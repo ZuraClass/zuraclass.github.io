@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zuralogic | Your Scale-Up Partner</title>
+<meta name="description" content="Automated solutions for your business. Tell us your most time-consuming task and get a free personalized plan by email.">
+
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        fontFamily: { sans: ['Inter', 'sans-serif'] },
+        colors: {
+          zura: { navy: '#0A1931', deep: '#152A4A', blue: '#2563EB', light: '#EFF6FF', ice: '#DBEAFE' }
+        }
+      }
+    }
+  }
+</script>
+
+<style>
+  .hp { position: absolute; left: -9999px; height: 0; overflow: hidden; }
+
+  .field-input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border-radius: 0.75rem;
+    border: 1px solid #e2e8f0;
+    background: #fff;
+    color: #0f172a;
+    font-size: 0.875rem;
+    transition: all .2s;
+  }
+  .field-input::placeholder { color: #94a3b8; }
+  .field-input:focus { outline: none; border-color: #2563EB; box-shadow: 0 0 0 3px rgba(37,99,235,.15); }
+
+  .frosted-nav {
+    background: rgba(255, 255, 255, 0.86);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+  }
+</style>
+</head>
+
+<body class="bg-slate-50 text-slate-900 font-sans antialiased selection:bg-blue-600 selection:text-white min-h-screen flex flex-col">
+
+<!-- ============ HEADER (konsisten dengan homepage) ============ -->
+<header class="sticky top-0 z-40 frosted-nav border-b border-blue-100/80 shadow-sm">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+    <a href="/" class="flex items-center gap-3 group">
+      <div class="relative w-9 h-9 rounded-xl bg-zura-navy flex items-center justify-center shadow-md group-hover:scale-105 transition">
+        <span class="font-black text-white text-sm tracking-tighter">ZL</span>
+      </div>
+      <div class="flex flex-col">
+        <span class="text-lg font-black tracking-tight text-zura-navy group-hover:text-blue-600 transition leading-none">Zuralogic<span class="text-blue-600">.com</span></span>
+        <span class="text-[10px] font-semibold text-slate-500 mt-0.5">Your Scale-Up Partner</span>
+      </div>
+    </a>
+    <a href="/" aria-label="Zuralogic.com home" class="p-2.5 rounded-xl border border-slate-200 text-slate-600 hover:text-blue-600 hover:border-blue-400 hover:bg-blue-50 transition">
+      <i data-lucide="home" class="w-4 h-4"></i>
+    </a>
+  </div>
+</header>
+
+<!-- ============ MAIN ============ -->
+<main class="relative flex-grow flex items-center justify-center px-4 py-10 sm:py-14 overflow-hidden">
+
+  <!-- Dekorasi latar (mengikuti hero homepage) -->
+  <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
+    <div class="absolute -right-24 -top-24 w-[480px] h-[480px] rounded-full bg-blue-400/20 blur-3xl"></div>
+    <div class="absolute -left-24 bottom-0 w-[420px] h-[420px] rounded-full bg-zura-navy/20 blur-3xl"></div>
+    <svg class="hidden md:block absolute right-0 bottom-0 w-[55%] h-[60%] opacity-40" viewBox="0 0 800 400" preserveAspectRatio="none" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="gw1" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#93C5FD" stop-opacity="0.55"/>
+          <stop offset="50%" stop-color="#2563EB" stop-opacity="0.65"/>
+          <stop offset="100%" stop-color="#0A1931" stop-opacity="0.85"/>
+        </linearGradient>
+      </defs>
+      <path d="M0 220 C 160 100, 320 340, 520 200 C 640 120, 720 160, 800 100 L 800 400 L 0 400 Z" fill="url(#gw1)"/>
+    </svg>
+  </div>
+
+  <section class="relative z-10 max-w-xl w-full rounded-[32px] overflow-hidden border border-blue-200/90 shadow-2xl bg-gradient-to-br from-white via-[#F4F8FF] to-[#E5F0FF]">
+
+    <!-- Bar bahasa -->
+    <div class="flex justify-between items-center gap-3 px-5 sm:px-8 py-4 border-b border-blue-100/80 bg-white/60 backdrop-blur-sm">
+      <div class="flex items-center gap-2">
+        <span class="w-7 h-7 rounded-lg bg-blue-50 border border-blue-100 text-blue-600 flex items-center justify-center shrink-0">
+          <i data-lucide="languages" class="w-4 h-4"></i>
+        </span>
+        <label id="ll" for="lang" class="text-xs font-semibold text-slate-500">Pilih Bahasa</label>
+      </div>
+      <select id="lang" aria-label="Language" class="bg-white border border-slate-200 text-xs font-semibold text-zura-navy rounded-lg px-3 py-2 focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-100 transition shadow-sm">
+        <option value="id">🇮🇩 Bahasa Indonesia</option><option value="en">🇺🇸 English</option>
+        <option value="th">🇹🇭 ไทย</option><option value="es">🇪🇸 Español</option>
+        <option value="ar">🇦🇪 العربية</option><option value="zh">🇨🇳 中文</option>
+        <option value="fr">🇫🇷 Français</option><option value="de">🇩🇪 Deutsch</option>
+        <option value="hi">🇮🇳 हिन्दी</option><option value="it">🇮🇹 Italiano</option>
+        <option value="ja">🇯🇵 日本語</option><option value="ru">🇷🇺 Русский</option>
+      </select>
+    </div>
+
+    <!-- Isi -->
+    <div class="p-6 sm:p-10">
+      <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-zura-navy via-blue-700 to-blue-500 text-white flex items-center justify-center shadow-lg mb-5">
+        <i data-lucide="bot" class="w-6 h-6"></i>
+      </div>
+
+      <h1 id="h" class="text-2xl sm:text-3xl font-black text-zura-navy tracking-tight leading-tight mb-3"></h1>
+      <p id="d" class="text-slate-600 mb-7 text-sm sm:text-base leading-relaxed"></p>
+      <div id="status" class="mb-4" role="status" aria-live="polite"></div>
+
+      <form id="form" class="space-y-5" novalidate>
+        <div class="hp" aria-hidden="true"><input type="text" id="website" tabindex="-1" autocomplete="off"></div>
+
+        <div>
+          <label id="ln" for="name" class="block text-xs font-bold uppercase tracking-wide text-slate-500 mb-1.5"></label>
+          <input id="name" type="text" required maxlength="60" autocomplete="given-name" class="field-input">
+        </div>
+
+        <div>
+          <label id="le" for="email" class="block text-xs font-bold uppercase tracking-wide text-slate-500 mb-1.5"></label>
+          <input id="email" type="email" required maxlength="120" autocomplete="email" class="field-input" placeholder="name@email.com">
+        </div>
+
+        <div>
+          <label id="lc" for="bCase" class="block text-xs font-bold uppercase tracking-wide text-slate-500 mb-1.5"></label>
+          <textarea id="bCase" required rows="4" maxlength="1000" class="field-input leading-relaxed resize-y"></textarea>
+          <p class="text-end text-[11px] font-medium text-slate-400 mt-1"><span id="cnt">0</span>/1000</p>
+        </div>
+
+        <button id="btn" type="submit" class="w-full bg-zura-navy hover:bg-blue-700 disabled:opacity-70 disabled:cursor-not-allowed disabled:hover:bg-zura-navy text-white font-bold text-sm py-3.5 rounded-xl transition flex justify-center items-center shadow-md hover:shadow-lg active:scale-[.98]">
+          <svg id="spin" class="animate-spin me-3 h-5 w-5 hidden" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.4 0 0 5.4 0 12h4z"/></svg>
+          <span id="bt"></span>
+        </button>
+      </form>
+    </div>
+  </section>
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer class="bg-white border-t border-slate-200/90 mt-auto">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex items-center justify-center">
+    <p class="text-sm font-medium text-slate-500">copyright zuralogic.com @ 2021</p>
+  </div>
+</footer>
+
+<script>
+/* ====== GANTI DENGAN URL WEB APP APPS SCRIPT LO (berakhiran /exec) ====== */
+const API_URL = "https://script.google.com/macros/s/AKfycbzHGyDwLVNQKO0YvF4YKAm9iOWa2qOMA6YnIaUe0MJ9dBgOUQ4cwUUDVLkSyiAG7TIZ/exec";
+
+/* h=heading d=desc n=nama e=email c=kasus b=tombol p=proses ok=judul sukses od=isi sukses er=error generik rl=terlalu sering */
+const T = {
+id:{h:"Solusi Otomatis untuk Bisnismu 🚀",d:"Ceritain pekerjaan yang paling nyita waktu kamu. Sistem pintar kami bakal analisa dan kirim solusi hemat waktunya ke email kamu!",n:"Nama Panggilan",e:"Email Aktif",c:"Pekerjaan / rekap manual apa yang paling nyita waktu di bisnismu?",b:"Dapatkan Solusi Otomatis Gratis",p:"Menganalisa",ok:"Solusi Berhasil Dikirim! 🚀",od:"Cek inbox ({email}). Kalau belum ada, cek folder Spam/Promosi.",er:"Koneksi terganggu. Coba lagi sebentar lagi.",rl:"Terlalu sering. Tunggu 1 menit lalu coba lagi."},
+en:{h:"Automated Solutions for Your Business 🚀",d:"Tell us the most time-consuming manual task in your business. Our smart system will analyze it and email you a time-saving plan!",n:"First Name",e:"Email Address",c:"Which manual task or spreadsheet chore eats most of your time?",b:"Get My Free Solution Plan",p:"Analyzing",ok:"Solution Sent! 🚀",od:"Check your inbox ({email}). If it's missing, check Spam/Promotions.",er:"Network error. Please try again.",rl:"Too many requests. Wait 1 minute and retry."},
+th:{h:"โซลูชันอัตโนมัติสำหรับธุรกิจคุณ 🚀",d:"เล่างานที่กินเวลาคุณมากที่สุด ระบบอัจฉริยะของเราจะวิเคราะห์และส่งแผนประหยัดเวลาให้ทางอีเมล!",n:"ชื่อเล่น",e:"อีเมล",c:"งานแมนนวลอะไรที่กินเวลาคุณมากที่สุด?",b:"รับแผนโซลูชันฟรี",p:"กำลังวิเคราะห์",ok:"ส่งโซลูชันแล้ว! 🚀",od:"ตรวจสอบอีเมล ({email}) หากไม่พบ ลองดูในสแปม",er:"เครือข่ายขัดข้อง โปรดลองอีกครั้ง",rl:"ส่งถี่เกินไป รอ 1 นาทีแล้วลองใหม่"},
+es:{h:"Soluciones automáticas para tu negocio 🚀",d:"Cuéntanos la tarea manual que más tiempo te consume. Nuestro sistema la analizará y te enviará un plan por correo.",n:"Nombre",e:"Correo electrónico",c:"¿Qué tarea manual te consume más tiempo?",b:"Recibir mi plan gratis",p:"Analizando",ok:"¡Solución enviada! 🚀",od:"Revisa tu bandeja ({email}). Si no aparece, mira en Spam.",er:"Error de red. Inténtalo de nuevo.",rl:"Demasiadas solicitudes. Espera 1 minuto."},
+ar:{h:"حلول آلية لعملك 🚀",d:"أخبرنا بأكثر مهمة يدوية تستهلك وقتك. سيحللها نظامنا الذكي ويرسل لك خطة توفير الوقت بالبريد.",n:"الاسم الأول",e:"البريد الإلكتروني",c:"ما المهمة اليدوية التي تستهلك معظم وقتك؟",b:"احصل على خطتك المجانية",p:"جارٍ التحليل",ok:"تم إرسال الحل! 🚀",od:"تحقق من بريدك ({email}). إن لم تجده فتفقد البريد العشوائي.",er:"خطأ في الشبكة. حاول مرة أخرى.",rl:"طلبات كثيرة. انتظر دقيقة ثم أعد المحاولة."},
+zh:{h:"为您的业务打造自动化方案 🚀",d:"告诉我们最耗时的手工任务，智能系统会分析并把节省时间的方案发到您的邮箱！",n:"称呼",e:"电子邮箱",c:"哪项手工工作最耗费您的时间？",b:"免费获取方案",p:"分析中",ok:"方案已发送！🚀",od:"请查收邮箱（{email}）。若未收到，请检查垃圾邮件。",er:"网络错误，请重试。",rl:"请求过于频繁，请等待1分钟后重试。"},
+fr:{h:"Des solutions automatisées pour votre entreprise 🚀",d:"Décrivez la tâche manuelle qui vous prend le plus de temps. Notre système l'analysera et vous enverra un plan par e-mail.",n:"Prénom",e:"Adresse e-mail",c:"Quelle tâche manuelle vous prend le plus de temps ?",b:"Recevoir mon plan gratuit",p:"Analyse en cours",ok:"Solution envoyée ! 🚀",od:"Consultez votre boîte ({email}). Sinon, vérifiez les spams.",er:"Erreur réseau. Réessayez.",rl:"Trop de demandes. Patientez 1 minute."},
+de:{h:"Automatisierte Lösungen für Ihr Unternehmen 🚀",d:"Beschreiben Sie die zeitraubendste manuelle Aufgabe. Unser System analysiert sie und sendet Ihnen einen Plan per E-Mail.",n:"Vorname",e:"E-Mail-Adresse",c:"Welche manuelle Aufgabe kostet Sie am meisten Zeit?",b:"Kostenlosen Plan erhalten",p:"Analysiere",ok:"Lösung gesendet! 🚀",od:"Prüfen Sie Ihr Postfach ({email}). Sonst im Spam-Ordner nachsehen.",er:"Netzwerkfehler. Bitte erneut versuchen.",rl:"Zu viele Anfragen. Bitte 1 Minute warten."},
+hi:{h:"आपके बिज़नेस के लिए ऑटोमेशन समाधान 🚀",d:"बताइए कौन सा मैन्युअल काम सबसे ज़्यादा समय लेता है। हमारा सिस्टम विश्लेषण कर आपको ईमेल पर प्लान भेजेगा!",n:"नाम",e:"ईमेल पता",c:"कौन सा मैन्युअल काम आपका सबसे ज़्यादा समय लेता है?",b:"मुफ़्त प्लान पाएं",p:"विश्लेषण हो रहा है",ok:"समाधान भेज दिया गया! 🚀",od:"अपना इनबॉक्स ({email}) देखें। न मिले तो स्पैम देखें।",er:"नेटवर्क त्रुटि। फिर कोशिश करें।",rl:"बहुत अधिक अनुरोध। 1 मिनट रुकें।"},
+it:{h:"Soluzioni automatiche per la tua attività 🚀",d:"Raccontaci l'attività manuale che ti ruba più tempo. Il nostro sistema la analizzerà e ti invierà un piano via email.",n:"Nome",e:"Indirizzo email",c:"Quale attività manuale ti occupa più tempo?",b:"Ricevi il piano gratuito",p:"Analisi in corso",ok:"Soluzione inviata! 🚀",od:"Controlla la posta ({email}). Altrimenti guarda nello spam.",er:"Errore di rete. Riprova.",rl:"Troppe richieste. Attendi 1 minuto."},
+ja:{h:"あなたのビジネスに自動化ソリューションを 🚀",d:"最も時間がかかる手作業を教えてください。AIが分析し、時短プランをメールでお送りします！",n:"お名前",e:"メールアドレス",c:"最も時間を取られている手作業は何ですか？",b:"無料プランを受け取る",p:"分析中",ok:"送信しました！🚀",od:"受信箱（{email}）をご確認ください。届かない場合は迷惑メールもご確認を。",er:"ネットワークエラー。再試行してください。",rl:"リクエストが多すぎます。1分後にお試しください。"},
+ru:{h:"Автоматизация для вашего бизнеса 🚀",d:"Расскажите, какая ручная задача отнимает больше всего времени. Система проанализирует и пришлёт план на почту!",n:"Имя",e:"Электронная почта",c:"Какая ручная работа отнимает больше всего времени?",b:"Получить бесплатный план",p:"Анализируем",ok:"Решение отправлено! 🚀",od:"Проверьте почту ({email}). Если письма нет, загляните в спам.",er:"Ошибка сети. Попробуйте снова.",rl:"Слишком много запросов. Подождите 1 минуту."}
+};
+
+const LL = {id:"Pilih Bahasa",en:"Select Language",th:"เลือกภาษา",es:"Elige idioma",ar:"اختر اللغة",zh:"选择语言",fr:"Choisir la langue",de:"Sprache wählen",hi:"भाषा चुनें",it:"Scegli la lingua",ja:"言語を選択",ru:"Выберите язык"};
+const $ = id => document.getElementById(id);
+let lang = "en", timer = null;
+
+function setLang(l) {
+  lang = T[l] ? l : "en";
+  const t = T[lang];
+  document.documentElement.lang = lang;
+  document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
+  $("lang").value = lang;
+  $("ll").textContent = LL[lang]; $("h").textContent = t.h; $("d").textContent = t.d;
+  $("ln").textContent = t.n; $("le").textContent = t.e; $("lc").textContent = t.c;
+  if (!$("btn").disabled) $("bt").textContent = t.b;
+  try { localStorage.setItem("zl_lang", lang); } catch (e) {}
+}
+
+function detectLang() {
+  let s = null;
+  try { s = localStorage.getItem("zl_lang"); } catch (e) {}
+  return s || (navigator.language || "en").slice(0, 2).toLowerCase();
+}
+
+function show(type, msg, title) {
+  const c = type === "ok"
+    ? "bg-emerald-50 border-emerald-200 text-emerald-900"
+    : "bg-rose-50 border-rose-200 text-rose-800";
+  const box = document.createElement("div");
+  box.className = "p-4 border rounded-xl text-sm text-center " + c;
+  if (title) { const h = document.createElement("h3"); h.className = "text-lg font-extrabold text-emerald-700 mb-1"; h.textContent = title; box.appendChild(h); }
+  const p = document.createElement("p"); p.textContent = msg; box.appendChild(p);
+  $("status").replaceChildren(box);   // textContent/replaceChildren = aman dari XSS
+}
+
+function busy(on) {
+  const b = $("btn"); b.disabled = on; $("spin").classList.toggle("hidden", !on);
+  clearInterval(timer);
+  if (on) {
+    let s = 0; const t = T[lang];
+    $("bt").textContent = t.p + "… (0s)";
+    timer = setInterval(() => $("bt").textContent = t.p + "… (" + (++s) + "s)", 1000);
+  } else $("bt").textContent = T[lang].b;
+}
+
+$("lang").addEventListener("change", e => setLang(e.target.value));
+$("bCase").addEventListener("input", e => $("cnt").textContent = e.target.value.length);
+
+$("form").addEventListener("submit", async ev => {
+  ev.preventDefault();
+  if ($("btn").disabled) return;
+  const t = T[lang];
+  if (!$("form").checkValidity()) { $("form").reportValidity(); return; }
+  if (API_URL.startsWith("TARUH_")) { show("err", "API_URL belum diisi di index.html"); return; }
+
+  const payload = {
+    name: $("name").value.trim(), email: $("email").value.trim(),
+    bCase: $("bCase").value.trim(), lang, website: $("website").value
+  };
+  busy(true); $("status").replaceChildren();
+
+  const ctrl = new AbortController();
+  const to = setTimeout(() => ctrl.abort(), 90000);   // Gemini + Gmail bisa lama
+  try {
+    const res = await fetch(API_URL, {
+      method: "POST",
+      headers: { "Content-Type": "text/plain;charset=utf-8" },  // hindari CORS preflight
+      body: JSON.stringify(payload),
+      signal: ctrl.signal
+    });
+    const r = await res.json();
+    if (r.status === "SUCCESS") {
+      $("form").classList.add("hidden");
+      show("ok", t.od.replace("{email}", payload.email), t.ok);
+    } else {
+      show("err", r.code === "RATE_LIMIT" ? t.rl : t.er);
+    }
+  } catch (e) {
+    show("err", t.er);
+  } finally {
+    clearTimeout(to); busy(false);
+  }
+});
+
+setLang(detectLang());
+lucide.createIcons();
+</script>
+</body>
+</html>
