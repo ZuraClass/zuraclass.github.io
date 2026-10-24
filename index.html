@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Zuralogic.com — Your Scale-Up Partner | Global Business App Ecosystem</title>
+  <title>Zuralogic.com — Your Scale-Up Partner </title>
   
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -118,7 +118,7 @@
   <!-- =====================================================================
        SIMULATOR BAR (Untuk ngetes fitur Creator Hub saat Login/Guest)
        ===================================================================== -->
-  <div class="bg-zura-navy text-blue-100 text-xs py-2 px-4 border-b border-blue-900/80">
+  <div class="hidden bg-zura-navy text-blue-100 text-xs py-2 px-4 border-b border-blue-900/80">
     <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
       <div class="flex items-center gap-2">
         <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
@@ -374,7 +374,7 @@
                   <span>Creator Member Only</span>
                 </div>
                 <p class="text-amber-700 leading-relaxed mb-2">Sign in as a ZuraClass Creator to access your Dashboard, Portfolio, and Profile.</p>
-                <button onclick="toggleCreatorMode()" class="w-full py-1.5 rounded-lg bg-zura-navy text-white font-semibold hover:bg-blue-700 transition">
+                <button onclick="window.location.href='/auth/?mode=register&role=creator'" class="w-full py-1.5 rounded-lg bg-zura-navy text-white font-semibold hover:bg-blue-700 transition">
                   Unlock Creator Hub
                 </button>
               </div>
