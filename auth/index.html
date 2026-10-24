@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Log in or Sign up — Zuralogic.com</title>
+  <meta name="robots" content="noindex" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'sans-serif'] },
+          colors: {
+            zura: { navy: '#0A1931', deep: '#152A4A', blue: '#2563EB', light: '#EFF6FF', ice: '#DBEAFE' }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    .field-input {
+      width: 100%;
+      padding: 0.7rem 1rem;
+      border-radius: 0.75rem;
+      border: 1px solid #e2e8f0;
+      background: #fff;
+      font-size: 0.875rem;
+      transition: all .2s;
+    }
+    .field-input:focus { outline: none; border-color: #2563EB; box-shadow: 0 0 0 3px rgba(37,99,235,.15); }
+    .field-input.has-error { border-color: #e11d48; box-shadow: 0 0 0 3px rgba(225,29,72,.10); }
+    .field-error { color: #e11d48; font-size: 0.75rem; margin-top: 0.25rem; display: none; }
+    .field-error.show { display: block; }
+
+    .role-card { transition: all .25s cubic-bezier(.16,1,.3,1); }
+    .role-card[aria-checked="true"] {
+      border-color: #2563EB;
+      background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%);
+      box-shadow: 0 8px 20px -8px rgba(37,99,235,.45);
+    }
+    .role-card[aria-checked="true"] .role-radio { background: #2563EB; border-color: #2563EB; }
+    .role-card[aria-checked="true"] .role-radio::after { opacity: 1; }
+    .role-radio { position: relative; }
+    .role-radio::after { content: ''; position: absolute; inset: 3px; border-radius: 9999px; background: #fff; opacity: 0; transition: opacity .15s; }
+
+    .tab-btn[aria-selected="true"] { background: #0A1931; color: #fff; box-shadow: 0 4px 10px -2px rgba(10,25,49,.35); }
+
+    .view { display: none; }
+    .view.active { display: block; animation: fadeUp .35s cubic-bezier(.16,1,.3,1); }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(8px);} to { opacity: 1; transform: translateY(0);} }
+
+    .benefit-set { display: none; }
+    .benefit-set.active { display: block; animation: fadeUp .35s cubic-bezier(.16,1,.3,1); }
+
+    .spinner { width: 16px; height: 16px; border: 2px solid rgba(255,255,255,.4); border-top-color: #fff; border-radius: 9999px; animation: spin .7s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
+</head>
+
+<body class="bg-slate-50 text-slate-900 font-sans antialiased selection:bg-blue-600 selection:text-white min-h-screen flex flex-col">
+
+  <!-- ============ MINIMAL HEADER ============ -->
+  <header class="bg-white/90 backdrop-blur-xl border-b border-blue-100/80 sticky top-0 z-40">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <a href="/" class="flex items-center gap-3 group">
+        <div class="relative w-9 h-9 rounded-xl bg-zura-navy flex items-center justify-center shadow-md group-hover:scale-105 transition">
+          <span class="font-black text-white text-sm tracking-tighter">ZL</span>
+        </div>
+        <div class="flex flex-col">
+          <span class="text-lg font-black tracking-tight text-zura-navy leading-none">Zuralogic<span class="text-blue-600">.com</span></span>
+          <span class="text-[10px] font-semibold text-slate-500 mt-0.5">Your Scale-Up Partner</span>
+        </div>
+      </a>
+      <a href="/" class="text-sm font-semibold text-slate-600 hover:text-blue-600 transition flex items-center gap-1.5">
+        <i data-lucide="arrow-left" class="w-4 h-4"></i>
+        <span>Back to home</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- ============ MAIN ============ -->
+  <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-12">
+    <div class="grid grid-cols-1 lg:grid-cols-12 rounded-[32px] overflow-hidden border border-blue-200/90 shadow-2xl bg-white">
+
+      <!-- LEFT: BRAND / BENEFITS PANEL -->
+      <aside class="hidden lg:flex lg:col-span-5 relative flex-col justify-between p-12 text-white bg-gradient-to-br from-zura-navy via-zura-deep to-blue-800 overflow-hidden">
+        <div class="absolute -right-24 -top-24 w-80 h-80 rounded-full bg-blue-400/20 blur-3xl"></div>
+        <div class="absolute -left-20 bottom-0 w-72 h-72 rounded-full bg-blue-500/20 blur-3xl"></div>
+        <svg class="absolute right-0 bottom-0 w-full h-1/2 opacity-30" viewBox="0 0 400 300" preserveAspectRatio="none" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0 120 C 100 40, 200 220, 400 100 L 400 300 L 0 300 Z" fill="#2563EB" fill-opacity="0.5"/>
+          <path d="M0 190 C 120 110, 240 280, 400 170 L 400 300 L 0 300 Z" fill="#93C5FD" fill-opacity="0.35"/>
+        </svg>
+
+        <div class="relative z-10">
+          <div class="text-xs font-extrabold tracking-[0.22em] uppercase text-blue-300 mb-4">ZURALOGIC GLOBAL ECOSYSTEM</div>
+          <h2 id="panelHeading" class="text-3xl font-black tracking-tight leading-tight">Deploy proven business apps in minutes.</h2>
+
+          <!-- Buyer benefits -->
+          <div id="benefits-buyer" class="benefit-set active mt-8 space-y-5">
+            <div class="flex items-start gap-3.5">
+              <div class="w-10 h-10 rounded-xl bg-white/10 border border-white/15 flex items-center justify-center shrink-0"><i data-lucide="layout-grid" class="w-5 h-5"></i></div>
+              <div><div class="font-bold text-sm">Ready-to-deploy industry apps</div><p class="text-xs text-blue-100/80 mt-0.5 leading-relaxed">Warehouse, HSE, POS, HR and more, built by verified creators.</p></div>
+            </div>
+            <div class="flex items-start gap-3.5">
+              <div class="w-10 h-10 rounded-xl bg-white/10 border border-white/15 flex items-center justify-center shrink-0"><i data-lucide="library" class="w-5 h-5"></i></div>
+              <div><div class="font-bold text-sm">Your personal app library</div><p class="text-xs text-blue-100/80 mt-0.5 leading-relaxed">Keep every purchase, license and update in one place.</p></div>
+            </div>
+            <div class="flex items-start gap-3.5">
+              <div class="w-10 h-10 rounded-xl bg-white/10 border border-white/15 flex items-center justify-center shrink-0"><i data-lucide="graduation-cap" class="w-5 h-5"></i></div>
+              <div><div class="font-bold text-sm">Learn with ZuraClass</div><p class="text-xs text-blue-100/80 mt-0.5 leading-relaxed">Master no-code and automation with guided tracks.</p></div>
+            </div>
+          </div>
+
+          <!-- Creator benefits -->
+          <div id="benefits-creator" class="benefit-set mt-8 space-y-5">
+            <div class="flex items-start gap-3.5">
+              <div class="w-10 h-10 rounded-xl bg-white/10 border border-white/15 flex items-center justify-center shrink-0"><i data-lucide="rocket" class="w-5 h-5"></i></div>
+              <div><div class="font-bold text-sm">Publish and sell your apps</div><p class="text-xs text-blue-100/80 mt-0.5 leading-relaxed">Reach global buyers on ZuraAppMarket.</p></div>
+            </div>
+            <div class="flex items-start gap-3.5">
+              <div class="w-10 h-10 rounded-xl bg-white/10 border border-white/15 flex items-center justify-center shrink-0"><i data-lucide="bar-chart-3" class="w-5 h-5"></i></div>
+              <div><div class="font-bold text-sm">Dashboard and analytics</div><p class="text-xs text-blue-100/80 mt-0.5 leading-relaxed">Track revenue, downloads and reviews in real time.</p></div>
+            </div>
+            <div class="flex items-start gap-3.5">
+              <div class="w-10 h-10 rounded-xl bg-white/10 border border-white/15 flex items-center justify-center shrink-0"><i data-lucide="badge-check" class="w-5 h-5"></i></div>
+              <div><div class="font-bold text-sm">Verified Creator badge</div><p class="text-xs text-blue-100/80 mt-0.5 leading-relaxed">Build trust with a public profile and portfolio.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="relative z-10 pt-10 flex items-center gap-3 text-xs text-blue-100/90">
+          <div class="flex -space-x-2">
+            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=80&q=80" alt="" class="w-8 h-8 rounded-full object-cover ring-2 ring-zura-deep" />
+            <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=80&q=80" alt="" class="w-8 h-8 rounded-full object-cover ring-2 ring-zura-deep" />
+            <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=80&q=80" alt="" class="w-8 h-8 rounded-full object-cover ring-2 ring-zura-deep" />
+          </div>
+          <span><strong class="text-white">12,400+</strong> builders across 40+ countries</span>
+        </div>
+      </aside>
+
+      <!-- RIGHT: FORM PANEL -->
+      <section class="lg:col-span-7 p-6 sm:p-10 lg:p-14 bg-gradient-to-br from-white via-[#F8FAFF] to-white">
+        <div class="max-w-md mx-auto">
+
+          <!-- Global alert -->
+          <div id="globalAlert" class="hidden mb-5 p-3.5 rounded-xl text-sm font-medium flex items-start gap-2.5" role="alert">
+            <i id="globalAlertIcon" data-lucide="alert-circle" class="w-4 h-4 mt-0.5 shrink-0"></i>
+            <span id="globalAlertText"></span>
+          </div>
+
+          <!-- Tabs (login / register) -->
+          <div id="tabsWrap" class="grid grid-cols-2 gap-1.5 p-1.5 rounded-2xl bg-slate-100 mb-8" role="tablist">
+            <button type="button" id="tab-login" class="tab-btn py-2.5 rounded-xl text-sm font-bold text-slate-600 transition" role="tab" aria-selected="true" onclick="showView('login')">Log in</button>
+            <button type="button" id="tab-register" class="tab-btn py-2.5 rounded-xl text-sm font-bold text-slate-600 transition" role="tab" aria-selected="false" onclick="showView('register')">Create account</button>
+          </div>
+
+          <!-- ============ VIEW: LOGIN ============ -->
+          <div id="view-login" class="view active">
+            <h1 class="text-2xl sm:text-3xl font-black text-zura-navy tracking-tight">Welcome back</h1>
+            <p class="text-sm text-slate-600 mt-1.5 mb-6">Log in to access your app library, courses, or Creator Hub.</p>
+
+            <button type="button" onclick="handleGoogle()" class="w-full py-3 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 hover:border-blue-300 text-sm font-bold text-slate-700 transition flex items-center justify-center gap-2.5 shadow-sm">
+              <svg class="w-4 h-4" viewBox="0 0 48 48"><path fill="#FFC107" d="M43.6 20.1H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 8 3l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.6-.4-3.9z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 8 3l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-8l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.1H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.6-.4-3.9z"/></svg>
+              <span>Continue with Google</span>
+            </button>
+
+            <div class="flex items-center gap-3 my-5 text-[11px] font-bold uppercase tracking-wider text-slate-400">
+              <span class="flex-1 h-px bg-slate-200"></span><span>or with email</span><span class="flex-1 h-px bg-slate-200"></span>
+            </div>
+
+            <form id="loginForm" novalidate class="space-y-4">
+              <div>
+                <label for="loginEmail" class="block text-xs font-bold uppercase text-slate-500 mb-1.5">Email address</label>
+                <input id="loginEmail" name="email" type="email" autocomplete="email" placeholder="you@company.com" class="field-input" />
+                <p class="field-error" data-error-for="loginEmail"></p>
+              </div>
+              <div>
+                <div class="flex items-center justify-between mb-1.5">
+                  <label for="loginPassword" class="block text-xs font-bold uppercase text-slate-500">Password</label>
+                  <button type="button" onclick="showView('forgot')" class="text-xs font-semibold text-blue-600 hover:text-blue-700">Forgot password?</button>
+                </div>
+                <div class="relative">
+                  <input id="loginPassword" name="password" type="password" autocomplete="current-password" placeholder="Your password" class="field-input pr-11" />
+                  <button type="button" onclick="togglePassword('loginPassword', this)" class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-blue-600" aria-label="Show password"><i data-lucide="eye" class="w-4 h-4"></i></button>
+                </div>
+                <p class="field-error" data-error-for="loginPassword"></p>
+              </div>
+              <label class="flex items-center gap-2 text-xs text-slate-600 cursor-pointer select-none">
+                <input type="checkbox" id="rememberMe" class="w-4 h-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500" />
+                <span>Keep me signed in on this device</span>
+              </label>
+              <button type="submit" class="submit-btn w-full py-3 rounded-xl bg-zura-navy hover:bg-blue-700 text-white font-bold text-sm shadow-md hover:shadow-lg transition flex items-center justify-center gap-2">
+                <span class="btn-label">Log in</span>
+              </button>
+            </form>
+
+            <p class="text-center text-sm text-slate-600 mt-6">
+              New to Zuralogic?
+              <button type="button" onclick="showView('register')" class="font-bold text-blue-600 hover:text-blue-700">Create an account</button>
+            </p>
+          </div>
+
+          <!-- ============ VIEW: REGISTER ============ -->
+          <div id="view-register" class="view">
+            <h1 class="text-2xl sm:text-3xl font-black text-zura-navy tracking-tight">Create your account</h1>
+            <p class="text-sm text-slate-600 mt-1.5 mb-6">Choose how you want to use Zuralogic. You can change this later.</p>
+
+            <!-- Role selector -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6" role="radiogroup" aria-label="Account type">
+              <button type="button" id="role-buyer" role="radio" aria-checked="true" onclick="setRole('buyer')" class="role-card text-left p-4 rounded-2xl border border-slate-200 bg-white hover:border-blue-300">
+                <div class="flex items-start justify-between">
+                  <div class="w-10 h-10 rounded-xl bg-zura-navy text-white flex items-center justify-center"><i data-lucide="app-window" class="w-5 h-5"></i></div>
+                  <span class="role-radio w-4 h-4 rounded-full border-2 border-slate-300"></span>
+                </div>
+                <div class="font-extrabold text-sm text-zura-navy mt-3">I want to use apps</div>
+                <p class="text-xs text-slate-500 mt-0.5 leading-relaxed">Buy apps, learn at ZuraClass</p>
+              </button>
+              <button type="button" id="role-creator" role="radio" aria-checked="false" onclick="setRole('creator')" class="role-card text-left p-4 rounded-2xl border border-slate-200 bg-white hover:border-blue-300">
+                <div class="flex items-start justify-between">
+                  <div class="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center"><i data-lucide="badge-dollar-sign" class="w-5 h-5"></i></div>
+                  <span class="role-radio w-4 h-4 rounded-full border-2 border-slate-300"></span>
+                </div>
+                <div class="font-extrabold text-sm text-zura-navy mt-3">I want to sell apps</div>
+                <p class="text-xs text-slate-500 mt-0.5 leading-relaxed">Publish and earn as a Creator</p>
+              </button>
+            </div>
+
+            <form id="registerForm" novalidate class="space-y-4">
+              <div>
+                <label for="regName" class="block text-xs font-bold uppercase text-slate-500 mb-1.5">Full name</label>
+                <input id="regName" name="name" type="text" autocomplete="name" placeholder="Your full name" class="field-input" />
+                <p class="field-error" data-error-for="regName"></p>
+              </div>
+              <div>
+                <label for="regEmail" class="block text-xs font-bold uppercase text-slate-500 mb-1.5">Email address</label>
+                <input id="regEmail" name="email" type="email" autocomplete="email" placeholder="you@company.com" class="field-input" />
+                <p class="field-error" data-error-for="regEmail"></p>
+              </div>
+
+              <!-- Creator-only fields -->
+              <div id="creatorFields" class="hidden space-y-4 p-4 rounded-2xl bg-blue-50/70 border border-blue-100">
+                <div class="flex items-center gap-2 text-xs font-extrabold uppercase tracking-wider text-blue-600">
+                  <i data-lucide="sparkles" class="w-3.5 h-3.5"></i><span>Creator details</span>
+                </div>
+                <div>
+                  <label for="regExpertise" class="block text-xs font-bold uppercase text-slate-500 mb-1.5">Main platform / expertise</label>
+                  <select id="regExpertise" name="expertise" class="field-input">
+                    <option value="">Select one</option>
+                    <option value="appsheet">AppSheet</option>
+                    <option value="apps-script">Google Apps Script</option>
+                    <option value="sheets">Google Sheets / Workspace</option>
+                    <option value="other-nocode">Other no-code platform</option>
+                    <option value="code">Custom code</option>
+                  </select>
+                  <p class="field-error" data-error-for="regExpertise"></p>
+                </div>
+                <div>
+                  <label for="regPortfolio" class="block text-xs font-bold uppercase text-slate-500 mb-1.5">Portfolio or demo link <span class="normal-case font-medium text-slate-400">(optional)</span></label>
+                  <input id="regPortfolio" name="portfolio" type="url" placeholder="https://" class="field-input" />
+                  <p class="field-error" data-error-for="regPortfolio"></p>
+                </div>
+                <p class="text-[11px] text-slate-500 leading-relaxed">Creator accounts are reviewed before you can publish. Payout details are added later in your Creator Hub profile.</p>
+              </div>
+
+              <div>
+                <label for="regPassword" class="block text-xs font-bold uppercase text-slate-500 mb-1.5">Password</label>
+                <div class="relative">
+                  <input id="regPassword" name="password" type="password" autocomplete="new-password" placeholder="At least 8 characters" class="field-input pr-11" oninput="updateStrength(this.value)" />
+                  <button type="button" onclick="togglePassword('regPassword', this)" class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-blue-600" aria-label="Show password"><i data-lucide="eye" class="w-4 h-4"></i></button>
+                </div>
+                <div class="flex items-center gap-1.5 mt-2" aria-hidden="true">
+                  <span class="strength-bar h-1.5 flex-1 rounded-full bg-slate-200 transition-colors"></span>
+                  <span class="strength-bar h-1.5 flex-1 rounded-full bg-slate-200 transition-colors"></span>
+                  <span class="strength-bar h-1.5 flex-1 rounded-full bg-slate-200 transition-colors"></span>
+                  <span class="strength-bar h-1.5 flex-1 rounded-full bg-slate-200 transition-colors"></span>
+                  <span id="strengthLabel" class="text-[11px] font-semibold text-slate-400 w-14 text-right">&nbsp;</span>
+                </div>
+                <p class="field-error" data-error-for="regPassword"></p>
+              </div>
+              <div>
+                <label for="regConfirm" class="block text-xs font-bold uppercase text-slate-500 mb-1.5">Confirm password</label>
+                <input id="regConfirm" name="confirm" type="password" autocomplete="new-password" placeholder="Repeat your password" class="field-input" />
+                <p class="field-error" data-error-for="regConfirm"></p>
+              </div>
+
+              <div>
+                <label class="flex items-start gap-2.5 text-xs text-slate-600 cursor-pointer select-none leading-relaxed">
+                  <input type="checkbox" id="regTerms" class="w-4 h-4 mt-0.5 rounded border-slate-300 text-blue-600 focus:ring-blue-500 shrink-0" />
+                  <span>I agree to the <a href="/terms/" target="_blank" rel="noopener" class="font-semibold text-blue-600 hover:underline">Terms of Service</a> and <a href="/privacy/" target="_blank" rel="noopener" class="font-semibold text-blue-600 hover:underline">Privacy Policy</a>.</span>
+                </label>
+                <p class="field-error" data-error-for="regTerms"></p>
+              </div>
+
+              <button type="submit" class="submit-btn w-full py-3 rounded-xl bg-zura-navy hover:bg-blue-700 text-white font-bold text-sm shadow-md hover:shadow-lg transition flex items-center justify-center gap-2">
+                <span class="btn-label" id="registerBtnLabel">Create buyer account</span>
+              </button>
+            </form>
+
+            <div class="flex items-center gap-3 my-5 text-[11px] font-bold uppercase tracking-wider text-slate-400">
+              <span class="flex-1 h-px bg-slate-200"></span><span>or</span><span class="flex-1 h-px bg-slate-200"></span>
+            </div>
+            <button type="button" onclick="handleGoogle()" class="w-full py-3 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 hover:border-blue-300 text-sm font-bold text-slate-700 transition flex items-center justify-center gap-2.5 shadow-sm">
+              <svg class="w-4 h-4" viewBox="0 0 48 48"><path fill="#FFC107" d="M43.6 20.1H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 8 3l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.6-.4-3.9z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 8 3l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-8l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.1H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.6-.4-3.9z"/></svg>
+              <span>Sign up with Google</span>
+            </button>
+
+            <p class="text-center text-sm text-slate-600 mt-6">
+              Already have an account?
+              <button type="button" onclick="showView('login')" class="font-bold text-blue-600 hover:text-blue-700">Log in</button>
+            </p>
+          </div>
+
+          <!-- ============ VIEW: FORGOT PASSWORD ============ -->
+          <div id="view-forgot" class="view">
+            <button type="button" onclick="showView('login')" class="text-sm font-semibold text-slate-500 hover:text-blue-600 flex items-center gap-1.5 mb-6">
+              <i data-lucide="arrow-left" class="w-4 h-4"></i><span>Back to log in</span>
+            </button>
+            <div class="w-12 h-12 rounded-2xl bg-blue-50 border border-blue-100 text-blue-600 flex items-center justify-center mb-4"><i data-lucide="key-round" class="w-6 h-6"></i></div>
+            <h1 class="text-2xl sm:text-3xl font-black text-zura-navy tracking-tight">Reset your password</h1>
+            <p class="text-sm text-slate-600 mt-1.5 mb-6">Enter the email you registered with and we'll send you a reset link.</p>
+
+            <form id="forgotForm" novalidate class="space-y-4">
+              <div>
+                <label for="forgotEmail" class="block text-xs font-bold uppercase text-slate-500 mb-1.5">Email address</label>
+                <input id="forgotEmail" name="email" type="email" autocomplete="email" placeholder="you@company.com" class="field-input" />
+                <p class="field-error" data-error-for="forgotEmail"></p>
+              </div>
+              <button type="submit" class="submit-btn w-full py-3 rounded-xl bg-zura-navy hover:bg-blue-700 text-white font-bold text-sm shadow-md hover:shadow-lg transition flex items-center justify-center gap-2">
+                <span class="btn-label">Send reset link</span>
+              </button>
+            </form>
+          </div>
+
+        </div>
+      </section>
+    </div>
+
+    <p id="demoNote" class="max-w-md mx-auto text-center text-[11px] text-slate-400 mt-5 leading-relaxed"></p>
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="bg-white border-t border-slate-200/90">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col sm:flex-row items-center justify-between gap-3">
+      <p class="text-sm font-medium text-slate-500">copyright zuralogic.com @ 2021</p>
+      <div class="flex items-center gap-5 text-xs font-semibold text-slate-500">
+        <a href="/terms/" class="hover:text-blue-600">Terms</a>
+        <a href="/privacy/" class="hover:text-blue-600">Privacy</a>
+        <a href="/contact/" class="hover:text-blue-600">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Toast -->
+  <div id="toastBox" class="fixed bottom-5 right-5 z-50 hidden items-center gap-2.5 bg-zura-navy text-white px-4 py-3 rounded-2xl shadow-xl border border-blue-400/30 text-sm font-medium">
+    <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400 shrink-0"></i>
+    <span id="toastText"></span>
+  </div>
+
+  <script>
+    /* =====================================================================
+       CONFIG
+       ===================================================================== */
+    const CONFIG = {
+      DEMO_MODE: true,                 // Set to false after connecting your real backend
+      REDIRECT: {
+        buyer: '/library/',            // My Purchases / Library (to be built)
+        creator: '/creator-hub/'       // Creator Hub Dashboard (to be built)
+      },
+      MIN_PASSWORD: 8
+    };
+
+    /* =====================================================================
+       AUTH SERVICE (ADAPTER)
+       All backend calls live here. In DEMO_MODE they are simulated and NO
+       password is ever stored. Replace each method body with your real
+       provider (e.g. Supabase / Firebase) when ready.
+       Each method must return { ok: true, user } or throw Error(message).
+       ===================================================================== */
+    const AuthService = {
+      _delay: (ms = 800) => new Promise(r => setTimeout(r, ms)),
+      _users() { try { return JSON.parse(localStorage.getItem('zl_demo_users') || '{}'); } catch { return {}; } },
+      _saveUsers(u) { try { localStorage.setItem('zl_demo_users', JSON.stringify(u)); } catch {} },
+      _setSession(user, persist) {
+        const store = persist ? localStorage : sessionStorage;
+        try { store.setItem('zl_demo_session', JSON.stringify({ email: user.email, name: user.name, role: user.role })); } catch {}
+      },
+
+      async login({ email, password, remember }) {
+        if (!CONFIG.DEMO_MODE) {
+          // TODO (Supabase): const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+          throw new Error('Backend not connected yet.');
+        }
+        await this._delay();
+        const user = this._users()[email.toLowerCase()];
+        if (!user) throw new Error('No account found with this email. Please create an account first (demo mode).');
+        this._setSession(user, remember);
+        return { ok: true, user };
+      },
+
+      async register({ name, email, password, role, expertise, portfolio }) {
+        if (!CONFIG.DEMO_MODE) {
+          // TODO (Supabase): await supabase.auth.signUp({ email, password, options: { data: { name, role, expertise, portfolio } } });
+          throw new Error('Backend not connected yet.');
+        }
+        await this._delay();
+        const users = this._users();
+        const key = email.toLowerCase();
+        if (users[key]) throw new Error('An account with this email already exists. Try logging in instead.');
+        const user = { name, email: key, role, expertise: expertise || null, portfolio: portfolio || null, status: role === 'creator' ? 'pending_review' : 'active' };
+        users[key] = user;
+        this._saveUsers(users);
+        this._setSession(user, false);
+        return { ok: true, user };
+      },
+
+      async resetPassword({ email }) {
+        if (!CONFIG.DEMO_MODE) {
+          // TODO (Supabase): await supabase.auth.resetPasswordForEmail(email, { redirectTo: location.origin + '/auth/reset/' });
+          throw new Error('Backend not connected yet.');
+        }
+        await this._delay();
+        return { ok: true }; // Always succeed: never reveal whether an email is registered.
+      },
+
+      async google() {
+        if (!CONFIG.DEMO_MODE) {
+          // TODO (Supabase): await supabase.auth.signInWithOAuth({ provider: 'google', options: { redirectTo: location.origin + '/auth/callback/' } });
+          throw new Error('Backend not connected yet.');
+        }
+        await this._delay(500);
+        throw new Error('Google sign-in is available once the backend is connected.');
+      }
+    };
+
+    /* =====================================================================
+       STATE & HELPERS
+       ===================================================================== */
+    let currentRole = 'buyer';
+    const params = new URLSearchParams(location.search);
+
+    const $ = id => document.getElementById(id);
+    const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
+    function safeNext() {
+      // Only allow same-site relative paths to prevent open-redirect attacks.
+      const next = params.get('next');
+      return next && next.startsWith('/') && !next.startsWith('//') ? next : null;
+    }
+
+    function showToast(msg) {
+      const box = $('toastBox');
+      $('toastText').textContent = msg;
+      box.classList.replace('hidden', 'flex');
+      clearTimeout(showToast._t);
+      showToast._t = setTimeout(() => box.classList.replace('flex', 'hidden'), 3200);
+    }
+
+    function showAlert(type, msg) {
+      const el = $('globalAlert');
+      const styles = {
+        error: ['bg-rose-50', 'border', 'border-rose-200', 'text-rose-800'],
+        success: ['bg-emerald-50', 'border', 'border-emerald-200', 'text-emerald-800'],
+        info: ['bg-blue-50', 'border', 'border-blue-200', 'text-blue-800']
+      };
+      el.className = 'mb-5 p-3.5 rounded-xl text-sm font-medium flex items-start gap-2.5 ' + styles[type].join(' ');
+      $('globalAlertText').textContent = msg;
+      $('globalAlertIcon').setAttribute('data-lucide', type === 'success' ? 'check-circle-2' : type === 'info' ? 'info' : 'alert-circle');
+      lucide.createIcons();
+    }
+    function hideAlert() { $('globalAlert').classList.add('hidden'); }
+
+    function setFieldError(id, msg) {
+      const input = $(id);
+      const err = document.querySelector(`[data-error-for="${id}"]`);
+      if (msg) {
+        if (input) input.classList.add('has-error');
+        if (err) { err.textContent = msg; err.classList.add('show'); }
+      } else {
+        if (input) input.classList.remove('has-error');
+        if (err) { err.textContent = ''; err.classList.remove('show'); }
+      }
+    }
+    function clearErrors(formId) {
+      $(formId).querySelectorAll('[data-error-for]').forEach(e => setFieldError(e.dataset.errorFor, ''));
+    }
+
+    function setLoading(form, loading, label) {
+      const btn = form.querySelector('.submit-btn');
+      const text = btn.querySelector('.btn-label');
+      if (loading) {
+        btn.dataset.label = text.textContent;
+        btn.disabled = true;
+        btn.classList.add('opacity-80', 'cursor-not-allowed');
+        text.innerHTML = '<span class="spinner inline-block align-middle mr-2"></span>' + (label || 'Please wait...');
+      } else {
+        btn.disabled = false;
+        btn.classList.remove('opacity-80', 'cursor-not-allowed');
+        text.textContent = btn.dataset.label || text.textContent;
+      }
+    }
+
+    function togglePassword(inputId, btn) {
+      const input = $(inputId);
+      const show = input.type === 'password';
+      input.type = show ? 'text' : 'password';
+      btn.innerHTML = `<i data-lucide="${show ? 'eye-off' : 'eye'}" class="w-4 h-4"></i>`;
+      btn.setAttribute('aria-label', show ? 'Hide password' : 'Show password');
+      lucide.createIcons();
+    }
+
+    function passwordScore(pw) {
+      let s = 0;
+      if (pw.length >= CONFIG.MIN_PASSWORD) s++;
+      if (/[a-z]/.test(pw) && /[A-Z]/.test(pw)) s++;
+      if (/\d/.test(pw)) s++;
+      if (/[^A-Za-z0-9]/.test(pw) || pw.length >= 14) s++;
+      return s;
+    }
+    function updateStrength(pw) {
+      const score = pw ? passwordScore(pw) : 0;
+      const colors = ['bg-slate-200', 'bg-rose-500', 'bg-amber-500', 'bg-blue-500', 'bg-emerald-500'];
+      const labels = ['', 'Weak', 'Fair', 'Good', 'Strong'];
+      document.querySelectorAll('.strength-bar').forEach((bar, i) => {
+        bar.className = 'strength-bar h-1.5 flex-1 rounded-full transition-colors ' + (i < score ? colors[score] : 'bg-slate-200');
+      });
+      $('strengthLabel').textContent = labels[score] || '\u00A0';
+    }
+
+    /* =====================================================================
+       VIEW & ROLE SWITCHING
+       ===================================================================== */
+    function showView(name) {
+      hideAlert();
+      ['login', 'register', 'forgot'].forEach(v => $('view-' + v).classList.toggle('active', v === name));
+      $('tabsWrap').classList.toggle('hidden', name === 'forgot');
+      $('tab-login').setAttribute('aria-selected', name === 'login');
+      $('tab-register').setAttribute('aria-selected', name === 'register');
+      history.replaceState(null, '', name === 'forgot' ? '?mode=forgot' : `?mode=${name}${name === 'register' && currentRole === 'creator' ? '&role=creator' : ''}`);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function setRole(role) {
+      currentRole = role;
+      $('role-buyer').setAttribute('aria-checked', role === 'buyer');
+      $('role-creator').setAttribute('aria-checked', role === 'creator');
+      $('creatorFields').classList.toggle('hidden', role !== 'creator');
+      $('registerBtnLabel').textContent = role === 'creator' ? 'Create creator account' : 'Create buyer account';
+      $('benefits-buyer').classList.toggle('active', role === 'buyer');
+      $('benefits-creator').classList.toggle('active', role === 'creator');
+      $('panelHeading').textContent = role === 'creator'
+        ? 'Turn your built apps into recurring revenue.'
+        : 'Deploy proven business apps in minutes.';
+      if ($('view-register').classList.contains('active')) {
+        history.replaceState(null, '', `?mode=register${role === 'creator' ? '&role=creator' : ''}`);
+      }
+    }
+
+    function redirectAfterAuth(user) {
+      const dest = safeNext() || CONFIG.REDIRECT[user.role] || '/';
+      if (CONFIG.DEMO_MODE) {
+        showAlert('success', `Signed in as ${user.name} (${user.role}). In production you would now be redirected to ${dest}`);
+        return;
+      }
+      location.href = dest;
+    }
+
+    /* =====================================================================
+       FORM HANDLERS
+       ===================================================================== */
+    $('loginForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      hideAlert(); clearErrors('loginForm');
+      const email = $('loginEmail').value.trim();
+      const password = $('loginPassword').value;
+      let ok = true;
+      if (!emailRe.test(email)) { setFieldError('loginEmail', 'Please enter a valid email address.'); ok = false; }
+      if (!password) { setFieldError('loginPassword', 'Please enter your password.'); ok = false; }
+      if (!ok) return;
+
+      setLoading(e.target, true, 'Logging in...');
+      try {
+        const { user } = await AuthService.login({ email, password, remember: $('rememberMe').checked });
+        redirectAfterAuth(user);
+      } catch (err) {
+        showAlert('error', err.message || 'Something went wrong. Please try again.');
+      } finally {
+        setLoading(e.target, false);
+      }
+    });
+
+    $('registerForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      hideAlert(); clearErrors('registerForm');
+      const name = $('regName').value.trim();
+      const email = $('regEmail').value.trim();
+      const password = $('regPassword').value;
+      const confirm = $('regConfirm').value;
+      const expertise = $('regExpertise').value;
+      const portfolio = $('regPortfolio').value.trim();
+      let ok = true;
+
+      if (name.length < 2) { setFieldError('regName', 'Please enter your full name.'); ok = false; }
+      if (!emailRe.test(email)) { setFieldError('regEmail', 'Please enter a valid email address.'); ok = false; }
+      if (currentRole === 'creator') {
+        if (!expertise) { setFieldError('regExpertise', 'Please select your main platform.'); ok = false; }
+        if (portfolio && !/^https?:\/\/.+\..+/.test(portfolio)) { setFieldError('regPortfolio', 'Please enter a valid URL starting with http:// or https://'); ok = false; }
+      }
+      if (password.length < CONFIG.MIN_PASSWORD) { setFieldError('regPassword', `Password must be at least ${CONFIG.MIN_PASSWORD} characters.`); ok = false; }
+      else if (passwordScore(password) < 2) { setFieldError('regPassword', 'Please use a mix of letters and numbers.'); ok = false; }
+      if (confirm !== password) { setFieldError('regConfirm', 'Passwords do not match.'); ok = false; }
+      if (!$('regTerms').checked) { setFieldError('regTerms', 'You must accept the Terms and Privacy Policy to continue.'); ok = false; }
+      if (!ok) return;
+
+      setLoading(e.target, true, 'Creating account...');
+      try {
+        const payload = { name, email, password, role: currentRole };
+        if (currentRole === 'creator') { payload.expertise = expertise; payload.portfolio = portfolio; }
+        const { user } = await AuthService.register(payload);
+        if (user.role === 'creator') {
+          showAlert('success', 'Creator account created. Our team will review your profile before you can publish apps.');
+        }
+        setTimeout(() => redirectAfterAuth(user), user.role === 'creator' ? 1200 : 0);
+      } catch (err) {
+        showAlert('error', err.message || 'Something went wrong. Please try again.');
+      } finally {
+        setLoading(e.target, false);
+      }
+    });
+
+    $('forgotForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      hideAlert(); clearErrors('forgotForm');
+      const email = $('forgotEmail').value.trim();
+      if (!emailRe.test(email)) { setFieldError('forgotEmail', 'Please enter a valid email address.'); return; }
+      setLoading(e.target, true, 'Sending...');
+      try {
+        await AuthService.resetPassword({ email });
+        showAlert('success', 'If an account exists for that email, a reset link is on its way. Check your inbox.');
+      } catch (err) {
+        showAlert('error', err.message || 'Something went wrong. Please try again.');
+      } finally {
+        setLoading(e.target, false);
+      }
+    });
+
+    async function handleGoogle() {
+      hideAlert();
+      try { await AuthService.google(); }
+      catch (err) { showAlert('info', err.message); }
+    }
+
+    // Clear a field's error as the user fixes it
+    document.addEventListener('input', (e) => {
+      if (e.target.id && e.target.classList.contains('field-input')) setFieldError(e.target.id, '');
+    });
+    $('regTerms').addEventListener('change', () => setFieldError('regTerms', ''));
+
+    /* =====================================================================
+       INIT: honour ?mode=login|register|forgot and ?role=buyer|creator
+       ===================================================================== */
+    window.addEventListener('DOMContentLoaded', () => {
+      const role = params.get('role');
+      if (role === 'creator' || role === 'buyer') setRole(role);
+      const mode = params.get('mode');
+      showView(['login', 'register', 'forgot'].includes(mode) ? mode : 'login');
+      window.scrollTo(0, 0);
+
+      if (CONFIG.DEMO_MODE) {
+        $('demoNote').textContent = 'Demo mode: accounts are simulated in this browser only and no password is stored. Set DEMO_MODE to false after connecting your backend.';
+      }
+      lucide.createIcons();
+    });
+  </script>
+</body>
+</html>
