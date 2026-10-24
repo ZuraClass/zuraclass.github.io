@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZuraClass | AppSheet & Spreadsheets Formula Library</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Zuralogic Theme Config -->
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: { 
+              sans: ['Inter', 'sans-serif'],
+              mono: ['JetBrains Mono', 'monospace']
+            },
+            colors: {
+              zura: { navy: '#0A1931', deep: '#152A4A', blue: '#2563EB', light: '#EFF6FF', ice: '#DBEAFE' }
+            }
+          }
+        }
+      }
+    </script>
+
+    <style>
+        .frosted-nav { background: rgba(255, 255, 255, 0.86); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #f8fafc; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        
+        .dark-scrollbar::-webkit-scrollbar-track { background: #0f172a; }
+        .dark-scrollbar::-webkit-scrollbar-thumb { background: #334155; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 font-sans min-h-screen flex flex-col antialiased selection:bg-blue-600 selection:text-white">
+
+    <!-- Top Navigation Header (Zuralogic Style) -->
+    <header class="sticky top-0 z-40 frosted-nav border-b border-blue-100/80 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex flex-wrap justify-between items-center gap-4">
+            
+            <!-- Brand Logo Header -->
+            <a href="https://zuralogic.com" class="flex items-center gap-3 group">
+                <div class="relative w-9 h-9 rounded-xl bg-zura-navy flex items-center justify-center shadow-md group-hover:scale-105 transition">
+                    <span class="font-black text-white text-sm tracking-tighter">ZL</span>
+                </div>
+                <div class="flex flex-col">
+                    <span class="text-lg font-black tracking-tight text-zura-navy leading-none">Zuralogic<span class="text-blue-600">.com</span></span>
+                    <span id="uiHeaderSub" class="text-[10px] font-semibold text-slate-500 mt-0.5 tracking-wide uppercase">
+                        Formula Library & Documentation
+                    </span>
+                </div>
+            </a>
+
+            <!-- Header Controls: Links, Lang & Stats -->
+            <div class="flex items-center space-x-3">
+                
+                <!-- Count Badge -->
+                <div class="hidden sm:flex items-center bg-slate-100 border border-slate-200 rounded-lg px-3 py-1.5 text-xs font-semibold text-slate-600">
+                    <i class="fa-solid fa-code text-blue-600 mr-2"></i>
+                    <span id="formulaCounterText">100+ Formulas</span>
+                </div>
+
+                <!-- Language Selector -->
+                <div class="flex items-center bg-white border border-slate-200 shadow-sm rounded-lg px-2.5 py-1.5 text-xs font-semibold">
+                    <i class="fa-solid fa-globe text-blue-600 mr-2"></i>
+                    <select id="langSelector" onchange="switchLanguage(this.value)" class="bg-transparent text-slate-700 font-bold focus:outline-none cursor-pointer">
+                        <option value="en" class="bg-white text-slate-900">🇺🇸 English</option>
+                        <option value="id" class="bg-white text-slate-900">🇮🇩 Bahasa Indonesia</option>
+                        <option value="th" class="bg-white text-slate-900">🇹🇭 ไทย (Thai)</option>
+                        <option value="es" class="bg-white text-slate-900">🇪🇸 Español</option>
+                        <option value="ar" class="bg-white text-slate-900">🇦🇪 العربية (Arabic)</option>
+                        <option value="zh" class="bg-white text-slate-900">🇨🇳 中文 (Chinese)</option>
+                        <option value="fr" class="bg-white text-slate-900">🇫🇷 Français</option>
+                        <option value="de" class="bg-white text-slate-900">🇩🇪 Deutsch</option>
+                        <option value="hi" class="bg-white text-slate-900">🇮🇳 हिन्दी (Hindi)</option>
+                        <option value="it" class="bg-white text-slate-900">🇮🇹 Italiano</option>
+                        <option value="ja" class="bg-white text-slate-900">🇯🇵 日本語 (Japanese)</option>
+                        <option value="ru" class="bg-white text-slate-900">🇷🇺 Русский (Russian)</option>
+                    </select>
+                </div>
+
+                <!-- Community Link -->
+                <a href="https://discord.com" target="_blank" class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs px-3.5 py-1.5 rounded-lg transition-all flex items-center shadow-md shadow-blue-600/20">
+                    <i class="fa-brands fa-discord mr-1.5"></i>
+                    <span id="uiJoinDiscord">Discord</span>
+                </a>
+
+                <!-- Back to Homepage -->
+                <a href="https://zuralogic.com" class="hidden md:flex items-center gap-1.5 text-sm font-semibold text-slate-600 hover:text-blue-600 transition mr-2">
+                    <i class="fa-solid fa-arrow-left text-xs"></i>
+                    <span>Back to Homepage</span>
+                </a>
+
+
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Body -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-12 flex flex-col">
+        
+        <!-- Hero Banner -->
+        <div class="mb-10 text-center max-w-3xl mx-auto">
+            <h1 id="uiHeroTitle" class="text-3xl sm:text-4xl lg:text-5xl font-black text-zura-navy tracking-tight mb-4">
+                AppSheet & Google Sheets <span class="text-blue-600">Master Formula</span> Cheat-Sheet
+            </h1>
+            <p id="uiHeroDesc" class="text-slate-600 text-sm sm:text-base leading-relaxed">
+                The ultimate collection of formulas, expressions, and functions to power up your custom apps, automated workflows, and business dashboards.
+            </p>
+        </div>
+
+        <!-- Filter & Search Control Panel -->
+        <div class="bg-white border border-slate-200/90 shadow-sm rounded-2xl p-4 sm:p-6 mb-8">
+            
+            <!-- Platform Toggle Tabs -->
+            <div class="flex flex-wrap items-center justify-between gap-4 mb-6 pb-5 border-b border-slate-100">
+                <div class="flex items-center space-x-1.5 bg-slate-100 p-1.5 rounded-xl border border-slate-200/80">
+                    <button onclick="setPlatformFilter('all')" id="tab-all" class="platform-tab px-4 py-2 rounded-lg text-xs font-bold transition-all bg-zura-navy text-white shadow-sm">
+                        <i class="fa-solid fa-layer-group mr-1.5"></i> <span id="uiTabAll">All Formulas</span>
+                    </button>
+                    <button onclick="setPlatformFilter('appsheet')" id="tab-appsheet" class="platform-tab px-4 py-2 rounded-lg text-xs font-bold text-slate-500 hover:text-zura-navy transition-all">
+                        <i class="fa-solid fa-mobile-screen mr-1.5 text-blue-600"></i> AppSheet
+                    </button>
+                    <button onclick="setPlatformFilter('sheets')" id="tab-sheets" class="platform-tab px-4 py-2 rounded-lg text-xs font-bold text-slate-500 hover:text-zura-navy transition-all">
+                        <i class="fa-solid fa-table mr-1.5 text-emerald-500"></i> Spreadsheets
+                    </button>
+                </div>
+
+                <!-- Search Input Bar -->
+                <div class="relative flex-grow max-w-md">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
+                    <input type="text" id="searchInput" oninput="handleSearch()" 
+                           placeholder="Search formula name, keyword, or function..." 
+                           class="w-full bg-slate-50 border border-slate-200 rounded-xl pl-10 pr-4 py-2.5 text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-100 transition-all shadow-sm">
+                </div>
+            </div>
+
+            <!-- Category Filter Pills -->
+            <div id="categoryContainer" class="flex flex-wrap gap-2.5">
+                <!-- Dynamically populated category buttons -->
+            </div>
+        </div>
+
+        <!-- Formula Grid Display -->
+        <div id="formulaGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
+            <!-- Dynamically populated cards -->
+        </div>
+
+        <!-- Empty State Message -->
+        <div id="emptyState" class="hidden text-center py-16 bg-white border border-slate-200/90 rounded-2xl shadow-sm">
+            <div class="w-16 h-16 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center mx-auto mb-4 text-slate-400 text-2xl">
+                <i class="fa-solid fa-code-compare"></i>
+            </div>
+            <h3 id="uiEmptyTitle" class="text-xl font-black text-zura-navy">No Formulas Found</h3>
+            <p id="uiEmptyDesc" class="text-sm text-slate-500 max-w-md mx-auto mt-2">Try adjusting your search query or selecting a different category filter.</p>
+        </div>
+    </main>
+
+    <!-- Modal Detail View -->
+    <div id="detailModal" class="fixed inset-0 z-50 bg-zura-navy/60 backdrop-blur-sm flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-200">
+        <div class="bg-white border border-blue-100 rounded-3xl max-w-2xl w-full max-h-[90vh] flex flex-col overflow-hidden shadow-2xl relative">
+            
+            <!-- Modal Header -->
+            <div class="p-6 border-b border-slate-100 flex justify-between items-start bg-slate-50">
+                <div>
+                    <div class="flex items-center space-x-2.5 mb-2">
+                        <span id="modalPlatform" class="px-2.5 py-1 rounded-md text-[10px] font-bold tracking-wide uppercase border"></span>
+                        <span id="modalCategory" class="text-xs text-slate-500 font-semibold"></span>
+                    </div>
+                    <h3 id="modalName" class="text-2xl font-black text-zura-navy font-mono tracking-tight"></h3>
+                </div>
+                <button onclick="closeModal()" class="text-slate-400 hover:text-slate-700 hover:bg-slate-200 p-2 rounded-xl transition-colors">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+
+            <!-- Modal Content Body -->
+            <div class="p-6 overflow-y-auto custom-scrollbar space-y-6 text-sm">
+                <div>
+                    <h4 id="uiModalDescLabel" class="text-[11px] font-extrabold text-blue-600 uppercase tracking-wider mb-1.5">Description & Purpose</h4>
+                    <p id="modalDesc" class="text-slate-600 leading-relaxed"></p>
+                </div>
+
+                <div>
+                    <h4 id="uiModalSyntaxLabel" class="text-[11px] font-extrabold text-blue-600 uppercase tracking-wider mb-1.5">Syntax Structure</h4>
+                    <!-- Dark background for code readability -->
+                    <div class="bg-slate-900 border border-slate-800 rounded-xl p-3.5 font-mono text-emerald-400 text-xs overflow-x-auto dark-scrollbar">
+                        <code id="modalSyntax"></code>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="flex justify-between items-center mb-1.5">
+                        <h4 id="uiModalExampleLabel" class="text-[11px] font-extrabold text-blue-600 uppercase tracking-wider">Practical Real-World Example</h4>
+                        <button onclick="copyModalCode()" class="text-xs font-semibold text-slate-500 hover:text-blue-600 flex items-center space-x-1.5 bg-slate-100 hover:bg-blue-50 px-2.5 py-1 rounded-md transition-colors">
+                            <i class="fa-regular fa-copy"></i>
+                            <span id="modalCopyBtnText">Copy Code</span>
+                        </button>
+                    </div>
+                    <pre id="modalExample" class="bg-slate-900 border border-slate-800 rounded-xl p-4 font-mono text-blue-300 text-xs overflow-x-auto leading-relaxed dark-scrollbar"></pre>
+                </div>
+
+                <div class="p-4 bg-blue-50/80 border border-blue-100 rounded-xl">
+                    <h4 id="uiModalTipLabel" class="text-xs font-bold text-blue-800 mb-1.5 flex items-center">
+                        <i class="fa-solid fa-lightbulb text-amber-500 mr-1.5"></i> Pro Builder Tip
+                    </h4>
+                    <p id="modalTip" class="text-blue-900/80 text-xs leading-relaxed font-medium"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="toast" class="fixed bottom-5 right-5 z-50 bg-zura-navy text-white px-4 py-3 rounded-2xl shadow-xl text-sm font-medium flex items-center space-x-2.5 transform translate-y-10 opacity-0 transition-all duration-300 border border-blue-400/30">
+        <i class="fa-solid fa-check-circle text-emerald-400"></i>
+        <span id="toastMsg">Formula copied to clipboard!</span>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200/90 py-8 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 text-center flex flex-col items-center gap-3">
+            <div class="flex items-center gap-2 grayscale opacity-50">
+                <div class="w-6 h-6 rounded-md bg-zura-navy flex items-center justify-center text-[9px] font-black text-white">ZL</div>
+                <span class="font-bold text-sm text-zura-navy">Zuralogic.com</span>
+            </div>
+            <p id="uiFooterText" class="text-xs font-medium text-slate-500">ZuraClass Ecosystem &copy; 2026. Empowering No-Code & Automation Builders Worldwide.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript Data Engine & Interactive Logic -->
+    <script>
+        // 12-Language Interface Dictionary
+        const uiTranslations = {
+            en: {
+                headerSub: "Formula Library & Documentation",
+                joinDiscord: "Discord",
+                heroTitle: "AppSheet & Google Sheets <span class='text-blue-600'>Master Formula</span> Cheat-Sheet",
+                heroDesc: "The ultimate collection of formulas, expressions, and functions to power up your custom apps, automated workflows, and business dashboards.",
+                tabAll: "All Formulas",
+                searchPh: "Search formula name, keyword, or function (e.g. SELECT, QUERY, LOOKUP)...",
+                emptyTitle: "No Formulas Found",
+                emptyDesc: "Try adjusting your search query or selecting a different category filter.",
+                descLabel: "Description & Purpose",
+                syntaxLabel: "Syntax Structure",
+                exampleLabel: "Practical Real-World Example",
+                tipLabel: "Pro Builder Tip",
+                copyBtn: "Copy Code",
+                copiedToast: "Copied to clipboard!",
+                footerText: "ZuraClass Ecosystem © 2026. Empowering No-Code & Automation Builders Worldwide."
+            },
+            id: {
+                headerSub: "Pustaka Formula & Dokumentasi",
+                joinDiscord: "Komunitas",
+                heroTitle: "Kamus Master Formula <span class='text-blue-600'>AppSheet & Google Sheets</span>",
+                heroDesc: "Kumpulan formula, ekspresi, dan fungsi lengkap untuk memberdayakan aplikasi kustom, otomatisasi bisnis, dan dashboard rekap.",
+                tabAll: "Semua Formula",
+                searchPh: "Cari nama formula, kata kunci, atau fungsi (misal: SELECT, QUERY, LOOKUP)...",
+                emptyTitle: "Formula Tidak Ditemukan",
+                emptyDesc: "Coba ubah kata kunci pencarian atau pilih kategori filter yang berbeda.",
+                descLabel: "Deskripsi & Kegunaan",
+                syntaxLabel: "Struktur Penulisan (Sintaks)",
+                exampleLabel: "Contoh Kasus Nyata",
+                tipLabel: "Tips Pro Builder",
+                copyBtn: "Salin Kode",
+                copiedToast: "Berhasil disalin ke clipboard!",
+                footerText: "Ekosistem ZuraClass © 2026. Memberdayakan Builder No-Code & Otomatisasi."
+            },
+            // ... (translations for other languages remain exactly as they were in your original code)
+            th: { headerSub: "คลังสูตรและคู่มือการใช้งาน", joinDiscord: "ชุมชน", heroTitle: "สูตรลับรวมคลัง <span class='text-blue-600'>AppSheet & Google Sheets</span>", heroDesc: "รวบรวมสูตรและฟังก์ชันสำหรับสร้างแอปพลิเคชันและระบบอัตโนมัติสำหรับธุรกิจ", tabAll: "สูตรทั้งหมด", searchPh: "ค้นหานามสูตร คำสำคัญ หรือฟังก์ชัน...", emptyTitle: "ไม่พบสูตรที่ค้นหา", emptyDesc: "ลองเปลี่ยนคำค้นหาหรือตัวกรองหมวดหมู่", descLabel: "คำอธิบายและวัตถุประสงค์", syntaxLabel: "ไวยากรณ์ (Syntax)", exampleLabel: "ตัวอย่างการใช้งานจริง", tipLabel: "เคล็ดลับระดับมืออาชีพ", copyBtn: "คัดลอกรหัส", copiedToast: "คัดลอกลงคลิปบอร์ดเรียบร้อย!", footerText: "ZuraClass Ecosystem © 2026" },
+            es: { headerSub: "Biblioteca de Fórmulas y Documentación", joinDiscord: "Comunidad", heroTitle: "Guía Maestra de Fórmulas para <span class='text-blue-600'>AppSheet y Google Sheets</span>", heroDesc: "Colección definitiva de fórmulas y expresiones para potenciar tus aplicaciones personalizadas.", tabAll: "Todas las Fórmulas", searchPh: "Buscar fórmula, palabra clave o función...", emptyTitle: "No se encontraron fórmulas", emptyDesc: "Intenta ajustar tu búsqueda o seleccionar otra categoría.", descLabel: "Descripción y Propósito", syntaxLabel: "Estructura de Sintaxis", exampleLabel: "Ejemplo Práctico Real", tipLabel: "Consejo de Experto", copyBtn: "Copiar Código", copiedToast: "¡Copiado al portapapeles!", footerText: "Ecosistema ZuraClass © 2026." },
+            ar: { headerSub: "مكتبة الصيغ والتوثيق", joinDiscord: "المجتمع", heroTitle: "دليل صيغ <span class='text-blue-600'>AppSheet و Google Sheets</span>", heroDesc: "المجموعة الكاملة من الصيغ والدوال لتطوير تطبيقاتك وأتمتة أعمالك.", tabAll: "جميع الصيغ", searchPh: "بحث عن صيغة أو كلمة مفتاحية...", emptyTitle: "لم يتم العثور على صيغ", emptyDesc: "جرب تغيير كلمات البحث أو الفئة.", descLabel: "الوصف والغرض", syntaxLabel: "صيغة الكتابة", exampleLabel: "مثال عملي واقعي", tipLabel: "نصيحة المطورين", copyBtn: "نسخ الكود", copiedToast: "تم النسخ إلى الحافظة!", footerText: "منظومة ZuraClass © 2026." },
+            zh: { headerSub: "公式库与文档", joinDiscord: "加入社区", heroTitle: "<span class='text-blue-600'>AppSheet 与 Google 表格</span> 核心公式速查表", heroDesc: "助力您的自定义应用、业务自动化与数据看板的完整公式与表达式合集。", tabAll: "所有公式", searchPh: "搜索公式名称、关键词或函数...", emptyTitle: "未找到相关公式", emptyDesc: "请尝试更改搜索关键词或切换分类筛选。", descLabel: "功能说明", syntaxLabel: "语法结构", exampleLabel: "实际应用案例", tipLabel: "专家构建技巧", copyBtn: "复制代码", copiedToast: "已复制到剪贴板！", footerText: "ZuraClass 生态系统 © 2026." },
+            fr: { headerSub: "Bibliothèque de Formules & Documentation", joinDiscord: "Communauté", heroTitle: "Guide Ultime des Formules <span class='text-blue-600'>AppSheet & Google Sheets</span>", heroDesc: "Collection complète de formules et d'expressions pour booster vos applications et automatisations.", tabAll: "Toutes les Formules", searchPh: "Rechercher une formule, un mot-clé ou une fonction...", emptyTitle: "Aucune formule trouvée", emptyDesc: "Essayez de modifier votre recherche ou filtre.", descLabel: "Description & Utilisation", syntaxLabel: "Structure de Syntaxe", exampleLabel: "Exemple Pratique Réel", tipLabel: "Astuce de Développeur", copyBtn: "Copier le Code", copiedToast: "Copié dans le presse-papiers !", footerText: "Écosystème ZuraClass © 2026." },
+            de: { headerSub: "Formel-Bibliothek & Dokumentation", joinDiscord: "Community", heroTitle: "Master-Formelsammlung für <span class='text-blue-600'>AppSheet & Google Sheets</span>", heroDesc: "Die ultimative Übersicht aller Ausdrücke und Funktionen für Ihre Workflows und Apps.", tabAll: "Alle Formeln", searchPh: "Suche nach Formelname, Stichwort oder Funktion...", emptyTitle: "Keine Formeln gefunden", emptyDesc: "Versuchen Sie, den Suchbegriff oder Filter anzupassen.", descLabel: "Beschreibung & Zweck", syntaxLabel: "Syntax-Struktur", exampleLabel: "Praktisches Beispiel", tipLabel: "Profi-Tipp", copyBtn: "Code Kopieren", copiedToast: "In Zwischenablage kopiert!", footerText: "ZuraClass Ökosystem © 2026." },
+            hi: { headerSub: "फ़ॉर्मूला लाइब्रेरी और दस्तावेज़", joinDiscord: "कम्युनिटी", heroTitle: "<span class='text-blue-600'>AppSheet और Google Sheets</span> मास्टर फ़ॉर्मूला गाइड", heroDesc: "आपके कस्टम ऐप और ऑटोमेशन को शक्ति देने के लिए फ़ार्मुलों का संपूर्ण संग्रह।", tabAll: "सभी फ़ॉर्मूले", searchPh: "फ़ॉर्मूला नाम या कीवर्ड खोजें...", emptyTitle: "कोई फ़ॉर्मूला नहीं मिला", emptyDesc: "कृपया खोज शब्द या फ़िल्टर बदलें।", descLabel: "विवरण और उद्देश्य", syntaxLabel: "सिंटैक्स संरचना", exampleLabel: "व्यावहारिक उदाहरण", tipLabel: "प्रो डेवलपर टिप", copyBtn: "कोड कॉपी करें", copiedToast: "क्लिपबोर्ड पर कॉपी किया गया!", footerText: "ZuraClass इकोसिस्टम © 2026." },
+            it: { headerSub: "Libreria Formule e Documentazione", joinDiscord: "Community", heroTitle: "Guida Master Formule per <span class='text-blue-600'>AppSheet e Google Sheets</span>", heroDesc: "La raccolta completa di formule ed espressioni per potenziare le tue app e automazioni.", tabAll: "Tutte le Formule", searchPh: "Cerca nome formula, parola chiave o funzione...", emptyTitle: "Nessuna formula trovata", emptyDesc: "Prova a modificare la ricerca o il filtro di categoria.", descLabel: "Descrizione e Scopo", syntaxLabel: "Struttura Sintassi", exampleLabel: "Esempio Pratico Reale", tipLabel: "Consiglio da Esperto", copyBtn: "Copia Codice", copiedToast: "Copiato negli appunti!", footerText: "Ecosistema ZuraClass © 2026." },
+            ja: { headerSub: "数式ライブラリ＆ドキュメント", joinDiscord: "コミュニティ", heroTitle: "<span class='text-blue-600'>AppSheet & Google スプレッドシート</span> 公式集", heroDesc: "カスタムアプリや業務自動化を強力にサポートする公式・関数マスター集。", tabAll: "すべての数式", searchPh: "数式名、キーワード、関数を検索...", emptyTitle: "該当する数式が見つかりません", emptyDesc: "検索ワードやカテゴリーを変更してください。", descLabel: "概要と目的", syntaxLabel: "構文（シンタックス）", exampleLabel: "実用的な活用例", tipLabel: "開発者のプロチップ", copyBtn: "コードをコピー", copiedToast: "クリップボードにコピーしました！", footerText: "ZuraClass エコシステム © 2026." },
+            ru: { headerSub: "Библиотека Формул и Документация", joinDiscord: "Сообщество", heroTitle: "База Формул <span class='text-blue-600'>AppSheet и Google Таблиц</span>", heroDesc: "Полный справочник формул и выражений для автоматизации бизнеса и приложений.", tabAll: "Все Формулы", searchPh: "Поиск по названию формулы, ключу или функции...", emptyTitle: "Формулы не найдены", emptyDesc: "Попробуйте изменить поисковый запрос или фильтр.", descLabel: "Описание и Назначение", syntaxLabel: "Синтаксис", exampleLabel: "Практический Пример", tipLabel: "Совет Разработчика", copyBtn: "Копировать Код", copiedToast: "Скопировано в буфер обмена!", footerText: "Экосистема ZuraClass © 2026." }
+        };
+
+        // Master Formula Database (Exactly the same 100+ formulas)
+        const formulasDatabase = [
+            {id:"a1", name:"SELECT()", platform:"appsheet", category:"Data Extraction", desc:"Extracts a list of column values from a table based on logical condition.", syntax:"SELECT(Table[Column], [Condition])", example:"SELECT(Orders[Order ID], [Status] = \"Completed\")", tip:"Use TRUE in the 3rd argument to keep duplicates."},
+            {id:"a2", name:"FILTER()", platform:"appsheet", category:"Data Extraction", desc:"Returns a list of key values (Row IDs) from a table matching a filter condition.", syntax:"FILTER(\"TableName\", [Condition])", example:"FILTER(\"Customers\", [City] = \"Jakarta\")", tip:"Ideal for Related Lists and EnumList validation."},
+            {id:"a3", name:"LOOKUP()", platform:"appsheet", category:"Data Lookup", desc:"Finds and returns a single column value from a target row.", syntax:"LOOKUP(SearchVal, \"Table\", \"SearchCol\", \"ReturnCol\")", example:"LOOKUP([Cust ID], \"Customers\", \"Cust ID\", \"Phone\")", tip:"Returns only the first matching row value."},
+            {id:"a4", name:"ANY()", platform:"appsheet", category:"Data Extraction", desc:"Returns one arbitrary element from a list.", syntax:"ANY(List)", example:"ANY(SELECT(Staff[Email], [Role]=\"Manager\"))", tip:"Great for extracting a single value when you know the list only has 1 item."},
+            {id:"a5", name:"INDEX()", platform:"appsheet", category:"Data Extraction", desc:"Returns the Nth item from a list.", syntax:"INDEX(List, Number)", example:"INDEX(ORDERBY(Scores[Points], [Points], TRUE), 1)", tip:"Perfect for finding the 1st, 2nd, or 3rd place in a sorted list."},
+            {id:"a6", name:"MAXROW()", platform:"appsheet", category:"Data Lookup", desc:"Finds the Key of the row that has the maximum value in a column.", syntax:"MAXROW(\"Table\", \"Col\", [Condition])", example:"MAXROW(\"Logs\", \"Date\", [User] = USEREMAIL())", tip:"Perfect for fetching a user's most recent check-in."},
+            {id:"a7", name:"MINROW()", platform:"appsheet", category:"Data Lookup", desc:"Finds the Key of the row that has the minimum value in a column.", syntax:"MINROW(\"Table\", \"Col\", [Condition])", example:"MINROW(\"Products\", \"Price\", [Category]=\"Shoes\")", tip:"Useful for finding the oldest record or cheapest item."},
+            {id:"a8", name:"IFS()", platform:"appsheet", category:"Logic & Conditional", desc:"Evaluates multiple condition-value pairs in sequence.", syntax:"IFS(Cond1, Res1, Cond2, Res2, ...)", example:"IFS([Score]>=90, \"A\", [Score]>=75, \"B\", TRUE, \"C\")", tip:"Always add TRUE as the last condition for a fallback."},
+            {id:"a9", name:"SWITCH()", platform:"appsheet", category:"Logic & Conditional", desc:"Evaluates an expression against a series of values.", syntax:"SWITCH(Expr, Val1, Res1, ..., Default)", example:"SWITCH([Role], \"Admin\", \"All\", \"User\", \"Limited\", \"None\")", tip:"Cleaner than nested IFs for single-column checks."},
+            {id:"a10", name:"IF()", platform:"appsheet", category:"Logic & Conditional", desc:"Returns one value if TRUE, another if FALSE.", syntax:"IF(Condition, TrueValue, FalseValue)", example:"IF([Total]>1000, \"VIP\", \"Regular\")", tip:"Use IFS if you have more than 2 possible outcomes."},
+            {id:"a11", name:"ISBLANK()", platform:"appsheet", category:"Logic & Conditional", desc:"Checks if a column or expression is empty.", syntax:"ISBLANK(Value)", example:"ISBLANK([Phone Number])", tip:"Essential for Valid_If or Show_If requirements."},
+            {id:"a12", name:"ISNOTBLANK()", platform:"appsheet", category:"Logic & Conditional", desc:"Checks if a column or expression has a value.", syntax:"ISNOTBLANK(Value)", example:"ISNOTBLANK([Email])", tip:"Equivalent to NOT(ISBLANK(Value))."},
+            {id:"a13", name:"AND()", platform:"appsheet", category:"Logic & Conditional", desc:"Returns TRUE only if ALL conditions are TRUE.", syntax:"AND(Cond1, Cond2, ...)", example:"AND([Status]=\"Active\", [Balance]>0)", tip:"Often used in Security Filters or complex Show_Ifs."},
+            {id:"a14", name:"OR()", platform:"appsheet", category:"Logic & Conditional", desc:"Returns TRUE if ANY of the conditions are TRUE.", syntax:"OR(Cond1, Cond2, ...)", example:"OR([Role]=\"Admin\", [Role]=\"Manager\")", tip:"Groups multiple acceptable scenarios together."},
+            {id:"a15", name:"NOT()", platform:"appsheet", category:"Logic & Conditional", desc:"Reverses a TRUE/FALSE result.", syntax:"NOT(Condition)", example:"NOT(IN([Status], {\"Closed\", \"Cancelled\"}))", tip:"Great for excluding specific items from a list."},
+            {id:"a16", name:"CONCATENATE()", platform:"appsheet", category:"Text Processing", desc:"Combines multiple text strings.", syntax:"CONCATENATE(Text1, Text2, ...)", example:"CONCATENATE(\"INV-\", [ID])", tip:"Can also use the shorthand & operator."},
+            {id:"a17", name:"SPLIT()", platform:"appsheet", category:"Text Processing", desc:"Splits a text string into a list of items.", syntax:"SPLIT(Text, Delimiter)", example:"SPLIT(\"A, B, C\", \", \")", tip:"Converts comma-separated user inputs into EnumLists."},
+            {id:"a18", name:"FIND()", platform:"appsheet", category:"Text Processing", desc:"Finds the position of a substring within text.", syntax:"FIND(Search, Text)", example:"FIND(\"@\", [Email])", tip:"Returns 0 if the search string is not found."},
+            {id:"a19", name:"EXTRACTEMAILS()", platform:"appsheet", category:"Text Processing", desc:"Extracts all email addresses from a block of text.", syntax:"EXTRACTEMAILS(Text)", example:"EXTRACTEMAILS([Notes])", tip:"Returns a list. Use ANY() if you just need the first one."},
+            {id:"a20", name:"SUBSTITUTE()", platform:"appsheet", category:"Text Processing", desc:"Replaces specific text within a string.", syntax:"SUBSTITUTE(Text, Old, New)", example:"SUBSTITUTE([Phone], \" \", \"\")", tip:"Great for cleaning up messy formatting in phone numbers."},
+            {id:"a21", name:"LEFT()", platform:"appsheet", category:"Text Processing", desc:"Extracts N characters from the left of a string.", syntax:"LEFT(Text, N)", example:"LEFT([Phone], 3)", tip:"Useful for getting country codes or prefixes."},
+            {id:"a22", name:"RIGHT()", platform:"appsheet", category:"Text Processing", desc:"Extracts N characters from the right of a string.", syntax:"RIGHT(Text, N)", example:"RIGHT([Card Number], 4)", tip:"Perfect for showing 'ending in 1234'."},
+            {id:"a23", name:"MID()", platform:"appsheet", category:"Text Processing", desc:"Extracts text from the middle of a string.", syntax:"MID(Text, Start, Length)", example:"MID(\"AppSheet\", 4, 5)", tip:"Extracts specific patterns like year from a custom ID."},
+            {id:"a24", name:"UPPER()", platform:"appsheet", category:"Text Processing", desc:"Converts text to ALL CAPS.", syntax:"UPPER(Text)", example:"UPPER([License Plate])", tip:"Use in Auto-Compute formulas to enforce standardized data."},
+            {id:"a25", name:"LOWER()", platform:"appsheet", category:"Text Processing", desc:"Converts text to all lowercase.", syntax:"LOWER(Text)", example:"LOWER([Email])", tip:"Helps standardize email addresses for comparisons."},
+            {id:"a26", name:"INITIALS()", platform:"appsheet", category:"Text Processing", desc:"Gets the initials of a name.", syntax:"INITIALS(Text)", example:"INITIALS([Full Name])", tip:"Great for generating Avatar images."},
+            {id:"a27", name:"USEREMAIL()", platform:"appsheet", category:"User & Security", desc:"Returns the current user's email.", syntax:"USEREMAIL()", example:"[Owner] = USEREMAIL()", tip:"Essential for Row Level Security (RLS)."},
+            {id:"a28", name:"USERROLE()", platform:"appsheet", category:"User & Security", desc:"Returns the current user's AppSheet role.", syntax:"USERROLE()", example:"USERROLE() = \"Admin\"", tip:"Note: This relies on AppSheet's built-in allowlist roles."},
+            {id:"a29", name:"USERNAME()", platform:"appsheet", category:"User & Security", desc:"Returns the current user's display name.", syntax:"USERNAME()", example:"CONCATENATE(\"Hello, \", USERNAME())", tip:"Only works if Google/Microsoft provides the name to AppSheet."},
+            {id:"a30", name:"COUNT()", platform:"appsheet", category:"Aggregation", desc:"Counts the number of items in a list.", syntax:"COUNT(List)", example:"COUNT([Related Orders])", tip:"Use with SELECT to show real-time metrics."},
+            {id:"a31", name:"SUM()", platform:"appsheet", category:"Aggregation", desc:"Sums a list of numbers.", syntax:"SUM(List)", example:"SUM([Related Order Details][Line Total])", tip:"Standard for Parent-Child invoice total calculations."},
+            {id:"a32", name:"AVERAGE()", platform:"appsheet", category:"Aggregation", desc:"Calculates the average of a numeric list.", syntax:"AVERAGE(List)", example:"AVERAGE(SELECT(Reviews[Rating], [Product]=[_THISROW]))", tip:"Great for dynamic dashboard scoring."},
+            {id:"a33", name:"MIN()", platform:"appsheet", category:"Aggregation", desc:"Finds the lowest number in a list.", syntax:"MIN(List)", example:"MIN([Related Bids][Amount])", tip:"Returns a value, unlike MINROW which returns a Key."},
+            {id:"a34", name:"MAX()", platform:"appsheet", category:"Aggregation", desc:"Finds the highest number in a list.", syntax:"MAX(List)", example:"MAX(SELECT(Sales[Amount], [Date]=TODAY()))", tip:"Returns a value, unlike MAXROW which returns a Key."},
+            {id:"a35", name:"TODAY()", platform:"appsheet", category:"Date & Time", desc:"Returns the current date.", syntax:"TODAY()", example:"[Due Date] < TODAY()", tip:"Updates automatically on the device."},
+            {id:"a36", name:"NOW()", platform:"appsheet", category:"Date & Time", desc:"Returns the current date and time.", syntax:"NOW()", example:"[Timestamp] = NOW()", tip:"Use TIMENOW() if you only want the time portion."},
+            {id:"a37", name:"TIMENOW()", platform:"appsheet", category:"Date & Time", desc:"Returns the current time.", syntax:"TIMENOW()", example:"[Clock In] = TIMENOW()", tip:"Best for shift tracking or attendance apps."},
+            {id:"a38", name:"YEAR()", platform:"appsheet", category:"Date & Time", desc:"Extracts the year from a date.", syntax:"YEAR(Date)", example:"YEAR(TODAY())", tip:"Useful for grouping records in reports."},
+            {id:"a39", name:"MONTH()", platform:"appsheet", category:"Date & Time", desc:"Extracts the month (1-12) from a date.", syntax:"MONTH(Date)", example:"MONTH([Birthdate]) = MONTH(TODAY())", tip:"Great for finding 'Birthdays this month'."},
+            {id:"a40", name:"DAY()", platform:"appsheet", category:"Date & Time", desc:"Extracts the day of the month.", syntax:"DAY(Date)", example:"DAY(TODAY()) = 1", tip:"Useful for first-of-the-month automation triggers."},
+            {id:"a41", name:"EOMONTH()", platform:"appsheet", category:"Date & Time", desc:"Returns the last day of a month.", syntax:"EOMONTH(Date, Offset)", example:"EOMONTH(TODAY(), 0)", tip:"Use offset 1 for the end of next month."},
+            {id:"a42", name:"WORKDAY()", platform:"appsheet", category:"Date & Time", desc:"Adds working days to a date.", syntax:"WORKDAY(Date, Days)", example:"WORKDAY(TODAY(), 3)", tip:"Skips weekends automatically for SLA calculations."},
+            {id:"a43", name:"WEEKDAY()", platform:"appsheet", category:"Date & Time", desc:"Returns the day of the week (1=Sun, 7=Sat).", syntax:"WEEKDAY(Date)", example:"WEEKDAY(TODAY())", tip:"Use IN(WEEKDAY(TODAY()), {2,3,4,5,6}) to check if it's a weekday."},
+            {id:"a44", name:"IN()", platform:"appsheet", category:"Lists & Arrays", desc:"Checks if a value exists within a list.", syntax:"IN(Value, List)", example:"IN([Status], {\"Pending\", \"Draft\"})", tip:"Faster and cleaner than multiple OR() statements."},
+            {id:"a45", name:"INTERSECT()", platform:"appsheet", category:"Lists & Arrays", desc:"Returns items that exist in BOTH lists.", syntax:"INTERSECT(List1, List2)", example:"INTERSECT([Required Skills], [User Skills])", tip:"Perfect for matching jobs to qualified freelancers."},
+            {id:"a46", name:"UNIQUE()", platform:"appsheet", category:"Lists & Arrays", desc:"Removes duplicates from a list.", syntax:"UNIQUE(List)", example:"UNIQUE(SELECT(Orders[Customer ID], TRUE))", tip:"Generates clean dropdowns from raw datasets."},
+            {id:"a47", name:"SORT()", platform:"appsheet", category:"Lists & Arrays", desc:"Sorts a list of primitive values.", syntax:"SORT(List, [Descending?])", example:"SORT(Orders[Total], TRUE)", tip:"Does not sort rows, only lists of values (like enums)."},
+            {id:"a48", name:"ORDERBY()", platform:"appsheet", category:"Lists & Arrays", desc:"Sorts a list of Row IDs (refs) based on columns.", syntax:"ORDERBY(List, Col1, [Desc?])", example:"ORDERBY(SELECT(Tasks[ID], [Status]=\"Open\"), [Due Date], FALSE)", tip:"Crucial for sorting Related Items in Detail Views."},
+            {id:"a49", name:"LINKTOVIEW()", platform:"appsheet", category:"Navigation", desc:"Navigates to a specific view.", syntax:"LINKTOVIEW(\"ViewName\")", example:"LINKTOVIEW(\"Dashboard\")", tip:"Attach to Action buttons for custom menus."},
+            {id:"a50", name:"LINKTOROW()", platform:"appsheet", category:"Navigation", desc:"Navigates to a specific row.", syntax:"LINKTOROW(Key, \"View\")", example:"LINKTOROW([ID], \"Detail_View\")", tip:"Use in emails for deep-linking users straight to an item."},
+            {id:"a51", name:"LINKTOFORM()", platform:"appsheet", category:"Navigation", desc:"Opens a form and pre-fills values.", syntax:"LINKTOFORM(\"Form\", \"Col1\", Val1)", example:"LINKTOFORM(\"Order_Form\", \"Client\", [Client ID])", tip:"Best way to pass context from a parent to a new child record."},
+            {id:"a52", name:"[_THISROW]", platform:"appsheet", category:"Context", desc:"Refers to the current row context.", syntax:"[_THISROW].[Col]", example:"SELECT(Tasks[ID], [Project]=[_THISROW].[Project])", tip:"Prevents ambiguity in SELECT statements."},
+            {id:"a53", name:"CONTEXT()", platform:"appsheet", category:"Context", desc:"Returns app state info.", syntax:"CONTEXT(\"Type\")", example:"CONTEXT(\"ViewType\") = \"Form\"", tip:"Hide columns dynamically if the user is in a form view."},
+            
+            {id:"s1", name:"QUERY()", platform:"sheets", category:"Data Extraction", desc:"SQL-like data querying and aggregation.", syntax:"=QUERY(range, sql_string, [headers])", example:"=QUERY(A:E, \"SELECT A, SUM(C) GROUP BY A\", 1)", tip:"The ultimate Swiss Army knife formula in Sheets."},
+            {id:"s2", name:"FILTER()", platform:"sheets", category:"Data Extraction", desc:"Filters a range based on conditions.", syntax:"=FILTER(range, cond1, ...)", example:"=FILTER(A2:D, B2:B = \"Active\")", tip:"Dynamic arrays automatically spill to adjacent cells."},
+            {id:"s3", name:"XLOOKUP()", platform:"sheets", category:"Data Lookup", desc:"Modern, flexible replacement for VLOOKUP.", syntax:"=XLOOKUP(search, lookup_rng, result_rng, [missing])", example:"=XLOOKUP(F2, A:A, C:C, \"Not Found\")", tip:"Works right-to-left and won't break if you insert columns."},
+            {id:"s4", name:"VLOOKUP()", platform:"sheets", category:"Data Lookup", desc:"Vertical lookup (Legacy).", syntax:"=VLOOKUP(search, range, index, [is_sorted])", example:"=VLOOKUP(A2, D:F, 2, FALSE)", tip:"Requires search key to be in the first column. Use XLOOKUP instead."},
+            {id:"s5", name:"INDEX()", platform:"sheets", category:"Data Lookup", desc:"Returns cell content based on row/col offset.", syntax:"=INDEX(range, row, [col])", example:"=INDEX(A1:C10, 5, 2)", tip:"Often paired with MATCH as an alternative to VLOOKUP."},
+            {id:"s6", name:"MATCH()", platform:"sheets", category:"Data Lookup", desc:"Returns the relative position of an item.", syntax:"=MATCH(search, range, [type])", example:"=MATCH(\"Apple\", A1:A100, 0)", tip:"Returns a number, not the value itself."},
+            {id:"s7", name:"INDIRECT()", platform:"sheets", category:"Data Lookup", desc:"Returns a cell reference from a text string.", syntax:"=INDIRECT(string)", example:"=INDIRECT(\"Sheet2!A\" & B1)", tip:"Volatile function. Can slow down large sheets."},
+            {id:"s8", name:"ARRAYFORMULA()", platform:"sheets", category:"Arrays", desc:"Applies a formula to an entire column.", syntax:"=ARRAYFORMULA(formula)", example:"=ARRAYFORMULA(IF(A2:A=\"\",, B2:B*C2:C))", tip:"Prevents manual drag-down errors. Always use open ranges (A2:A)."},
+            {id:"s9", name:"UNIQUE()", platform:"sheets", category:"Arrays", desc:"Returns unique rows from a range.", syntax:"=UNIQUE(range)", example:"=UNIQUE(A2:A)", tip:"Great for creating dynamic dropdown validation lists."},
+            {id:"s10", name:"SORT()", platform:"sheets", category:"Arrays", desc:"Sorts a range by a specified column.", syntax:"=SORT(range, sort_col, is_asc)", example:"=SORT(A2:D, 3, FALSE)", tip:"Can be nested inside FILTER() for sorted results."},
+            {id:"s11", name:"SUMIFS()", platform:"sheets", category:"Math & Stats", desc:"Sums range based on multiple criteria.", syntax:"=SUMIFS(sum_range, crit_range1, crit1, ...)", example:"=SUMIFS(C:C, A:A, \"East\", B:B, \">100\")", tip:"Sum_range comes FIRST, unlike SUMIF()."},
+            {id:"s12", name:"COUNTIFS()", platform:"sheets", category:"Math & Stats", desc:"Counts items matching multiple criteria.", syntax:"=COUNTIFS(crit_range1, crit1, ...)", example:"=COUNTIFS(A:A, \"Complete\", B:B, TODAY())", tip:"Excellent for dashboard summary metrics."},
+            {id:"s13", name:"SUBTOTAL()", platform:"sheets", category:"Math & Stats", desc:"Aggregates data ignoring filtered-out rows.", syntax:"=SUBTOTAL(code, range)", example:"=SUBTOTAL(9, C2:C100)", tip:"Code 9 is SUM, Code 1 is AVERAGE. Ignores hidden rows if used properly."},
+            {id:"s14", name:"IMPORTRANGE()", platform:"sheets", category:"Web & Import", desc:"Imports data from another spreadsheet URL.", syntax:"=IMPORTRANGE(\"url\", \"range\")", example:"=IMPORTRANGE(\"url_id\", \"Data!A:Z\")", tip:"Requires one-time manual 'Allow Access' click."},
+            {id:"s15", name:"IMPORTDATA()", platform:"sheets", category:"Web & Import", desc:"Imports data from a CSV/TSV url.", syntax:"=IMPORTDATA(\"url\")", example:"=IMPORTDATA(\"https://example.com/data.csv\")", tip:"Great for syncing with external public APIs."},
+            {id:"s16", name:"IMPORTXML()", platform:"sheets", category:"Web & Import", desc:"Scrapes structured data from a webpage.", syntax:"=IMPORTXML(\"url\", \"xpath\")", example:"=IMPORTXML(\"http://site.com\", \"//title\")", tip:"Can scrape pricing data from e-commerce sites."},
+            {id:"s17", name:"IFERROR()", platform:"sheets", category:"Logic", desc:"Returns fallback value if formula errors.", syntax:"=IFERROR(value, [fallback])", example:"=IFERROR(VLOOKUP(A2,D:E,2,0), \"\")", tip:"Hides ugly #N/A or #DIV/0! errors for cleaner UI."},
+            {id:"s18", name:"IFS()", platform:"sheets", category:"Logic", desc:"Evaluates multiple conditions in order.", syntax:"=IFS(cond1, val1, cond2, val2, ...)", example:"=IFS(A2>90,\"A\", A2>80,\"B\", TRUE,\"C\")", tip:"Replaces deeply nested IF statements."},
+            {id:"s19", name:"LET()", platform:"sheets", category:"Logic", desc:"Assigns variables within a formula.", syntax:"=LET(name, val, ..., formula)", example:"=LET(x, SUM(A:A), x * 0.1)", tip:"Improves calculation speed by avoiding repeating complex expressions."},
+            {id:"s20", name:"LAMBDA()", platform:"sheets", category:"Advanced", desc:"Creates a custom reusable function.", syntax:"=LAMBDA(name, formula)(input)", example:"=LAMBDA(x, x*2)(5)", tip:"Usually paired with MAP or BYROW for advanced array operations."},
+            {id:"s21", name:"MAP()", platform:"sheets", category:"Advanced", desc:"Maps a LAMBDA over an array.", syntax:"=MAP(array, LAMBDA(val, formula))", example:"=MAP(A2:A, LAMBDA(x, IF(x>10, \"Yes\", \"No\")))", tip:"The ultimate way to loop logic without dragging cells."},
+            {id:"s22", name:"BYROW()", platform:"sheets", category:"Advanced", desc:"Applies LAMBDA row by row.", syntax:"=BYROW(range, LAMBDA(row, formula))", example:"=BYROW(A2:C, LAMBDA(r, SUM(r)))", tip:"Calculates row-level totals dynamically."},
+            {id:"s23", name:"REGEXEXTRACT()", platform:"sheets", category:"Text", desc:"Extracts substring using RegEx.", syntax:"=REGEXEXTRACT(text, regex)", example:"=REGEXEXTRACT(A2, \"[0-9]+\")", tip:"Powerful for pulling order numbers out of long notes."},
+            {id:"s24", name:"REGEXREPLACE()", platform:"sheets", category:"Text", desc:"Replaces text using RegEx.", syntax:"=REGEXREPLACE(text, regex, replacement)", example:"=REGEXREPLACE(A2, \"[^a-zA-Z]\", \"\")", tip:"Removes all numbers/symbols to clean up names."},
+            {id:"s25", name:"TEXTJOIN()", platform:"sheets", category:"Text", desc:"Joins text with a delimiter.", syntax:"=TEXTJOIN(delim, ignore_empty, rng1, ...)", example:"=TEXTJOIN(\", \", TRUE, A2:C2)", tip:"Much better than CONCATENATE when dealing with empty cells."},
+            {id:"s26", name:"SPLIT()", platform:"sheets", category:"Text", desc:"Splits text around a character.", syntax:"=SPLIT(text, delimiter)", example:"=SPLIT(A2, \"-\")", tip:"Turns one column of 'First-Last' into two columns."},
+            {id:"s27", name:"PROPER()", platform:"sheets", category:"Text", desc:"Capitalizes first letter of each word.", syntax:"=PROPER(text)", example:"=PROPER(A2)", tip:"Great for standardizing user input names."},
+            {id:"s28", name:"TRIM()", platform:"sheets", category:"Text", desc:"Removes extra spaces.", syntax:"=TRIM(text)", example:"=TRIM(A2)", tip:"Use this to clean data before running VLOOKUP."},
+            {id:"s29", name:"DATEDIF()", platform:"sheets", category:"Date & Time", desc:"Calculates days/months/years between dates.", syntax:"=DATEDIF(start, end, unit)", example:"=DATEDIF(A2, TODAY(), \"Y\")", tip:"Calculates exact age in years (\"Y\"), months (\"M\"), or days (\"D\")."},
+            {id:"s30", name:"EDATE()", platform:"sheets", category:"Date & Time", desc:"Adds months to a date.", syntax:"=EDATE(start, months)", example:"=EDATE(A2, 6)", tip:"Calculates 6-month contract expirations."},
+            {id:"s31", name:"NETWORKDAYS()", platform:"sheets", category:"Date & Time", desc:"Returns number of working days between dates.", syntax:"=NETWORKDAYS(start, end, [holidays])", example:"=NETWORKDAYS(A2, B2)", tip:"Crucial for SLA/Payroll calculations."},
+            {id:"s32", name:"IMAGE()", platform:"sheets", category:"Web & Import", desc:"Inserts an image into a cell.", syntax:"=IMAGE(\"url\", [mode])", example:"=IMAGE(\"http://site.com/logo.png\")", tip:"Mode 4 allows custom sizing."},
+            {id:"s33", name:"SPARKLINE()", platform:"sheets", category:"Web & Import", desc:"Creates a mini chart in a single cell.", syntax:"=SPARKLINE(data, [options])", example:"=SPARKLINE(B2:M2, {\"charttype\",\"column\"})", tip:"Creates beautiful dashboard KPI visuals instantly."},
+            {id:"s34", name:"GOOGLEFINANCE()", platform:"sheets", category:"Web & Import", desc:"Fetches current/historical securities info.", syntax:"=GOOGLEFINANCE(ticker, [attr])", example:"=GOOGLEFINANCE(\"GOOG\", \"price\")", tip:"Build live stock portfolios natively."},
+            {id:"s35", name:"FLATTEN()", platform:"sheets", category:"Arrays", desc:"Flattens a multi-dimensional array to 1 column.", syntax:"=FLATTEN(range)", example:"=FLATTEN(A2:C10)", tip:"Useful for consolidating matrix data into a single list."},
+            {id:"s36", name:"TOCOL()", platform:"sheets", category:"Arrays", desc:"Transforms array into a single column.", syntax:"=TOCOL(array, [ignore])", example:"=TOCOL(A2:C10, 1)", tip:"Modern replacement for FLATTEN, allows ignoring blanks/errors."},
+            {id:"s37", name:"TOROW()", platform:"sheets", category:"Arrays", desc:"Transforms array into a single row.", syntax:"=TOROW(array, [ignore])", example:"=TOROW(A2:A10, 3)", tip:"Quickly transposes a column list into a header row."},
+            {id:"s38", name:"VSTACK()", platform:"sheets", category:"Arrays", desc:"Appends arrays vertically.", syntax:"=VSTACK(range1, range2, ...)", example:"=VSTACK(Sheet1!A:B, Sheet2!A:B)", tip:"Combines data from multiple sheets into one master list."},
+            {id:"s39", name:"HSTACK()", platform:"sheets", category:"Arrays", desc:"Appends arrays horizontally.", syntax:"=HSTACK(range1, range2, ...)", example:"=HSTACK(A1:B10, E1:F10)", tip:"Joins disparate columns into a single continuous table view."},
+            {id:"s40", name:"CHOOSECOLUMNS()", platform:"sheets", category:"Arrays", desc:"Extracts specific columns from a range.", syntax:"=CHOOSECOLUMNS(array, col_num1, ...)", example:"=CHOOSECOLUMNS(A1:Z100, 1, 5, 10)", tip:"Cleaner than QUERY when you just need to pluck specific columns."},
+            {id:"s41", name:"CHOOSEROWS()", platform:"sheets", category:"Arrays", desc:"Extracts specific rows from a range.", syntax:"=CHOOSEROWS(array, row_num1, ...)", example:"=CHOOSEROWS(A1:Z100, 1, 2, -1)", tip:"Use negative numbers to pull from the bottom of the data."},
+            {id:"s42", name:"REDUCE()", platform:"sheets", category:"Advanced", desc:"Reduces array to a single value via LAMBDA.", syntax:"=REDUCE(init, array, LAMBDA(acc, val, form))", example:"=REDUCE(0, A1:A5, LAMBDA(acc, val, acc+val))", tip:"Can execute complex iterative logic like compound interest."},
+            {id:"s43", name:"SCAN()", platform:"sheets", category:"Advanced", desc:"Returns an array of intermediate REDUCE values.", syntax:"=SCAN(init, array, LAMBDA(acc, val, form))", example:"=SCAN(0, A2:A10, LAMBDA(acc, val, acc+val))", tip:"The easiest way to generate a running total / cumulative sum."},
+            {id:"s44", name:"ISBLANK()", platform:"sheets", category:"Logic", desc:"Checks if a cell is empty.", syntax:"=ISBLANK(cell)", example:"=ISBLANK(A2)", tip:"Used inside IF statements to prevent zero/error outputs."},
+            {id:"s45", name:"ISNA()", platform:"sheets", category:"Logic", desc:"Checks if a cell returns #N/A.", syntax:"=ISNA(cell)", example:"=ISNA(VLOOKUP(...))", tip:"More targeted than IFERROR."},
+            {id:"s46", name:"COLUMN()", platform:"sheets", category:"Math & Stats", desc:"Returns the column number.", syntax:"=COLUMN([cell])", example:"=COLUMN(C2)", tip:"Returns 3. Useful for dynamic OFFSET arrays."},
+            {id:"s47", name:"ROW()", platform:"sheets", category:"Math & Stats", desc:"Returns the row number.", syntax:"=ROW([cell])", example:"=ROW()", tip:"=ROW()-1 creates an auto-incrementing ID column."},
+            {id:"s48", name:"OFFSET()", platform:"sheets", category:"Data Lookup", desc:"Returns a range shifted from a starting cell.", syntax:"=OFFSET(cell, rows, cols, [height], [width])", example:"=OFFSET(A1, 1, 0, 10, 1)", tip:"Creates dynamic named ranges, though volatile."},
+            {id:"s49", name:"TRANSPOSE()", platform:"sheets", category:"Arrays", desc:"Swaps rows and columns.", syntax:"=TRANSPOSE(range)", example:"=TRANSPOSE(A1:A10)", tip:"Turns a vertical list into a horizontal header."},
+            {id:"s50", name:"SEQUENCE()", platform:"sheets", category:"Arrays", desc:"Generates a sequential array of numbers.", syntax:"=SEQUENCE(rows, [cols], [start], [step])", example:"=SEQUENCE(10, 1, 1, 1)", tip:"Instantly generates numbered lists (1 to 10)."}
+        ];
+
+        // State Management
+        let currentLang = 'en';
+        let currentPlatform = 'all';
+        let currentCategory = 'all';
+        let searchQuery = '';
+        let activeModalFormula = null;
+
+        // Initialize App on DOM Load
+        document.addEventListener('DOMContentLoaded', () => {
+            renderCategories();
+            renderFormulas();
+            updateLanguageUI();
+        });
+
+        // Switch Language Handler
+        function switchLanguage(langKey) {
+            if (!uiTranslations[langKey]) return;
+            currentLang = langKey;
+            updateLanguageUI();
+        }
+
+        function updateLanguageUI() {
+            const t = uiTranslations[currentLang] || uiTranslations.en;
+            
+            document.getElementById('uiHeaderSub').innerText = t.headerSub;
+            document.getElementById('uiJoinDiscord').innerText = t.joinDiscord;
+            document.getElementById('uiHeroTitle').innerHTML = t.heroTitle;
+            document.getElementById('uiHeroDesc').innerText = t.heroDesc;
+            document.getElementById('uiTabAll').innerText = t.tabAll;
+            document.getElementById('searchInput').placeholder = t.searchPh;
+            document.getElementById('uiEmptyTitle').innerText = t.emptyTitle;
+            document.getElementById('uiEmptyDesc').innerText = t.emptyDesc;
+            document.getElementById('uiModalDescLabel').innerText = t.descLabel;
+            document.getElementById('uiModalSyntaxLabel').innerText = t.syntaxLabel;
+            document.getElementById('uiModalExampleLabel').innerText = t.exampleLabel;
+            document.getElementById('uiModalTipLabel').innerText = t.tipLabel;
+            document.getElementById('modalCopyBtnText').innerText = t.copyBtn;
+            document.getElementById('uiFooterText').innerText = t.footerText;
+        }
+
+        // Platform Tab Filter
+        function setPlatformFilter(platform) {
+            currentPlatform = platform;
+            
+            // Highlight Tab Buttons
+            document.querySelectorAll('.platform-tab').forEach(tab => {
+                tab.classList.remove('bg-zura-navy', 'text-white', 'shadow-sm');
+                tab.classList.add('text-slate-500', 'bg-transparent');
+            });
+
+            const activeBtn = document.getElementById(`tab-${platform}`);
+            if (activeBtn) {
+                activeBtn.classList.add('bg-zura-navy', 'text-white', 'shadow-sm');
+                activeBtn.classList.remove('text-slate-500', 'bg-transparent');
+            }
+
+            currentCategory = 'all';
+            renderCategories();
+            renderFormulas();
+        }
+
+        // Render Dynamic Category Pills
+        function renderCategories() {
+            const container = document.getElementById('categoryContainer');
+            container.innerHTML = '';
+
+            // Filter relevant categories by current platform
+            const relevantFormulas = currentPlatform === 'all' 
+                ? formulasDatabase 
+                : formulasDatabase.filter(f => f.platform === currentPlatform);
+
+            const categories = ['all', ...new Set(relevantFormulas.map(f => f.category))];
+
+            categories.forEach(cat => {
+                const btn = document.createElement('button');
+                btn.className = `px-3.5 py-2 rounded-xl text-xs font-semibold transition-all shadow-sm ${
+                    currentCategory === cat 
+                        ? 'bg-zura-navy text-white' 
+                        : 'bg-white text-slate-600 border border-slate-200 hover:border-blue-400 hover:text-blue-600'
+                }`;
+                btn.innerText = cat === 'all' ? 'All Categories' : cat;
+                btn.onclick = () => {
+                    currentCategory = cat;
+                    renderCategories();
+                    renderFormulas();
+                };
+                container.appendChild(btn);
+            });
+        }
+
+        // Search Input Handler
+        function handleSearch() {
+            searchQuery = document.getElementById('searchInput').value.toLowerCase().trim();
+            renderFormulas();
+        }
+
+        // Render Formula Cards Grid
+        function renderFormulas() {
+            const grid = document.getElementById('formulaGrid');
+            const emptyState = document.getElementById('emptyState');
+            grid.innerHTML = '';
+
+            const filtered = formulasDatabase.filter(item => {
+                const matchesPlatform = currentPlatform === 'all' || item.platform === currentPlatform;
+                const matchesCategory = currentCategory === 'all' || item.category === currentCategory;
+                const matchesSearch = searchQuery === '' || 
+                    item.name.toLowerCase().includes(searchQuery) ||
+                    item.category.toLowerCase().includes(searchQuery) ||
+                    item.desc.toLowerCase().includes(searchQuery) ||
+                    item.example.toLowerCase().includes(searchQuery);
+
+                return matchesPlatform && matchesCategory && matchesSearch;
+            });
+
+            document.getElementById('formulaCounterText').innerText = `${filtered.length} Formulas`;
+
+            if (filtered.length === 0) {
+                grid.classList.add('hidden');
+                emptyState.classList.remove('hidden');
+                return;
+            }
+
+            grid.classList.remove('hidden');
+            emptyState.classList.add('hidden');
+
+            filtered.forEach(item => {
+                const isAppSheet = item.platform === 'appsheet';
+                const badgeBg = isAppSheet ? 'bg-blue-50 text-blue-600 border-blue-200' : 'bg-emerald-50 text-emerald-600 border-emerald-200';
+                const platformLabel = isAppSheet ? 'AppSheet' : 'Spreadsheet';
+
+                const card = document.createElement('div');
+                card.className = "bg-white border border-slate-200/90 rounded-2xl p-5 hover:border-blue-400 transition-all duration-300 flex flex-col justify-between group hover:shadow-xl hover:-translate-y-0.5 cursor-pointer";
+                card.onclick = () => openModal(item);
+
+                card.innerHTML = `
+                    <div>
+                        <div class="flex justify-between items-center mb-3">
+                            <span class="px-2.5 py-0.5 rounded-md text-[10px] font-bold tracking-wide uppercase border ${badgeBg}">
+                                ${platformLabel}
+                            </span>
+                            <span class="text-[11px] font-semibold text-slate-400">${item.category}</span>
+                        </div>
+                        <h3 class="text-base font-bold text-zura-navy font-mono mb-2 group-hover:text-blue-600 transition-colors">
+                            ${item.name}
+                        </h3>
+                        <p class="text-slate-500 text-xs leading-relaxed line-clamp-2 mb-4">
+                            ${item.desc}
+                        </p>
+                    </div>
+
+                    <div class="bg-slate-50 border border-slate-200 rounded-xl p-2.5 font-mono text-[11px] text-slate-700 truncate flex justify-between items-center">
+                        <span class="truncate pr-2">${item.syntax}</span>
+                        <i class="fa-solid fa-chevron-right text-slate-400 group-hover:text-blue-600 group-hover:translate-x-0.5 transition-all"></i>
+                    </div>
+                `;
+
+                grid.appendChild(card);
+            });
+        }
+
+        // Modal Handlers
+        function openModal(item) {
+            activeModalFormula = item;
+            
+            const isAppSheet = item.platform === 'appsheet';
+            const badgeBg = isAppSheet ? 'bg-blue-50 text-blue-600 border-blue-200' : 'bg-emerald-50 text-emerald-600 border-emerald-200';
+            
+            const pBadge = document.getElementById('modalPlatform');
+            pBadge.className = `px-2.5 py-1 rounded-md text-[10px] font-bold tracking-wide uppercase border ${badgeBg}`;
+            pBadge.innerText = isAppSheet ? 'AppSheet Expression' : 'Spreadsheet Formula';
+
+            document.getElementById('modalCategory').innerText = `• ${item.category}`;
+            document.getElementById('modalName').innerText = item.name;
+            document.getElementById('modalDesc').innerText = item.desc;
+            document.getElementById('modalSyntax').innerText = item.syntax;
+            document.getElementById('modalExample').innerText = item.example;
+            document.getElementById('modalTip').innerText = item.tip;
+
+            const modal = document.getElementById('detailModal');
+            modal.classList.remove('opacity-0', 'pointer-events-none');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('detailModal');
+            modal.classList.add('opacity-0', 'pointer-events-none');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Copy Code Functionality
+        function copyModalCode() {
+            if (!activeModalFormula) return;
+            
+            const codeToCopy = activeModalFormula.example;
+            
+            // Fallback execCommand for iframe compatibility
+            const tempInput = document.createElement('textarea');
+            tempInput.value = codeToCopy;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempInput);
+
+            showToast(uiTranslations[currentLang]?.copiedToast || "Copied to clipboard!");
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMsg').innerText = message;
+            toast.classList.remove('translate-y-10', 'opacity-0');
+            
+            setTimeout(() => {
+                toast.classList.add('translate-y-10', 'opacity-0');
+            }, 2500);
+        }
+    </script>
+</body>
+</html>
