@@ -12,110 +12,20 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <script src="https://unpkg.com/lucide@latest"></script>
 
+  <!-- SUPABASE SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
   <script>
-    /* =====================================================================
-       SUPABASE CONFIGURATION
-       ===================================================================== */
-    const SUPABASE_URL = 'https://your-project-id.supabase.co';
-    const SUPABASE_ANON_KEY = 'your-supabase-anon-key-here';
-
-    const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-    let currentRole = 'buyer';
-    const $ = id => document.getElementById(id);
-    const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
-
-    // Cek apakah user baru saja kembali dari link verifikasi email
-    window.addEventListener('DOMContentLoaded', () => {
-      const params = new URLSearchParams(location.search);
-      if (params.get('verified') === 'true' || location.hash.includes('type=signup')) {
-        showView('login');
-        showAlert('success', 'Email verified successfully! Please log in with your credentials.');
-      } else {
-        const mode = params.get('mode');
-        showView(['login', 'register', 'forgot'].includes(mode) ? mode : 'login');
-      }
-      lucide.createIcons();
-    });
-
-    /* =====================================================================
-       SUPABASE AUTH FLOW (Disesuaikan agar tidak auto-login setelah verifikasi)
-       ===================================================================== */
-    if (supabaseClient) {
-      // Tangkap event ketika token verifikasi email diproses
-      supabaseClient.auth.onAuthStateChange(async (event, session) => {
-        if (event === 'SIGNED_IN') {
-          // Jika user terdeteksi login karena klik link verifikasi email, 
-          // kita langsung Sign Out paksa agar mereka diarahkan ke halaman login manual.
-          await supabaseClient.auth.signOut();
-          window.location.href = '/auth/?verified=true';
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'sans-serif'] },
+          colors: {
+            zura: { navy: '#0A1931', deep: '#152A4A', blue: '#2563EB', light: '#EFF6FF', ice: '#DBEAFE' }
+          }
         }
-      });
+      }
     }
-
-    // Handler Login
-    document.getElementById('loginForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      hideAlert(); 
-      
-      const email = document.getElementById('loginEmail').value.trim();
-      const password = document.getElementById('loginPassword').value;
-      
-      if (!emailRe.test(email) || !password) {
-        showAlert('error', 'Please enter a valid email and password.');
-        return;
-      }
-
-      setLoading(e.target, true, 'Logging in...');
-      const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
-      setLoading(e.target, false);
-      
-      if (error) {
-        if (error.message.includes('Email not confirmed')) {
-          showAlert('error', 'Your email address has not been verified yet. Please check your inbox for the verification link.');
-        } else {
-          showAlert('error', error.message);
-        }
-      } else {
-        const userMeta = data.user?.user_metadata || {};
-        const userData = { name: userMeta.name || 'User', email: data.user.email, role: userMeta.role || 'buyer' };
-        localStorage.setItem('zl_demo_session', JSON.stringify(userData));
-        showToast('Login successful! Redirecting...');
-        setTimeout(() => window.location.href = '/', 1000);
-      }
-    });
-
-    // Handler Register (Redirect kembali ke /auth/?verified=true setelah klik email)
-    document.getElementById('registerForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      hideAlert();
-
-      const name = document.getElementById('regName').value.trim();
-      const email = document.getElementById('regEmail').value.trim();
-      const password = document.getElementById('regPassword').value;
-      
-      if (!name || !emailRe.test(email) || password.length < 6) {
-        showAlert('error', 'Please complete all required fields correctly.');
-        return;
-      }
-
-      setLoading(e.target, true, 'Creating account...');
-      const { data, error } = await supabaseClient.auth.signUp({
-        email: email,
-        password: password,
-        options: {
-          data: { name: name, role: currentRole },
-          emailRedirectTo: window.location.origin + '/auth/?verified=true'
-        }
-      });
-      setLoading(e.target, false);
-
-      if (error) {
-        showAlert('error', error.message);
-      } else {
-        document.getElementById('verifyEmailDisplay').textContent = email;
-        showView('verify');
-      }
-    });
   </script>
 
   <style>
@@ -171,7 +81,7 @@
   <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-12">
     <div class="grid grid-cols-1 lg:grid-cols-12 rounded-[32px] overflow-hidden border border-blue-200/90 shadow-2xl bg-white">
 
-      <!-- LEFT: BRAND / BENEFITS PANEL -->
+      <!-- LEFT: BRAND / BENEFITS PANEL (Restored to Original Design) -->
       <aside class="hidden lg:flex lg:col-span-5 relative flex-col justify-between p-12 text-white bg-gradient-to-br from-zura-navy via-zura-deep to-blue-800 overflow-hidden">
         <div class="absolute -right-24 -top-24 w-80 h-80 rounded-full bg-blue-400/20 blur-3xl"></div>
         <div class="absolute -left-20 bottom-0 w-72 h-72 rounded-full bg-blue-500/20 blur-3xl"></div>
@@ -326,7 +236,7 @@
             </form>
           </div>
 
-          <!-- ============ VIEW: VERIFY EMAIL (REAL) ============ -->
+          <!-- ============ VIEW: VERIFY EMAIL (REAL SUPABASE) ============ -->
           <div id="view-verify" class="view">
             <div class="w-14 h-14 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-600 flex items-center justify-center mb-5 shadow-sm">
               <i data-lucide="mail-check" class="w-7 h-7"></i>
@@ -337,10 +247,10 @@
             </p>
             <div class="mt-6 p-5 rounded-2xl bg-blue-50/60 border border-blue-200/80 space-y-3">
                <p class="text-xs text-blue-800 leading-relaxed font-medium">
-                 <strong class="font-bold">Important:</strong> Please open your inbox (or spam folder) and click the link inside to activate your account. Once clicked, you will be automatically logged in.
+                 <strong class="font-bold">Important:</strong> Please open your inbox (or spam folder) and click the link inside to activate your account. Once clicked, you will be automatically logged in and redirected to Zuralogic.
                </p>
             </div>
-            <div class="mt-6 pt-5 border-t border-slate-200/80 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500">
+            <div class="mt-6 pt-5 border-t border-slate-200/80 flex items-center justify-between text-xs text-slate-500">
               <button type="button" onclick="showView('login')" class="font-bold text-zura-navy hover:text-blue-600 flex items-center gap-1">
                 <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
                 <span>Back to Log in</span>
@@ -382,242 +292,107 @@
 
   <script>
     /* =====================================================================
-       1. MASUKKAN SUPABASE URL DAN ANON KEY KAMU DI SINI
+       SUPABASE CONFIGURATION
        ===================================================================== */
     const SUPABASE_URL = 'https://tnshmzrggqdmppkqlubg.supabase.co';
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRuc2htenJnZ3FkbXBwa3FsdWJnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTI4NDMyMjEsImV4cCI6MjEwODQxOTIyMX0.wPMS_GzFHramTzOWihb47IDOLZG7BV-67wep4ZvQrYc';
 
-    // Inisialisasi Supabase (Dilindungi validasi agar tidak error URL kosong)
-    let supabaseClient = null;
-    if (SUPABASE_URL.startsWith('http')) {
-      supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-    }
-
-    /* =====================================================================
-       STATE & UI HELPERS
-       ===================================================================== */
+    const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
     let currentRole = 'buyer';
     const $ = id => document.getElementById(id);
     const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
-    function showToast(msg) {
-      const box = $('toastBox');
-      $('toastText').textContent = msg;
-      box.classList.replace('hidden', 'flex');
-      clearTimeout(showToast._t);
-      showToast._t = setTimeout(() => box.classList.replace('flex', 'hidden'), 3200);
-    }
-
-    function showAlert(type, msg) {
-      const el = $('globalAlert');
-      const styles = { error: ['bg-rose-50', 'border-rose-200', 'text-rose-800'], success: ['bg-emerald-50', 'border-emerald-200', 'text-emerald-800'] };
-      el.className = 'mb-5 p-3.5 rounded-xl text-sm font-medium flex items-start gap-2.5 border ' + styles[type].join(' ');
-      $('globalAlertText').textContent = msg;
-      $('globalAlertIcon').setAttribute('data-lucide', type === 'success' ? 'check-circle-2' : 'alert-circle');
-      lucide.createIcons();
-      el.classList.remove('hidden');
-    }
-    function hideAlert() { $('globalAlert').classList.add('hidden'); }
-
-    function setFieldError(id, msg) {
-      const input = $(id);
-      const err = document.querySelector(`[data-error-for="${id}"]`);
-      if (msg) {
-        if (input) input.classList.add('has-error');
-        if (err) { err.textContent = msg; err.classList.add('show'); }
+    // Cek apakah user baru saja kembali dari link verifikasi email
+    window.addEventListener('DOMContentLoaded', () => {
+      const params = new URLSearchParams(location.search);
+      if (params.get('verified') === 'true' || location.hash.includes('type=signup')) {
+        showView('login');
+        showAlert('success', 'Email verified successfully! Please log in with your credentials.');
       } else {
-        if (input) input.classList.remove('has-error');
-        if (err) { err.textContent = ''; err.classList.remove('show'); }
+        const mode = params.get('mode');
+        showView(['login', 'register', 'forgot'].includes(mode) ? mode : 'login');
       }
-    }
-    function clearErrors(formId) {
-      $(formId).querySelectorAll('[data-error-for]').forEach(e => setFieldError(e.dataset.errorFor, ''));
-    }
-
-    function setLoading(form, loading, label) {
-      const btn = form.querySelector('.submit-btn');
-      const text = btn.querySelector('.btn-label');
-      if (loading) {
-        btn.dataset.label = text.textContent;
-        btn.disabled = true;
-        btn.classList.add('opacity-80', 'cursor-not-allowed');
-        text.innerHTML = '<span class="spinner inline-block align-middle mr-2"></span>' + (label || 'Please wait...');
-      } else {
-        btn.disabled = false;
-        btn.classList.remove('opacity-80', 'cursor-not-allowed');
-        text.textContent = btn.dataset.label || text.textContent;
-      }
-    }
-
-    function togglePassword(inputId, btn) {
-      const input = $(inputId);
-      const show = input.type === 'password';
-      input.type = show ? 'text' : 'password';
-      btn.innerHTML = `<i data-lucide="${show ? 'eye-off' : 'eye'}" class="w-4 h-4"></i>`;
       lucide.createIcons();
-    }
-
-    function showView(name) {
-      hideAlert();
-      ['login', 'register', 'forgot', 'verify'].forEach(v => $('view-' + v).classList.toggle('active', v === name));
-      $('tabsWrap').classList.toggle('hidden', name === 'forgot' || name === 'verify');
-      $('tab-login').setAttribute('aria-selected', name === 'login');
-      $('tab-register').setAttribute('aria-selected', name === 'register');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    function setRole(role) {
-      currentRole = role;
-      $('role-buyer').setAttribute('aria-checked', role === 'buyer');
-      $('role-creator').setAttribute('aria-checked', role === 'creator');
-      $('creatorFields').classList.toggle('hidden', role !== 'creator');
-      $('registerBtnLabel').textContent = role === 'creator' ? 'Create creator account' : 'Create buyer account';
-    }
+    });
 
     /* =====================================================================
-       SUPABASE EVENT LISTENER (Auto Redirect saat klik link di email)
+       SUPABASE AUTH FLOW (Disesuaikan agar tidak auto-login setelah verifikasi)
        ===================================================================== */
     if (supabaseClient) {
-      supabaseClient.auth.onAuthStateChange((event, session) => {
-        if (event === 'SIGNED_IN' && session) {
-          const userData = {
-            name: session.user.user_metadata?.name || 'User',
-            email: session.user.email,
-            role: session.user.user_metadata?.role || 'buyer'
-          };
-          localStorage.setItem('zl_demo_session', JSON.stringify(userData));
-          
-          showToast('Successfully verified & logged in! Redirecting...');
-          setTimeout(() => {
-            window.location.href = '/';
-          }, 1500);
+      // Tangkap event ketika token verifikasi email diproses
+      supabaseClient.auth.onAuthStateChange(async (event, session) => {
+        if (event === 'SIGNED_IN') {
+          // Jika user terdeteksi login karena klik link verifikasi email, 
+          // kita langsung Sign Out paksa agar mereka diarahkan ke halaman login manual.
+          await supabaseClient.auth.signOut();
+          window.location.href = '/auth/?verified=true';
         }
       });
     }
 
-    /* =====================================================================
-       FORM HANDLERS DENGAN SUPABASE ASLI
-       ===================================================================== */
-    $('loginForm').addEventListener('submit', async (e) => {
+    // Handler Login
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
       e.preventDefault();
-      hideAlert(); clearErrors('loginForm');
+      hideAlert(); 
       
-      if (!supabaseClient) {
-        showAlert('error', 'Please configure your SUPABASE_URL and SUPABASE_ANON_KEY in the code first.');
+      const email = document.getElementById('loginEmail').value.trim();
+      const password = document.getElementById('loginPassword').value;
+      
+      if (!emailRe.test(email) || !password) {
+        showAlert('error', 'Please enter a valid email and password.');
         return;
       }
 
-      const email = $('loginEmail').value.trim();
-      const password = $('loginPassword').value;
-      
-      if (!emailRe.test(email)) { setFieldError('loginEmail', 'Invalid email.'); return; }
-      if (!password) { setFieldError('loginPassword', 'Password required.'); return; }
-
       setLoading(e.target, true, 'Logging in...');
-      
-      const { data, error } = await supabaseClient.auth.signInWithPassword({
-        email: email,
-        password: password
-      });
-      
+      const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
       setLoading(e.target, false);
       
       if (error) {
-        showAlert('error', error.message);
+        if (error.message.includes('Email not confirmed')) {
+          showAlert('error', 'Your email address has not been verified yet. Please check your inbox for the verification link.');
+        } else {
+          showAlert('error', error.message);
+        }
       } else {
         const userMeta = data.user?.user_metadata || {};
-        const userData = {
-          name: userMeta.name || 'User',
-          email: data.user.email,
-          role: userMeta.role || 'buyer'
-        };
+        const userData = { name: userMeta.name || 'User', email: data.user.email, role: userMeta.role || 'buyer' };
         localStorage.setItem('zl_demo_session', JSON.stringify(userData));
         showToast('Login successful! Redirecting...');
         setTimeout(() => window.location.href = '/', 1000);
       }
     });
 
-    $('registerForm').addEventListener('submit', async (e) => {
+    // Handler Register (Redirect kembali ke /auth/?verified=true setelah klik email)
+    document.getElementById('registerForm').addEventListener('submit', async (e) => {
       e.preventDefault();
-      hideAlert(); clearErrors('registerForm');
+      hideAlert();
 
-      if (!supabaseClient) {
-        showAlert('error', 'Please configure your SUPABASE_URL and SUPABASE_ANON_KEY in the code first.');
+      const name = document.getElementById('regName').value.trim();
+      const email = document.getElementById('regEmail').value.trim();
+      const password = document.getElementById('regPassword').value;
+      
+      if (!name || !emailRe.test(email) || password.length < 6) {
+        showAlert('error', 'Please complete all required fields correctly.');
         return;
       }
 
-      const name = $('regName').value.trim();
-      const email = $('regEmail').value.trim();
-      const password = $('regPassword').value;
-      const confirm = $('regConfirm').value;
-      let ok = true;
-
-      if (name.length < 2) { setFieldError('regName', 'Name required.'); ok = false; }
-      if (!emailRe.test(email)) { setFieldError('regEmail', 'Invalid email.'); ok = false; }
-      if (password.length < 6) { setFieldError('regPassword', 'Min 6 characters.'); ok = false; }
-      if (confirm !== password) { setFieldError('regConfirm', 'Passwords do not match.'); ok = false; }
-      if (!$('regTerms').checked) { setFieldError('regTerms', 'Please accept Terms.'); ok = false; }
-      
-      if (!ok) return;
-
       setLoading(e.target, true, 'Creating account...');
-      
       const { data, error } = await supabaseClient.auth.signUp({
         email: email,
         password: password,
         options: {
-          data: {
-            name: name,
-            role: currentRole
-          },
-          emailRedirectTo: window.location.origin + '/auth/'
+          data: { name: name, role: currentRole },
+          emailRedirectTo: window.location.origin + '/auth/?verified=true'
         }
       });
-
       setLoading(e.target, false);
 
       if (error) {
         showAlert('error', error.message);
       } else {
-        // Berhasil daftar, tampilkan instruksi cek Email asli dari Supabase
-        $('verifyEmailDisplay').textContent = email;
+        document.getElementById('verifyEmailDisplay').textContent = email;
         showView('verify');
       }
-    });
-
-    $('forgotForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      hideAlert(); clearErrors('forgotForm');
-
-      if (!supabaseClient) {
-        showAlert('error', 'Please configure your SUPABASE_URL and SUPABASE_ANON_KEY in the code first.');
-        return;
-      }
-
-      const email = $('forgotEmail').value.trim();
-      if (!emailRe.test(email)) { setFieldError('forgotEmail', 'Invalid email.'); return; }
-      
-      setLoading(e.target, true, 'Sending...');
-      const { error } = await supabaseClient.auth.resetPasswordForEmail(email, {
-        redirectTo: window.location.origin + '/auth/?mode=reset'
-      });
-      setLoading(e.target, false);
-
-      if (error) {
-        showAlert('error', error.message);
-      } else {
-        showAlert('success', 'If an account exists, a reset link is on its way. Check your inbox.');
-      }
-    });
-
-    document.addEventListener('input', (e) => {
-      if (e.target.id && e.target.classList.contains('field-input')) setFieldError(e.target.id, '');
-    });
-    $('regTerms').addEventListener('change', () => setFieldError('regTerms', ''));
-
-    window.addEventListener('DOMContentLoaded', () => {
-      showView('login');
-      lucide.createIcons();
     });
   </script>
 </body>
