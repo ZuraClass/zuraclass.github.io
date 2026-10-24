@@ -302,79 +302,156 @@
     const $ = id => document.getElementById(id);
     const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
-    // Cek apakah user baru saja kembali dari link verifikasi email
+    /* =====================================================================
+       UI HELPER FUNCTIONS (INI FUNGSI YANG SEMPAT HILANG)
+       ===================================================================== */
+    let toastTimer;
+    function showToast(msg) {
+      const box = $('toastBox');
+      $('toastText').textContent = msg;
+      box.classList.replace('hidden', 'flex');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => box.classList.replace('flex', 'hidden'), 3200);
+    }
+
+    function showAlert(type, msg) {
+      const el = $('globalAlert');
+      const styles = { error: ['bg-rose-50', 'border-rose-200', 'text-rose-800'], success: ['bg-emerald-50', 'border-emerald-200', 'text-emerald-800'] };
+      el.className = 'mb-5 p-3.5 rounded-xl text-sm font-medium flex items-start gap-2.5 border ' + styles[type].join(' ');
+      $('globalAlertText').textContent = msg;
+      $('globalAlertIcon').setAttribute('data-lucide', type === 'success' ? 'check-circle-2' : 'alert-circle');
+      lucide.createIcons();
+      el.classList.remove('hidden');
+    }
+    function hideAlert() { $('globalAlert').classList.add('hidden'); }
+
+    function setFieldError(id, msg) {
+      const input = $(id);
+      const err = document.querySelector(`[data-error-for="${id}"]`);
+      if (msg) {
+        if (input) input.classList.add('has-error');
+        if (err) { err.textContent = msg; err.classList.add('show'); }
+      } else {
+        if (input) input.classList.remove('has-error');
+        if (err) { err.textContent = ''; err.classList.remove('show'); }
+      }
+    }
+    function clearErrors(formId) {
+      $(formId).querySelectorAll('[data-error-for]').forEach(e => setFieldError(e.dataset.errorFor, ''));
+    }
+
+    function setLoading(form, loading, label) {
+      const btn = form.querySelector('.submit-btn');
+      const text = btn.querySelector('.btn-label');
+      if (loading) {
+        btn.dataset.label = text.textContent;
+        btn.disabled = true;
+        btn.classList.add('opacity-80', 'cursor-not-allowed');
+        text.innerHTML = '<span class="spinner inline-block align-middle mr-2"></span>' + (label || 'Please wait...');
+      } else {
+        btn.disabled = false;
+        btn.classList.remove('opacity-80', 'cursor-not-allowed');
+        text.textContent = btn.dataset.label || text.textContent;
+      }
+    }
+
+    function togglePassword(inputId, btn) {
+      const input = $(inputId);
+      const show = input.type === 'password';
+      input.type = show ? 'text' : 'password';
+      btn.innerHTML = `<i data-lucide="${show ? 'eye-off' : 'eye'}" class="w-4 h-4"></i>`;
+      lucide.createIcons();
+    }
+
+    function showView(name) {
+      hideAlert();
+      ['login', 'register', 'forgot', 'verify'].forEach(v => {
+        const el = $('view-' + v);
+        if (el) el.classList.toggle('active', v === name);
+      });
+      $('tabsWrap').classList.toggle('hidden', name === 'forgot' || name === 'verify');
+      const tabLogin = $('tab-login');
+      const tabReg = $('tab-register');
+      if(tabLogin) tabLogin.setAttribute('aria-selected', name === 'login');
+      if(tabReg) tabReg.setAttribute('aria-selected', name === 'register');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function setRole(role) {
+      currentRole = role;
+      $('role-buyer').setAttribute('aria-checked', role === 'buyer');
+      $('role-creator').setAttribute('aria-checked', role === 'creator');
+      const creatorFields = $('creatorFields');
+      if(creatorFields) creatorFields.classList.toggle('hidden', role !== 'creator');
+      const regBtnLabel = $('registerBtnLabel');
+      if(regBtnLabel) regBtnLabel.textContent = role === 'creator' ? 'Create creator account' : 'Create buyer account';
+    }
+
+    // Hapus error saat diketik ulang
+    document.addEventListener('input', (e) => {
+      if (e.target.id && e.target.classList.contains('field-input')) setFieldError(e.target.id, '');
+    });
+    const regTerms = $('regTerms');
+    if(regTerms) regTerms.addEventListener('change', () => setFieldError('regTerms', ''));
+
+    /* =====================================================================
+       INIT & AUTH STATE FLOW
+       ===================================================================== */
     window.addEventListener('DOMContentLoaded', () => {
       const params = new URLSearchParams(location.search);
       if (params.get('verified') === 'true' || location.hash.includes('type=signup')) {
         showView('login');
         showAlert('success', 'Email verified successfully! Please log in with your credentials.');
+        // Hapus parameter url agar bersih tanpa error
+        try { history.replaceState(null, '', '/auth/'); } catch(e){}
       } else {
-        const mode = params.get('mode');
-        showView(['login', 'register', 'forgot'].includes(mode) ? mode : 'login');
+        showView('login');
       }
       lucide.createIcons();
     });
 
-    /* =====================================================================
-       SUPABASE AUTH FLOW (Disesuaikan agar tidak auto-login setelah verifikasi)
-       ===================================================================== */
     if (supabaseClient) {
-      // Tangkap event ketika token verifikasi email diproses
       supabaseClient.auth.onAuthStateChange(async (event, session) => {
         if (event === 'SIGNED_IN') {
-          // Jika user terdeteksi login karena klik link verifikasi email, 
-          // kita langsung Sign Out paksa agar mereka diarahkan ke halaman login manual.
-          await supabaseClient.auth.signOut();
-          window.location.href = '/auth/?verified=true';
+          const isVerifiedRedirect = new URLSearchParams(location.search).get('verified') === 'true' || location.hash.includes('type=signup');
+          
+          if (isVerifiedRedirect) {
+            // Mencegah auto-login setelah klik verifikasi
+            await supabaseClient.auth.signOut();
+            window.location.href = '/auth/?verified=true';
+          } else if (session) {
+            // Normal Login Sukses
+            const userMeta = session.user.user_metadata || {};
+            const userData = { name: userMeta.name || 'User', email: session.user.email, role: userMeta.role || 'buyer' };
+            localStorage.setItem('zl_demo_session', JSON.stringify(userData));
+            showToast('Login successful! Redirecting...');
+            setTimeout(() => window.location.href = '/', 1000);
+          }
         }
       });
     }
 
-    // Handler Login
-    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+    /* =====================================================================
+       FORM HANDLERS
+       ===================================================================== */
+    // 1. REGISTER
+    $('registerForm').addEventListener('submit', async (e) => {
       e.preventDefault();
-      hideAlert(); 
-      
-      const email = document.getElementById('loginEmail').value.trim();
-      const password = document.getElementById('loginPassword').value;
-      
-      if (!emailRe.test(email) || !password) {
-        showAlert('error', 'Please enter a valid email and password.');
-        return;
-      }
+      hideAlert(); clearErrors('registerForm');
 
-      setLoading(e.target, true, 'Logging in...');
-      const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
-      setLoading(e.target, false);
+      const name = $('regName').value.trim();
+      const email = $('regEmail').value.trim();
+      const password = $('regPassword').value;
+      const confirm = $('regConfirm').value;
+      let ok = true;
       
-      if (error) {
-        if (error.message.includes('Email not confirmed')) {
-          showAlert('error', 'Your email address has not been verified yet. Please check your inbox for the verification link.');
-        } else {
-          showAlert('error', error.message);
-        }
-      } else {
-        const userMeta = data.user?.user_metadata || {};
-        const userData = { name: userMeta.name || 'User', email: data.user.email, role: userMeta.role || 'buyer' };
-        localStorage.setItem('zl_demo_session', JSON.stringify(userData));
-        showToast('Login successful! Redirecting...');
-        setTimeout(() => window.location.href = '/', 1000);
-      }
-    });
-
-    // Handler Register (Redirect kembali ke /auth/?verified=true setelah klik email)
-    document.getElementById('registerForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      hideAlert();
-
-      const name = document.getElementById('regName').value.trim();
-      const email = document.getElementById('regEmail').value.trim();
-      const password = document.getElementById('regPassword').value;
+      if (name.length < 2) { setFieldError('regName', 'Full name is required.'); ok = false; }
+      if (!emailRe.test(email)) { setFieldError('regEmail', 'Invalid email address.'); ok = false; }
+      if (password.length < 6) { setFieldError('regPassword', 'Min 6 characters.'); ok = false; }
+      if (confirm !== password) { setFieldError('regConfirm', 'Passwords do not match.'); ok = false; }
+      if (!$('regTerms').checked) { setFieldError('regTerms', 'Please accept Terms & Privacy Policy.'); ok = false; }
       
-      if (!name || !emailRe.test(email) || password.length < 6) {
-        showAlert('error', 'Please complete all required fields correctly.');
-        return;
-      }
+      if (!ok) return;
 
       setLoading(e.target, true, 'Creating account...');
       const { data, error } = await supabaseClient.auth.signUp({
@@ -390,8 +467,55 @@
       if (error) {
         showAlert('error', error.message);
       } else {
-        document.getElementById('verifyEmailDisplay').textContent = email;
+        $('verifyEmailDisplay').textContent = email;
         showView('verify');
+      }
+    });
+
+    // 2. LOGIN
+    $('loginForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      hideAlert(); clearErrors('loginForm');
+      
+      const email = $('loginEmail').value.trim();
+      const password = $('loginPassword').value;
+      let ok = true;
+
+      if (!emailRe.test(email)) { setFieldError('loginEmail', 'Invalid email address.'); ok = false; }
+      if (!password) { setFieldError('loginPassword', 'Password is required.'); ok = false; }
+      if (!ok) return;
+
+      setLoading(e.target, true, 'Logging in...');
+      const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
+      setLoading(e.target, false);
+      
+      if (error) {
+        if (error.message.includes('Email not confirmed')) {
+          showAlert('error', 'Please verify your email address first. Check your inbox.');
+        } else {
+          showAlert('error', error.message);
+        }
+      }
+    });
+
+    // 3. FORGOT PASSWORD
+    $('forgotForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      hideAlert(); clearErrors('forgotForm');
+      
+      const email = $('forgotEmail').value.trim();
+      if (!emailRe.test(email)) { setFieldError('forgotEmail', 'Invalid email address.'); return; }
+      
+      setLoading(e.target, true, 'Sending...');
+      const { error } = await supabaseClient.auth.resetPasswordForEmail(email, {
+        redirectTo: window.location.origin + '/auth/?mode=reset'
+      });
+      setLoading(e.target, false);
+
+      if (error) {
+        showAlert('error', error.message);
+      } else {
+        showAlert('success', 'Reset link sent! Please check your inbox.');
       }
     });
   </script>
