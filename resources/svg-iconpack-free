@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZuraClass | SVG UI Icons Library</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Zuralogic Theme Config -->
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: { 
+              sans: ['Inter', 'sans-serif'],
+              mono: ['JetBrains Mono', 'monospace']
+            },
+            colors: {
+              zura: { navy: '#0A1931', deep: '#152A4A', blue: '#2563EB', light: '#EFF6FF', ice: '#DBEAFE' }
+            }
+          }
+        }
+      }
+    </script>
+
+    <style>
+        .frosted-nav { background: rgba(255, 255, 255, 0.86); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); }
+        /* Custom scrollbar for dark code blocks */
+        .code-scroll::-webkit-scrollbar { height: 6px; width: 6px; }
+        .code-scroll::-webkit-scrollbar-track { background: #0f172a; border-radius: 4px; }
+        .code-scroll::-webkit-scrollbar-thumb { background: #3b82f6; border-radius: 4px; }
+        .code-scroll::-webkit-scrollbar-thumb:hover { background: #2563eb; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 font-sans antialiased min-h-screen flex flex-col selection:bg-blue-600 selection:text-white">
+
+    <!-- Top Navigation Header (Zuralogic Enterprise Style) -->
+    <header class="sticky top-0 z-40 frosted-nav border-b border-blue-100/80 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex flex-wrap justify-between items-center gap-4">
+            
+            <!-- Brand Logo Header -->
+            <a href="https://zuralogic.com" class="flex items-center gap-3 group shrink-0">
+                <div class="relative w-10 h-10 rounded-xl overflow-hidden shadow-md border border-blue-200 group-hover:scale-105 transition bg-zura-navy flex items-center justify-center">
+                    <img 
+                        src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=160&q=80" 
+                        onerror="this.src='https://placehold.co/96x96/0A1931/FFFFFF?text=ZL'"
+                        alt="Zuralogic Logo" 
+                        class="w-full h-full object-cover opacity-90"
+                    />
+                    <span class="absolute inset-0 flex items-center justify-center font-black text-white text-base tracking-tighter bg-zura-navy/50 backdrop-blur-[1px]">ZL</span>
+                </div>
+                <div class="flex flex-col">
+                    <span class="text-xl font-black tracking-tight text-zura-navy group-hover:text-blue-600 transition leading-none">
+                        Zuralogic<span class="text-blue-600">.com</span>
+                    </span>
+                    <span id="uiHeaderSub" class="text-[10px] font-semibold text-slate-500 mt-1 uppercase tracking-wide">
+                        Your Scale-Up Partner
+                    </span>
+                </div>
+            </a>
+
+            <!-- Header Controls -->
+            <div class="flex flex-wrap items-center gap-3">
+                <!-- Language Selector -->
+                <div class="flex items-center bg-white border border-slate-200 shadow-sm rounded-lg px-2.5 py-1.5 text-xs font-semibold">
+                    <i class="fa-solid fa-globe text-blue-600 mr-2"></i>
+                    <select id="langSelector" onchange="switchLanguage(this.value)" class="bg-transparent text-slate-700 font-bold focus:outline-none cursor-pointer">
+                        <option value="id" class="bg-white text-slate-900" selected>🇮🇩 Bahasa Indonesia</option>
+                        <option value="en" class="bg-white text-slate-900">🇺🇸 English</option>
+                        <option value="th" class="bg-white text-slate-900">🇹🇭 ไทย (Thai)</option>
+                        <option value="es" class="bg-white text-slate-900">🇪🇸 Español</option>
+                        <option value="ar" class="bg-white text-slate-900">🇦🇪 العربية (Arabic)</option>
+                        <option value="zh" class="bg-white text-slate-900">🇨🇳 中文 (Chinese)</option>
+                        <option value="fr" class="bg-white text-slate-900">🇫🇷 Français</option>
+                        <option value="de" class="bg-white text-slate-900">🇩🇪 Deutsch</option>
+                        <option value="hi" class="bg-white text-slate-900">🇮🇳 हिन्दी (Hindi)</option>
+                        <option value="it" class="bg-white text-slate-900">🇮🇹 Italiano</option>
+                        <option value="ja" class="bg-white text-slate-900">🇯🇵 日本語 (Japanese)</option>
+                        <option value="ru" class="bg-white text-slate-900">🇷🇺 Русский (Russian)</option>
+                    </select>
+                </div>
+
+                <!-- Tutorial Button -->
+                <a href="https://youtu.be/ML_pBG8xQyo" target="_blank" 
+                   class="bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200 font-bold text-xs px-3.5 py-1.5 rounded-lg transition-all flex items-center shadow-sm">
+                    <i class="fa-brands fa-youtube mr-1.5 text-red-500"></i>
+                    <span id="uiTutorialBtn">Cara Install di AppSheet</span>
+                </a>
+
+                <!-- Join Member Button -->
+                <a href="https://www.youtube.com/channel/UC7E98cGagwKgc7E_F2CtZpQ/join" target="_blank" 
+                   class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs px-4 py-1.5 rounded-lg transition-all flex items-center shadow-md">
+                    <i class="fa-solid fa-crown mr-1.5 text-amber-300"></i>
+                    <span id="uiJoinBtn">Join Member VIP</span>
+                </a>
+
+                <!-- Back to Homepage Link -->
+                <a href="https://zuralogic.com" class="hidden md:flex items-center gap-1.5 text-sm font-bold text-slate-500 hover:text-blue-600 transition border-l border-slate-200 pl-4 ml-1">
+                    <i class="fa-solid fa-arrow-left text-xs"></i>
+                    <span>Back to Homepage</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        
+        <!-- Hero Banner -->
+        <div class="mb-10 text-center max-w-3xl mx-auto">
+            <h1 id="uiTitle" class="text-3xl sm:text-4xl lg:text-5xl font-black text-zura-navy tracking-tight mb-4">
+                100+ SVG UI Icons <span class="text-blue-600">Library</span>
+            </h1>
+            <p id="uiDesc" class="text-slate-600 text-sm sm:text-base leading-relaxed mb-6">
+                Standard UI Icons for Business Apps. Format: Data URI (AppSheet) & Raw SVG (Web).
+            </p>
+            <div class="bg-blue-50 border border-blue-100 p-4 rounded-xl text-sm text-blue-800 inline-block text-left shadow-sm">
+                <i class="fa-solid fa-circle-info mr-2 text-blue-600"></i>
+                <span id="uiNote"><strong>Catatan:</strong> Tabel ini menyediakan Data URI untuk AppSheet dan Raw SVG untuk Web. Kode sudah tergabung lengkap, klik Copy untuk menyalin.</span>
+            </div>
+        </div>
+
+        <!-- Table Container -->
+        <div class="bg-white shadow-xl shadow-blue-900/5 border border-slate-200 rounded-2xl overflow-hidden mb-10">
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse min-w-[800px]">
+                    <thead class="bg-slate-50 border-b border-slate-200">
+                        <tr>
+                            <th id="uiColCat" class="py-4 px-6 font-extrabold text-slate-500 text-[11px] uppercase tracking-wider w-1/5">Kategori</th>
+                            <th id="uiColDesc" class="py-4 px-6 font-extrabold text-slate-500 text-[11px] uppercase tracking-wider w-1/4">Deskripsi Ikon</th>
+                            <th id="uiColCode" class="py-4 px-6 font-extrabold text-slate-500 text-[11px] uppercase tracking-wider w-auto">Kode SVG & Data URI</th>
+                        </tr>
+                    </thead>
+                    <tbody id="icon-table-body" class="divide-y divide-slate-100">
+                        <!-- Data will be injected here via JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200/90 py-8 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 text-center flex flex-col items-center gap-3">
+            <div class="flex items-center gap-2 grayscale opacity-50">
+                <div class="w-6 h-6 rounded-md bg-zura-navy flex items-center justify-center text-[9px] font-black text-white">ZL</div>
+                <span class="font-bold text-sm text-zura-navy">Zuralogic.com</span>
+            </div>
+            <p id="uiFooterText" class="text-xs font-medium text-slate-500">ZuraClass Ecosystem &copy; 2026. Empowering No-Code & Automation Builders Worldwide.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Translations Dictionary
+        const uiTranslations = {
+            id: {
+                tutorialBtn: "Cara Install di AppSheet",
+                joinBtn: "Join Member VIP",
+                title: "100+ SVG UI Icons <span class='text-blue-600'>Library</span>",
+                desc: "Ikon UI Standar untuk Aplikasi Bisnis. Format: Data URI (AppSheet) & Raw SVG (Web).",
+                note: "<strong>Catatan:</strong> Tabel ini menyediakan Data URI lengkap untuk AppSheet dan Raw SVG untuk Web. Klik Copy untuk menyalin.",
+                colCat: "Kategori",
+                colDesc: "Deskripsi Ikon",
+                colCode: "Kode SVG & Data URI",
+                copyUri: "Copy Data URI",
+                copySvg: "Copy Raw SVG",
+                copied: "Berhasil disalin!"
+            },
+            en: {
+                tutorialBtn: "How to Install in AppSheet",
+                joinBtn: "Join VIP Member",
+                title: "100+ SVG UI Icons <span class='text-blue-600'>Library</span>",
+                desc: "Standard UI Icons for Business Apps. Format: Data URI (AppSheet) & Raw SVG (Web).",
+                note: "<strong>Note:</strong> This table provides full Data URIs for AppSheet and Raw SVGs for Web. Click Copy to clone.",
+                colCat: "Category",
+                colDesc: "Icon Description",
+                colCode: "SVG Code & Data URI",
+                copyUri: "Copy Data URI",
+                copySvg: "Copy Raw SVG",
+                copied: "Copied!"
+            },
+            th: {
+                tutorialBtn: "วิธีติดตั้งใน AppSheet",
+                joinBtn: "เข้าร่วมสมาชิก VIP",
+                title: "คลังไอคอน UI SVG 100+",
+                desc: "ไอคอนมาตรฐานสำหรับแอปธุรกิจ รูปแบบ: Data URI และ Raw SVG",
+                note: "<strong>หมายเหตุ:</strong> ตารางนี้มี Data URI เต็มรูปแบบสำหรับ AppSheet และ Raw SVG สำหรับเว็บ",
+                colCat: "หมวดหมู่",
+                colDesc: "คำอธิบายไอคอน",
+                colCode: "รหัส SVG & Data URI",
+                copyUri: "คัดลอก Data URI",
+                copySvg: "คัดลอก Raw SVG",
+                copied: "คัดลอกแล้ว!"
+            },
+            es: {
+                tutorialBtn: "Cómo instalar en AppSheet",
+                joinBtn: "Únete a Miembros VIP",
+                title: "Biblioteca de 100+ Íconos SVG",
+                desc: "Íconos UI estándar para apps de negocios. Formato: Data URI y Raw SVG.",
+                note: "<strong>Nota:</strong> Esta tabla proporciona Data URIs completos para AppSheet y Raw SVGs para Web.",
+                colCat: "Categoría",
+                colDesc: "Descripción del Ícono",
+                colCode: "Código SVG y Data URI",
+                copyUri: "Copiar Data URI",
+                copySvg: "Copiar Raw SVG",
+                copied: "¡Copiado!"
+            },
+            ar: {
+                tutorialBtn: "كيفية التثبيت في AppSheet",
+                joinBtn: "انضم كعضو VIP",
+                title: "+100 أيقونة SVG للتطبيقات",
+                desc: "أيقونات واجهة المستخدم لتطبيقات الأعمال. الصيغ: Data URI و Raw SVG.",
+                note: "<strong>ملاحظة:</strong> يوفر هذا الجدول Data URI كامل لـ AppSheet و Raw SVG للويب.",
+                colCat: "الفئة",
+                colDesc: "وصف الأيقونة",
+                colCode: "كود SVG و Data URI",
+                copyUri: "نسخ Data URI",
+                copySvg: "نسخ Raw SVG",
+                copied: "تم النسخ!"
+            },
+            zh: {
+                tutorialBtn: "如何在 AppSheet 中安装",
+                joinBtn: "加入 VIP 会员",
+                title: "100+ SVG 矢量图标库",
+                desc: "商业应用标准 UI 图标。格式：Data URI (AppSheet) & Raw SVG (Web)。",
+                note: "<strong>注意：</strong> 此表格提供适用于 AppSheet 的完整 Data URI 和适用于 Web 的 Raw SVG。",
+                colCat: "类别",
+                colDesc: "图标说明",
+                colCode: "SVG 代码与 Data URI",
+                copyUri: "复制 Data URI",
+                copySvg: "复制 Raw SVG",
+                copied: "已复制!"
+            },
+            fr: {
+                tutorialBtn: "Comment installer sur AppSheet",
+                joinBtn: "Rejoindre Membre VIP",
+                title: "Bibliothèque de 100+ Icônes SVG",
+                desc: "Icônes standard pour applications professionnelles. Format : Data URI & Raw SVG.",
+                note: "<strong>Note:</strong> Ce tableau fournit des Data URIs complets pour AppSheet et Raw SVGs pour le Web.",
+                colCat: "Catégorie",
+                colDesc: "Description de l'icône",
+                colCode: "Code SVG & Data URI",
+                copyUri: "Copier Data URI",
+                copySvg: "Copier Raw SVG",
+                copied: "Copié !"
+            },
+            de: {
+                tutorialBtn: "Installation in AppSheet",
+                joinBtn: "VIP Mitglied werden",
+                title: "100+ SVG UI Icons Bibliothek",
+                desc: "Standard UI-Icons für Business-Apps. Format: Data URI & Raw SVG.",
+                note: "<strong>Hinweis:</strong> Diese Tabelle enthält vollständige Data URIs für AppSheet und Raw SVGs für das Web.",
+                colCat: "Kategorie",
+                colDesc: "Icon-Beschreibung",
+                colCode: "SVG Code & Data URI",
+                copyUri: "Data URI Kopieren",
+                copySvg: "Raw SVG Kopieren",
+                copied: "Kopiert!"
+            },
+            hi: {
+                tutorialBtn: "AppSheet में कैसे इनस्टॉल करें",
+                joinBtn: "VIP मेंबर बनें",
+                title: "100+ SVG UI आइकॉन लाइब्रेरी",
+                desc: "बिजनेस ऐप्स के लिए स्टैंडर्ड UI आइकॉन। फॉर्मेट: Data URI और Raw SVG.",
+                note: "<strong>नोट:</strong> यह टेबल AppSheet के लिए पूर्ण Data URI और Web के लिए Raw SVG प्रदान करती है।",
+                colCat: "श्रेणी",
+                colDesc: "आइकॉन विवरण",
+                colCode: "SVG कोड और Data URI",
+                copyUri: "Data URI कॉपी करें",
+                copySvg: "Raw SVG कॉपी करें",
+                copied: "कॉपी हो गया!"
+            },
+            it: {
+                tutorialBtn: "Come installare in AppSheet",
+                joinBtn: "Diventa Membro VIP",
+                title: "Libreria 100+ Icone SVG",
+                desc: "Icone UI standard per app aziendali. Formato: Data URI e Raw SVG.",
+                note: "<strong>Nota:</strong> Questa tabella fornisce Data URI completi per AppSheet e Raw SVG per il Web.",
+                colCat: "Categoria",
+                colDesc: "Descrizione Icona",
+                colCode: "Codice SVG e Data URI",
+                copyUri: "Copia Data URI",
+                copySvg: "Copia Raw SVG",
+                copied: "Copiato!"
+            },
+            ja: {
+                tutorialBtn: "AppSheetでのインストール方法",
+                joinBtn: "VIPメンバーに参加",
+                title: "100+ SVG アイコンライブラリ",
+                desc: "ビジネスアプリ用標準UIアイコン。フォーマット: Data URI & Raw SVG.",
+                note: "<strong>メモ:</strong> この表には、AppSheet用の完全なData URIとWeb用のRaw SVGが含まれています。",
+                colCat: "カテゴリー",
+                colDesc: "アイコンの説明",
+                colCode: "SVGコードとData URI",
+                copyUri: "Data URI をコピー",
+                copySvg: "Raw SVG をコピー",
+                copied: "コピーしました！"
+            },
+            ru: {
+                tutorialBtn: "Как установить в AppSheet",
+                joinBtn: "Стать VIP участником",
+                title: "Библиотека 100+ SVG Иконок",
+                desc: "Стандартные UI иконки для бизнес-приложений. Формат: Data URI и Raw SVG.",
+                note: "<strong>Примечание:</strong> В таблице представлены полные Data URI для AppSheet и Raw SVG для Web.",
+                colCat: "Категория",
+                colDesc: "Описание иконки",
+                colCode: "Код SVG и Data URI",
+                copyUri: "Копировать Data URI",
+                copySvg: "Копировать Raw SVG",
+                copied: "Скопировано!"
+            }
+        };
+
+        let currentLang = 'id';
+
+        // Library of standard UI paths
+        const uiPaths = {
+            "home": "<path d='m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z'/><polyline points='9 22 9 12 15 12 15 22'/>",
+            "search": "<circle cx='11' cy='11' r='8'/><line x1='21' y1='21' x2='16.65' y2='16.65'/>",
+            "user": "<path d='M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2'/><circle cx='12' cy='7' r='4'/>",
+            "users": "<path d='M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2'/><circle cx='9' cy='7' r='4'/><path d='M23 21v-2a4 4 0 0 0-3-3.87'/><path d='M16 3.13a4 4 0 0 1 0 7.75'/>",
+            "user-plus": "<path d='M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2'/><circle cx='8.5' cy='7' r='4'/><line x1='20' y1='8' x2='20' y2='14'/><line x1='23' y1='11' x2='17' y2='11'/>",
+            "user-minus": "<path d='M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2'/><circle cx='8.5' cy='7' r='4'/><line x1='23' y1='11' x2='17' y2='11'/>",
+            "user-check": "<path d='M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2'/><circle cx='8.5' cy='7' r='4'/><polyline points='17 11 19 13 23 9'/>",
+            "settings": "<circle cx='12' cy='12' r='3'/><path d='M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z'/>",
+            "menu": "<line x1='3' y1='12' x2='21' y2='12'/><line x1='3' y1='6' x2='21' y2='6'/><line x1='3' y1='18' x2='21' y2='18'/>",
+            "bell": "<path d='M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9'/><path d='M13.73 21a2 2 0 0 1-3.46 0'/>",
+            "plus": "<line x1='12' y1='5' x2='12' y2='19'/><line x1='5' y1='12' x2='19' y2='12'/>",
+            "minus": "<line x1='5' y1='12' x2='19' y2='12'/>",
+            "x": "<line x1='18' y1='6' x2='6' y2='18'/><line x1='6' y1='6' x2='18' y2='18'/>",
+            "check": "<polyline points='20 6 9 17 4 12'/>",
+            "shopping-cart": "<circle cx='9' cy='21' r='1'/><circle cx='20' cy='21' r='1'/><path d='M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6'/>",
+            "shopping-bag": "<path d='M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z'/><line x1='3' y1='6' x2='21' y2='6'/><path d='M16 10a4 4 0 0 1-8 0'/>",
+            "credit-card": "<rect x='1' y='4' width='22' height='16' rx='2' ry='2'/><line x1='1' y1='10' x2='23' y2='10'/>",
+            "wallet": "<path d='M21 12V7H5a2 2 0 0 1 0-4h14v4'/><path d='M3 5v14a2 2 0 0 0 2 2h16v-5H11a2 2 0 0 1 0-4h10z'/>",
+            "list": "<line x1='8' y1='6' x2='21' y2='6'/><line x1='8' y1='12' x2='21' y2='12'/><line x1='8' y1='18' x2='21' y2='18'/><line x1='3' y1='6' x2='3.01' y2='6'/><line x1='3' y1='12' x2='3.01' y2='12'/><line x1='3' y1='18' x2='3.01' y2='18'/>",
+            "grid": "<rect x='3' y='3' width='7' height='7'/><rect x='14' y='3' width='7' height='7'/><rect x='14' y='14' width='7' height='7'/><rect x='3' y='14' width='7' height='7'/>",
+            "heart": "<path d='M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z'/>",
+            "star": "<polygon points='12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2'/>",
+            "tag": "<path d='M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z'/><line x1='7' y1='7' x2='7.01' y2='7'/>",
+            "filter": "<polygon points='22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3'/>",
+            "trending-up": "<polyline points='23 6 13.5 15.5 8.5 10.5 1 18'/><polyline points='17 6 23 6 23 12'/>",
+            "trending-down": "<polyline points='23 18 13.5 8.5 8.5 13.5 1 6'/><polyline points='17 18 23 18 23 12'/>",
+            "truck": "<rect x='1' y='3' width='15' height='13'/><polygon points='16 8 20 8 23 11 23 16 16 16 16 8'/><circle cx='5.5' cy='18.5' r='2.5'/><circle cx='18.5' cy='18.5' r='2.5'/>",
+            "package": "<line x1='16.5' y1='9.4' x2='7.5' y2='4.21'/><path d='M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z'/><polyline points='3.27 6.96 12 12.01 20.73 6.96'/><line x1='12' y1='22.08' x2='12' y2='12'/>",
+            "message": "<path d='M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z'/>",
+            "phone": "<path d='M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z'/>",
+            "map-pin": "<path d='M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z'/><circle cx='12' cy='10' r='3'/>",
+            "camera": "<path d='M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z'/><circle cx='12' cy='13' r='4'/>",
+            "file": "<path d='M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z'/><polyline points='13 2 13 9 20 9'/>",
+            "share": "<circle cx='18' cy='5' r='3'/><circle cx='6' cy='12' r='3'/><circle cx='18' cy='19' r='3'/><line x1='8.59' y1='13.51' x2='15.42' y2='17.49'/><line x1='15.41' y1='6.51' x2='8.59' y2='10.49'/>",
+            "calendar": "<rect x='3' y='4' width='18' height='18' rx='2' ry='2'/><line x1='16' y1='2' x2='16' y2='6'/><line x1='8' y1='2' x2='8' y2='6'/><line x1='3' y1='10' x2='21' y2='10'/>",
+            "folder": "<path d='M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z'/>",
+            "video": "<polygon points='23 7 16 12 23 17 23 7'/><rect x='1' y='5' width='15' height='14' rx='2' ry='2'/>",
+            "activity": "<polyline points='22 12 18 12 15 21 9 3 6 12 2 12'/>",
+            "upload": "<path d='M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4'/><polyline points='17 8 12 3 7 8'/><line x1='12' y1='3' x2='12' y2='15'/>",
+            "download": "<path d='M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4'/><polyline points='7 10 12 15 17 10'/><line x1='12' y1='15' x2='12' y2='3'/>",
+            "dollar-sign": "<line x1='12' y1='1' x2='12' y2='23'/><path d='M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6'/>",
+            "shield": "<path d='M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z'/>",
+            "lock": "<rect x='3' y='11' width='18' height='11' rx='2' ry='2'/><path d='M7 11V7a5 5 0 0 1 10 0v4'/>",
+            "unlock": "<rect x='3' y='11' width='18' height='11' rx='2' ry='2'/><path d='M7 11V7a5 5 0 0 1 9.9-1'/>",
+            "eye": "<path d='M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z'/><circle cx='12' cy='12' r='3'/>",
+            "eye-off": "<path d='M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24'/><line x1='1' y1='1' x2='23' y2='23'/>",
+            "bar-chart": "<line x1='12' y1='20' x2='12' y2='10'/><line x1='18' y1='20' x2='18' y2='4'/><line x1='6' y1='20' x2='6' y2='16'/>",
+            "edit": "<path d='M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7'/><path d='M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z'/>",
+            "trash": "<polyline points='3 6 5 6 21 6'/><path d='M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2'/><line x1='10' y1='11' x2='10' y2='17'/><line x1='14' y1='11' x2='14' y2='17'/>",
+            "clock": "<circle cx='12' cy='12' r='10'/><polyline points='12 6 12 12 16 14'/>",
+            "tool": "<path d='M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z'/>",
+            "log-in": "<path d='M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4'/><polyline points='10 17 15 12 10 7'/><line x1='15' y1='12' x2='3' y2='12'/>",
+            "log-out": "<path d='M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4'/><polyline points='16 17 21 12 16 7'/><line x1='21' y1='12' x2='9' y2='12'/>",
+            "book": "<path d='M4 19.5A2.5 2.5 0 0 1 6.5 17H20'/><path d='M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z'/>",
+            "award": "<circle cx='12' cy='8' r='7'/><polyline points='8.21 13.89 7 23 12 20 17 23 15.79 13.88'/>",
+            "mic": "<path d='M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z'/><path d='M19 10v2a7 7 0 0 1-14 0v-2'/><line x1='12' y1='19' x2='12' y2='23'/><line x1='8' y1='23' x2='16' y2='23'/>",
+            "pie-chart": "<path d='M21.21 15.89A10 10 0 1 1 8 2.83'/><path d='M22 12A10 10 0 0 0 12 2v10z'/>",
+            "bookmark": "<path d='M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z'/>",
+            "monitor": "<rect x='2' y='3' width='20' height='14' rx='2' ry='2'/><line x1='8' y1='21' x2='16' y2='21'/><line x1='12' y1='17' x2='12' y2='21'/>",
+            "smartphone": "<rect x='5' y='2' width='14' height='20' rx='2' ry='2'/><line x1='12' y1='18' x2='12.01' y2='18'/>",
+            "wifi": "<path d='M5 12.55a11 11 0 0 1 14.08 0'/><path d='M1.42 9a16 16 0 0 1 21.16 0'/><path d='M8.53 16.11a6 6 0 0 1 6.95 0'/><line x1='12' y1='20' x2='12.01' y2='20'/>",
+            "cloud": "<path d='M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z'/>",
+            "bluetooth": "<polyline points='6.5 6.5 17.5 17.5 12 23 12 1 17.5 6.5 6.5 17.5'/>",
+            "battery": "<rect x='1' y='6' width='18' height='12' rx='2' ry='2'/><line x1='23' y1='13' x2='23' y2='11'/>",
+            "alert-triangle": "<path d='M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z'/><line x1='12' y1='9' x2='12' y2='13'/><line x1='12' y1='17' x2='12.01' y2='17'/>",
+            "power": "<path d='M18.36 6.64a9 9 0 1 1-12.73 0'/><line x1='12' y1='2' x2='12' y2='12'/>",
+            "copy": "<rect x='9' y='9' width='13' height='13' rx='2' ry='2'/><path d='M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1'/>",
+            "save": "<path d='M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z'/><polyline points='17 21 17 13 7 13 7 21'/><polyline points='7 3 7 8 15 8'/>",
+            "refresh-cw": "<polyline points='23 4 23 10 17 10'/><polyline points='1 20 1 14 7 14'/><path d='M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15'/>",
+            "briefcase": "<rect x='2' y='7' width='20' height='14' rx='2' ry='2'/><path d='M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16'/>",
+            "send": "<line x1='22' y1='2' x2='11' y2='13'/><polygon points='22 2 15 22 11 13 2 9 22 2'/>",
+            "arrow-down": "<line x1='12' y1='5' x2='12' y2='19'/><polyline points='19 12 12 19 5 12'/>",
+            "arrow-up": "<line x1='12' y1='19' x2='12' y2='5'/><polyline points='5 12 12 5 19 12'/>",
+            "arrow-left": "<line x1='19' y1='12' x2='5' y2='12'/><polyline points='12 19 5 12 12 5'/>",
+            "arrow-right": "<line x1='5' y1='12' x2='19' y2='12'/><polyline points='12 5 19 12 12 19'/>",
+            "headphones": "<path d='M3 18v-6a9 9 0 0 1 18 0v6'/><path d='M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z'/>",
+            "paperclip": "<path d='M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48'/>",
+            "info": "<circle cx='12' cy='12' r='10'/><line x1='12' y1='16' x2='12' y2='12'/><line x1='12' y1='8' x2='12.01' y2='8'/>",
+            "globe": "<circle cx='12' cy='12' r='10'/><line x1='2' y1='12' x2='22' y2='12'/><path d='M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z'/>",
+            "compass": "<circle cx='12' cy='12' r='10'/><polygon points='16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76'/>",
+            "link": "<path d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'/><path d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'/>",
+            "percent": "<line x1='19' y1='5' x2='5' y2='19'/><circle cx='6.5' cy='6.5' r='2.5'/><circle cx='17.5' cy='17.5' r='2.5'/>",
+            "key": "<path d='M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4'/>"
+        };
+
+        const businessCategories = [
+            {
+                name: "1. Supermarket & Retail",
+                items: [
+                    { id: 'home', desc: 'Home Dashboard' },
+                    { id: 'search', desc: 'Search Products' },
+                    { id: 'user', desc: 'Customer Profile' },
+                    { id: 'settings', desc: 'App Settings' },
+                    { id: 'shopping-cart', desc: 'View Cart' },
+                    { id: 'shopping-bag', desc: 'Shopping Bag' },
+                    { id: 'credit-card', desc: 'Payment Methods' },
+                    { id: 'wallet', desc: 'Digital Wallet' },
+                    { id: 'list', desc: 'Order History' },
+                    { id: 'grid', desc: 'Product Categories' },
+                    { id: 'bell', desc: 'Promo Notifications' },
+                    { id: 'heart', desc: 'Wishlist / Favorites' },
+                    { id: 'star', desc: 'Rate Product' },
+                    { id: 'tag', desc: 'Discount Tags' },
+                    { id: 'filter', desc: 'Filter Items' },
+                    { id: 'trending-up', desc: 'Sales Trending' },
+                    { id: 'truck', desc: 'Delivery Status' },
+                    { id: 'package', desc: 'Track Package' },
+                    { id: 'message', desc: 'Support Chat' },
+                    { id: 'phone', desc: 'Call Support' },
+                    { id: 'map-pin', desc: 'Store Locations' },
+                    { id: 'camera', desc: 'Scan Barcode' },
+                    { id: 'file', desc: 'Receipt / Invoice' },
+                    { id: 'share', desc: 'Share Product' },
+                    { id: 'plus', desc: 'Add to Cart' },
+                    { id: 'minus', desc: 'Remove Item' },
+                    { id: 'check', desc: 'Order Success' },
+                    { id: 'x', desc: 'Cancel Order' },
+                    { id: 'menu', desc: 'Menu Navigation' },
+                    { id: 'users', desc: 'Membership Program' }
+                ]
+            },
+            {
+                name: "2. Healthcare & Hospitality",
+                items: [
+                    { id: 'home', desc: 'Clinic Dashboard' },
+                    { id: 'search', desc: 'Search Patients' },
+                    { id: 'user', desc: 'Patient Profile' },
+                    { id: 'users', desc: 'Staff Directory' },
+                    { id: 'user-plus', desc: 'Add Patient' },
+                    { id: 'settings', desc: 'System Settings' },
+                    { id: 'calendar', desc: 'Appointments' },
+                    { id: 'folder', desc: 'Medical Records' },
+                    { id: 'file', desc: 'Prescriptions' },
+                    { id: 'message', desc: 'Consultations' },
+                    { id: 'video', desc: 'Telehealth Call' },
+                    { id: 'bell', desc: 'Health Reminders' },
+                    { id: 'activity', desc: 'Patient Vitals' },
+                    { id: 'heart', desc: 'Health Status' },
+                    { id: 'upload', desc: 'Upload Record' },
+                    { id: 'download', desc: 'Download Report' },
+                    { id: 'list', desc: 'Care Plan' },
+                    { id: 'dollar-sign', desc: 'Billing / Invoice' },
+                    { id: 'shield', desc: 'Insurance Info' },
+                    { id: 'phone', desc: 'Emergency Contact' },
+                    { id: 'map-pin', desc: 'Hospital Location' },
+                    { id: 'lock', desc: 'Secure Data Lock' },
+                    { id: 'unlock', desc: 'Unlock Record' },
+                    { id: 'eye', desc: 'View Details' },
+                    { id: 'eye-off', desc: 'Hide Privacy Data' },
+                    { id: 'bar-chart', desc: 'Health Analytics' },
+                    { id: 'edit', desc: 'Edit Info' },
+                    { id: 'trash', desc: 'Delete Record' },
+                    { id: 'menu', desc: 'Main Menu' },
+                    { id: 'bookmark', desc: 'Saved Articles' }
+                ]
+            },
+            {
+                name: "3. Home Service",
+                items: [
+                    { id: 'home', desc: 'Service Dashboard' },
+                    { id: 'search', desc: 'Search Services' },
+                    { id: 'user', desc: 'Customer Profile' },
+                    { id: 'user-check', desc: 'Verified Provider' },
+                    { id: 'settings', desc: 'App Settings' },
+                    { id: 'calendar', desc: 'Bookings' },
+                    { id: 'clock', desc: 'Schedule Time' },
+                    { id: 'message', desc: 'Message Tech' },
+                    { id: 'phone', desc: 'Call Provider' },
+                    { id: 'bell', desc: 'Job Alerts' },
+                    { id: 'grid', desc: 'Service Categories' },
+                    { id: 'star', desc: 'Provider Reviews' },
+                    { id: 'heart', desc: 'Favorite Techs' },
+                    { id: 'file', desc: 'Service Invoice' },
+                    { id: 'credit-card', desc: 'Online Payment' },
+                    { id: 'map-pin', desc: 'Job Location' },
+                    { id: 'activity', desc: 'Job Progress' },
+                    { id: 'camera', desc: 'Upload Photos' },
+                    { id: 'folder', desc: 'Work Orders' },
+                    { id: 'plus', desc: 'Add New Task' },
+                    { id: 'x', desc: 'Cancel Booking' },
+                    { id: 'check', desc: 'Job Completed' },
+                    { id: 'share', desc: 'Share Profile' },
+                    { id: 'filter', desc: 'Filter by Trade' },
+                    { id: 'shield', desc: 'Privacy & Safety' },
+                    { id: 'tool', desc: 'Equipment List' },
+                    { id: 'menu', desc: 'Navigation Menu' },
+                    { id: 'edit', desc: 'Edit Booking' },
+                    { id: 'trash', desc: 'Delete Task' },
+                    { id: 'log-in', desc: 'Tech Login' }
+                ]
+            },
+            {
+                name: "4. Hotel",
+                items: [
+                    { id: 'home', desc: 'Hotel Dashboard' },
+                    { id: 'search', desc: 'Search Rooms' },
+                    { id: 'user', desc: 'Guest Profile' },
+                    { id: 'users', desc: 'Staff / Personnel' },
+                    { id: 'settings', desc: 'App Settings' },
+                    { id: 'calendar', desc: 'Check-in Dates' },
+                    { id: 'clock', desc: 'Arrival Time' },
+                    { id: 'grid', desc: 'Room Types' },
+                    { id: 'list', desc: 'Amenities List' },
+                    { id: 'star', desc: 'Hotel Reviews' },
+                    { id: 'heart', desc: 'Favorite Rooms' },
+                    { id: 'file', desc: 'Booking Receipt' },
+                    { id: 'credit-card', desc: 'Pay Reservation' },
+                    { id: 'map-pin', desc: 'Directions' },
+                    { id: 'phone', desc: 'Call Reception' },
+                    { id: 'message', desc: 'Concierge Chat' },
+                    { id: 'bell', desc: 'Reminders' },
+                    { id: 'shopping-bag', desc: 'Room Service' },
+                    { id: 'key', desc: 'Digital Door Key' },
+                    { id: 'wifi', desc: 'Wi-Fi Access' },
+                    { id: 'monitor', desc: 'Smart TV Control' },
+                    { id: 'shield', desc: 'Secure Booking' },
+                    { id: 'upload', desc: 'Upload ID Doc' },
+                    { id: 'camera', desc: 'Room Gallery' },
+                    { id: 'eye', desc: 'View 360 Tour' },
+                    { id: 'filter', desc: 'Filter Rooms' },
+                    { id: 'user-plus', desc: 'Add Guest' },
+                    { id: 'user-minus', desc: 'Remove Guest' },
+                    { id: 'menu', desc: 'App Menu' },
+                    { id: 'log-out', desc: 'Guest Checkout' }
+                ]
+            },
+            {
+                name: "5. Education Business",
+                items: [
+                    { id: 'home', desc: 'Student Dashboard' },
+                    { id: 'search', desc: 'Search Courses' },
+                    { id: 'user', desc: 'Student Profile' },
+                    { id: 'users', desc: 'Instructors' },
+                    { id: 'settings', desc: 'Settings' },
+                    { id: 'calendar', desc: 'Class Schedule' },
+                    { id: 'folder', desc: 'Course Modules' },
+                    { id: 'file', desc: 'Lesson Material' },
+                    { id: 'book', desc: 'Assignments' },
+                    { id: 'bar-chart', desc: 'Grades/Analytics' },
+                    { id: 'award', desc: 'Certificates' },
+                    { id: 'message', desc: 'Discussion Forums' },
+                    { id: 'video', desc: 'Video Lectures' },
+                    { id: 'mic', desc: 'Audio Lessons' },
+                    { id: 'pie-chart', desc: 'Course Progress' },
+                    { id: 'bell', desc: 'Class Reminders' },
+                    { id: 'bookmark', desc: 'Saved Courses' },
+                    { id: 'list', desc: 'Syllabus' },
+                    { id: 'shopping-cart', desc: 'Buy Course' },
+                    { id: 'credit-card', desc: 'Tuition Payment' },
+                    { id: 'star', desc: 'Course Ratings' },
+                    { id: 'upload', desc: 'Submit Homework' },
+                    { id: 'download', desc: 'Download Handout' },
+                    { id: 'user-plus', desc: 'Enroll Student' },
+                    { id: 'grid', desc: 'Course Categories' },
+                    { id: 'edit', desc: 'Edit Profile' },
+                    { id: 'shield', desc: 'Privacy Center' },
+                    { id: 'menu', desc: 'Navigation' },
+                    { id: 'log-in', desc: 'Student Login' },
+                    { id: 'log-out', desc: 'Logout Portal' }
+                ]
+            },
+            {
+                name: "6. Tech Services",
+                items: [
+                    { id: 'home', desc: 'IT Dashboard' },
+                    { id: 'search', desc: 'Search Tickets' },
+                    { id: 'user', desc: 'Client Profile' },
+                    { id: 'users', desc: 'Admin Team' },
+                    { id: 'settings', desc: 'System Settings' },
+                    { id: 'monitor', desc: 'Desktop Support' },
+                    { id: 'smartphone', desc: 'Mobile Devices' },
+                    { id: 'wifi', desc: 'Network Status' },
+                    { id: 'cloud', desc: 'Cloud Storage' },
+                    { id: 'bluetooth', desc: 'Peripherals' },
+                    { id: 'battery', desc: 'Power Status' },
+                    { id: 'alert-triangle', desc: 'System Alerts' },
+                    { id: 'message', desc: 'Support Chat' },
+                    { id: 'phone', desc: 'Helpline' },
+                    { id: 'video', desc: 'Remote Video' },
+                    { id: 'book', desc: 'Knowledge Base' },
+                    { id: 'file', desc: 'Error Logs' },
+                    { id: 'folder', desc: 'Tech Projects' },
+                    { id: 'bar-chart', desc: 'Usage Analytics' },
+                    { id: 'activity', desc: 'Server Uptime' },
+                    { id: 'shield', desc: 'Data Security' },
+                    { id: 'lock', desc: 'Lock System' },
+                    { id: 'unlock', desc: 'Unlock Access' },
+                    { id: 'power', desc: 'Restart Device' },
+                    { id: 'tool', desc: 'Terminal / Tools' },
+                    { id: 'copy', desc: 'Copy Code/IP' },
+                    { id: 'save', desc: 'Save Config' },
+                    { id: 'refresh-cw', desc: 'Sync/Refresh' },
+                    { id: 'plus', desc: 'Add Node' },
+                    { id: 'menu', desc: 'Console Menu' }
+                ]
+            },
+            {
+                name: "7. Financial Services",
+                items: [
+                    { id: 'home', desc: 'Account Dashboard' },
+                    { id: 'search', desc: 'Search Transactions' },
+                    { id: 'user', desc: 'User Profile' },
+                    { id: 'briefcase', desc: 'Portfolios' },
+                    { id: 'settings', desc: 'App Settings' },
+                    { id: 'dollar-sign', desc: 'Balances' },
+                    { id: 'pie-chart', desc: 'Asset Allocation' },
+                    { id: 'trending-up', desc: 'Market Growth' },
+                    { id: 'trending-down', desc: 'Market Decline' },
+                    { id: 'bar-chart', desc: 'Expense Reports' },
+                    { id: 'file', desc: 'E-Statements' },
+                    { id: 'send', desc: 'Transfer Funds' },
+                    { id: 'arrow-down', desc: 'Deposit' },
+                    { id: 'arrow-up', desc: 'Withdraw' },
+                    { id: 'arrow-left', desc: 'Receive Money' },
+                    { id: 'arrow-right', desc: 'Pay Bills' },
+                    { id: 'credit-card', desc: 'Manage Cards' },
+                    { id: 'users', desc: 'Saved Contacts' },
+                    { id: 'user-plus', desc: 'Add Payee' },
+                    { id: 'message', desc: 'Bank Messages' },
+                    { id: 'bell', desc: 'Alerts' },
+                    { id: 'shield', desc: 'Secure Login' },
+                    { id: 'lock', desc: 'Lock Card' },
+                    { id: 'unlock', desc: 'Unlock Card' },
+                    { id: 'eye', desc: 'Show Balance' },
+                    { id: 'eye-off', desc: 'Hide Balance' },
+                    { id: 'headphones', desc: 'Live Support' },
+                    { id: 'map-pin', desc: 'Branch/ATM' },
+                    { id: 'list', desc: 'Transaction History' },
+                    { id: 'menu', desc: 'App Menu' }
+                ]
+            },
+            {
+                name: "8. Law & Advocative business",
+                items: [
+                    { id: 'home', desc: 'Firm Dashboard' },
+                    { id: 'search', desc: 'Search Cases' },
+                    { id: 'user', desc: 'Client Profile' },
+                    { id: 'users', desc: 'Attorneys' },
+                    { id: 'settings', desc: 'Settings' },
+                    { id: 'calendar', desc: 'Court Dates' },
+                    { id: 'folder', desc: 'Case Files' },
+                    { id: 'file', desc: 'Legal Documents' },
+                    { id: 'paperclip', desc: 'Attachments' },
+                    { id: 'bookmark', desc: 'Bookmarked Laws' },
+                    { id: 'camera', desc: 'Evidence Photos' },
+                    { id: 'message', desc: 'Client Chat' },
+                    { id: 'shield', desc: 'Secure Comms' },
+                    { id: 'lock', desc: 'Confidential' },
+                    { id: 'info', desc: 'Legal Info' },
+                    { id: 'alert-triangle', desc: 'Dispute Warnings' },
+                    { id: 'activity', desc: 'Case Progress' },
+                    { id: 'briefcase', desc: 'Corporate Cases' },
+                    { id: 'dollar-sign', desc: 'Retainer Fees' },
+                    { id: 'credit-card', desc: 'Payments' },
+                    { id: 'video', desc: 'Virtual Consult' },
+                    { id: 'phone', desc: 'Call Office' },
+                    { id: 'map-pin', desc: 'Office Locations' },
+                    { id: 'user-plus', desc: 'Add New Client' },
+                    { id: 'edit', desc: 'Edit Case Notes' },
+                    { id: 'trash', desc: 'Archive Case' },
+                    { id: 'download', desc: 'Download Brief' },
+                    { id: 'upload', desc: 'Upload Affidavits' },
+                    { id: 'share', desc: 'Share Documents' },
+                    { id: 'menu', desc: 'System Menu' }
+                ]
+            },
+            {
+                name: "9. Logistic, warehouse & Supply Chain",
+                items: [
+                    { id: 'home', desc: 'Logistics Dashboard' },
+                    { id: 'search', desc: 'Search Waybill' },
+                    { id: 'user', desc: 'Driver Profile' },
+                    { id: 'users', desc: 'Fleet Management' },
+                    { id: 'settings', desc: 'System Settings' },
+                    { id: 'package', desc: 'Cargo / Parcels' },
+                    { id: 'truck', desc: 'Delivery Trucks' },
+                    { id: 'calendar', desc: 'Schedules' },
+                    { id: 'clock', desc: 'Transit Time' },
+                    { id: 'globe', desc: 'Global Shipping' },
+                    { id: 'map-pin', desc: 'Destinations' },
+                    { id: 'compass', desc: 'Route Optimizer' },
+                    { id: 'file', desc: 'Manifests' },
+                    { id: 'list', desc: 'Inventories' },
+                    { id: 'grid', desc: 'Warehouse Zones' },
+                    { id: 'bell', desc: 'Tracking Alerts' },
+                    { id: 'message', desc: 'Dispatcher Chat' },
+                    { id: 'phone', desc: 'Call Driver' },
+                    { id: 'camera', desc: 'Scan QR/Barcode' },
+                    { id: 'tag', desc: 'RFID Tags' },
+                    { id: 'upload', desc: 'Upload BOL' },
+                    { id: 'download', desc: 'Download POD' },
+                    { id: 'link', desc: 'Supply Chain Link' },
+                    { id: 'wifi', desc: 'IoT Tracking' },
+                    { id: 'shield', desc: 'Cargo Insurance' },
+                    { id: 'bar-chart', desc: 'Efficiency Analytics' },
+                    { id: 'plus', desc: 'Create Order' },
+                    { id: 'x', desc: 'Cancel Shipment' },
+                    { id: 'check', desc: 'Confirm Drop-off' },
+                    { id: 'menu', desc: 'Nav Menu' }
+                ]
+            },
+            {
+                name: "10. Real Estate & Property",
+                items: [
+                    { id: 'home', desc: 'Property Dashboard' },
+                    { id: 'search', desc: 'Search Listings' },
+                    { id: 'user', desc: 'Agent Profile' },
+                    { id: 'users', desc: 'Clients Directory' },
+                    { id: 'settings', desc: 'App Settings' },
+                    { id: 'grid', desc: 'Floor Plans' },
+                    { id: 'map-pin', desc: 'Property Location' },
+                    { id: 'camera', desc: 'Photo Gallery' },
+                    { id: 'video', desc: 'Virtual Tours' },
+                    { id: 'list', desc: 'Amenities List' },
+                    { id: 'dollar-sign', desc: 'Asking Price' },
+                    { id: 'percent', desc: 'Mortgage Rates' },
+                    { id: 'trending-up', desc: 'Market Value' },
+                    { id: 'file', desc: 'Lease Contracts' },
+                    { id: 'folder', desc: 'Agent Portfolios' },
+                    { id: 'bookmark', desc: 'Saved Homes' },
+                    { id: 'heart', desc: 'Favorite Listings' },
+                    { id: 'message', desc: 'Message Agent' },
+                    { id: 'phone', desc: 'Call Owner' },
+                    { id: 'bell', desc: 'Price Alerts' },
+                    { id: 'calendar', desc: 'Open House Dates' },
+                    { id: 'plus', desc: 'Add Listing' },
+                    { id: 'trash', desc: 'Remove Listing' },
+                    { id: 'edit', desc: 'Edit Details' },
+                    { id: 'filter', desc: 'Filter Search' },
+                    { id: 'share', desc: 'Share Property' },
+                    { id: 'shield', desc: 'Secure Documents' },
+                    { id: 'key', desc: 'Handover Keys' },
+                    { id: 'check', desc: 'Sold / Closed' },
+                    { id: 'menu', desc: 'App Menu' }
+                ]
+            }
+        ];
+
+        // Initialization
+        document.addEventListener('DOMContentLoaded', () => {
+            renderTable();
+            updateLanguageUI();
+        });
+
+        function renderTable() {
+            const tbody = document.getElementById('icon-table-body');
+            const svgPrefix = "data:image/svg+xml;utf8,";
+            
+            // Raw SVG Wrapper
+            const rawOpen = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">`;
+            const rawClose = `</svg>`;
+            
+            let htmlContent = "";
+
+            businessCategories.forEach((cat) => {
+                cat.items.forEach((item) => {
+                    const pathData = uiPaths[item.id];
+                    
+                    // Generate Raw SVG string
+                    const rawSvg = `${rawOpen}${pathData.replace(/'/g, '"')}${rawClose}`;
+                    
+                    // Generate Data URI string (AppSheet needs %23 for hex colors)
+                    const appSheetOpen = `<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%234b5563' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'>`;
+                    const appSheetSvg = `${appSheetOpen}${pathData}</svg>`;
+                    const dataUri = `${svgPrefix}${appSheetSvg}`;
+
+                    // Display SVG (for preview) - Update to standard blue for light theme
+                    const previewSvg = `${rawOpen.replace('currentColor', '#2563eb')}${pathData.replace(/'/g, '"')}${rawClose}`;
+                    const previewUri = `data:image/svg+xml;utf8,${previewSvg.replace(/#/g, '%23').replace(/"/g, "'")}`;
+
+                    htmlContent += `
+                        <tr class="hover:bg-blue-50/80 transition-colors duration-150 group border-b border-slate-100">
+                            <td class="py-4 px-6 text-[13px] text-slate-600 font-bold align-top break-words">
+                                ${cat.name}
+                            </td>
+                            <td class="py-4 px-6 align-top">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 rounded-lg bg-slate-50 flex items-center justify-center border border-slate-200 shrink-0 shadow-sm">
+                                        <img src="${previewUri}" class="w-6 h-6 opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all" alt="${item.desc}">
+                                    </div>
+                                    <span class="text-[13px] text-slate-800 font-bold">${item.desc}</span>
+                                </div>
+                            </td>
+                            <td class="py-4 px-6 align-top">
+                                <div class="flex flex-col gap-4">
+                                    
+                                    <!-- AppSheet Data URI Box -->
+                                    <div class="flex flex-col gap-1.5">
+                                        <div class="flex justify-between items-center">
+                                            <span class="text-[10px] text-slate-500 font-bold uppercase tracking-wider">Data URI (AppSheet)</span>
+                                            <button onclick="copyCode(this)" data-clipboard="${dataUri}" class="ui-copy-uri inline-flex items-center text-[10px] font-bold uppercase bg-slate-100 border border-slate-200 text-slate-600 rounded shadow-sm px-2.5 py-1 hover:bg-blue-600 hover:text-white hover:border-blue-600 focus:outline-none transition-all">
+                                                <i class="fa-regular fa-copy mr-1.5 opacity-80"></i>
+                                                <span class="copy-text">Copy Data URI</span>
+                                            </button>
+                                        </div>
+                                        <div class="bg-slate-900 p-3 rounded-lg text-xs text-blue-300 break-all font-mono code-scroll max-h-16 overflow-y-auto border border-slate-800 shadow-inner">
+                                            ${dataUri}
+                                        </div>
+                                    </div>
+
+                                    <!-- Raw SVG Box -->
+                                    <div class="flex flex-col gap-1.5">
+                                        <div class="flex justify-between items-center">
+                                            <span class="text-[10px] text-slate-500 font-bold uppercase tracking-wider">Raw SVG (Web)</span>
+                                            <button onclick="copyCode(this)" data-clipboard='${rawSvg}' class="ui-copy-svg inline-flex items-center text-[10px] font-bold uppercase bg-slate-100 border border-slate-200 text-slate-600 rounded shadow-sm px-2.5 py-1 hover:bg-blue-600 hover:text-white hover:border-blue-600 focus:outline-none transition-all">
+                                                <i class="fa-solid fa-code mr-1.5 opacity-80"></i>
+                                                <span class="copy-text">Copy Raw SVG</span>
+                                            </button>
+                                        </div>
+                                        <div class="bg-slate-900 p-3 rounded-lg text-xs text-emerald-300 break-all font-mono code-scroll max-h-16 overflow-y-auto border border-slate-800 shadow-inner">
+                                            ${rawSvg.replace(/</g, '&lt;').replace(/>/g, '&gt;')}
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </td>
+                        </tr>
+                    `;
+                });
+            });
+
+            tbody.innerHTML = htmlContent;
+        }
+
+        // Language Switcher Logic
+        function switchLanguage(langKey) {
+            if (!uiTranslations[langKey]) return;
+            currentLang = langKey;
+            updateLanguageUI();
+        }
+
+        function updateLanguageUI() {
+            const t = uiTranslations[currentLang] || uiTranslations.id;
+            
+            document.getElementById('uiTutorialBtn').innerText = t.tutorialBtn;
+            document.getElementById('uiJoinBtn').innerText = t.joinBtn;
+            document.getElementById('uiTitle').innerHTML = t.title;
+            document.getElementById('uiDesc').innerText = t.desc;
+            document.getElementById('uiNote').innerHTML = t.note;
+            document.getElementById('uiColCat').innerText = t.colCat;
+            document.getElementById('uiColDesc').innerText = t.colDesc;
+            document.getElementById('uiColCode').innerText = t.colCode;
+
+            // Update all copy buttons text
+            document.querySelectorAll('.ui-copy-uri .copy-text').forEach(el => el.innerText = t.copyUri);
+            document.querySelectorAll('.ui-copy-svg .copy-text').forEach(el => el.innerText = t.copySvg);
+        }
+
+        // Copy to Clipboard
+        function copyCode(button) {
+            const codeToCopy = button.getAttribute('data-clipboard');
+            const originalHTML = button.innerHTML;
+            const t = uiTranslations[currentLang] || uiTranslations.id;
+
+            // Use execCommand for broader compatibility, especially in iframes
+            const textarea = document.createElement("textarea");
+            textarea.value = codeToCopy;
+            textarea.style.position = "fixed";  // Prevent scrolling
+            textarea.style.opacity = "0";
+            document.body.appendChild(textarea);
+            textarea.select();
+            
+            try {
+                document.execCommand("copy");
+                // Visual feedback - Enterprise Light Theme success state
+                button.innerHTML = `<i class="fa-solid fa-check mr-1.5 text-emerald-600"></i><span class="text-emerald-600 font-bold">${t.copied}</span>`;
+                button.classList.add('border-emerald-500', 'bg-emerald-50');
+                button.classList.remove('text-white', 'bg-blue-600', 'border-blue-600');
+            } catch (ex) {
+                console.warn("Copy to clipboard failed.", ex);
+            } finally {
+                document.body.removeChild(textarea);
+            }
+
+            // Revert back after 2 seconds
+            setTimeout(() => {
+                button.innerHTML = originalHTML;
+                button.classList.remove('border-emerald-500', 'bg-emerald-50');
+            }, 2000);
+        }
+    </script>
+</body>
+</html>
