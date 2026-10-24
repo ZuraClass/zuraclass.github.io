@@ -12,20 +12,110 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <script src="https://unpkg.com/lucide@latest"></script>
 
-  <!-- SUPABASE SDK -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
   <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: { sans: ['Inter', 'sans-serif'] },
-          colors: {
-            zura: { navy: '#0A1931', deep: '#152A4A', blue: '#2563EB', light: '#EFF6FF', ice: '#DBEAFE' }
-          }
-        }
+    /* =====================================================================
+       SUPABASE CONFIGURATION
+       ===================================================================== */
+    const SUPABASE_URL = 'https://your-project-id.supabase.co';
+    const SUPABASE_ANON_KEY = 'your-supabase-anon-key-here';
+
+    const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    let currentRole = 'buyer';
+    const $ = id => document.getElementById(id);
+    const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
+    // Cek apakah user baru saja kembali dari link verifikasi email
+    window.addEventListener('DOMContentLoaded', () => {
+      const params = new URLSearchParams(location.search);
+      if (params.get('verified') === 'true' || location.hash.includes('type=signup')) {
+        showView('login');
+        showAlert('success', 'Email verified successfully! Please log in with your credentials.');
+      } else {
+        const mode = params.get('mode');
+        showView(['login', 'register', 'forgot'].includes(mode) ? mode : 'login');
       }
+      lucide.createIcons();
+    });
+
+    /* =====================================================================
+       SUPABASE AUTH FLOW (Disesuaikan agar tidak auto-login setelah verifikasi)
+       ===================================================================== */
+    if (supabaseClient) {
+      // Tangkap event ketika token verifikasi email diproses
+      supabaseClient.auth.onAuthStateChange(async (event, session) => {
+        if (event === 'SIGNED_IN') {
+          // Jika user terdeteksi login karena klik link verifikasi email, 
+          // kita langsung Sign Out paksa agar mereka diarahkan ke halaman login manual.
+          await supabaseClient.auth.signOut();
+          window.location.href = '/auth/?verified=true';
+        }
+      });
     }
+
+    // Handler Login
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      hideAlert(); 
+      
+      const email = document.getElementById('loginEmail').value.trim();
+      const password = document.getElementById('loginPassword').value;
+      
+      if (!emailRe.test(email) || !password) {
+        showAlert('error', 'Please enter a valid email and password.');
+        return;
+      }
+
+      setLoading(e.target, true, 'Logging in...');
+      const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
+      setLoading(e.target, false);
+      
+      if (error) {
+        if (error.message.includes('Email not confirmed')) {
+          showAlert('error', 'Your email address has not been verified yet. Please check your inbox for the verification link.');
+        } else {
+          showAlert('error', error.message);
+        }
+      } else {
+        const userMeta = data.user?.user_metadata || {};
+        const userData = { name: userMeta.name || 'User', email: data.user.email, role: userMeta.role || 'buyer' };
+        localStorage.setItem('zl_demo_session', JSON.stringify(userData));
+        showToast('Login successful! Redirecting...');
+        setTimeout(() => window.location.href = '/', 1000);
+      }
+    });
+
+    // Handler Register (Redirect kembali ke /auth/?verified=true setelah klik email)
+    document.getElementById('registerForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      hideAlert();
+
+      const name = document.getElementById('regName').value.trim();
+      const email = document.getElementById('regEmail').value.trim();
+      const password = document.getElementById('regPassword').value;
+      
+      if (!name || !emailRe.test(email) || password.length < 6) {
+        showAlert('error', 'Please complete all required fields correctly.');
+        return;
+      }
+
+      setLoading(e.target, true, 'Creating account...');
+      const { data, error } = await supabaseClient.auth.signUp({
+        email: email,
+        password: password,
+        options: {
+          data: { name: name, role: currentRole },
+          emailRedirectTo: window.location.origin + '/auth/?verified=true'
+        }
+      });
+      setLoading(e.target, false);
+
+      if (error) {
+        showAlert('error', error.message);
+      } else {
+        document.getElementById('verifyEmailDisplay').textContent = email;
+        showView('verify');
+      }
+    });
   </script>
 
   <style>
