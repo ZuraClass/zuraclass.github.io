@@ -1,0 +1,1260 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Zuralogic.com — Your Scale-Up Partner | Global Business App Ecosystem</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          },
+          colors: {
+            zura: {
+              navy: '#0A1931',
+              deep: '#152A4A',
+              blue: '#2563EB',
+              light: '#EFF6FF',
+              ice: '#DBEAFE'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Custom Frosted Glass & Wave Styling */
+    .frosted-nav {
+      background: rgba(255, 255, 255, 0.86);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+    }
+
+    /* Glassmorphism Navy-Blue-White Cards (3 Right Hero Buttons - Tanpa Pill Badge Kecil) */
+    .glass-action-card {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(239, 246, 255, 0.88) 55%, rgba(219, 234, 254, 0.82) 100%);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid rgba(255, 255, 255, 0.92);
+      box-shadow: 0 16px 36px -8px rgba(10, 25, 49, 0.25), inset 0 1px 1px rgba(255, 255, 255, 0.95);
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .glass-action-card:hover {
+      background: linear-gradient(135deg, rgba(10, 25, 49, 0.96) 0%, rgba(29, 78, 216, 0.92) 100%);
+      border-color: rgba(147, 197, 253, 0.65);
+      transform: translateY(-4px) scale(1.015);
+      box-shadow: 0 24px 48px -12px rgba(10, 25, 49, 0.5);
+    }
+
+    .glass-action-card:hover .card-title,
+    .glass-action-card:hover .card-desc,
+    .glass-action-card:hover .card-arrow {
+      color: #ffffff !important;
+    }
+
+    .glass-action-card:hover .card-icon-box {
+      background: rgba(255, 255, 255, 0.16);
+      color: #ffffff;
+      border-color: rgba(255, 255, 255, 0.35);
+    }
+
+    /* Multi-level Dropdown Hover */
+    .dropdown-menu {
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(10px);
+      transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .group:hover > .dropdown-menu,
+    .dropdown-group:hover > .dropdown-menu {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .sub-dropdown-menu {
+      opacity: 0;
+      visibility: hidden;
+      transform: translateX(10px);
+      transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .sub-group:hover > .sub-dropdown-menu {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(0);
+    }
+
+    /* Hide scrollbar for category slider */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+</head>
+
+<body class="bg-slate-50 text-slate-900 font-sans antialiased selection:bg-blue-600 selection:text-white flex flex-col min-h-screen">
+
+  <!-- =====================================================================
+       SIMULATOR BAR (Untuk ngetes fitur Creator Hub saat Login/Guest)
+       ===================================================================== -->
+  <div class="bg-zura-navy text-blue-100 text-xs py-2 px-4 border-b border-blue-900/80">
+    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
+      <div class="flex items-center gap-2">
+        <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+        <span><strong>Enterprise Simulator:</strong> Test the <strong>"Creator Hub"</strong> member gate (Dashboard, Portfolio & Profile).</span>
+      </div>
+      <div class="flex items-center gap-3">
+        <div class="flex items-center gap-2">
+          <!-- Dummy Creator Avatar in Top Bar -->
+          <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=80&q=80" alt="User Avatar" class="w-5 h-5 rounded-full object-cover border border-blue-400" />
+          <span id="roleStatusLabel" class="text-blue-200 font-medium">Status: Public Guest</span>
+        </div>
+        <button onclick="toggleCreatorMode()" id="toggleCreatorBtn" class="px-3 py-1 rounded-md bg-blue-600 hover:bg-blue-500 text-white font-semibold transition flex items-center gap-1.5 shadow-sm">
+          <i data-lucide="user-check" class="w-3.5 h-3.5"></i>
+          <span id="toggleCreatorBtnText">Simulate Creator Login</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       HEADER / NAVBAR (Frosted Glass Sticky + Clean Vector Mega Menu)
+       ===================================================================== -->
+  <header class="sticky top-0 z-50 frosted-nav border-b border-blue-100/80 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-3">
+      
+      <!-- 1. LOGO ZURALOGIC.COM & TAGLINE (Dengan Gambar Dummy) -->
+      <a href="https://zuralogic.com" class="flex items-center gap-3 group shrink-0">
+        <!-- GANTI URL LOGO DI SINI -->
+        <div class="relative w-11 h-11 rounded-xl overflow-hidden shadow-md border border-blue-200 group-hover:scale-105 transition bg-zura-navy flex items-center justify-center">
+          <img 
+            src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=160&q=80" 
+            onerror="this.src='https://placehold.co/96x96/0A1931/FFFFFF?text=ZL'"
+            alt="Zuralogic Logo" 
+            class="w-full h-full object-cover opacity-90"
+          />
+          <span class="absolute inset-0 flex items-center justify-center font-black text-white text-base tracking-tighter bg-zura-navy/50 backdrop-blur-[1px]">ZL</span>
+        </div>
+        <div class="flex flex-col">
+          <span class="text-xl font-black tracking-tight text-zura-navy group-hover:text-blue-600 transition leading-none">
+            Zuralogic<span class="text-blue-600">.com</span>
+          </span>
+          <span class="text-[11px] font-semibold text-slate-500 tracking-wide mt-1">
+            Your Scale-Up Partner
+          </span>
+        </div>
+      </a>
+
+      <!-- CENTER NAVIGATION MENUS (Clean Typography & Vector Icons — Tanpa Gambar) -->
+      <nav class="hidden xl:flex items-center gap-1.5">
+        
+        <!-- 2. MENU PRODUCT (Sub-menu & Sub-sub menu dengan Vector Icons) -->
+        <div class="relative group px-3 py-2">
+          <button class="flex items-center gap-1.5 text-sm font-semibold text-slate-700 hover:text-blue-600 transition">
+            <span>Product</span>
+            <i data-lucide="chevron-down" class="w-4 h-4 text-slate-400 group-hover:rotate-180 transition-transform"></i>
+          </button>
+
+          <!-- Level 1 Mega Dropdown -->
+          <div class="dropdown-menu absolute left-0 top-full pt-2 w-80 z-50">
+            <div class="bg-white/95 backdrop-blur-xl rounded-2xl shadow-2xl border border-blue-100 p-2.5 space-y-1">
+              
+              <!-- Sub-menu 1: Ready to Go Business Apps -->
+              <div class="relative sub-group">
+                <a href="#marketplace-section" class="flex items-center justify-between p-2.5 rounded-xl hover:bg-blue-50/90 transition group/sub">
+                  <div class="flex items-center gap-3">
+                    <div class="w-9 h-9 rounded-lg bg-blue-50 border border-blue-100 text-blue-600 flex items-center justify-center shrink-0 group-hover/sub:bg-blue-600 group-hover/sub:text-white transition">
+                      <i data-lucide="layout-grid" class="w-4 h-4"></i>
+                    </div>
+                    <div>
+                      <div class="text-sm font-bold text-slate-800 group-hover/sub:text-blue-600">Ready to Go Business Apps</div>
+                      <div class="text-[11px] text-slate-500">Instant deployment for operations</div>
+                    </div>
+                  </div>
+                  <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
+                </a>
+                <!-- Sub-sub Menu -->
+                <div class="sub-dropdown-menu absolute left-full top-0 pl-2 w-72 z-50">
+                  <div class="bg-white/95 backdrop-blur-xl rounded-2xl shadow-2xl border border-blue-100 p-2.5 space-y-1">
+                    <div class="px-3 py-1 text-[10px] font-extrabold uppercase tracking-wider text-blue-600">Select Business Line</div>
+                    <a href="#marketplace-section" onclick="filterApps('warehouse')" class="flex items-center gap-2.5 px-3 py-2 rounded-lg hover:bg-blue-50 text-xs font-semibold text-slate-700 hover:text-blue-600 transition">
+                      <i data-lucide="package-check" class="w-4 h-4 text-blue-600 shrink-0"></i>
+                      <span>Warehouse & Logistics ERP</span>
+                    </a>
+                    <a href="#marketplace-section" onclick="filterApps('hse')" class="flex items-center gap-2.5 px-3 py-2 rounded-lg hover:bg-blue-50 text-xs font-semibold text-slate-700 hover:text-blue-600 transition">
+                      <i data-lucide="shield-check" class="w-4 h-4 text-blue-600 shrink-0"></i>
+                      <span>SIM-APAR & HSE Inspection</span>
+                    </a>
+                    <a href="#marketplace-section" onclick="filterApps('retail')" class="flex items-center gap-2.5 px-3 py-2 rounded-lg hover:bg-blue-50 text-xs font-semibold text-slate-700 hover:text-blue-600 transition">
+                      <i data-lucide="shopping-bag" class="w-4 h-4 text-blue-600 shrink-0"></i>
+                      <span>Omnichannel POS & Retail</span>
+                    </a>
+                    <a href="#marketplace-section" onclick="filterApps('hr')" class="flex items-center gap-2.5 px-3 py-2 rounded-lg hover:bg-blue-50 text-xs font-semibold text-slate-700 hover:text-blue-600 transition">
+                      <i data-lucide="users" class="w-4 h-4 text-blue-600 shrink-0"></i>
+                      <span>HRIS & Field Attendance</span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Sub-menu 2: Courses -->
+              <div class="relative sub-group">
+                <a href="#marketplace-section" class="flex items-center justify-between p-2.5 rounded-xl hover:bg-blue-50/90 transition group/sub">
+                  <div class="flex items-center gap-3">
+                    <div class="w-9 h-9 rounded-lg bg-blue-50 border border-blue-100 text-blue-600 flex items-center justify-center shrink-0 group-hover/sub:bg-blue-600 group-hover/sub:text-white transition">
+                      <i data-lucide="graduation-cap" class="w-4 h-4"></i>
+                    </div>
+                    <div>
+                      <div class="text-sm font-bold text-slate-800 group-hover/sub:text-blue-600">Courses (ZuraClass)</div>
+                      <div class="text-[11px] text-slate-500">Global no-code academy</div>
+                    </div>
+                  </div>
+                  <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
+                </a>
+                <!-- Sub-sub Menu -->
+                <div class="sub-dropdown-menu absolute left-full top-0 pl-2 w-72 z-50">
+                  <div class="bg-white/95 backdrop-blur-xl rounded-2xl shadow-2xl border border-blue-100 p-2.5 space-y-1">
+                    <div class="px-3 py-1 text-[10px] font-extrabold uppercase tracking-wider text-blue-600">ZuraClass Tracks</div>
+                    <a href="#learn" onclick="showToast('AppSheet Zero to Hero Track')" class="flex items-center gap-2.5 px-3 py-2 rounded-lg hover:bg-blue-50 text-xs font-semibold text-slate-700 hover:text-blue-600 transition">
+                      <i data-lucide="Smartphone" class="w-4 h-4 text-blue-600 shrink-0"></i>
+                      <span>AppSheet Zero to Hero</span>
+                    </a>
+                    <a href="#learn" onclick="showToast('Google Apps Script Mastery')" class="flex items-center gap-2.5 px-3 py-2 rounded-lg hover:bg-blue-50 text-xs font-semibold text-slate-700 hover:text-blue-600 transition">
+                      <i data-lucide="code-2" class="w-4 h-4 text-blue-600 shrink-0"></i>
+                      <span>Google Apps Script Mastery</span>
+                    </a>
+                    <a href="#learn" onclick="showToast('Workspace Automation Bootcamp')" class="flex items-center gap-2.5 px-3 py-2 rounded-lg hover:bg-blue-50 text-xs font-semibold text-slate-700 hover:text-blue-600 transition">
+                      <i data-lucide="workflow" class="w-4 h-4 text-blue-600 shrink-0"></i>
+                      <span>Workspace Automation Bootcamp</span>
+                    </a>
+                    <a href="#learn" onclick="showToast('UI/UX Design for No-Code')" class="flex items-center gap-2.5 px-3 py-2 rounded-lg hover:bg-blue-50 text-xs font-semibold text-slate-700 hover:text-blue-600 transition">
+                      <i data-lucide="palette" class="w-4 h-4 text-blue-600 shrink-0"></i>
+                      <span>UI/UX Design for No-Code</span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Sub-menu 3: Enterprise Scale-Up Suite (Bisa diedit/dihapus) -->
+              <div class="relative sub-group">
+                <a href="#enterprise" class="flex items-center justify-between p-2.5 rounded-xl hover:bg-blue-50/90 transition group/sub">
+                  <div class="flex items-center gap-3">
+                    <div class="w-9 h-9 rounded-lg bg-blue-50 border border-blue-100 text-blue-600 flex items-center justify-center shrink-0 group-hover/sub:bg-blue-600 group-hover/sub:text-white transition">
+                      <i data-lucide="building-2" class="w-4 h-4"></i>
+                    </div>
+                    <div>
+                      <div class="text-sm font-bold text-slate-800 group-hover/sub:text-blue-600">Enterprise Scale-Up Suite</div>
+                      <div class="text-[11px] text-slate-500">Custom ERP & cloud architecture</div>
+                    </div>
+                  </div>
+                  <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
+                </a>
+                <!-- Sub-sub Menu -->
+                <div class="sub-dropdown-menu absolute left-full top-0 pl-2 w-64 z-50">
+                  <div class="bg-white/95 backdrop-blur-xl rounded-2xl shadow-2xl border border-blue-100 p-2.5 space-y-1">
+                    <div class="px-3 py-1 text-[10px] font-extrabold uppercase tracking-wider text-blue-600">Enterprise Solutions</div>
+                    <a href="#enterprise" onclick="openContactModal()" class="flex items-center gap-2.5 px-3 py-2 rounded-lg hover:bg-blue-50 text-xs font-semibold text-slate-700 hover:text-blue-600 transition">
+                      <i data-lucide="server" class="w-4 h-4 text-blue-600 shrink-0"></i>
+                      <span>Custom ERP Integration</span>
+                    </a>
+                    <a href="#enterprise" onclick="openContactModal()" class="flex items-center gap-2.5 px-3 py-2 rounded-lg hover:bg-blue-50 text-xs font-semibold text-slate-700 hover:text-blue-600 transition">
+                      <i data-lucide="database" class="w-4 h-4 text-blue-600 shrink-0"></i>
+                      <span>Dedicated Cloud Database</span>
+                    </a>
+                    <a href="#enterprise" onclick="openContactModal()" class="flex items-center gap-2.5 px-3 py-2 rounded-lg hover:bg-blue-50 text-xs font-semibold text-slate-700 hover:text-blue-600 transition">
+                      <i data-lucide="award" class="w-4 h-4 text-blue-600 shrink-0"></i>
+                      <span>White-Label App Solutions</span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. MENU RESOURCES (Terhubung ke 3 Repo GitHub Pages — Tanpa Gambar di Menu) -->
+        <div class="relative group px-3 py-2">
+          <button class="flex items-center gap-1.5 text-sm font-semibold text-slate-700 hover:text-blue-600 transition">
+            <span>Resources</span>
+            <i data-lucide="chevron-down" class="w-4 h-4 text-slate-400 group-hover:rotate-180 transition-transform"></i>
+          </button>
+          <div class="dropdown-menu absolute left-0 top-full pt-2 w-80 z-50">
+            <div class="bg-white/95 backdrop-blur-xl rounded-2xl shadow-2xl border border-blue-100 p-2.5 space-y-1">
+              <!-- Templates -> /resource-vault-free/ -->
+              <a href="/resource-vault-free/" class="flex items-center gap-3 p-2.5 rounded-xl hover:bg-blue-50/90 transition group/item">
+                <div class="w-9 h-9 rounded-lg bg-blue-50 border border-blue-100 text-blue-600 flex items-center justify-center shrink-0 group-hover/item:bg-blue-600 group-hover/item:text-white transition">
+                  <i data-lucide="folder-kanban" class="w-4 h-4"></i>
+                </div>
+                <div>
+                  <div class="text-sm font-bold text-slate-800 group-hover/item:text-blue-600">Templates</div>
+                  <div class="text-xs text-slate-500">Free Resource Vault for Automation</div>
+                </div>
+              </a>
+              <!-- Formulas -> /zuraclass-formula-library/ -->
+              <a href="/zuraclass-formula-library/" class="flex items-center gap-3 p-2.5 rounded-xl hover:bg-blue-50/90 transition group/item">
+                <div class="w-9 h-9 rounded-lg bg-blue-50 border border-blue-100 text-blue-600 flex items-center justify-center shrink-0 group-hover/item:bg-blue-600 group-hover/item:text-white transition">
+                  <i data-lucide="function-square" class="w-4 h-4"></i>
+                </div>
+                <div>
+                  <div class="text-sm font-bold text-slate-800 group-hover/item:text-blue-600">Formulas</div>
+                  <div class="text-xs text-slate-500">100+ AppSheet & Sheet Formulas</div>
+                </div>
+              </a>
+              <!-- Icon Packs -> /svg-library-lite/ -->
+              <a href="/svg-library-lite/" class="flex items-center gap-3 p-2.5 rounded-xl hover:bg-blue-50/90 transition group/item">
+                <div class="w-9 h-9 rounded-lg bg-blue-50 border border-blue-100 text-blue-600 flex items-center justify-center shrink-0 group-hover/item:bg-blue-600 group-hover/item:text-white transition">
+                  <i data-lucide="shapes" class="w-4 h-4"></i>
+                </div>
+                <div>
+                  <div class="text-sm font-bold text-slate-800 group-hover/item:text-blue-600">Icon Packs</div>
+                  <div class="text-xs text-slate-500">Free SVG UI Icon Library Lite</div>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4. MENU COMMUNITY -->
+        <div class="relative group px-3 py-2">
+          <button class="flex items-center gap-1.5 text-sm font-semibold text-slate-700 hover:text-blue-600 transition">
+            <span>Community</span>
+            <i data-lucide="chevron-down" class="w-4 h-4 text-slate-400 group-hover:rotate-180 transition-transform"></i>
+          </button>
+          <div class="dropdown-menu absolute left-0 top-full pt-2 w-72 z-50">
+            <div class="bg-white/95 backdrop-blur-xl rounded-2xl shadow-2xl border border-blue-100 p-2.5">
+              <a href="#community-section" onclick="showToast('Opening ZuraClass Global Community Forum')" class="flex items-center gap-3 p-2.5 rounded-xl hover:bg-blue-50/90 transition group/item">
+                <div class="w-9 h-9 rounded-lg bg-blue-50 border border-blue-100 text-blue-600 flex items-center justify-center shrink-0 group-hover/item:bg-blue-600 group-hover/item:text-white transition">
+                  <i data-lucide="messages-square" class="w-4 h-4"></i>
+                </div>
+                <div>
+                  <div class="text-sm font-bold text-slate-800 group-hover/item:text-blue-600">ZuraClass Community</div>
+                  <div class="text-xs text-slate-500">Global builders & local chapters</div>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5. MENU CREATOR HUB (Sub-menu: Dashboard, Portfolio, Profile) -->
+        <div class="relative group px-3 py-2">
+          <button onclick="handleCreatorHubClick()" class="flex items-center gap-1.5 text-sm font-semibold text-slate-700 hover:text-blue-600 transition">
+            <i id="creatorLockIcon" data-lucide="lock" class="w-3.5 h-3.5 text-amber-500"></i>
+            <span>Creator Hub</span>
+            <i data-lucide="chevron-down" class="w-4 h-4 text-slate-400 group-hover:rotate-180 transition-transform"></i>
+          </button>
+          <div class="dropdown-menu absolute left-0 top-full pt-2 w-72 z-50">
+            <div class="bg-white/95 backdrop-blur-xl rounded-2xl shadow-2xl border border-blue-100 p-2.5">
+              
+              <!-- State Belum Login Creator -->
+              <div id="creatorLockedBanner" class="p-3 mb-2 rounded-xl bg-amber-50/90 border border-amber-200/80 text-xs text-amber-900">
+                <div class="font-bold flex items-center gap-1.5 mb-1">
+                  <i data-lucide="shield-alert" class="w-4 h-4 text-amber-600"></i>
+                  <span>Creator Member Only</span>
+                </div>
+                <p class="text-amber-700 leading-relaxed mb-2">Sign in as a ZuraClass Creator to access your Dashboard, Portfolio, and Profile.</p>
+                <button onclick="toggleCreatorMode()" class="w-full py-1.5 rounded-lg bg-zura-navy text-white font-semibold hover:bg-blue-700 transition">
+                  Unlock Creator Hub
+                </button>
+              </div>
+
+              <!-- Sub-menu Creator Hub: Dashboard, Portfolio, Profile (Tanpa Gambar) -->
+              <div id="creatorMenuLinks" class="space-y-1 opacity-50 pointer-events-none transition">
+                <a href="#dashboard" onclick="showToast('Opening Creator Hub: Dashboard')" class="flex items-center justify-between p-2.5 rounded-xl hover:bg-blue-50/90 transition group/c">
+                  <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 rounded-lg bg-blue-50 border border-blue-100 text-blue-600 flex items-center justify-center group-hover/c:bg-blue-600 group-hover/c:text-white transition">
+                      <i data-lucide="bar-chart-3" class="w-4 h-4"></i>
+                    </div>
+                    <div>
+                      <div class="text-sm font-bold text-slate-800 group-hover/c:text-blue-600">Dashboard</div>
+                      <div class="text-[11px] text-slate-500">Revenue & analytics</div>
+                    </div>
+                  </div>
+                  <span class="text-[11px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-md">$2.4k</span>
+                </a>
+                <a href="#portfolio" onclick="showToast('Opening Creator Hub: Portfolio')" class="flex items-center justify-between p-2.5 rounded-xl hover:bg-blue-50/90 transition group/c">
+                  <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 rounded-lg bg-blue-50 border border-blue-100 text-blue-600 flex items-center justify-center group-hover/c:bg-blue-600 group-hover/c:text-white transition">
+                      <i data-lucide="briefcase" class="w-4 h-4"></i>
+                    </div>
+                    <div>
+                      <div class="text-sm font-bold text-slate-800 group-hover/c:text-blue-600">Portfolio</div>
+                      <div class="text-[11px] text-slate-500">Manage built apps & assets</div>
+                    </div>
+                  </div>
+                  <span class="text-[11px] font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded-md">16 Live</span>
+                </a>
+                <a href="#profile" onclick="showToast('Opening Creator Hub: Profile')" class="flex items-center justify-between p-2.5 rounded-xl hover:bg-blue-50/90 transition group/c">
+                  <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 rounded-lg bg-blue-50 border border-blue-100 text-blue-600 flex items-center justify-center group-hover/c:bg-blue-600 group-hover/c:text-white transition">
+                      <i data-lucide="user-Check" class="w-4 h-4"></i>
+                    </div>
+                    <div>
+                      <div class="text-sm font-bold text-slate-800 group-hover/c:text-blue-600">Profile</div>
+                      <div class="text-[11px] text-slate-500">Bio, payouts & badge</div>
+                    </div>
+                  </div>
+                  <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
+                </a>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- 6. GET HELP (Dengan Ikon AI) -->
+        <button onclick="openAiHelpModal()" class="px-3 py-2 rounded-xl text-sm font-semibold text-slate-700 hover:text-blue-600 hover:bg-blue-50/80 transition flex items-center gap-1.5 group">
+          <span class="relative flex items-center justify-center w-6 h-6 rounded-lg bg-gradient-to-tr from-zura-navy via-blue-700 to-blue-500 text-white shadow-sm group-hover:scale-110 transition">
+            <i data-lucide="bot" class="w-3.5 h-3.5"></i>
+          </span>
+          <span>Get Help</span>
+          <span class="text-[10px] font-black uppercase tracking-wider text-blue-600">AI</span>
+        </button>
+
+      </nav>
+
+      <!-- RIGHT UTILITY BAR: Contact Us & Log in (Clean English Only) -->
+      <div class="hidden lg:flex items-center gap-3 shrink-0">
+        
+        <!-- 7. CONTACT US -->
+        <button onclick="openContactModal()" class="px-3.5 py-2 text-sm font-semibold text-slate-700 hover:text-blue-600 transition">
+          Contact Us
+        </button>
+
+        <!-- 8. LOGIN BUTTON -->
+        <button onclick="openLoginModal()" id="headerLoginBtn" class="px-5 py-2.5 rounded-full bg-zura-navy hover:bg-blue-700 text-white text-sm font-bold shadow-md hover:shadow-lg transition flex items-center gap-2">
+          <i data-lucide="log-in" class="w-4 h-4"></i>
+          <span id="headerLoginText">Log in</span>
+        </button>
+
+      </div>
+
+      <!-- Mobile Menu Button -->
+      <div class="flex xl:hidden items-center gap-2">
+        <button onclick="toggleMobileMenu()" class="p-2.5 rounded-xl border border-slate-200 text-slate-700 hover:bg-blue-50">
+          <i data-lucide="menu" class="w-6 h-6"></i>
+        </button>
+      </div>
+
+    </div>
+
+    <!-- Mobile Navigation Drawer -->
+    <div id="mobileMenu" class="hidden xl:hidden bg-white/95 backdrop-blur-xl border-b border-blue-100 px-6 py-5 space-y-4">
+      <div class="grid grid-cols-1 gap-2 text-sm font-semibold text-slate-800">
+        <a href="#marketplace-section" class="py-2 border-b border-slate-100 flex justify-between items-center"><span>Product</span><i data-lucide="chevron-right" class="w-4 h-4"></i></a>
+        <a href="/resource-vault-free/" class="py-2 border-b border-slate-100 flex justify-between items-center"><span>Templates</span><i data-lucide="external-link" class="w-4 h-4"></i></a>
+        <a href="/zuraclass-formula-library/" class="py-2 border-b border-slate-100 flex justify-between items-center"><span>Formulas</span><i data-lucide="external-link" class="w-4 h-4"></i></a>
+        <a href="/svg-library-lite/" class="py-2 border-b border-slate-100 flex justify-between items-center"><span>Icon Packs</span><i data-lucide="external-link" class="w-4 h-4"></i></a>
+        <a href="#community-section" class="py-2 border-b border-slate-100">ZuraClass Community</a>
+        <div class="py-2 border-b border-slate-100 space-y-1.5">
+          <div class="flex items-center justify-between text-blue-600">
+            <span>Creator Hub</span>
+            <i data-lucide="sparkles" class="w-4 h-4"></i>
+          </div>
+          <div class="pl-3 flex gap-4 text-xs text-slate-600 font-medium">
+            <a href="#dashboard" onclick="showToast('Opening Creator Dashboard')">Dashboard</a>
+            <a href="#portfolio" onclick="showToast('Opening Creator Portfolio')">Portfolio</a>
+            <a href="#profile" onclick="showToast('Opening Creator Profile')">Profile</a>
+          </div>
+        </div>
+        <button onclick="openAiHelpModal()" class="py-2 border-b border-slate-100 text-left flex items-center gap-2">
+          <i data-lucide="bot" class="w-4 h-4 text-blue-600"></i>
+          <span>Get Help (AI)</span>
+        </button>
+      </div>
+      <div class="flex items-center gap-3 pt-2">
+        <button onclick="openContactModal()" class="w-1/2 py-2.5 rounded-xl border border-slate-300 text-sm font-bold text-slate-700">Contact Us</button>
+        <button onclick="openLoginModal()" class="w-1/2 py-2.5 rounded-xl bg-zura-navy text-white text-sm font-bold">Log in</button>
+      </div>
+    </div>
+  </header>
+
+
+  <!-- =====================================================================
+       HERO SECTION (Bubble.io Marketplace Layout + Wave-Shaped Frosted Glass
+       + 3 Clean Glassmorphism Action Cards TANPA Gambar & TANPA Pill Badge)
+       ===================================================================== -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-8 w-full">
+    <div class="relative rounded-[32px] overflow-hidden border border-blue-200/90 shadow-2xl bg-gradient-to-br from-white via-[#F4F8FF] to-[#E5F0FF]">
+      
+      <!-- DECORATIVE WAVE-SHAPED LIGHT BLUE TO NAVY GRADIENT FROSTED-GLASS (Kanan) -->
+      <div class="absolute inset-0 pointer-events-none overflow-hidden">
+        <!-- Ambient Enterprise Glow -->
+        <div class="absolute -right-16 -top-20 w-[560px] h-[560px] rounded-full bg-blue-400/25 blur-3xl"></div>
+        <div class="absolute right-12 -bottom-24 w-[480px] h-[480px] rounded-full bg-zura-navy/35 blur-3xl"></div>
+
+        <!-- Wave-Shaped Multi-Layered SVG (Light Blue to Deep Navy Gradient) -->
+        <svg class="hidden lg:block absolute right-0 top-0 h-full w-[65%] object-cover opacity-95" viewBox="0 0 800 620" fill="none" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="zuraWaveGradMain" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#93C5FD" stop-opacity="0.60" />
+              <stop offset="45%" stop-color="#2563EB" stop-opacity="0.82" />
+              <stop offset="100%" stop-color="#0A1931" stop-opacity="0.96" />
+            </linearGradient>
+            <linearGradient id="zuraWaveGradSoft" x1="10%" y1="0%" x2="100%" y2="90%">
+              <stop offset="0%" stop-color="#DBEAFE" stop-opacity="0.55" />
+              <stop offset="50%" stop-color="#1D4ED8" stop-opacity="0.68" />
+              <stop offset="100%" stop-color="#0A1931" stop-opacity="0.92" />
+            </linearGradient>
+          </defs>
+          <!-- First Wave Curve -->
+          <path d="M165 0 C 45 155, 295 315, 115 475 C 35 545, 95 595, 145 620 L 800 620 L 800 0 Z" fill="url(#zuraWaveGradSoft)" />
+          <!-- Second Deep Wave Curve -->
+          <path d="M255 0 C 130 165, 365 305, 195 480 C 120 555, 180 600, 225 620 L 800 620 L 800 0 Z" fill="url(#zuraWaveGradMain)" />
+        </svg>
+
+        <!-- Frosted Glass Overlay Layer -->
+        <div class="hidden lg:block absolute right-0 top-0 h-full w-[48%] backdrop-blur-[6px] bg-gradient-to-l from-zura-navy/30 via-blue-600/10 to-transparent"></div>
+      </div>
+
+      <!-- HERO CONTENT GRID -->
+      <div class="relative z-10 grid grid-cols-1 lg:grid-cols-12 items-center gap-10 px-6 sm:px-12 lg:px-16 py-12 lg:py-16">
+        
+        <!-- LEFT COLUMN: Heading, Description & Global Creator Avatars -->
+        <div class="lg:col-span-6 space-y-5 max-w-xl">
+          <div class="text-xs sm:text-sm font-extrabold tracking-[0.22em] uppercase text-blue-600">
+            ZURALOGIC GLOBAL ECOSYSTEM
+          </div>
+          
+          <h1 class="text-4xl sm:text-5xl lg:text-[52px] font-black text-zura-navy tracking-tight leading-[1.08]">
+            Learn, build, and scale your business with ready-made apps
+          </h1>
+          
+          <p class="text-base sm:text-lg text-slate-600 leading-relaxed font-normal pt-1">
+            Empowering global learners at ZuraClass, enabling creators to sell their built apps, and helping businesses deploy proven solutions on ZuraAppMarket.
+          </p>
+
+          <!-- Enterprise Trust Bar with Dummy Creator Avatars -->
+          <div class="pt-4 flex flex-wrap items-center gap-4 border-t border-blue-200/70">
+            <div class="flex -space-x-2.5">
+              <!-- GANTI URL GAMBAR AVATAR DI SINI -->
+              <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&q=80" alt="Creator 1" class="w-9 h-9 rounded-full object-cover ring-2 ring-white" />
+              <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=100&q=80" alt="Creator 2" class="w-9 h-9 rounded-full object-cover ring-2 ring-white" />
+              <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=100&q=80" alt="Creator 3" class="w-9 h-9 rounded-full object-cover ring-2 ring-white" />
+              <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=100&q=80" alt="Creator 4" class="w-9 h-9 rounded-full object-cover ring-2 ring-white" />
+            </div>
+            <div class="text-xs sm:text-sm text-slate-600">
+              <strong class="text-zura-navy font-extrabold">12,400+</strong> <span>Global Builders & Enterprise Teams across 40+ Countries</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT COLUMN: 3 Staggered Glassmorphism Action Buttons (Navy-Blue-White, Tanpa Gambar & Tanpa Pill Badge Kecil) -->
+        <div class="lg:col-span-6 flex flex-col gap-4 sm:gap-5 w-full">
+          
+          <!-- Button 1: Learn to Build Apps (Shifted Right like Bubble.io) -->
+          <a href="#learn-section" onclick="highlightAction('learn')" class="glass-action-card rounded-2xl p-5 sm:p-6 lg:ml-12 lg:mr-1 flex items-center justify-between gap-4 group cursor-pointer">
+            <div class="flex items-start gap-4 min-w-0">
+              <div class="card-icon-box w-12 h-12 rounded-xl bg-zura-navy text-white border border-blue-200/50 flex items-center justify-center shrink-0 shadow-sm transition">
+                <i data-lucide="graduation-cap" class="w-6 h-6"></i>
+              </div>
+              <div class="min-w-0">
+                <h2 class="card-title text-lg sm:text-xl font-extrabold text-zura-navy transition">
+                  Learn to Build Apps
+                </h2>
+                <p class="card-desc text-xs sm:text-sm text-slate-600 mt-1 leading-relaxed transition">
+                  Master no-code app creation and business automation at ZuraClass
+                </p>
+              </div>
+            </div>
+            <i data-lucide="arrow-up-right" class="card-arrow w-5 h-5 text-zura-navy opacity-70 shrink-0 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition"></i>
+          </a>
+
+          <!-- Button 2: Find my Business Apps (Shifted Left like Bubble.io) -->
+          <a href="#marketplace-section" onclick="highlightAction('find')" class="glass-action-card rounded-2xl p-5 sm:p-6 lg:mr-12 lg:ml-0 flex items-center justify-between gap-4 group cursor-pointer">
+            <div class="flex items-start gap-4 min-w-0">
+              <div class="card-icon-box w-12 h-12 rounded-xl bg-blue-600 text-white border border-blue-200/50 flex items-center justify-center shrink-0 shadow-sm transition">
+                <i data-lucide="layout-template" class="w-6 h-6"></i>
+              </div>
+              <div class="min-w-0">
+                <h2 class="card-title text-lg sm:text-xl font-extrabold text-zura-navy transition">
+                  Find my Business Apps
+                </h2>
+                <p class="card-desc text-xs sm:text-sm text-slate-600 mt-1 leading-relaxed transition">
+                  Browse & deploy ready-to-use industry apps on ZuraAppMarket
+                </p>
+              </div>
+            </div>
+            <i data-lucide="arrow-up-right" class="card-arrow w-5 h-5 text-zura-navy opacity-70 shrink-0 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition"></i>
+          </a>
+
+          <!-- Button 3: Showcase my Built Apps (Shifted Right like Bubble.io) -->
+          <a href="#showcase-section" onclick="highlightAction('showcase')" class="glass-action-card rounded-2xl p-5 sm:p-6 lg:ml-10 lg:mr-3 flex items-center justify-between gap-4 group cursor-pointer">
+            <div class="flex items-start gap-4 min-w-0">
+              <div class="card-icon-box w-12 h-12 rounded-xl bg-zura-navy text-white border border-blue-200/50 flex items-center justify-center shrink-0 shadow-sm transition">
+                <i data-lucide="rocket" class="w-6 h-6"></i>
+              </div>
+              <div class="min-w-0">
+                <h2 class="card-title text-lg sm:text-xl font-extrabold text-zura-navy transition">
+                  Showcase my Built Apps
+                </h2>
+                <p class="card-desc text-xs sm:text-sm text-slate-600 mt-1 leading-relaxed transition">
+                  Publish your built apps, reach global buyers, and earn revenue
+                </p>
+              </div>
+            </div>
+            <i data-lucide="arrow-up-right" class="card-arrow w-5 h-5 text-zura-navy opacity-70 shrink-0 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition"></i>
+          </a>
+
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- =====================================================================
+       ENTERPRISE PARTNER & ECOSYSTEM SHOWCASE STRIP (Dengan Gambar Dummy)
+       ===================================================================== -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-6 w-full">
+    <div class="bg-white rounded-2xl border border-slate-200/80 px-6 py-4 shadow-sm flex flex-wrap items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <span class="w-2.5 h-2.5 rounded-full bg-blue-600"></span>
+        <span class="text-xs font-extrabold uppercase tracking-wider text-slate-500" data-i18n="partnerStripTitle">TRUSTED BY MODERN SCALE-UP OPERATIONS</span>
+      </div>
+      <div class="flex flex-wrap items-center gap-6 opacity-85">
+        <div class="flex items-center gap-2 text-xs font-bold text-slate-600">
+          <img src="https://placehold.co/32x32/0A1931/FFFFFF?text=G" class="w-6 h-6 rounded" alt="Google Workspace" />
+          <span>Google Workspace Ready</span>
+        </div>
+        <div class="flex items-center gap-2 text-xs font-bold text-slate-600">
+          <img src="https://placehold.co/32x32/2563EB/FFFFFF?text=A" class="w-6 h-6 rounded" alt="AppSheet" />
+          <span>AppSheet Enterprise</span>
+        </div>
+        <div class="flex items-center gap-2 text-xs font-bold text-slate-600">
+          <img src="https://placehold.co/32x32/1E40AF/FFFFFF?text=L" class="w-6 h-6 rounded" alt="Looker" />
+          <span>Looker BI Integrated</span>
+        </div>
+        <div class="flex items-center gap-2 text-xs font-bold text-slate-600">
+          <img src="https://placehold.co/32x32/0F172A/FFFFFF?text=AI" class="w-6 h-6 rounded" alt="ZuraAI" />
+          <span>ZuraAI Automation</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- =====================================================================
+       BUSINESS LINE FILTER SLIDER & ZURAAPPMARKET SHOWCASE
+       ===================================================================== -->
+  <section id="marketplace-section" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full flex-grow">
+    
+    <!-- Section Header + Search -->
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-6">
+      <div>
+        <h2 class="text-2xl sm:text-3xl font-black text-zura-navy tracking-tight" data-i18n="marketTitle">
+          Explore Apps by Business Line
+        </h2>
+        <p class="text-sm sm:text-base text-slate-600 mt-1" data-i18n="marketSub">
+          Select your industry below to filter relevant, ready-to-deploy applications built by verified ZuraClass creators.
+        </p>
+      </div>
+
+      <!-- Quick Search Box -->
+      <div class="relative w-full md:w-80">
+        <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2"></i>
+        <input 
+          type="text" 
+          id="appSearchInput"
+          oninput="searchApps(this.value)"
+          placeholder="Search POS, Inventory, HSE, HR..." 
+          class="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white border border-slate-200 text-sm focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-100 transition shadow-sm"
+        />
+      </div>
+    </div>
+
+    <!-- HORIZONTAL BUSINESS LINE SLIDER -->
+    <div class="relative flex items-center gap-2 mb-8">
+      <!-- Scroll Left Button -->
+      <button onclick="scrollSlider(-260)" class="p-2.5 rounded-xl bg-white border border-slate-200 text-slate-600 hover:text-blue-600 hover:border-blue-400 shadow-sm shrink-0 transition" aria-label="Scroll Left">
+        <i data-lucide="chevron-left" class="w-5 h-5"></i>
+      </button>
+
+      <!-- Scrollable Pill Track -->
+      <div id="industrySlider" class="flex items-center gap-2.5 overflow-x-auto no-scrollbar scroll-smooth py-1">
+        <button onclick="filterApps('all')" data-cat="all" class="industry-pill shrink-0 px-4 py-2.5 rounded-xl text-sm font-bold bg-zura-navy text-white shadow-sm transition flex items-center gap-2">
+          <i data-lucide="layers" class="w-4 h-4"></i>
+          <span data-i18n="pillAll">All Business Lines</span>
+        </button>
+        <button onclick="filterApps('warehouse')" data-cat="warehouse" class="industry-pill shrink-0 px-4 py-2.5 rounded-xl text-sm font-semibold bg-white text-slate-700 border border-slate-200 hover:border-blue-400 transition flex items-center gap-2">
+          <i data-lucide="package-check" class="w-4 h-4 text-blue-600"></i>
+          <span data-i18n="pillWarehouse">Warehouse & Logistics</span>
+        </button>
+        <button onclick="filterApps('retail')" data-cat="retail" class="industry-pill shrink-0 px-4 py-2.5 rounded-xl text-sm font-semibold bg-white text-slate-700 border border-slate-200 hover:border-blue-400 transition flex items-center gap-2">
+          <i data-lucide="shopping-bag" class="w-4 h-4 text-blue-600"></i>
+          <span data-i18n="pillRetail">Retail & POS</span>
+        </button>
+        <button onclick="filterApps('hse')" data-cat="hse" class="industry-pill shrink-0 px-4 py-2.5 rounded-xl text-sm font-semibold bg-white text-slate-700 border border-slate-200 hover:border-blue-400 transition flex items-center gap-2">
+          <i data-lucide="shield-check" class="w-4 h-4 text-blue-600"></i>
+          <span data-i18n="pillHse">Manufacturing & HSE</span>
+        </button>
+        <button onclick="filterApps('hr')" data-cat="hr" class="industry-pill shrink-0 px-4 py-2.5 rounded-xl text-sm font-semibold bg-white text-slate-700 border border-slate-200 hover:border-blue-400 transition flex items-center gap-2">
+          <i data-lucide="users" class="w-4 h-4 text-blue-600"></i>
+          <span data-i18n="pillHr">HR & Field Operations</span>
+        </button>
+        <button onclick="filterApps('finance')" data-cat="finance" class="industry-pill shrink-0 px-4 py-2.5 rounded-xl text-sm font-semibold bg-white text-slate-700 border border-slate-200 hover:border-blue-400 transition flex items-center gap-2">
+          <i data-lucide="wallet" class="w-4 h-4 text-blue-600"></i>
+          <span data-i18n="pillFinance">Finance & CRM</span>
+        </button>
+        <button onclick="filterApps('fnb')" data-cat="fnb" class="industry-pill shrink-0 px-4 py-2.5 rounded-xl text-sm font-semibold bg-white text-slate-700 border border-slate-200 hover:border-blue-400 transition flex items-center gap-2">
+          <i data-lucide="utensils" class="w-4 h-4 text-blue-600"></i>
+          <span data-i18n="pillFnb">F&B & Hospitality</span>
+        </button>
+      </div>
+
+      <!-- Scroll Right Button -->
+      <button onclick="scrollSlider(260)" class="p-2.5 rounded-xl bg-white border border-slate-200 text-slate-600 hover:text-blue-600 hover:border-blue-400 shadow-sm shrink-0 transition" aria-label="Scroll Right">
+        <i data-lucide="chevron-right" class="w-5 h-5"></i>
+      </button>
+    </div>
+
+    <!-- APPS MARKETPLACE GRID (Dynamically Rendered with High-Res Dummy Mockups & Creator Avatars) -->
+    <div id="appsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+
+  </section>
+
+
+  <!-- =====================================================================
+       CONNECTED GITHUB PAGES ECOSYSTEM BANNER (3 Repo Pendukung dengan Gambar Dummy)
+       ===================================================================== -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full">
+    <div class="rounded-3xl bg-gradient-to-r from-zura-navy via-zura-deep to-blue-800 p-6 sm:p-10 text-white shadow-2xl border border-blue-800">
+      <div class="max-w-2xl mb-8">
+        <div class="text-xs font-extrabold uppercase tracking-widest text-blue-300 mb-2" data-i18n="repoEyebrow">OFFICIAL GITHUB PAGES REPOSITORIES</div>
+        <h3 class="text-2xl sm:text-3xl font-black tracking-tight" data-i18n="repoHeading">Build Faster with ZuraClass Open Libraries</h3>
+        <p class="text-sm sm:text-base text-blue-100/90 mt-2" data-i18n="repoSub">
+          Explore our integrated developer & business automation libraries hosted directly on the Zuralogic domain.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Repo 1: svg-library-lite -->
+        <a href="/svg-library-lite/" class="group rounded-2xl bg-white/10 hover:bg-white/15 backdrop-blur-md border border-white/15 overflow-hidden transition flex flex-col justify-between shadow-lg">
+          <div>
+            <!-- Dummy Banner Image -->
+            <div class="relative h-36 overflow-hidden">
+              <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80" alt="SVG Library Preview" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
+              <div class="absolute inset-0 bg-gradient-to-t from-zura-navy/90 via-zura-navy/30 to-transparent"></div>
+              <span class="absolute bottom-3 left-4 text-[11px] font-bold uppercase tracking-wider bg-blue-600/90 px-2.5 py-0.5 rounded-md">UI Icon Pack</span>
+            </div>
+            <div class="p-5">
+              <h4 class="font-bold text-lg text-white group-hover:text-blue-200 transition">ZuraClass SVG Library Lite</h4>
+              <p class="text-xs text-blue-100/80 mt-1.5 leading-relaxed" data-i18n="repo1Desc">Free SVG UI Icon Library with instant Data URI copy for AppSheet & Web interfaces.</p>
+            </div>
+          </div>
+          <div class="px-5 pb-4 pt-3 border-t border-white/10 flex items-center justify-between text-xs font-bold text-blue-200">
+            <span>zuralogic.com/svg-library-lite</span>
+            <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition"></i>
+          </div>
+        </a>
+
+        <!-- Repo 2: resource-vault-free -->
+        <a href="/resource-vault-free/" class="group rounded-2xl bg-white/10 hover:bg-white/15 backdrop-blur-md border border-white/15 overflow-hidden transition flex flex-col justify-between shadow-lg">
+          <div>
+            <!-- Dummy Banner Image -->
+            <div class="relative h-36 overflow-hidden">
+              <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=600&q=80" alt="Resource Vault Preview" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
+              <div class="absolute inset-0 bg-gradient-to-t from-zura-navy/90 via-zura-navy/30 to-transparent"></div>
+              <span class="absolute bottom-3 left-4 text-[11px] font-bold uppercase tracking-wider bg-blue-600/90 px-2.5 py-0.5 rounded-md">Automation Vault</span>
+            </div>
+            <div class="p-5">
+              <h4 class="font-bold text-lg text-white group-hover:text-blue-200 transition">Resource Vault Free</h4>
+              <p class="text-xs text-blue-100/80 mt-1.5 leading-relaxed" data-i18n="repo2Desc">Free blueprints, scripts, and templates for your business automation workflow.</p>
+            </div>
+          </div>
+          <div class="px-5 pb-4 pt-3 border-t border-white/10 flex items-center justify-between text-xs font-bold text-blue-200">
+            <span>zuralogic.com/resource-vault-free</span>
+            <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition"></i>
+          </div>
+        </a>
+
+        <!-- Repo 3: zuraclass-formula-library -->
+        <a href="/zuraclass-formula-library/" class="group rounded-2xl bg-white/10 hover:bg-white/15 backdrop-blur-md border border-white/15 overflow-hidden transition flex flex-col justify-between shadow-lg">
+          <div>
+            <!-- Dummy Banner Image -->
+            <div class="relative h-36 overflow-hidden">
+              <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=600&q=80" alt="Formula Library Preview" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
+              <div class="absolute inset-0 bg-gradient-to-t from-zura-navy/90 via-zura-navy/30 to-transparent"></div>
+              <span class="absolute bottom-3 left-4 text-[11px] font-bold uppercase tracking-wider bg-blue-600/90 px-2.5 py-0.5 rounded-md">100+ Formulas</span>
+            </div>
+            <div class="p-5">
+              <h4 class="font-bold text-lg text-white group-hover:text-blue-200 transition">ZuraClass Formula Library</h4>
+              <p class="text-xs text-blue-100/80 mt-1.5 leading-relaxed" data-i18n="repo3Desc">100+ AppSheet & Spreadsheets formulas ready to copy and implement.</p>
+            </div>
+          </div>
+          <div class="px-5 pb-4 pt-3 border-t border-white/10 flex items-center justify-between text-xs font-bold text-blue-200">
+            <span>zuralogic.com/zuraclass-formula-library</span>
+            <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition"></i>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- =====================================================================
+       FOOTER (Dengan teks copyright zuralogic.com @ 2021)
+       ===================================================================== -->
+  <footer class="bg-white border-t border-slate-200/90 mt-auto">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <!-- Dummy Logo Footer -->
+        <div class="relative w-8 h-8 rounded-lg overflow-hidden bg-zura-navy flex items-center justify-center">
+          <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=80&q=80" alt="Zuralogic Logo" class="w-full h-full object-cover opacity-80" />
+          <span class="absolute font-black text-white text-xs">ZL</span>
+        </div>
+        <span class="font-bold text-sm text-zura-navy">Zuralogic.com</span>
+        <span class="text-xs text-slate-400">• <span data-i18n="tagline">Your Scale-Up Partner</span></span>
+      </div>
+
+      <p class="text-sm font-medium text-slate-500">
+        copyright zuralogic.com @ 2021
+      </p>
+    </div>
+  </footer>
+
+
+  <!-- =====================================================================
+       MODALS (App Preview Modal, AI Get Help, Login / Creator Switch, Toast)
+       ===================================================================== -->
+  <!-- Live App Preview Modal (Menampilkan Gambar Dummy Screenshot Besar) -->
+  <div id="appPreviewModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-zura-navy/60 backdrop-blur-sm p-4">
+    <div class="bg-white rounded-3xl max-w-2xl w-full overflow-hidden shadow-2xl border border-blue-100">
+      <div class="relative h-64 sm:h-72 bg-slate-900">
+        <img id="previewModalImg" src="" alt="App Preview" class="w-full h-full object-cover" />
+        <button onclick="closeModals()" class="absolute top-4 right-4 p-2 rounded-full bg-zura-navy/80 text-white hover:bg-zura-navy">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+        <div id="previewModalPrice" class="absolute bottom-4 right-4 px-4 py-1.5 rounded-xl bg-white text-zura-navy font-black text-base shadow-lg"></div>
+      </div>
+      <div class="p-6 space-y-4">
+        <div class="flex items-center justify-between">
+          <span id="previewModalCat" class="text-xs font-extrabold uppercase tracking-wider text-blue-600"></span>
+          <span id="previewModalLang" class="text-xs font-semibold text-slate-500"></span>
+        </div>
+        <h3 id="previewModalTitle" class="text-2xl font-black text-zura-navy"></h3>
+        <p id="previewModalDesc" class="text-sm text-slate-600 leading-relaxed"></p>
+        <div class="flex items-center justify-between pt-4 border-t border-slate-100">
+          <div class="flex items-center gap-2.5">
+            <img id="previewModalAvatar" src="" alt="Creator" class="w-9 h-9 rounded-full object-cover border border-blue-200" />
+            <div>
+              <div id="previewModalCreator" class="text-xs font-bold text-zura-navy"></div>
+              <div class="text-[11px] text-emerald-600 font-semibold">✓ Verified ZuraClass Creator</div>
+            </div>
+          </div>
+          <div class="flex gap-2">
+            <button onclick="closeModals()" class="px-4 py-2.5 rounded-xl border border-slate-200 text-xs font-bold text-slate-600 hover:bg-slate-50">Close</button>
+            <button onclick="closeModals(); showToast('Redirecting to ZuraAppMarket Checkout...')" class="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold shadow-md">Deploy This App</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- AI Help Modal -->
+  <div id="aiHelpModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-zura-navy/50 backdrop-blur-sm p-4">
+    <div class="bg-white rounded-3xl max-w-lg w-full p-6 shadow-2xl border border-blue-100">
+      <div class="flex items-center justify-between pb-4 border-b border-slate-100">
+        <div class="flex items-center gap-2.5">
+          <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-zura-navy to-blue-600 text-white flex items-center justify-center">
+            <i data-lucide="bot" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h3 class="font-extrabold text-zura-navy">ZuraAI Ecosystem Assistant</h3>
+            <p class="text-xs text-slate-500">Multilingual support for courses, apps & formulas</p>
+          </div>
+        </div>
+        <button onclick="closeModals()" class="p-1.5 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+      <div class="py-4 space-y-3 text-sm">
+        <div class="p-3.5 rounded-2xl bg-blue-50/80 text-slate-700 leading-relaxed" data-i18n="aiModalGreeting">
+          👋 Hi! I can help you find the right ready-to-go business app for your industry, or guide you to the right ZuraClass course. What are you looking to build or automate today?
+        </div>
+        <input type="text" placeholder="e.g., Warehouse inventory app with QR barcode..." class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:border-blue-600 text-sm" />
+      </div>
+      <div class="flex justify-end gap-2 pt-2">
+        <button onclick="closeModals()" class="px-4 py-2 rounded-xl text-sm font-semibold text-slate-600 hover:bg-slate-100">Close</button>
+        <button onclick="closeModals(); showToast('ZuraAI is generating your custom recommendation...')" class="px-5 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold">Ask ZuraAI</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Login Modal -->
+  <div id="loginModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-zura-navy/50 backdrop-blur-sm p-4">
+    <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border border-blue-100">
+      <div class="flex items-center justify-between pb-4 border-b border-slate-100">
+        <div class="flex items-center gap-2.5">
+          <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&q=80" alt="Creator Avatar" class="w-9 h-9 rounded-full object-cover border border-blue-200" />
+          <h3 class="font-extrabold text-lg text-zura-navy" data-i18n="navLogin">Log in</h3>
+        </div>
+        <button onclick="closeModals()" class="p-1.5 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+      <div class="py-4 space-y-4">
+        <div>
+          <label class="block text-xs font-bold uppercase text-slate-500 mb-1">Email Address</label>
+          <input type="email" value="creator@zuralogic.com" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:border-blue-600" />
+        </div>
+        <div>
+          <label class="block text-xs font-bold uppercase text-slate-500 mb-1">Password</label>
+          <input type="password" value="••••••••••••" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:border-blue-600" />
+        </div>
+        <button onclick="enableCreatorAndClose()" class="w-full py-3 rounded-xl bg-zura-navy hover:bg-blue-700 text-white font-bold text-sm shadow-md transition">
+          Sign In & Unlock Creator Hub
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toastBox" class="fixed bottom-5 right-5 z-50 hidden items-center gap-2.5 bg-zura-navy text-white px-4 py-3 rounded-2xl shadow-xl border border-blue-400/30 text-sm font-medium">
+    <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400 shrink-0"></i>
+    <span id="toastText">Action completed</span>
+  </div>
+
+
+  <!-- =====================================================================
+       JAVASCRIPT LOGIC: ENTERPRISE APP FILTER, CREATOR HUB GATE & MODALS
+       ===================================================================== -->
+  <script>
+    let activeCategory = 'all';
+    let isCreatorLoggedIn = false;
+
+    // High-Resolution Enterprise Dummy Apps Data (English Standard + Dummy Screenshots & Creator Avatars)
+    const appsData = [
+      {
+        id: 1,
+        category: "hse",
+        price: "$49",
+        rating: "4.9",
+        creator: "ZuraClass Official",
+        /* GANTI URL GAMBAR AVATAR KREATOR DI SINI */
+        creatorAvatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=120&q=80",
+        language: "Global Ready",
+        /* GANTI URL GAMBAR SCREENSHOT APLIKASI DI SINI */
+        image: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=800&q=80",
+        title: "SIM-APAR & HSE Safety Inspection Pro",
+        catLabel: "Manufacturing & HSE",
+        desc: "Complete fire extinguisher QR inspection, hazard reporting, and automated ISO compliance dashboard."
+      },
+      {
+        id: 2,
+        category: "warehouse",
+        price: "$39",
+        rating: "5.0",
+        creator: "Andi Pratama",
+        creatorAvatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=120&q=80",
+        language: "Global Ready",
+        image: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=800&q=80",
+        title: "Multi-Branch Warehouse & Stock Opname QR",
+        catLabel: "Warehouse & Logistics",
+        desc: "Real-time inbound/outbound stock tracking, mobile barcode scanner, and automated low-stock alerts."
+      },
+      {
+        id: 3,
+        category: "retail",
+        price: "$55",
+        rating: "4.8",
+        creator: "ZuraLab Global",
+        creatorAvatar: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=120&q=80",
+        language: "Global Ready",
+        image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=800&q=80",
+        title: "Omnichannel Cloud POS & Loyalty Cashier",
+        catLabel: "Retail & POS",
+        desc: "Fast tablet & mobile point-of-sale, WhatsApp digital receipt sender, and daily profit analytics."
+      },
+      {
+        id: 4,
+        category: "hr",
+        price: "$29",
+        rating: "4.9",
+        creator: "Siti Rahma",
+        creatorAvatar: "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=120&q=80",
+        language: "Global Ready",
+        image: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80",
+        title: "Geo-Tagging Field Attendance & Payroll Sync",
+        catLabel: "HR & Field Operations",
+        desc: "Selfie + GPS attendance verification, leave approval workflow, and one-click payslip generation."
+      },
+      {
+        id: 5,
+        category: "finance",
+        price: "$45",
+        rating: "4.8",
+        creator: "Carlos Mendez",
+        creatorAvatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=120&q=80",
+        language: "Global Ready",
+        image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80",
+        title: "B2B Sales Pipeline, Automated Invoice & Cashflow",
+        catLabel: "Finance & CRM",
+        desc: "Track client deals from lead to paid invoice with automated PDF billing and cashflow forecasting."
+      },
+      {
+        id: 6,
+        category: "fnb",
+        price: "$35",
+        rating: "4.9",
+        creator: "Kenji Sato",
+        creatorAvatar: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=120&q=80",
+        language: "Global Ready",
+        image: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=800&q=80",
+        title: "Central Kitchen Recipe Costing & Outlet Supply",
+        catLabel: "F&B & Hospitality",
+        desc: "Manage COGS food cost per menu, multi-outlet ingredient requisitions, and kitchen waste logs."
+      }
+    ];
+
+    // Render App Cards with Dummy Screenshots & Creator Avatars
+    function renderApps(list) {
+      const grid = document.getElementById('appsGrid');
+
+      if (list.length === 0) {
+        grid.innerHTML = `
+          <div class="col-span-full bg-white rounded-2xl p-10 text-center border border-slate-200">
+            <p class="text-slate-600 font-semibold">No business apps found matching your filter.</p>
+          </div>
+        `;
+        return;
+      }
+
+      grid.innerHTML = list.map(app => {
+        return `
+        <div class="group bg-white rounded-2xl border border-slate-200/90 overflow-hidden shadow-sm hover:shadow-2xl hover:border-blue-500 transition-all duration-300 flex flex-col">
+          <!-- Browser Mockup Header Bar -->
+          <div class="bg-slate-100 px-3.5 py-2 border-b border-slate-200/80 flex items-center justify-between">
+            <div class="flex items-center gap-1.5">
+              <span class="w-2.5 h-2.5 rounded-full bg-rose-400"></span>
+              <span class="w-2.5 h-2.5 rounded-full bg-amber-400"></span>
+              <span class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
+            </div>
+            <span class="text-[10px] font-bold text-slate-400 tracking-wide">zuraappmarket.com/app-${app.id}</span>
+          </div>
+
+          <!-- High-Res Dummy App Screenshot -->
+          <div class="relative h-48 overflow-hidden bg-slate-900 cursor-pointer" onclick="openAppPreview(${app.id})">
+            <img 
+              src="${app.image}" 
+              alt="${app.title}" 
+              class="w-full h-full object-cover group-hover:scale-105 transition duration-500 opacity-95"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-zura-navy/75 via-transparent to-transparent"></div>
+            <div class="absolute top-3 left-3 px-3 py-1 rounded-lg bg-zura-navy/85 backdrop-blur-md text-white text-xs font-semibold border border-white/15">
+              ${app.catLabel}
+            </div>
+            <div class="absolute top-3 right-3 px-3 py-1 rounded-lg bg-white/95 backdrop-blur-md text-zura-navy text-xs font-black shadow-md">
+              ${app.price}
+            </div>
+            <div class="absolute bottom-3 left-3 right-3 flex items-center justify-between text-white text-xs">
+              <span class="font-semibold flex items-center gap-1 bg-black/40 backdrop-blur-sm px-2.5 py-1 rounded-md">
+                🌐 ${app.language}
+              </span>
+              <span class="font-bold bg-blue-600/90 px-2.5 py-1 rounded-md shadow">
+                ★ ${app.rating}
+              </span>
+            </div>
+          </div>
+
+          <!-- Card Body -->
+          <div class="p-5 flex-1 flex flex-col justify-between">
+            <div>
+              <h3 onclick="openAppPreview(${app.id})" class="cursor-pointer font-extrabold text-lg text-zura-navy group-hover:text-blue-600 transition leading-snug">
+                ${app.title}
+              </h3>
+              <p class="text-xs text-slate-500 mt-2 leading-relaxed line-clamp-2">
+                ${app.desc}
+              </p>
+            </div>
+
+            <!-- Creator Avatar & Action -->
+            <div class="mt-5 pt-4 border-t border-slate-100 flex items-center justify-between">
+              <div class="flex items-center gap-2.5">
+                <img src="${app.creatorAvatar}" alt="${app.creator}" class="w-8 h-8 rounded-full object-cover border border-blue-200" />
+                <div>
+                  <div class="text-xs font-bold text-slate-800 leading-none">${app.creator}</div>
+                  <div class="text-[10px] font-semibold text-emerald-600 mt-0.5">✓ Verified App</div>
+                </div>
+              </div>
+
+              <button onclick="openAppPreview(${app.id})" class="px-3.5 py-2 rounded-xl bg-blue-50 hover:bg-zura-navy text-blue-600 hover:text-white text-xs font-extrabold transition flex items-center gap-1">
+                <span>Live Preview</span>
+                <span>→</span>
+              </button>
+            </div>
+          </div>
+        </div>
+        `;
+      }).join('');
+    }
+
+    // Filter Apps by Business Line
+    function filterApps(category) {
+      activeCategory = category;
+      document.querySelectorAll('.industry-pill').forEach(btn => {
+        if (btn.dataset.cat === category) {
+          btn.className = "industry-pill shrink-0 px-4 py-2.5 rounded-xl text-sm font-bold bg-zura-navy text-white shadow-sm transition flex items-center gap-2";
+        } else {
+          btn.className = "industry-pill shrink-0 px-4 py-2.5 rounded-xl text-sm font-semibold bg-white text-slate-700 border border-slate-200 hover:border-blue-400 transition flex items-center gap-2";
+        }
+      });
+
+      const filtered = category === 'all' ? appsData : appsData.filter(a => a.category === category);
+      renderApps(filtered);
+      lucide.createIcons();
+    }
+
+    // Search Apps
+    function searchApps(query) {
+      const q = query.toLowerCase().trim();
+      const filtered = appsData.filter(app => {
+        return (
+          app.title.toLowerCase().includes(q) ||
+          app.catLabel.toLowerCase().includes(q) ||
+          app.desc.toLowerCase().includes(q)
+        );
+      });
+      renderApps(filtered);
+    }
+
+    // Open Live App Preview Modal with Dummy Image
+    function openAppPreview(appId) {
+      const app = appsData.find(a => a.id === appId);
+      if (!app) return;
+
+      document.getElementById('previewModalImg').src = app.image;
+      document.getElementById('previewModalPrice').textContent = app.price;
+      document.getElementById('previewModalCat').textContent = app.catLabel;
+      document.getElementById('previewModalLang').textContent = '🌐 ' + app.language;
+      document.getElementById('previewModalTitle').textContent = app.title;
+      document.getElementById('previewModalDesc').textContent = app.desc;
+      document.getElementById('previewModalAvatar').src = app.creatorAvatar;
+      document.getElementById('previewModalCreator').textContent = app.creator;
+
+      document.getElementById('appPreviewModal').classList.replace('hidden', 'flex');
+      lucide.createIcons();
+    }
+
+    // Horizontal Slider Controls
+    function scrollSlider(amount) {
+      document.getElementById('industrySlider').scrollBy({ left: amount, behavior: 'smooth' });
+    }
+
+    // Update Creator Hub UI State
+    function updateCreatorUIState() {
+      const statusLabel = document.getElementById('roleStatusLabel');
+      const toggleBtnText = document.getElementById('toggleCreatorBtnText');
+      const lockedBanner = document.getElementById('creatorLockedBanner');
+      const creatorLinks = document.getElementById('creatorMenuLinks');
+      const lockIcon = document.getElementById('creatorLockIcon');
+      const headerLoginText = document.getElementById('headerLoginText');
+
+      if (isCreatorLoggedIn) {
+        statusLabel.innerHTML = `<strong class="text-emerald-300">Status: Logged in as Creator</strong>`;
+        toggleBtnText.textContent = 'Switch to Guest';
+        lockedBanner.classList.add('hidden');
+        creatorLinks.classList.remove('opacity-50', 'pointer-events-none');
+        lockIcon.setAttribute('data-lucide', 'sparkles');
+        lockIcon.classList.replace('text-amber-500', 'text-blue-600');
+        headerLoginText.textContent = 'Creator Area';
+      } else {
+        statusLabel.textContent = 'Status: Public Guest';
+        toggleBtnText.textContent = 'Simulate Creator Login';
+        lockedBanner.classList.remove('hidden');
+        creatorLinks.classList.add('opacity-50', 'pointer-events-none');
+        lockIcon.setAttribute('data-lucide', 'lock');
+        lockIcon.classList.replace('text-blue-600', 'text-amber-500');
+        headerLoginText.textContent = 'Log in';
+      }
+      lucide.createIcons();
+    }
+
+    function toggleCreatorMode() {
+      isCreatorLoggedIn = !isCreatorLoggedIn;
+      updateCreatorUIState();
+      showToast(isCreatorLoggedIn
+        ? 'Creator Hub Unlocked! Dashboard, Portfolio & Profile are now active.'
+        : 'Switched back to Public Guest mode.');
+    }
+
+    function handleCreatorHubClick() {
+      if (!isCreatorLoggedIn) {
+        openLoginModal();
+      }
+    }
+
+    function enableCreatorAndClose() {
+      if (!isCreatorLoggedIn) toggleCreatorMode();
+      closeModals();
+    }
+
+    // Hero 3 Buttons Feedback
+    function highlightAction(type) {
+      if (type === 'learn') showToast('Opening ZuraClass Multilingual Academy...');
+      if (type === 'find') document.getElementById('marketplace-section').scrollIntoView({ behavior: 'smooth' });
+      if (type === 'showcase') {
+        if (!isCreatorLoggedIn) toggleCreatorMode();
+      }
+    }
+
+    // Modals & Mobile Menu
+    function openAiHelpModal() {
+      document.getElementById('aiHelpModal').classList.replace('hidden', 'flex');
+    }
+    function openLoginModal() {
+      document.getElementById('loginModal').classList.replace('hidden', 'flex');
+    }
+    function openContactModal() {
+      showToast('Opening Zuralogic Enterprise Partner Inquiry...');
+    }
+    function closeModals() {
+      document.getElementById('aiHelpModal').classList.replace('flex', 'hidden');
+      document.getElementById('loginModal').classList.replace('flex', 'hidden');
+      document.getElementById('appPreviewModal').classList.replace('flex', 'hidden');
+    }
+    function toggleMobileMenu() {
+      document.getElementById('mobileMenu').classList.toggle('hidden');
+    }
+
+    // Toast Helper
+    let toastTimer;
+    function showToast(message) {
+      const box = document.getElementById('toastBox');
+      document.getElementById('toastText').textContent = message;
+      box.classList.replace('hidden', 'flex');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => {
+        box.classList.replace('flex', 'hidden');
+      }, 3200);
+    }
+
+    // Initialize on load
+    window.addEventListener('DOMContentLoaded', () => {
+      renderApps(appsData);
+      lucide.createIcons();
+    });
+  </script>
+</body>
+</html>
