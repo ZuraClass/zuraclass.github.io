@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Zuralogic.com — Your Scale-Up Partner </title>
+  <title>Zuralogic.com — Your Scale-Up Partner | Global Business App Ecosystem</title>
   
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -344,7 +344,7 @@
           </button>
           <div class="dropdown-menu absolute left-0 top-full pt-2 w-72 z-50">
             <div class="bg-white/95 backdrop-blur-xl rounded-2xl shadow-2xl border border-blue-100 p-2.5">
-              <a href="https://discord.gg/QBjWZEdY2" onclick="showToast('Opening ZuraClass Global Community Forum')" class="flex items-center gap-3 p-2.5 rounded-xl hover:bg-blue-50/90 transition group/item">
+              <a href="#community-section" onclick="showToast('Opening ZuraClass Global Community Forum')" class="flex items-center gap-3 p-2.5 rounded-xl hover:bg-blue-50/90 transition group/item">
                 <div class="w-9 h-9 rounded-lg bg-blue-50 border border-blue-100 text-blue-600 flex items-center justify-center shrink-0 group-hover/item:bg-blue-600 group-hover/item:text-white transition">
                   <i data-lucide="messages-square" class="w-4 h-4"></i>
                 </div>
@@ -373,7 +373,7 @@
                   <i data-lucide="shield-alert" class="w-4 h-4 text-amber-600"></i>
                   <span>Creator Member Only</span>
                 </div>
-                <p class="text-amber-700 leading-relaxed mb-2">Sign in as a ZuraClass Creator to access your Dashboard, Portfolio, and Profile.</p>
+                <p id="creatorLockedDesc" class="text-amber-700 leading-relaxed mb-2">Sign in as a ZuraClass Creator to access your Dashboard, Portfolio, and Profile.</p>
                 <button onclick="window.location.href='/auth/?mode=register&role=creator'" class="w-full py-1.5 rounded-lg bg-zura-navy text-white font-semibold hover:bg-blue-700 transition">
                   Unlock Creator Hub
                 </button>
@@ -442,9 +442,15 @@
           Contact Us
         </button>
 
-        <!-- 8. LOGIN BUTTON -->
-        <button onclick="openLoginModal()" id="headerLoginBtn" class="px-5 py-2.5 rounded-full bg-zura-navy hover:bg-blue-700 text-white text-sm font-bold shadow-md hover:shadow-lg transition flex items-center gap-2">
-          <i data-lucide="log-in" class="w-4 h-4"></i>
+        <!-- 8. USER IDENTITY BADGE (Muncul setelah Login: "Nama - [Creator/Explorer]") -->
+        <div id="headerUserBadge" class="hidden items-center gap-2.5 pl-2 pr-3.5 py-1.5 rounded-full bg-blue-50/90 border border-blue-200/90 text-xs font-bold text-zura-navy shadow-sm">
+          <span class="w-6 h-6 rounded-full bg-zura-navy text-white flex items-center justify-center text-[11px] font-black shrink-0" id="headerUserInitial">U</span>
+          <span id="headerUserLabel" class="tracking-tight">User - [Explorer]</span>
+        </div>
+
+        <!-- 9. LOGIN / LOGOUT BUTTON -->
+        <button onclick="handleHeaderAuthAction()" id="headerLoginBtn" class="px-5 py-2.5 rounded-full bg-zura-navy hover:bg-blue-700 text-white text-sm font-bold shadow-md hover:shadow-lg transition flex items-center gap-2">
+          <i id="headerLoginIcon" data-lucide="log-in" class="w-4 h-4"></i>
           <span id="headerLoginText">Log in</span>
         </button>
 
@@ -483,9 +489,14 @@
           <span>Get Help (AI)</span>
         </button>
       </div>
+      <!-- Mobile User Badge -->
+      <div id="mobileUserBadge" class="hidden items-center justify-between px-3.5 py-2.5 rounded-xl bg-blue-50 border border-blue-200 text-xs font-bold text-zura-navy">
+        <span id="mobileUserLabel">User - [Explorer]</span>
+        <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+      </div>
       <div class="flex items-center gap-3 pt-2">
         <button onclick="openContactModal()" class="w-1/2 py-2.5 rounded-xl border border-slate-300 text-sm font-bold text-slate-700">Contact Us</button>
-        <button onclick="openLoginModal()" class="w-1/2 py-2.5 rounded-xl bg-zura-navy text-white text-sm font-bold">Log in</button>
+        <button onclick="handleHeaderAuthAction()" id="mobileAuthBtn" class="w-1/2 py-2.5 rounded-xl bg-zura-navy text-white text-sm font-bold">Log in</button>
       </div>
     </div>
   </header>
@@ -625,7 +636,37 @@
 
 
   <!-- =====================================================================
-       ENTERPRISE PARTNER & ECOSYSTEM SHOWCASE STRIP (Dengan Gambar Dummy)
+       FOOTER (Dengan Footer Links + teks copyright zuralogic.com @ 2021)
+       ===================================================================== -->
+  <footer class="bg-white border-t border-slate-200/90 mt-auto">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col md:flex-row items-center justify-between gap-6">
+      <div class="flex items-center gap-3">
+        <!-- Dummy Logo Footer -->
+        <a href="/" class="relative w-8 h-8 rounded-lg overflow-hidden bg-zura-navy flex items-center justify-center">
+          <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=80&q=80" alt="Zuralogic Logo" class="w-full h-full object-cover opacity-80" />
+          <span class="absolute font-black text-white text-xs">ZL</span>
+        </a>
+        <span class="font-bold text-sm text-zura-navy">Zuralogic.com</span>
+        <span class="text-xs text-slate-400">• <span data-i18n="tagline">Your Scale-Up Partner</span></span>
+      </div>
+
+      <!-- Footer Legal & Ecosystem Links -->
+      <div class="flex flex-wrap items-center justify-center gap-6 text-xs sm:text-sm font-semibold text-slate-600">
+        <a href="/terms.html" class="hover:text-blue-600 transition">Terms of Service</a>
+        <a href="/privacy.html" class="hover:text-blue-600 transition">Privacy Policy</a>
+        <a href="/gethelp/" class="hover:text-blue-600 transition">Help Center</a>
+        <button onclick="openContactModal()" class="hover:text-blue-600 transition">Contact Us</button>
+      </div>
+
+      <p class="text-sm font-medium text-slate-500">
+        copyright zuralogic.com @ 2021
+      </p>
+    </div>
+  </footer>
+
+
+  <!-- =====================================================================
+       MODALS (App Preview Modal, AI Get Help, Logout Confirmation Modal, Toast)
        ===================================================================== -->
   <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-6 w-full">
     <div class="bg-white rounded-2xl border border-slate-200/80 px-6 py-4 shadow-sm flex flex-wrap items-center justify-between gap-4">
@@ -813,31 +854,21 @@
   </section>
 
 
- <!-- =====================================================================
-       FOOTER (Dengan Footer Links + teks copyright zuralogic.com @ 2021)
+  <!-- =====================================================================
+       FOOTER (Dengan teks copyright zuralogic.com @ 2021)
        ===================================================================== -->
   <footer class="bg-white border-t border-slate-200/90 mt-auto">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col md:flex-row items-center justify-between gap-6">
-      
-      <!-- Brand Identity -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col sm:flex-row items-center justify-between gap-4">
       <div class="flex items-center gap-3">
-        <a href="/" class="relative w-8 h-8 rounded-lg overflow-hidden bg-zura-navy flex items-center justify-center">
+        <!-- Dummy Logo Footer -->
+        <div class="relative w-8 h-8 rounded-lg overflow-hidden bg-zura-navy flex items-center justify-center">
           <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=80&q=80" alt="Zuralogic Logo" class="w-full h-full object-cover opacity-80" />
           <span class="absolute font-black text-white text-xs">ZL</span>
-        </a>
+        </div>
         <span class="font-bold text-sm text-zura-navy">Zuralogic.com</span>
-        <span class="text-xs text-slate-400">• <span>Your Scale-Up Partner</span></span>
+        <span class="text-xs text-slate-400">• <span data-i18n="tagline">Your Scale-Up Partner</span></span>
       </div>
 
-      <!-- Footer Legal & Ecosystem Links -->
-      <div class="flex flex-wrap items-center justify-center gap-6 text-xs sm:text-sm font-semibold text-slate-600">
-        <a href="/terms.html" class="hover:text-blue-600 transition">Terms of Service</a>
-        <a href="/privacy.html" class="hover:text-blue-600 transition">Privacy Policy</a>
-        <a href="/gethelp/" class="hover:text-blue-600 transition">Help Center</a>
-        <button onclick="openContactModal()" class="hover:text-blue-600 transition">Contact Us</button>
-      </div>
-
-      <!-- Copyright -->
       <p class="text-sm font-medium text-slate-500">
         copyright zuralogic.com @ 2021
       </p>
@@ -940,6 +971,28 @@
     </div>
   </div>
 
+  <!-- Logout Confirmation Modal -->
+  <div id="logoutConfirmModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-zura-navy/60 backdrop-blur-sm p-4">
+    <div class="bg-white rounded-3xl max-w-sm w-full p-6 shadow-2xl border border-blue-100 text-center">
+      <div class="w-12 h-12 rounded-2xl bg-rose-50 border border-rose-100 text-rose-600 flex items-center justify-center mx-auto mb-4">
+        <i data-lucide="log-out" class="w-6 h-6"></i>
+      </div>
+      <h3 class="font-black text-xl text-zura-navy">Confirm Logout</h3>
+      <p class="text-xs sm:text-sm text-slate-600 mt-2 leading-relaxed">
+        Are you sure you want to log out from <strong id="logoutModalUserName" class="text-zura-navy">your account</strong>?
+      </p>
+      <div class="grid grid-cols-2 gap-3 mt-6">
+        <button type="button" onclick="closeModals()" class="py-2.5 px-4 rounded-xl border border-slate-200 hover:bg-slate-50 text-xs sm:text-sm font-bold text-slate-700 transition">
+          Cancel
+        </button>
+        <button type="button" onclick="confirmLogout()" class="py-2.5 px-4 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-xs sm:text-sm font-bold shadow-md transition flex items-center justify-center gap-1.5">
+          <i data-lucide="log-out" class="w-4 h-4"></i>
+          <span>Yes, Logout</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
   <!-- Toast Notification -->
   <div id="toastBox" class="fixed bottom-5 right-5 z-50 hidden items-center gap-2.5 bg-zura-navy text-white px-4 py-3 rounded-2xl shadow-xl border border-blue-400/30 text-sm font-medium">
     <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400 shrink-0"></i>
@@ -948,11 +1001,137 @@
 
 
   <!-- =====================================================================
-       JAVASCRIPT LOGIC: ENTERPRISE APP FILTER, CREATOR HUB GATE & MODALS
+       JAVASCRIPT LOGIC: ENTERPRISE APP FILTER, AUTH SESSION & MODALS
        ===================================================================== -->
   <script>
     let activeCategory = 'all';
     let isCreatorLoggedIn = false;
+    let currentSessionUser = null;
+
+    // Read active session from /auth/ page (localStorage or sessionStorage)
+    function getActiveSession() {
+      try {
+        const raw = localStorage.getItem('zl_demo_session') || sessionStorage.getItem('zl_demo_session');
+        return raw ? JSON.parse(raw) : null;
+      } catch (e) {
+        return null;
+      }
+    }
+
+    // Format Role Badge: creator -> Creator, buyer -> Explorer
+    function formatRoleDisplay(role) {
+      return role === 'creator' ? 'Creator' : 'Explorer';
+    }
+
+    // Sync Header UI & Creator Hub Gate with active session
+    function syncAuthSessionUI() {
+      currentSessionUser = getActiveSession();
+      isCreatorLoggedIn = Boolean(currentSessionUser && currentSessionUser.role === 'creator');
+
+      const userBadge = document.getElementById('headerUserBadge');
+      const userInitial = document.getElementById('headerUserInitial');
+      const userLabel = document.getElementById('headerUserLabel');
+      const mobileUserBadge = document.getElementById('mobileUserBadge');
+      const mobileUserLabel = document.getElementById('mobileUserLabel');
+
+      const loginBtn = document.getElementById('headerLoginBtn');
+      const loginIcon = document.getElementById('headerLoginIcon');
+      const loginText = document.getElementById('headerLoginText');
+      const mobileAuthBtn = document.getElementById('mobileAuthBtn');
+
+      const lockedBanner = document.getElementById('creatorLockedBanner');
+      const lockedDesc = document.getElementById('creatorLockedDesc');
+      const creatorLinks = document.getElementById('creatorMenuLinks');
+      const lockIcon = document.getElementById('creatorLockIcon');
+
+      if (currentSessionUser) {
+        const roleTag = formatRoleDisplay(currentSessionUser.role);
+        const formattedLabel = `${currentSessionUser.name} - [${roleTag}]`;
+
+        // Show User Badge in Header: "user - [Creator/Explorer]"
+        userLabel.textContent = formattedLabel;
+        userInitial.textContent = (currentSessionUser.name || 'U').trim().charAt(0).toUpperCase();
+        userBadge.classList.replace('hidden', 'flex');
+
+        if (mobileUserBadge && mobileUserLabel) {
+          mobileUserLabel.textContent = formattedLabel;
+          mobileUserBadge.classList.replace('hidden', 'flex');
+        }
+
+        // Change Log in button -> Logout button
+        loginText.textContent = 'Logout';
+        loginIcon.setAttribute('data-lucide', 'log-out');
+        loginBtn.className = 'px-5 py-2.5 rounded-full bg-rose-600 hover:bg-rose-700 text-white text-sm font-bold shadow-md hover:shadow-lg transition flex items-center gap-2';
+        if (mobileAuthBtn) {
+          mobileAuthBtn.textContent = 'Logout';
+          mobileAuthBtn.className = 'w-1/2 py-2.5 rounded-xl bg-rose-600 text-white text-sm font-bold';
+        }
+
+        // Unlock Creator Hub if role === 'creator'
+        if (isCreatorLoggedIn) {
+          lockedBanner.classList.add('hidden');
+          creatorLinks.classList.remove('opacity-50', 'pointer-events-none');
+          lockIcon.setAttribute('data-lucide', 'sparkles');
+          lockIcon.classList.replace('text-amber-500', 'text-blue-600');
+        } else {
+          lockedBanner.classList.remove('hidden');
+          if (lockedDesc) {
+            lockedDesc.textContent = 'You are signed in as an Explorer. Upgrade or register a Creator account to unlock Dashboard, Portfolio & Profile.';
+          }
+          creatorLinks.classList.add('opacity-50', 'pointer-events-none');
+          lockIcon.setAttribute('data-lucide', 'lock');
+          lockIcon.classList.replace('text-blue-600', 'text-amber-500');
+        }
+      } else {
+        // Guest State
+        userBadge.classList.replace('flex', 'hidden');
+        if (mobileUserBadge) mobileUserBadge.classList.replace('flex', 'hidden');
+
+        loginText.textContent = 'Log in';
+        loginIcon.setAttribute('data-lucide', 'log-in');
+        loginBtn.className = 'px-5 py-2.5 rounded-full bg-zura-navy hover:bg-blue-700 text-white text-sm font-bold shadow-md hover:shadow-lg transition flex items-center gap-2';
+        if (mobileAuthBtn) {
+          mobileAuthBtn.textContent = 'Log in';
+          mobileAuthBtn.className = 'w-1/2 py-2.5 rounded-xl bg-zura-navy text-white text-sm font-bold';
+        }
+
+        lockedBanner.classList.remove('hidden');
+        if (lockedDesc) {
+          lockedDesc.textContent = 'Sign in as a ZuraClass Creator to access your Dashboard, Portfolio, and Profile.';
+        }
+        creatorLinks.classList.add('opacity-50', 'pointer-events-none');
+        lockIcon.setAttribute('data-lucide', 'lock');
+        lockIcon.classList.replace('text-blue-600', 'text-amber-500');
+      }
+
+      lucide.createIcons();
+    }
+
+    // Header Button Click: If logged in -> Open Logout Confirmation Popup; Else -> Go to Login Page
+    function handleHeaderAuthAction() {
+      if (currentSessionUser) {
+        const roleTag = formatRoleDisplay(currentSessionUser.role);
+        document.getElementById('logoutModalUserName').textContent = `${currentSessionUser.name} - [${roleTag}]`;
+        document.getElementById('logoutConfirmModal').classList.replace('hidden', 'flex');
+        lucide.createIcons();
+      } else {
+        openLoginModal();
+      }
+    }
+
+    // Confirm Logout Action: Clear session, close popup, update UI & redirect to homepage
+    function confirmLogout() {
+      try {
+        localStorage.removeItem('zl_demo_session');
+        sessionStorage.removeItem('zl_demo_session');
+      } catch (e) {}
+      closeModals();
+      syncAuthSessionUI();
+      showToast('You have been logged out. Redirecting to homepage...');
+      setTimeout(() => {
+        window.location.href = '/';
+      }, 600);
+    }
 
     // High-Resolution Enterprise Dummy Apps Data (English Standard + Dummy Screenshots & Creator Avatars)
     const appsData = [
@@ -1172,41 +1351,20 @@
       document.getElementById('industrySlider').scrollBy({ left: amount, behavior: 'smooth' });
     }
 
-    // Update Creator Hub UI State
+    // Update Creator Hub UI State (Simulator fallback)
     function updateCreatorUIState() {
-      const statusLabel = document.getElementById('roleStatusLabel');
-      const toggleBtnText = document.getElementById('toggleCreatorBtnText');
-      const lockedBanner = document.getElementById('creatorLockedBanner');
-      const creatorLinks = document.getElementById('creatorMenuLinks');
-      const lockIcon = document.getElementById('creatorLockIcon');
-      const headerLoginText = document.getElementById('headerLoginText');
-
-      if (isCreatorLoggedIn) {
-        statusLabel.innerHTML = `<strong class="text-emerald-300">Status: Logged in as Creator</strong>`;
-        toggleBtnText.textContent = 'Switch to Guest';
-        lockedBanner.classList.add('hidden');
-        creatorLinks.classList.remove('opacity-50', 'pointer-events-none');
-        lockIcon.setAttribute('data-lucide', 'sparkles');
-        lockIcon.classList.replace('text-amber-500', 'text-blue-600');
-        headerLoginText.textContent = 'Creator Area';
-      } else {
-        statusLabel.textContent = 'Status: Public Guest';
-        toggleBtnText.textContent = 'Simulate Creator Login';
-        lockedBanner.classList.remove('hidden');
-        creatorLinks.classList.add('opacity-50', 'pointer-events-none');
-        lockIcon.setAttribute('data-lucide', 'lock');
-        lockIcon.classList.replace('text-blue-600', 'text-amber-500');
-        headerLoginText.textContent = 'Log in';
-      }
-      lucide.createIcons();
+      syncAuthSessionUI();
     }
 
     function toggleCreatorMode() {
-      isCreatorLoggedIn = !isCreatorLoggedIn;
-      updateCreatorUIState();
-      showToast(isCreatorLoggedIn
-        ? 'Creator Hub Unlocked! Dashboard, Portfolio & Profile are now active.'
-        : 'Switched back to Public Guest mode.');
+      if (currentSessionUser) {
+        confirmLogout();
+      } else {
+        const demoCreator = { name: 'Creator Demo', email: 'creator@zuralogic.com', role: 'creator' };
+        try { sessionStorage.setItem('zl_demo_session', JSON.stringify(demoCreator)); } catch (e) {}
+        syncAuthSessionUI();
+        showToast('Creator Hub Unlocked! Signed in as Creator Demo - [Creator].');
+      }
     }
 
     function handleCreatorHubClick() {
@@ -1216,7 +1374,9 @@
     }
 
     function enableCreatorAndClose() {
-      if (!isCreatorLoggedIn) toggleCreatorMode();
+      const demoCreator = { name: 'Creator Demo', email: 'creator@zuralogic.com', role: 'creator' };
+      try { sessionStorage.setItem('zl_demo_session', JSON.stringify(demoCreator)); } catch (e) {}
+      syncAuthSessionUI();
       closeModals();
     }
 
@@ -1225,7 +1385,7 @@
       if (type === 'learn') showToast('Opening ZuraClass Multilingual Academy...');
       if (type === 'find') document.getElementById('marketplace-section').scrollIntoView({ behavior: 'smooth' });
       if (type === 'showcase') {
-        if (!isCreatorLoggedIn) toggleCreatorMode();
+        if (!isCreatorLoggedIn) openLoginModal();
       }
     }
 
@@ -1234,7 +1394,7 @@
       window.location.href = '/gethelp/';
     }
     function openLoginModal() {
-  window.location.href = '/auth/?mode=login';
+      window.location.href = '/auth/?mode=login';
     }
     function openContactModal() {
       showToast('Opening Zuralogic Enterprise Partner Inquiry...');
@@ -1243,6 +1403,8 @@
       document.getElementById('aiHelpModal').classList.replace('flex', 'hidden');
       document.getElementById('loginModal').classList.replace('flex', 'hidden');
       document.getElementById('appPreviewModal').classList.replace('flex', 'hidden');
+      const logoutModal = document.getElementById('logoutConfirmModal');
+      if (logoutModal) logoutModal.classList.replace('flex', 'hidden');
     }
     function toggleMobileMenu() {
       document.getElementById('mobileMenu').classList.toggle('hidden');
@@ -1263,6 +1425,7 @@
     // Initialize on load
     window.addEventListener('DOMContentLoaded', () => {
       renderApps(appsData);
+      syncAuthSessionUI();
       lucide.createIcons();
     });
   </script>
