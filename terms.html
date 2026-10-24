@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Terms of Service — Zuralogic.com</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'sans-serif'] },
+          colors: {
+            zura: {
+              navy: '#0A1931',
+              deep: '#152A4A',
+              blue: '#2563EB',
+              light: '#EFF6FF',
+              ice: '#DBEAFE'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    .frosted-nav {
+      background: rgba(255, 255, 255, 0.86);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+    }
+  </style>
+</head>
+
+<body class="bg-slate-50 text-slate-900 font-sans antialiased selection:bg-blue-600 selection:text-white flex flex-col min-h-screen">
+
+  <!-- HEADER / NAVBAR (Sama persis dengan Homepage) -->
+  <header class="sticky top-0 z-50 frosted-nav border-b border-blue-100/80 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-3">
+      
+      <!-- Logo Zuralogic.com -->
+      <a href="/" class="flex items-center gap-3 group shrink-0">
+        <div class="relative w-11 h-11 rounded-xl overflow-hidden shadow-md border border-blue-200 group-hover:scale-105 transition bg-zura-navy flex items-center justify-center">
+          <img 
+            src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=160&q=80" 
+            onerror="this.src='https://placehold.co/96x96/0A1931/FFFFFF?text=ZL'"
+            alt="Zuralogic Logo" 
+            class="w-full h-full object-cover opacity-90"
+          />
+          <span class="absolute inset-0 flex items-center justify-center font-black text-white text-base tracking-tighter bg-zura-navy/50 backdrop-blur-[1px]">ZL</span>
+        </div>
+        <div class="flex flex-col">
+          <span class="text-xl font-black tracking-tight text-zura-navy group-hover:text-blue-600 transition leading-none">
+            Zuralogic<span class="text-blue-600">.com</span>
+          </span>
+          <span class="text-[11px] font-semibold text-slate-500 tracking-wide mt-1">
+            Your Scale-Up Partner
+          </span>
+        </div>
+      </a>
+
+      <!-- Quick Back & Legal Switcher -->
+      <div class="hidden md:flex items-center gap-6 text-sm font-semibold text-slate-600">
+        <a href="/" class="hover:text-blue-600 transition flex items-center gap-1.5">
+          <i data-lucide="arrow-left" class="w-4 h-4"></i>
+          <span>Back to Homepage</span>
+        </a>
+        <a href="/terms.html" class="text-blue-600 font-bold">Terms of Service</a>
+        <a href="/privacy.html" class="hover:text-blue-600 transition">Privacy Policy</a>
+        <a href="/gethelp/" class="hover:text-blue-600 transition flex items-center gap-1.5">
+          <i data-lucide="bot" class="w-4 h-4 text-blue-600"></i>
+          <span>Get Help</span>
+        </a>
+      </div>
+
+      <!-- Right Utility -->
+      <div class="flex items-center gap-3">
+        <a href="/auth/?mode=login" class="px-5 py-2.5 rounded-full bg-zura-navy hover:bg-blue-700 text-white text-sm font-bold shadow-md transition flex items-center gap-2">
+          <i data-lucide="log-in" class="w-4 h-4"></i>
+          <span>Log in</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO HEADER BANNER -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-6 w-full">
+    <div class="relative rounded-3xl overflow-hidden border border-blue-200/90 bg-gradient-to-r from-zura-navy via-zura-deep to-blue-800 text-white p-8 sm:p-12 shadow-xl">
+      <div class="relative z-10 max-w-3xl">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/15 text-blue-200 text-xs font-extrabold uppercase tracking-widest mb-4">
+          <i data-lucide="scale" class="w-3.5 h-3.5"></i>
+          <span>Zuralogic Legal Center</span>
+        </div>
+        <h1 class="text-3xl sm:text-5xl font-black tracking-tight">Terms of Service</h1>
+        <p class="text-blue-100/90 text-sm sm:text-base mt-3 leading-relaxed">
+          Please read these Terms carefully before using the Zuralogic Ecosystem, learning on ZuraClass, or buying and selling applications on ZuraAppMarket.
+        </p>
+        <div class="mt-5 flex flex-wrap items-center gap-4 text-xs text-blue-200 font-medium">
+          <span>Effective Date: January 1, 2026</span>
+          <span>•</span>
+          <span>Last Updated: October 24, 2026</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MAIN CONTENT WITH STICKY TABLE OF CONTENTS -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full flex-grow">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      
+      <!-- Left Sidebar: Quick Navigation -->
+      <aside class="lg:col-span-4 lg:sticky lg:top-28 bg-white rounded-2xl border border-slate-200/90 p-5 shadow-sm">
+        <div class="text-xs font-extrabold uppercase tracking-wider text-blue-600 mb-3">On This Page</div>
+        <nav class="space-y-1.5 text-sm font-semibold text-slate-600">
+          <a href="#sec-1" class="block px-3 py-2 rounded-xl hover:bg-blue-50 hover:text-blue-600 transition">1. Acceptance of Terms</a>
+          <a href="#sec-2" class="block px-3 py-2 rounded-xl hover:bg-blue-50 hover:text-blue-600 transition">2. The 3-Sided Ecosystem</a>
+          <a href="#sec-3" class="block px-3 py-2 rounded-xl hover:bg-blue-50 hover:text-blue-600 transition">3. Creator Hub & Selling Rules</a>
+          <a href="#sec-4" class="block px-3 py-2 rounded-xl hover:bg-blue-50 hover:text-blue-600 transition">4. Buyer License & ZuraAppMarket</a>
+          <a href="#sec-5" class="block px-3 py-2 rounded-xl hover:bg-blue-50 hover:text-blue-600 transition">5. Open Libraries & Free Resources</a>
+          <a href="#sec-6" class="block px-3 py-2 rounded-xl hover:bg-blue-50 hover:text-blue-600 transition">6. Limitation of Liability</a>
+          <a href="#sec-7" class="block px-3 py-2 rounded-xl hover:bg-blue-50 hover:text-blue-600 transition">7. Contact & Dispute Resolution</a>
+        </nav>
+
+        <div class="mt-6 pt-5 border-t border-slate-100">
+          <div class="text-xs font-bold text-slate-500 mb-2">Looking for Data Protection?</div>
+          <a href="/privacy.html" class="w-full py-2.5 px-4 rounded-xl bg-slate-100 hover:bg-zura-navy hover:text-white text-zura-navy text-xs font-extrabold transition flex items-center justify-between">
+            <span>Read Privacy Policy</span>
+            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+          </a>
+        </div>
+      </aside>
+
+      <!-- Right Article Content -->
+      <article class="lg:col-span-8 bg-white rounded-3xl border border-slate-200/90 p-6 sm:p-10 shadow-sm space-y-8 text-slate-600 leading-relaxed text-sm sm:text-base">
+        
+        <section id="sec-1" class="space-y-3 scroll-mt-28">
+          <h2 class="text-xl sm:text-2xl font-black text-zura-navy">1. Acceptance of Terms</h2>
+          <p>
+            Welcome to <strong>Zuralogic.com</strong> ("Zuralogic", "we", "our", or "us"). By accessing or using our website, subdomains, connected GitHub Pages repositories, educational tracks (<strong>ZuraClass</strong>), marketplace (<strong>ZuraAppMarket</strong>), or creator tools (<strong>Creator Hub</strong>), you agree to be bound by these Terms of Service.
+          </p>
+        </section>
+
+        <section id="sec-2" class="space-y-3 scroll-mt-28 pt-4 border-t border-slate-100">
+          <h2 class="text-xl sm:text-2xl font-black text-zura-navy">2. The Zuralogic 3-Sided Ecosystem</h2>
+          <p>Zuralogic operates a global platform serving three primary user roles:</p>
+          <ul class="list-disc pl-5 space-y-2">
+            <li><strong class="text-slate-800">Learners (ZuraClass):</strong> Individuals and teams accessing courses, tutorials, formulas, and automation bootcamps.</li>
+            <li><strong class="text-slate-800">Business Buyers (ZuraAppMarket):</strong> Organizations and entrepreneurs purchasing or deploying ready-to-go business applications.</li>
+            <li><strong class="text-slate-800">Creators (Creator Hub):</strong> Verified builders who showcase their portfolio, publish built apps or templates, and earn revenue from global buyers.</li>
+          </ul>
+        </section>
+
+        <section id="sec-3" class="space-y-3 scroll-mt-28 pt-4 border-t border-slate-100">
+          <h2 class="text-xl sm:text-2xl font-black text-zura-navy">3. Creator Hub & Selling Rules</h2>
+          <p>If you register as a Creator to showcase and sell built applications on ZuraAppMarket:</p>
+          <ul class="list-disc pl-5 space-y-2">
+            <li><strong class="text-slate-800">Originality & IP Rights:</strong> You warrant that any AppSheet template, Google Apps Script, database schema, or UI asset you publish is your original work and does not infringe third-party intellectual property.</li>
+            <li><strong class="text-slate-800">Quality & Documentation:</strong> Published apps must include clear setup instructions and function as demonstrated in the Live Preview.</li>
+            <li><strong class="text-slate-800">Revenue Share & Payouts:</strong> Creator earnings, platform commission rates, and payout schedules are managed transparently inside your <em>Creator Hub &gt; Dashboard</em> and <em>Profile</em>.</li>
+          </ul>
+        </section>
+
+        <section id="sec-4" class="space-y-3 scroll-mt-28 pt-4 border-t border-slate-100">
+          <h2 class="text-xl sm:text-2xl font-black text-zura-navy">4. Buyer License & ZuraAppMarket</h2>
+          <p>
+            When you purchase or download a ready-to-go business application on ZuraAppMarket, you are granted a non-exclusive, worldwide license to deploy, customize, and use the application for your internal business operations. Unless explicitly purchased under a <em>White-Label / Enterprise Scale-Up License</em>, you may not resell or redistribute the raw template as a competing marketplace product.
+          </p>
+        </section>
+
+        <section id="sec-5" class="space-y-3 scroll-mt-28 pt-4 border-t border-slate-100">
+          <h2 class="text-xl sm:text-2xl font-black text-zura-navy">5. Open Libraries & Free Resources</h2>
+          <p>
+            Zuralogic provides open resources including <strong>ZuraClass SVG Library Lite</strong> (<code>/svg-library-lite/</code>), <strong>Resource Vault Free</strong> (<code>/resource-vault-free/</code>), and <strong>ZuraClass Formula Library</strong> (<code>/zuraclass-formula-library/</code>). You are free to use these icons, formulas, and blueprints in personal or commercial applications, except that you may not repackage and sell the raw libraries themselves as standalone icon or formula directories.
+          </p>
+        </section>
+
+        <section id="sec-6" class="space-y-3 scroll-mt-28 pt-4 border-t border-slate-100">
+          <h2 class="text-xl sm:text-2xl font-black text-zura-navy">6. Limitation of Liability</h2>
+          <p>
+            All applications, scripts, formulas, and educational content on Zuralogic.com are provided "as is" without warranties of any kind. Zuralogic and its Creators shall not be liable for any indirect, incidental, or operational damages, including data loss or business interruption, arising from the implementation of any app or script.
+          </p>
+        </section>
+
+        <section id="sec-7" class="space-y-3 scroll-mt-28 pt-4 border-t border-slate-100">
+          <h2 class="text-xl sm:text-2xl font-black text-zura-navy">7. Contact & Support</h2>
+          <p>
+            If you have questions regarding these Terms of Service, Creator licensing, or Enterprise agreements, please reach out via our <a href="/gethelp/" class="text-blue-600 font-bold hover:underline">Get Help (ZuraAI Support Center)</a> or email us at <strong>legal@zuralogic.com</strong>.
+          </p>
+        </section>
+
+      </article>
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="bg-white border-t border-slate-200/90 mt-auto">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col md:flex-row items-center justify-between gap-6">
+      <div class="flex items-center gap-3">
+        <a href="/" class="relative w-8 h-8 rounded-lg overflow-hidden bg-zura-navy flex items-center justify-center">
+          <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=80&q=80" alt="Zuralogic Logo" class="w-full h-full object-cover opacity-80" />
+          <span class="absolute font-black text-white text-xs">ZL</span>
+        </a>
+        <span class="font-bold text-sm text-zura-navy">Zuralogic.com</span>
+        <span class="text-xs text-slate-400">• <span>Your Scale-Up Partner</span></span>
+      </div>
+
+      <div class="flex flex-wrap items-center justify-center gap-6 text-xs sm:text-sm font-semibold text-slate-600">
+        <a href="/" class="hover:text-blue-600 transition">Home</a>
+        <a href="/terms.html" class="text-blue-600 font-bold">Terms of Service</a>
+        <a href="/privacy.html" class="hover:text-blue-600 transition">Privacy Policy</a>
+        <a href="/gethelp/" class="hover:text-blue-600 transition">Help Center</a>
+      </div>
+
+      <p class="text-sm font-medium text-slate-500">
+        copyright zuralogic.com @ 2021
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      lucide.createIcons();
+    });
+  </script>
+</body>
+</html>
