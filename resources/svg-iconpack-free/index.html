@@ -4,24 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ZuraClass | SVG UI Icons Library</title>
-    <!-- Tailwind CSS CDN -->
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- FontAwesome for Icons -->
+    <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    
     <!-- Zuralogic Theme Config -->
     <script>
       tailwind.config = {
         theme: {
           extend: {
-            fontFamily: { 
-              sans: ['Inter', 'sans-serif'],
-              mono: ['JetBrains Mono', 'monospace']
-            },
+            fontFamily: { sans: ['Inter', 'sans-serif'], mono: ['JetBrains Mono', 'monospace'] },
             colors: {
               zura: { navy: '#0A1931', deep: '#152A4A', blue: '#2563EB', light: '#EFF6FF', ice: '#DBEAFE' }
             }
@@ -31,6 +26,8 @@
     </script>
 
     <style>
+        body { font-family: 'Inter', sans-serif; }
+        .font-mono { font-family: 'JetBrains Mono', monospace; }
         .frosted-nav { background: rgba(255, 255, 255, 0.86); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); }
         /* Custom scrollbar for dark code blocks */
         .code-scroll::-webkit-scrollbar { height: 6px; width: 6px; }
@@ -125,6 +122,18 @@
                 <i class="fa-solid fa-circle-info mr-2 text-blue-600"></i>
                 <span id="uiNote"><strong>Catatan:</strong> Tabel ini menyediakan Data URI untuk AppSheet dan Raw SVG untuk Web. Kode sudah tergabung lengkap, klik Copy untuk menyalin.</span>
             </div>
+        </div>
+
+        <!-- Category Filter Control -->
+        <div class="mb-6 flex flex-col sm:flex-row justify-between items-center gap-4 bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
+            <div class="flex items-center gap-2 text-sm font-bold text-slate-700">
+                <i class="fa-solid fa-filter text-blue-600"></i>
+                <span id="uiFilterLabel">Filter Kategori:</span>
+            </div>
+            <select id="catFilter" onchange="filterCategory(this.value)" class="w-full sm:w-72 bg-slate-50 border border-slate-200 text-slate-700 text-sm font-semibold rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 block p-2.5 outline-none cursor-pointer shadow-inner">
+                <option value="all">Semua Kategori</option>
+                <!-- Populated via JS -->
+            </select>
         </div>
 
         <!-- Table Container -->
@@ -319,6 +328,7 @@
         };
 
         let currentLang = 'id';
+        let currentFilter = 'all';
 
         // Library of standard UI paths
         const uiPaths = {
@@ -762,9 +772,25 @@
 
         // Initialization
         document.addEventListener('DOMContentLoaded', () => {
+            populateFilter();
             renderTable();
             updateLanguageUI();
         });
+
+        function populateFilter() {
+            const filterSelect = document.getElementById('catFilter');
+            businessCategories.forEach((cat) => {
+                const option = document.createElement('option');
+                option.value = cat.name;
+                option.textContent = cat.name;
+                filterSelect.appendChild(option);
+            });
+        }
+
+        function filterCategory(catName) {
+            currentFilter = catName;
+            renderTable();
+        }
 
         function renderTable() {
             const tbody = document.getElementById('icon-table-body');
@@ -777,6 +803,9 @@
             let htmlContent = "";
 
             businessCategories.forEach((cat) => {
+                // Skip if a specific category is selected and this isn't it
+                if (currentFilter !== 'all' && currentFilter !== cat.name) return;
+
                 cat.items.forEach((item) => {
                     const pathData = uiPaths[item.id];
                     
@@ -788,7 +817,7 @@
                     const appSheetSvg = `${appSheetOpen}${pathData}</svg>`;
                     const dataUri = `${svgPrefix}${appSheetSvg}`;
 
-                    // Display SVG (for preview) - Update to standard blue for light theme
+                    // Display SVG (for preview) - Light theme styling
                     const previewSvg = `${rawOpen.replace('currentColor', '#2563eb')}${pathData.replace(/'/g, '"')}${rawClose}`;
                     const previewUri = `data:image/svg+xml;utf8,${previewSvg.replace(/#/g, '%23').replace(/"/g, "'")}`;
 
@@ -889,7 +918,7 @@
                 // Visual feedback - Enterprise Light Theme success state
                 button.innerHTML = `<i class="fa-solid fa-check mr-1.5 text-emerald-600"></i><span class="text-emerald-600 font-bold">${t.copied}</span>`;
                 button.classList.add('border-emerald-500', 'bg-emerald-50');
-                button.classList.remove('text-white', 'bg-blue-600', 'border-blue-600');
+                button.classList.remove('text-white', 'bg-blue-600', 'border-blue-600', 'bg-slate-100', 'text-slate-600');
             } catch (ex) {
                 console.warn("Copy to clipboard failed.", ex);
             } finally {
@@ -900,6 +929,7 @@
             setTimeout(() => {
                 button.innerHTML = originalHTML;
                 button.classList.remove('border-emerald-500', 'bg-emerald-50');
+                button.classList.add('bg-slate-100', 'text-slate-600');
             }, 2000);
         }
     </script>
