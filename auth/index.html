@@ -12,6 +12,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <script src="https://unpkg.com/lucide@latest"></script>
 
+  <!-- SUPABASE SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
   <script>
     tailwind.config = {
       theme: {
@@ -26,26 +29,14 @@
   </script>
 
   <style>
-    .field-input {
-      width: 100%;
-      padding: 0.7rem 1rem;
-      border-radius: 0.75rem;
-      border: 1px solid #e2e8f0;
-      background: #fff;
-      font-size: 0.875rem;
-      transition: all .2s;
-    }
+    .field-input { width: 100%; padding: 0.7rem 1rem; border-radius: 0.75rem; border: 1px solid #e2e8f0; background: #fff; font-size: 0.875rem; transition: all .2s; }
     .field-input:focus { outline: none; border-color: #2563EB; box-shadow: 0 0 0 3px rgba(37,99,235,.15); }
     .field-input.has-error { border-color: #e11d48; box-shadow: 0 0 0 3px rgba(225,29,72,.10); }
     .field-error { color: #e11d48; font-size: 0.75rem; margin-top: 0.25rem; display: none; }
     .field-error.show { display: block; }
 
     .role-card { transition: all .25s cubic-bezier(.16,1,.3,1); }
-    .role-card[aria-checked="true"] {
-      border-color: #2563EB;
-      background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%);
-      box-shadow: 0 8px 20px -8px rgba(37,99,235,.45);
-    }
+    .role-card[aria-checked="true"] { border-color: #2563EB; background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%); box-shadow: 0 8px 20px -8px rgba(37,99,235,.45); }
     .role-card[aria-checked="true"] .role-radio { background: #2563EB; border-color: #2563EB; }
     .role-card[aria-checked="true"] .role-radio::after { opacity: 1; }
     .role-radio { position: relative; }
@@ -67,9 +58,9 @@
 
 <body class="bg-slate-50 text-slate-900 font-sans antialiased selection:bg-blue-600 selection:text-white min-h-screen flex flex-col">
 
-  <!-- ============ HEADER (Menampilkan juga status user jika sudah login) ============ -->
+  <!-- ============ MINIMAL HEADER ============ -->
   <header class="bg-white/90 backdrop-blur-xl border-b border-blue-100/80 sticky top-0 z-40">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-3">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
       <a href="/" class="flex items-center gap-3 group">
         <div class="relative w-9 h-9 rounded-xl bg-zura-navy flex items-center justify-center shadow-md group-hover:scale-105 transition">
           <span class="font-black text-white text-sm tracking-tighter">ZL</span>
@@ -79,23 +70,10 @@
           <span class="text-[10px] font-semibold text-slate-500 mt-0.5">Your Scale-Up Partner</span>
         </div>
       </a>
-
-      <div class="flex items-center gap-3">
-        <!-- Active User Badge if already logged in -->
-        <div id="authHeaderUserBadge" class="hidden items-center gap-2 px-3 py-1.5 rounded-full bg-blue-50 border border-blue-200 text-xs font-bold text-zura-navy">
-          <i data-lucide="user-check" class="w-3.5 h-3.5 text-blue-600"></i>
-          <span id="authHeaderUserText">User - [Explorer]</span>
-        </div>
-        <button id="authHeaderLogoutBtn" type="button" onclick="openLogoutModal()" class="hidden px-3.5 py-1.5 rounded-full bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold transition items-center gap-1.5">
-          <i data-lucide="log-out" class="w-3.5 h-3.5"></i>
-          <span>Logout</span>
-        </button>
-
-        <a href="/" class="text-sm font-semibold text-slate-600 hover:text-blue-600 transition flex items-center gap-1.5">
-          <i data-lucide="arrow-left" class="w-4 h-4"></i>
-          <span>Back to home</span>
-        </a>
-      </div>
+      <a href="/" class="text-sm font-semibold text-slate-600 hover:text-blue-600 transition flex items-center gap-1.5">
+        <i data-lucide="arrow-left" class="w-4 h-4"></i>
+        <span>Back to home</span>
+      </a>
     </div>
   </header>
 
@@ -116,19 +94,11 @@
           <div class="text-xs font-extrabold tracking-[0.22em] uppercase text-blue-300 mb-4">ZURALOGIC GLOBAL ECOSYSTEM</div>
           <h2 id="panelHeading" class="text-3xl font-black tracking-tight leading-tight">Deploy proven business apps in minutes.</h2>
 
-          <!-- Explorer / Buyer benefits -->
+          <!-- Buyer benefits -->
           <div id="benefits-buyer" class="benefit-set active mt-8 space-y-5">
             <div class="flex items-start gap-3.5">
               <div class="w-10 h-10 rounded-xl bg-white/10 border border-white/15 flex items-center justify-center shrink-0"><i data-lucide="layout-grid" class="w-5 h-5"></i></div>
-              <div><div class="font-bold text-sm">Ready-to-deploy industry apps</div><p class="text-xs text-blue-100/80 mt-0.5 leading-relaxed">Warehouse, HSE, POS, HR and more, built by verified creators.</p></div>
-            </div>
-            <div class="flex items-start gap-3.5">
-              <div class="w-10 h-10 rounded-xl bg-white/10 border border-white/15 flex items-center justify-center shrink-0"><i data-lucide="library" class="w-5 h-5"></i></div>
-              <div><div class="font-bold text-sm">Your personal app library</div><p class="text-xs text-blue-100/80 mt-0.5 leading-relaxed">Keep every purchase, license and update in one place.</p></div>
-            </div>
-            <div class="flex items-start gap-3.5">
-              <div class="w-10 h-10 rounded-xl bg-white/10 border border-white/15 flex items-center justify-center shrink-0"><i data-lucide="graduation-cap" class="w-5 h-5"></i></div>
-              <div><div class="font-bold text-sm">Learn with ZuraClass</div><p class="text-xs text-blue-100/80 mt-0.5 leading-relaxed">Master no-code and automation with guided tracks.</p></div>
+              <div><div class="font-bold text-sm">Ready-to-deploy industry apps</div><p class="text-xs text-blue-100/80 mt-0.5 leading-relaxed">Warehouse, HSE, POS, HR and more.</p></div>
             </div>
           </div>
 
@@ -138,24 +108,7 @@
               <div class="w-10 h-10 rounded-xl bg-white/10 border border-white/15 flex items-center justify-center shrink-0"><i data-lucide="rocket" class="w-5 h-5"></i></div>
               <div><div class="font-bold text-sm">Publish and sell your apps</div><p class="text-xs text-blue-100/80 mt-0.5 leading-relaxed">Reach global buyers on ZuraAppMarket.</p></div>
             </div>
-            <div class="flex items-start gap-3.5">
-              <div class="w-10 h-10 rounded-xl bg-white/10 border border-white/15 flex items-center justify-center shrink-0"><i data-lucide="bar-chart-3" class="w-5 h-5"></i></div>
-              <div><div class="font-bold text-sm">Dashboard and analytics</div><p class="text-xs text-blue-100/80 mt-0.5 leading-relaxed">Track revenue, downloads and reviews in real time.</p></div>
-            </div>
-            <div class="flex items-start gap-3.5">
-              <div class="w-10 h-10 rounded-xl bg-white/10 border border-white/15 flex items-center justify-center shrink-0"><i data-lucide="badge-check" class="w-5 h-5"></i></div>
-              <div><div class="font-bold text-sm">Verified Creator badge</div><p class="text-xs text-blue-100/80 mt-0.5 leading-relaxed">Build trust with a public profile and portfolio.</p></div>
-            </div>
           </div>
-        </div>
-
-        <div class="relative z-10 pt-10 flex items-center gap-3 text-xs text-blue-100/90">
-          <div class="flex -space-x-2">
-            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=80&q=80" alt="" class="w-8 h-8 rounded-full object-cover ring-2 ring-zura-deep" />
-            <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=80&q=80" alt="" class="w-8 h-8 rounded-full object-cover ring-2 ring-zura-deep" />
-            <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=80&q=80" alt="" class="w-8 h-8 rounded-full object-cover ring-2 ring-zura-deep" />
-          </div>
-          <span><strong class="text-white">12,400+</strong> builders across 40+ countries</span>
         </div>
       </aside>
 
@@ -180,19 +133,10 @@
             <h1 class="text-2xl sm:text-3xl font-black text-zura-navy tracking-tight">Welcome back</h1>
             <p class="text-sm text-slate-600 mt-1.5 mb-6">Log in to access your app library, courses, or Creator Hub.</p>
 
-            <button type="button" onclick="handleGoogle()" class="w-full py-3 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 hover:border-blue-300 text-sm font-bold text-slate-700 transition flex items-center justify-center gap-2.5 shadow-sm">
-              <svg class="w-4 h-4" viewBox="0 0 48 48"><path fill="#FFC107" d="M43.6 20.1H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 8 3l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.6-.4-3.9z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 8 3l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-8l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.1H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.6-.4-3.9z"/></svg>
-              <span>Continue with Google</span>
-            </button>
-
-            <div class="flex items-center gap-3 my-5 text-[11px] font-bold uppercase tracking-wider text-slate-400">
-              <span class="flex-1 h-px bg-slate-200"></span><span>or with email</span><span class="flex-1 h-px bg-slate-200"></span>
-            </div>
-
             <form id="loginForm" novalidate class="space-y-4">
               <div>
                 <label for="loginEmail" class="block text-xs font-bold uppercase text-slate-500 mb-1.5">Email address</label>
-                <input id="loginEmail" name="email" type="email" autocomplete="email" placeholder="you@company.com" class="field-input" />
+                <input id="loginEmail" name="email" type="email" placeholder="you@company.com" class="field-input" />
                 <p class="field-error" data-error-for="loginEmail"></p>
               </div>
               <div>
@@ -201,60 +145,49 @@
                   <button type="button" onclick="showView('forgot')" class="text-xs font-semibold text-blue-600 hover:text-blue-700">Forgot password?</button>
                 </div>
                 <div class="relative">
-                  <input id="loginPassword" name="password" type="password" autocomplete="current-password" placeholder="Your password" class="field-input pr-11" />
-                  <button type="button" onclick="togglePassword('loginPassword', this)" class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-blue-600" aria-label="Show password"><i data-lucide="eye" class="w-4 h-4"></i></button>
+                  <input id="loginPassword" name="password" type="password" placeholder="Your password" class="field-input pr-11" />
+                  <button type="button" onclick="togglePassword('loginPassword', this)" class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400"><i data-lucide="eye" class="w-4 h-4"></i></button>
                 </div>
                 <p class="field-error" data-error-for="loginPassword"></p>
               </div>
-              <label class="flex items-center gap-2 text-xs text-slate-600 cursor-pointer select-none">
-                <input type="checkbox" id="rememberMe" checked class="w-4 h-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500" />
-                <span>Keep me signed in on this device</span>
-              </label>
               <button type="submit" class="submit-btn w-full py-3 rounded-xl bg-zura-navy hover:bg-blue-700 text-white font-bold text-sm shadow-md hover:shadow-lg transition flex items-center justify-center gap-2">
                 <span class="btn-label">Log in</span>
               </button>
             </form>
-
-            <p class="text-center text-sm text-slate-600 mt-6">
-              New to Zuralogic?
-              <button type="button" onclick="showView('register')" class="font-bold text-blue-600 hover:text-blue-700">Create an account</button>
-            </p>
           </div>
 
           <!-- ============ VIEW: REGISTER ============ -->
           <div id="view-register" class="view">
             <h1 class="text-2xl sm:text-3xl font-black text-zura-navy tracking-tight">Create your account</h1>
-            <p class="text-sm text-slate-600 mt-1.5 mb-6">Choose how you want to use Zuralogic. You can change this later.</p>
+            <p class="text-sm text-slate-600 mt-1.5 mb-6">Choose how you want to use Zuralogic.</p>
 
-            <!-- Role selector (Explorer/Buyer vs Creator) -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6" role="radiogroup" aria-label="Account type">
-              <button type="button" id="role-buyer" role="radio" aria-checked="true" onclick="setRole('buyer')" class="role-card text-left p-4 rounded-2xl border border-slate-200 bg-white hover:border-blue-300">
+            <!-- Role selector -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
+              <button type="button" id="role-buyer" aria-checked="true" onclick="setRole('buyer')" class="role-card text-left p-4 rounded-2xl border border-slate-200 bg-white hover:border-blue-300">
                 <div class="flex items-start justify-between">
-                  <div class="w-10 h-10 rounded-xl bg-zura-navy text-white flex items-center justify-center"><i data-lucide="compass" class="w-5 h-5"></i></div>
+                  <div class="w-10 h-10 rounded-xl bg-zura-navy text-white flex items-center justify-center"><i data-lucide="app-window" class="w-5 h-5"></i></div>
                   <span class="role-radio w-4 h-4 rounded-full border-2 border-slate-300"></span>
                 </div>
-                <div class="font-extrabold text-sm text-zura-navy mt-3">I want to use apps (Explorer)</div>
-                <p class="text-xs text-slate-500 mt-0.5 leading-relaxed">Buy apps, learn at ZuraClass</p>
+                <div class="font-extrabold text-sm text-zura-navy mt-3">I want to use apps</div>
               </button>
-              <button type="button" id="role-creator" role="radio" aria-checked="false" onclick="setRole('creator')" class="role-card text-left p-4 rounded-2xl border border-slate-200 bg-white hover:border-blue-300">
+              <button type="button" id="role-creator" aria-checked="false" onclick="setRole('creator')" class="role-card text-left p-4 rounded-2xl border border-slate-200 bg-white hover:border-blue-300">
                 <div class="flex items-start justify-between">
                   <div class="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center"><i data-lucide="badge-dollar-sign" class="w-5 h-5"></i></div>
                   <span class="role-radio w-4 h-4 rounded-full border-2 border-slate-300"></span>
                 </div>
-                <div class="font-extrabold text-sm text-zura-navy mt-3">I want to sell apps (Creator)</div>
-                <p class="text-xs text-slate-500 mt-0.5 leading-relaxed">Publish and earn as a Creator</p>
+                <div class="font-extrabold text-sm text-zura-navy mt-3">I want to sell apps</div>
               </button>
             </div>
 
             <form id="registerForm" novalidate class="space-y-4">
               <div>
-                <label for="regName" class="block text-xs font-bold uppercase text-slate-500 mb-1.5">Full name <span class="normal-case font-medium text-slate-400">(or username)</span></label>
-                <input id="regName" name="name" type="text" autocomplete="name" placeholder="Your full name" class="field-input" />
+                <label for="regName" class="block text-xs font-bold uppercase text-slate-500 mb-1.5">Full name</label>
+                <input id="regName" name="name" type="text" placeholder="Your full name" class="field-input" />
                 <p class="field-error" data-error-for="regName"></p>
               </div>
               <div>
                 <label for="regEmail" class="block text-xs font-bold uppercase text-slate-500 mb-1.5">Email address</label>
-                <input id="regEmail" name="email" type="email" autocomplete="email" placeholder="you@company.com" class="field-input" />
+                <input id="regEmail" name="email" type="email" placeholder="you@company.com" class="field-input" />
                 <p class="field-error" data-error-for="regEmail"></p>
               </div>
 
@@ -266,47 +199,33 @@
                 <div>
                   <label for="regExpertise" class="block text-xs font-bold uppercase text-slate-500 mb-1.5">Main platform / expertise</label>
                   <select id="regExpertise" name="expertise" class="field-input">
+                    <option value="">Select one</option>
                     <option value="appsheet">AppSheet</option>
                     <option value="apps-script">Google Apps Script</option>
-                    <option value="sheets">Google Sheets / Workspace</option>
-                    <option value="other-nocode">Other no-code platform</option>
-                    <option value="code">Custom code</option>
+                    <option value="other">Other</option>
                   </select>
                   <p class="field-error" data-error-for="regExpertise"></p>
                 </div>
-                <div>
-                  <label for="regPortfolio" class="block text-xs font-bold uppercase text-slate-500 mb-1.5">Portfolio or demo link <span class="normal-case font-medium text-slate-400">(optional)</span></label>
-                  <input id="regPortfolio" name="portfolio" type="url" placeholder="https://" class="field-input" />
-                  <p class="field-error" data-error-for="regPortfolio"></p>
-                </div>
-                <p class="text-[11px] text-slate-500 leading-relaxed">Creator accounts are reviewed before you can publish. Payout details are added later in your Creator Hub profile.</p>
               </div>
 
               <div>
                 <label for="regPassword" class="block text-xs font-bold uppercase text-slate-500 mb-1.5">Password</label>
                 <div class="relative">
-                  <input id="regPassword" name="password" type="password" autocomplete="new-password" placeholder="At least 8 characters" class="field-input pr-11" oninput="updateStrength(this.value)" />
-                  <button type="button" onclick="togglePassword('regPassword', this)" class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-blue-600" aria-label="Show password"><i data-lucide="eye" class="w-4 h-4"></i></button>
-                </div>
-                <div class="flex items-center gap-1.5 mt-2" aria-hidden="true">
-                  <span class="strength-bar h-1.5 flex-1 rounded-full bg-slate-200 transition-colors"></span>
-                  <span class="strength-bar h-1.5 flex-1 rounded-full bg-slate-200 transition-colors"></span>
-                  <span class="strength-bar h-1.5 flex-1 rounded-full bg-slate-200 transition-colors"></span>
-                  <span class="strength-bar h-1.5 flex-1 rounded-full bg-slate-200 transition-colors"></span>
-                  <span id="strengthLabel" class="text-[11px] font-semibold text-slate-400 w-14 text-right">&nbsp;</span>
+                  <input id="regPassword" name="password" type="password" placeholder="At least 6 characters" class="field-input pr-11" />
+                  <button type="button" onclick="togglePassword('regPassword', this)" class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400"><i data-lucide="eye" class="w-4 h-4"></i></button>
                 </div>
                 <p class="field-error" data-error-for="regPassword"></p>
               </div>
               <div>
                 <label for="regConfirm" class="block text-xs font-bold uppercase text-slate-500 mb-1.5">Confirm password</label>
-                <input id="regConfirm" name="confirm" type="password" autocomplete="new-password" placeholder="Repeat your password" class="field-input" />
+                <input id="regConfirm" name="confirm" type="password" placeholder="Repeat your password" class="field-input" />
                 <p class="field-error" data-error-for="regConfirm"></p>
               </div>
 
               <div>
-                <label class="flex items-start gap-2.5 text-xs text-slate-600 cursor-pointer select-none leading-relaxed">
+                <label class="flex items-start gap-2.5 text-xs text-slate-600 cursor-pointer select-none">
                   <input type="checkbox" id="regTerms" class="w-4 h-4 mt-0.5 rounded border-slate-300 text-blue-600 focus:ring-blue-500 shrink-0" />
-                  <span>I agree to the <a href="/terms.html" target="_blank" rel="noopener" class="font-semibold text-blue-600 hover:underline">Terms of Service</a> and <a href="/privacy.html" target="_blank" rel="noopener" class="font-semibold text-blue-600 hover:underline">Privacy Policy</a>.</span>
+                  <span>I agree to the <a href="/terms.html" target="_blank" class="font-semibold text-blue-600 hover:underline">Terms of Service</a> and <a href="/privacy.html" target="_blank" class="font-semibold text-blue-600 hover:underline">Privacy Policy</a>.</span>
                 </label>
                 <p class="field-error" data-error-for="regTerms"></p>
               </div>
@@ -315,61 +234,26 @@
                 <span class="btn-label" id="registerBtnLabel">Create buyer account</span>
               </button>
             </form>
-
-            <div class="flex items-center gap-3 my-5 text-[11px] font-bold uppercase tracking-wider text-slate-400">
-              <span class="flex-1 h-px bg-slate-200"></span><span>or</span><span class="flex-1 h-px bg-slate-200"></span>
-            </div>
-            <button type="button" onclick="handleGoogle()" class="w-full py-3 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 hover:border-blue-300 text-sm font-bold text-slate-700 transition flex items-center justify-center gap-2.5 shadow-sm">
-              <svg class="w-4 h-4" viewBox="0 0 48 48"><path fill="#FFC107" d="M43.6 20.1H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 8 3l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.6-.4-3.9z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 8 3l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-8l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.1H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.6-.4-3.9z"/></svg>
-              <span>Sign up with Google</span>
-            </button>
-
-            <p class="text-center text-sm text-slate-600 mt-6">
-              Already have an account?
-              <button type="button" onclick="showView('login')" class="font-bold text-blue-600 hover:text-blue-700">Log in</button>
-            </p>
           </div>
 
-          <!-- ============ VIEW: VERIFY EMAIL (Muncul otomatis setelah klik Create Account) ============ -->
+          <!-- ============ VIEW: VERIFY EMAIL (REAL) ============ -->
           <div id="view-verify" class="view">
-            <div class="w-14 h-14 rounded-2xl bg-blue-50 border border-blue-200 text-blue-600 flex items-center justify-center mb-5 shadow-sm">
+            <div class="w-14 h-14 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-600 flex items-center justify-center mb-5 shadow-sm">
               <i data-lucide="mail-check" class="w-7 h-7"></i>
             </div>
-            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs font-extrabold uppercase tracking-wider mb-3">
-              <i data-lucide="send" class="w-3.5 h-3.5"></i>
-              <span>Verification Email Sent</span>
-            </span>
-            <h1 class="text-2xl sm:text-3xl font-black text-zura-navy tracking-tight">Verify your email address</h1>
+            <h1 class="text-2xl sm:text-3xl font-black text-zura-navy tracking-tight">Check your email</h1>
             <p class="text-sm text-slate-600 mt-2 leading-relaxed">
-              We've sent an activation link to <strong id="verifyEmailDisplay" class="text-zura-navy font-bold">you@company.com</strong> for your <strong id="verifyRoleDisplay" class="text-blue-600">Explorer</strong> account.
+              We have sent a secure verification link to <strong id="verifyEmailDisplay" class="text-zura-navy font-bold">your email</strong>.
             </p>
-
-            <!-- Simulated Email Inbox Card -->
-            <div class="mt-6 p-5 rounded-2xl bg-blue-50/70 border border-blue-200/80 space-y-3">
-              <div class="flex items-center justify-between text-xs">
-                <span class="font-extrabold uppercase tracking-wider text-blue-700 flex items-center gap-1.5">
-                  <i data-lucide="inbox" class="w-4 h-4"></i>
-                  <span>Instant Email Verification</span>
-                </span>
-                <span class="text-slate-400 font-semibold">no-reply@zuralogic.com</span>
-              </div>
-              <p class="text-xs text-slate-600 leading-relaxed">
-                Click the verification button below to confirm your email address and proceed directly to the login page.
-              </p>
-              <button type="button" id="verifyNowBtn" onclick="completeEmailVerification()" class="w-full py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm shadow-md hover:shadow-lg transition flex items-center justify-center gap-2">
-                <i data-lucide="check-circle-2" class="w-4 h-4"></i>
-                <span>Verify Email &amp; Continue to Log in</span>
-              </button>
+            <div class="mt-6 p-5 rounded-2xl bg-blue-50/60 border border-blue-200/80 space-y-3">
+               <p class="text-xs text-blue-800 leading-relaxed font-medium">
+                 <strong class="font-bold">Important:</strong> Please open your inbox (or spam folder) and click the link inside to activate your account. Once clicked, you will be automatically logged in.
+               </p>
             </div>
-
             <div class="mt-6 pt-5 border-t border-slate-200/80 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500">
-              <button type="button" onclick="resendVerificationEmail()" class="font-bold text-blue-600 hover:underline flex items-center gap-1">
-                <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i>
-                <span>Resend verification email</span>
-              </button>
-              <button type="button" onclick="goToLoginAfterVerify()" class="font-bold text-zura-navy hover:text-blue-600 flex items-center gap-1">
-                <span>Already verified? Go to Log in</span>
-                <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+              <button type="button" onclick="showView('login')" class="font-bold text-zura-navy hover:text-blue-600 flex items-center gap-1">
+                <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i>
+                <span>Back to Log in</span>
               </button>
             </div>
           </div>
@@ -386,7 +270,7 @@
             <form id="forgotForm" novalidate class="space-y-4">
               <div>
                 <label for="forgotEmail" class="block text-xs font-bold uppercase text-slate-500 mb-1.5">Email address</label>
-                <input id="forgotEmail" name="email" type="email" autocomplete="email" placeholder="you@company.com" class="field-input" />
+                <input id="forgotEmail" name="email" type="email" class="field-input" />
                 <p class="field-error" data-error-for="forgotEmail"></p>
               </div>
               <button type="submit" class="submit-btn w-full py-3 rounded-xl bg-zura-navy hover:bg-blue-700 text-white font-bold text-sm shadow-md hover:shadow-lg transition flex items-center justify-center gap-2">
@@ -398,42 +282,7 @@
         </div>
       </section>
     </div>
-
-    <p id="demoNote" class="max-w-md mx-auto text-center text-[11px] text-slate-400 mt-5 leading-relaxed"></p>
   </main>
-
-  <!-- ============ FOOTER ============ -->
-  <footer class="bg-white border-t border-slate-200/90">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col sm:flex-row items-center justify-between gap-3">
-      <p class="text-sm font-medium text-slate-500">copyright zuralogic.com @ 2021</p>
-      <div class="flex items-center gap-5 text-xs font-semibold text-slate-500">
-        <a href="/terms.html" class="hover:text-blue-600">Terms</a>
-        <a href="/privacy.html" class="hover:text-blue-600">Privacy</a>
-        <a href="/gethelp/" class="hover:text-blue-600">Get Help</a>
-      </div>
-    </div>
-  </footer>
-
-  <!-- Logout Confirmation Modal -->
-  <div id="logoutConfirmModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-zura-navy/60 backdrop-blur-sm p-4">
-    <div class="bg-white rounded-3xl max-w-sm w-full p-6 shadow-2xl border border-blue-100 text-center">
-      <div class="w-12 h-12 rounded-2xl bg-rose-50 border border-rose-100 text-rose-600 flex items-center justify-center mx-auto mb-4">
-        <i data-lucide="log-out" class="w-6 h-6"></i>
-      </div>
-      <h3 class="font-black text-xl text-zura-navy">Confirm Logout</h3>
-      <p class="text-xs sm:text-sm text-slate-600 mt-2 leading-relaxed">
-        Are you sure you want to log out and return to the Zuralogic homepage?
-      </p>
-      <div class="grid grid-cols-2 gap-3 mt-6">
-        <button type="button" onclick="closeLogoutModal()" class="py-2.5 px-4 rounded-xl border border-slate-200 hover:bg-slate-50 text-xs sm:text-sm font-bold text-slate-700 transition">
-          Cancel
-        </button>
-        <button type="button" onclick="confirmLogout()" class="py-2.5 px-4 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-xs sm:text-sm font-bold shadow-md transition">
-          Yes, Logout
-        </button>
-      </div>
-    </div>
-  </div>
 
   <!-- Toast -->
   <div id="toastBox" class="fixed bottom-5 right-5 z-50 hidden items-center gap-2.5 bg-zura-navy text-white px-4 py-3 rounded-2xl shadow-xl border border-blue-400/30 text-sm font-medium">
@@ -443,152 +292,23 @@
 
   <script>
     /* =====================================================================
-       CONFIG
+       1. MASUKKAN SUPABASE URL DAN ANON KEY KAMU DI SINI
        ===================================================================== */
-    const CONFIG = {
-      DEMO_MODE: true,
-      REDIRECT: {
-        buyer: '/',       // Redirect to Homepage where Header shows "Name - [Explorer]"
-        creator: '/'      // Redirect to Homepage where Header shows "Name - [Creator]" & unlocks Creator Hub
-      },
-      MIN_PASSWORD: 8
-    };
+    const SUPABASE_URL = 'https://your-project-id.supabase.co';
+    const SUPABASE_ANON_KEY = 'your-supabase-anon-key-here';
 
+    // Inisialisasi Supabase (Dilindungi validasi agar tidak error URL kosong)
+    let supabaseClient = null;
+    if (SUPABASE_URL.startsWith('http')) {
+      supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    }
+
+    /* =====================================================================
+       STATE & UI HELPERS
+       ===================================================================== */
     let currentRole = 'buyer';
-    let pendingVerificationEmail = '';
-    const params = new URLSearchParams(location.search);
-
     const $ = id => document.getElementById(id);
     const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
-
-    /* =====================================================================
-       AUTH SERVICE
-       ===================================================================== */
-    const AuthService = {
-      _delay: (ms = 650) => new Promise(r => setTimeout(r, ms)),
-      _users() { try { return JSON.parse(localStorage.getItem('zl_demo_users') || '{}'); } catch { return {}; } },
-      _saveUsers(u) { try { localStorage.setItem('zl_demo_users', JSON.stringify(u)); } catch {} },
-      _setSession(user, persist = true) {
-        const sessionData = JSON.stringify({
-          email: user.email,
-          name: user.name,
-          role: user.role,
-          verified: true
-        });
-        try {
-          localStorage.setItem('zl_demo_session', sessionData);
-          if (!persist) sessionStorage.setItem('zl_demo_session', sessionData);
-        } catch {}
-      },
-
-      async login({ email, password, remember }) {
-        await this._delay();
-        const users = this._users();
-        const key = email.toLowerCase();
-        const user = users[key];
-
-        if (!user) {
-          throw new Error('No account found with this email. Please create an account first.');
-        }
-        if (user.verified === false) {
-          pendingVerificationEmail = key;
-          $('verifyEmailDisplay').textContent = key;
-          $('verifyRoleDisplay').textContent = user.role === 'creator' ? 'Creator' : 'Explorer';
-          showView('verify');
-          throw new Error('Please verify your email address first before logging in.');
-        }
-
-        this._setSession(user, remember);
-        return { ok: true, user };
-      },
-
-      async register({ name, email, password, role, expertise, portfolio }) {
-        await this._delay();
-        const users = this._users();
-        const key = email.toLowerCase();
-
-        // Derive clean display name if user left Full Name empty
-        const derivedName = (name && name.trim().length >= 2)
-          ? name.trim()
-          : key.split('@')[0].replace(/[._-]+/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
-
-        const user = {
-          name: derivedName,
-          email: key,
-          role: role, // 'buyer' (Explorer) or 'creator' (Creator)
-          expertise: expertise || null,
-          portfolio: portfolio || null,
-          verified: false,
-          status: role === 'creator' ? 'pending_review' : 'active'
-        };
-
-        users[key] = user;
-        this._saveUsers(users);
-        return { ok: true, user };
-      },
-
-      async verifyEmail(email) {
-        await this._delay(450);
-        const users = this._users();
-        const key = (email || '').toLowerCase();
-        if (users[key]) {
-          users[key].verified = true;
-          this._saveUsers(users);
-          return users[key];
-        }
-        return null;
-      },
-
-      async resetPassword({ email }) {
-        await this._delay();
-        return { ok: true };
-      },
-
-      async google() {
-        await this._delay(450);
-        const demoUser = {
-          name: 'Alex Zura',
-          email: 'alex@zuralogic.com',
-          role: currentRole,
-          verified: true
-        };
-        const users = this._users();
-        users[demoUser.email] = demoUser;
-        this._saveUsers(users);
-        this._setSession(demoUser, true);
-        return { ok: true, user: demoUser };
-      }
-    };
-
-    /* =====================================================================
-       UI HELPERS
-       ===================================================================== */
-    function safeReplaceState(queryString) {
-      try {
-        if (window.location.protocol === 'http:' || window.location.protocol === 'https:') {
-          history.replaceState(null, '', queryString);
-        }
-      } catch (e) {
-        // Ignore SecurityError in blob:/sandboxed preview environments
-      }
-    }
-
-    function safeRedirect(dest) {
-      try {
-        if (window.location.protocol === 'blob:') {
-          syncHeaderSessionOnAuthPage();
-          return;
-        }
-        window.location.href = dest;
-      } catch (e) {
-        syncHeaderSessionOnAuthPage();
-      }
-    }
-
-    function safeNext() {
-      const next = params.get('next');
-      return next && next.startsWith('/') && !next.startsWith('//') ? next : null;
-    }
 
     function showToast(msg) {
       const box = $('toastBox');
@@ -600,15 +320,12 @@
 
     function showAlert(type, msg) {
       const el = $('globalAlert');
-      const styles = {
-        error: ['bg-rose-50', 'border', 'border-rose-200', 'text-rose-800'],
-        success: ['bg-emerald-50', 'border', 'border-emerald-200', 'text-emerald-800'],
-        info: ['bg-blue-50', 'border', 'border-blue-200', 'text-blue-800']
-      };
-      el.className = 'mb-5 p-3.5 rounded-xl text-sm font-medium flex items-start gap-2.5 ' + styles[type].join(' ');
+      const styles = { error: ['bg-rose-50', 'border-rose-200', 'text-rose-800'], success: ['bg-emerald-50', 'border-emerald-200', 'text-emerald-800'] };
+      el.className = 'mb-5 p-3.5 rounded-xl text-sm font-medium flex items-start gap-2.5 border ' + styles[type].join(' ');
       $('globalAlertText').textContent = msg;
-      $('globalAlertIcon').setAttribute('data-lucide', type === 'success' ? 'check-circle-2' : type === 'info' ? 'info' : 'alert-circle');
+      $('globalAlertIcon').setAttribute('data-lucide', type === 'success' ? 'check-circle-2' : 'alert-circle');
       lucide.createIcons();
+      el.classList.remove('hidden');
     }
     function hideAlert() { $('globalAlert').classList.add('hidden'); }
 
@@ -647,45 +364,16 @@
       const show = input.type === 'password';
       input.type = show ? 'text' : 'password';
       btn.innerHTML = `<i data-lucide="${show ? 'eye-off' : 'eye'}" class="w-4 h-4"></i>`;
-      btn.setAttribute('aria-label', show ? 'Hide password' : 'Show password');
       lucide.createIcons();
     }
 
-    function passwordScore(pw) {
-      let s = 0;
-      if (pw.length >= CONFIG.MIN_PASSWORD) s++;
-      if (/[a-zA-Z]/.test(pw)) s++;
-      if (/\d/.test(pw)) s++;
-      if (/[^A-Za-z0-9]/.test(pw) || pw.length >= 12) s++;
-      return s;
-    }
-    function updateStrength(pw) {
-      const score = pw ? passwordScore(pw) : 0;
-      const colors = ['bg-slate-200', 'bg-rose-500', 'bg-amber-500', 'bg-blue-500', 'bg-emerald-500'];
-      const labels = ['', 'Weak', 'Fair', 'Good', 'Strong'];
-      document.querySelectorAll('.strength-bar').forEach((bar, i) => {
-        bar.className = 'strength-bar h-1.5 flex-1 rounded-full transition-colors ' + (i < score ? colors[score] : 'bg-slate-200');
-      });
-      $('strengthLabel').textContent = labels[score] || '\u00A0';
-    }
-
-    /* =====================================================================
-       VIEW & ROLE SWITCHING
-       ===================================================================== */
     function showView(name) {
       hideAlert();
-      ['login', 'register', 'verify', 'forgot'].forEach(v => {
-        const el = $('view-' + v);
-        if (el) el.classList.toggle('active', v === name);
-      });
+      ['login', 'register', 'forgot', 'verify'].forEach(v => $('view-' + v).classList.toggle('active', v === name));
       $('tabsWrap').classList.toggle('hidden', name === 'forgot' || name === 'verify');
       $('tab-login').setAttribute('aria-selected', name === 'login');
       $('tab-register').setAttribute('aria-selected', name === 'register');
-      if (name === 'login' || name === 'register' || name === 'forgot') {
-        safeReplaceState(name === 'forgot' ? '?mode=forgot' : `?mode=${name}${name === 'register' && currentRole === 'creator' ? '&role=creator' : ''}`);
-      }
       window.scrollTo({ top: 0, behavior: 'smooth' });
-      lucide.createIcons();
     }
 
     function setRole(role) {
@@ -694,216 +382,151 @@
       $('role-creator').setAttribute('aria-checked', role === 'creator');
       $('creatorFields').classList.toggle('hidden', role !== 'creator');
       $('registerBtnLabel').textContent = role === 'creator' ? 'Create creator account' : 'Create buyer account';
-      $('benefits-buyer').classList.toggle('active', role === 'buyer');
-      $('benefits-creator').classList.toggle('active', role === 'creator');
-      $('panelHeading').textContent = role === 'creator'
-        ? 'Turn your built apps into recurring revenue.'
-        : 'Deploy proven business apps in minutes.';
-      if ($('view-register').classList.contains('active')) {
-        safeReplaceState(`?mode=register${role === 'creator' ? '&role=creator' : ''}`);
-      }
     }
 
     /* =====================================================================
-       EMAIL VERIFICATION & REDIRECT WORKFLOW
+       SUPABASE EVENT LISTENER (Auto Redirect saat klik link di email)
        ===================================================================== */
-    async function completeEmailVerification() {
-      const btn = $('verifyNowBtn');
-      btn.disabled = true;
-      btn.innerHTML = '<span class="spinner inline-block align-middle mr-2"></span>Verifying email...';
-
-      await AuthService.verifyEmail(pendingVerificationEmail);
-
-      btn.disabled = false;
-      btn.innerHTML = '<i data-lucide="check-circle-2" class="w-4 h-4"></i><span>Verify Email & Continue to Log in</span>';
-
-      // Switch directly to Login View with pre-filled email
-      showView('login');
-      if (pendingVerificationEmail) {
-        $('loginEmail').value = pendingVerificationEmail;
-        $('loginPassword').focus();
-      }
-      showAlert('success', 'Email verified! Please log in with your password to continue.');
-      showToast('Email verified! Redirected to Log in.');
-    }
-
-    function goToLoginAfterVerify() {
-      completeEmailVerification();
-    }
-
-    function resendVerificationEmail() {
-      showToast(`Verification link resent to ${pendingVerificationEmail || 'your email'}`);
-      showAlert('info', `A fresh verification email has been sent to ${pendingVerificationEmail || 'your inbox'}.`);
-    }
-
-    function redirectAfterAuth(user) {
-      const roleLabel = user.role === 'creator' ? 'Creator' : 'Explorer';
-      const dest = safeNext() || CONFIG.REDIRECT[user.role] || '/';
-      syncHeaderSessionOnAuthPage();
-      showAlert('success', `Welcome, ${user.name} - [${roleLabel}]! Redirecting to Zuralogic Homepage...`);
-      showToast(`Signed in as ${user.name} - [${roleLabel}]`);
-      setTimeout(() => {
-        safeRedirect(dest);
-      }, 900);
+    if (supabaseClient) {
+      supabaseClient.auth.onAuthStateChange((event, session) => {
+        if (event === 'SIGNED_IN' && session) {
+          const userData = {
+            name: session.user.user_metadata?.name || 'User',
+            email: session.user.email,
+            role: session.user.user_metadata?.role || 'buyer'
+          };
+          localStorage.setItem('zl_demo_session', JSON.stringify(userData));
+          
+          showToast('Successfully verified & logged in! Redirecting...');
+          setTimeout(() => {
+            window.location.href = '/';
+          }, 1500);
+        }
+      });
     }
 
     /* =====================================================================
-       FORM HANDLERS
+       FORM HANDLERS DENGAN SUPABASE ASLI
        ===================================================================== */
     $('loginForm').addEventListener('submit', async (e) => {
       e.preventDefault();
       hideAlert(); clearErrors('loginForm');
+      
+      if (!supabaseClient) {
+        showAlert('error', 'Please configure your SUPABASE_URL and SUPABASE_ANON_KEY in the code first.');
+        return;
+      }
+
       const email = $('loginEmail').value.trim();
       const password = $('loginPassword').value;
-      let ok = true;
-      if (!emailRe.test(email)) { setFieldError('loginEmail', 'Please enter a valid email address.'); ok = false; }
-      if (!password) { setFieldError('loginPassword', 'Please enter your password.'); ok = false; }
-      if (!ok) return;
+      
+      if (!emailRe.test(email)) { setFieldError('loginEmail', 'Invalid email.'); return; }
+      if (!password) { setFieldError('loginPassword', 'Password required.'); return; }
 
       setLoading(e.target, true, 'Logging in...');
-      try {
-        const { user } = await AuthService.login({ email, password, remember: $('rememberMe').checked });
-        redirectAfterAuth(user);
-      } catch (err) {
-        showAlert('error', err.message || 'Something went wrong. Please try again.');
-      } finally {
-        setLoading(e.target, false);
+      
+      const { data, error } = await supabaseClient.auth.signInWithPassword({
+        email: email,
+        password: password
+      });
+      
+      setLoading(e.target, false);
+      
+      if (error) {
+        showAlert('error', error.message);
+      } else {
+        const userMeta = data.user?.user_metadata || {};
+        const userData = {
+          name: userMeta.name || 'User',
+          email: data.user.email,
+          role: userMeta.role || 'buyer'
+        };
+        localStorage.setItem('zl_demo_session', JSON.stringify(userData));
+        showToast('Login successful! Redirecting...');
+        setTimeout(() => window.location.href = '/', 1000);
       }
     });
 
     $('registerForm').addEventListener('submit', async (e) => {
       e.preventDefault();
       hideAlert(); clearErrors('registerForm');
+
+      if (!supabaseClient) {
+        showAlert('error', 'Please configure your SUPABASE_URL and SUPABASE_ANON_KEY in the code first.');
+        return;
+      }
+
       const name = $('regName').value.trim();
       const email = $('regEmail').value.trim();
       const password = $('regPassword').value;
       const confirm = $('regConfirm').value;
-      const expertise = $('regExpertise').value;
-      const portfolio = $('regPortfolio').value.trim();
       let ok = true;
 
-      if (!emailRe.test(email)) { setFieldError('regEmail', 'Please enter a valid email address.'); ok = false; }
-      if (currentRole === 'creator' && portfolio && !/^https?:\/\/.+\..+/.test(portfolio)) {
-        setFieldError('regPortfolio', 'Please enter a valid URL starting with http:// or https://');
-        ok = false;
-      }
-      if (password.length < CONFIG.MIN_PASSWORD) {
-        setFieldError('regPassword', `Password must be at least ${CONFIG.MIN_PASSWORD} characters.`);
-        ok = false;
-      }
-      if (confirm !== password) {
-        setFieldError('regConfirm', 'Passwords do not match.');
-        ok = false;
-      }
-      if (!$('regTerms').checked) {
-        setFieldError('regTerms', 'You must accept the Terms and Privacy Policy to continue.');
-        ok = false;
-      }
-      if (!ok) {
-        showAlert('error', 'Please check the highlighted fields before continuing.');
-        return;
-      }
+      if (name.length < 2) { setFieldError('regName', 'Name required.'); ok = false; }
+      if (!emailRe.test(email)) { setFieldError('regEmail', 'Invalid email.'); ok = false; }
+      if (password.length < 6) { setFieldError('regPassword', 'Min 6 characters.'); ok = false; }
+      if (confirm !== password) { setFieldError('regConfirm', 'Passwords do not match.'); ok = false; }
+      if (!$('regTerms').checked) { setFieldError('regTerms', 'Please accept Terms.'); ok = false; }
+      
+      if (!ok) return;
 
-      setLoading(e.target, true, 'Sending verification email...');
-      try {
-        const payload = { name, email, password, role: currentRole };
-        if (currentRole === 'creator') { payload.expertise = expertise; payload.portfolio = portfolio; }
-        const { user } = await AuthService.register(payload);
+      setLoading(e.target, true, 'Creating account...');
+      
+      const { data, error } = await supabaseClient.auth.signUp({
+        email: email,
+        password: password,
+        options: {
+          data: {
+            name: name,
+            role: currentRole
+          },
+          emailRedirectTo: window.location.origin + '/auth/'
+        }
+      });
 
-        // Save pending email & show Email Verification screen
-        pendingVerificationEmail = user.email;
-        $('verifyEmailDisplay').textContent = user.email;
-        $('verifyRoleDisplay').textContent = user.role === 'creator' ? 'Creator' : 'Explorer';
+      setLoading(e.target, false);
+
+      if (error) {
+        showAlert('error', error.message);
+      } else {
+        // Berhasil daftar, tampilkan instruksi cek Email asli dari Supabase
+        $('verifyEmailDisplay').textContent = email;
         showView('verify');
-        showToast(`Verification email sent to ${user.email}`);
-      } catch (err) {
-        showAlert('error', err.message || 'Something went wrong. Please try again.');
-      } finally {
-        setLoading(e.target, false);
       }
     });
 
     $('forgotForm').addEventListener('submit', async (e) => {
       e.preventDefault();
       hideAlert(); clearErrors('forgotForm');
+
+      if (!supabaseClient) {
+        showAlert('error', 'Please configure your SUPABASE_URL and SUPABASE_ANON_KEY in the code first.');
+        return;
+      }
+
       const email = $('forgotEmail').value.trim();
-      if (!emailRe.test(email)) { setFieldError('forgotEmail', 'Please enter a valid email address.'); return; }
+      if (!emailRe.test(email)) { setFieldError('forgotEmail', 'Invalid email.'); return; }
+      
       setLoading(e.target, true, 'Sending...');
-      try {
-        await AuthService.resetPassword({ email });
-        showAlert('success', 'If an account exists for that email, a reset link is on its way. Check your inbox.');
-      } catch (err) {
-        showAlert('error', err.message || 'Something went wrong. Please try again.');
-      } finally {
-        setLoading(e.target, false);
+      const { error } = await supabaseClient.auth.resetPasswordForEmail(email, {
+        redirectTo: window.location.origin + '/auth/?mode=reset'
+      });
+      setLoading(e.target, false);
+
+      if (error) {
+        showAlert('error', error.message);
+      } else {
+        showAlert('success', 'If an account exists, a reset link is on its way. Check your inbox.');
       }
     });
 
-    async function handleGoogle() {
-      hideAlert();
-      try {
-        const { user } = await AuthService.google();
-        redirectAfterAuth(user);
-      } catch (err) {
-        showAlert('info', err.message);
-      }
-    }
-
-    // Header Session & Logout Modal on Auth Page
-    function syncHeaderSessionOnAuthPage() {
-      try {
-        const raw = localStorage.getItem('zl_demo_session') || sessionStorage.getItem('zl_demo_session');
-        const session = raw ? JSON.parse(raw) : null;
-        if (session) {
-          const roleLabel = session.role === 'creator' ? 'Creator' : 'Explorer';
-          $('authHeaderUserText').textContent = `${session.name} - [${roleLabel}]`;
-          $('authHeaderUserBadge').classList.replace('hidden', 'flex');
-          $('authHeaderLogoutBtn').classList.replace('hidden', 'flex');
-        } else {
-          $('authHeaderUserBadge').classList.replace('flex', 'hidden');
-          $('authHeaderLogoutBtn').classList.replace('flex', 'hidden');
-        }
-        lucide.createIcons();
-      } catch (e) {}
-    }
-
-    function openLogoutModal() {
-      $('logoutConfirmModal').classList.replace('hidden', 'flex');
-    }
-    function closeLogoutModal() {
-      $('logoutConfirmModal').classList.replace('flex', 'hidden');
-    }
-    function confirmLogout() {
-      try {
-        localStorage.removeItem('zl_demo_session');
-        sessionStorage.removeItem('zl_demo_session');
-      } catch (e) {}
-      closeLogoutModal();
-      syncHeaderSessionOnAuthPage();
-      showToast('Logged out successfully.');
-      safeRedirect('/');
-    }
-
-    // Clear a field's error as the user fixes it
     document.addEventListener('input', (e) => {
       if (e.target.id && e.target.classList.contains('field-input')) setFieldError(e.target.id, '');
     });
     $('regTerms').addEventListener('change', () => setFieldError('regTerms', ''));
 
-    /* =====================================================================
-       INIT
-       ===================================================================== */
     window.addEventListener('DOMContentLoaded', () => {
-      const role = params.get('role');
-      if (role === 'creator' || role === 'buyer') setRole(role);
-      const mode = params.get('mode');
-      showView(['login', 'register', 'forgot', 'verify'].includes(mode) ? mode : 'login');
-      syncHeaderSessionOnAuthPage();
-      window.scrollTo(0, 0);
-
-      if (CONFIG.DEMO_MODE) {
-        $('demoNote').textContent = 'Interactive Ecosystem Auth: Registering sends an instant verification email, directs you to Log in, and syncs your Creator/Explorer session with the Homepage header.';
-      }
+      showView('login');
       lucide.createIcons();
     });
   </script>
