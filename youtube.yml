@@ -16,7 +16,7 @@ jobs:
       - name: Fetch YouTube data
         run: node scripts/update-youtube.mjs
         env:
-          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+          YOUTUBE_API_KEY: ${{ AIzaSyB-0D8kxwp4OUtDVxCOZdrzk1VZpHebh_g }}
       - name: Commit if changed
         run: |
           git config user.name "github-actions[bot]"
