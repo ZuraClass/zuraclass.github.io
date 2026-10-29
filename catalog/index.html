@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Catalog — Zuralogic</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='11' fill='%230A1931'/%3E%3Cpath d='M12 12h16l-12 16h12' fill='none' stroke='white' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@0.462.0/dist/umd/lucide.min.js"></script>
+  <script>
+    tailwind.config = { theme: { extend: {
+      fontFamily: { sans: ['Inter', 'sans-serif'], display: ['Sora', 'Inter', 'sans-serif'] },
+      colors: { zura: { navy: '#0A1931', deep: '#152A4A', blue: '#2563EB', light: '#EFF6FF', ice: '#DBEAFE' } }
+    } } }
+  </script>
+  <link rel="stylesheet" href="/assets/zl.css" />
+  <script src="/assets/zl-products.js"></script>
+</head>
+<body class="text-slate-900 antialiased overflow-x-hidden min-h-screen">
+
+  <div class="absolute inset-x-0 top-0 h-[600px] bg-grid pointer-events-none -z-10"></div>
+  <div class="absolute inset-x-0 top-0 h-[700px] overflow-hidden pointer-events-none -z-10">
+    <div class="absolute -right-24 -top-10 w-[420px] h-[420px] rounded-full bg-blue-400/25 blur-3xl blob"></div>
+    <div class="absolute -left-32 top-48 w-[340px] h-[340px] rounded-full bg-sky-300/30 blur-3xl blob" style="animation-delay:-5s"></div>
+  </div>
+
+  <!-- ===================== CONNECT ===================== -->
+  <div id="connectView" class="hidden min-h-screen items-center justify-center p-4">
+    <div class="glass rounded-3xl p-6 sm:p-9 w-full max-w-xl">
+      <div class="flex items-center gap-3">
+        <span class="w-11 h-11 rounded-xl bg-zura-navy text-white grid place-items-center"><i data-lucide="package" class="w-6 h-6"></i></span>
+        <div><h1 class="font-display text-2xl font-extrabold text-zura-navy leading-tight">Catalog Zuralogic</h1><p class="text-sm text-slate-500">Atur produk yang tampil di halaman Product.</p></div>
+      </div>
+
+      <ol class="mt-6 space-y-2 text-sm text-slate-700 list-decimal pl-5">
+        <li>Di GitHub buka <b>Settings → Developer settings → Personal access tokens → Fine-grained tokens</b>, lalu <b>Generate new token</b>.</li>
+        <li><b>Repository access</b>: <i>Only select repositories</i> → pilih repo website ini.</li>
+        <li><b>Permissions → Repository permissions → Contents: Read and write</b>.</li>
+        <li>Salin token, tempel di bawah. Token hanya disimpan di browser ini.</li>
+      </ol>
+
+      <form id="connectForm" class="mt-6 space-y-4" autocomplete="off">
+        <div class="grid sm:grid-cols-3 gap-3">
+          <div><label class="lbl" for="cOwner">Owner</label><input id="cOwner" class="field" placeholder="username-github" required /></div>
+          <div><label class="lbl" for="cRepo">Repo</label><input id="cRepo" class="field" placeholder="nama-repo" required /></div>
+          <div><label class="lbl" for="cBranch">Branch</label><input id="cBranch" class="field" value="main" required /></div>
+        </div>
+        <div><label class="lbl" for="cToken">Token GitHub</label><input id="cToken" type="password" class="field" placeholder="github_pat_…" required /></div>
+        <label class="flex items-start gap-2.5 text-xs text-slate-600"><input id="cRemember" type="checkbox" class="mt-0.5" /><span>Ingat token di perangkat ini. <b>Jangan dicentang di komputer bersama.</b> Tanpa centang, token hilang saat tab ditutup.</span></label>
+        <p id="cErr" class="hidden text-sm font-semibold text-rose-600 bg-rose-50 border border-rose-100 rounded-xl px-3 py-2"></p>
+        <button type="submit" class="w-full py-3 rounded-xl bg-zura-navy hover:bg-blue-700 text-white font-bold text-sm shadow-md transition flex items-center justify-center gap-2"><i data-lucide="plug-zap" class="w-4 h-4"></i>Hubungkan GitHub</button>
+      </form>
+      <p class="mt-4 text-[11px] text-slate-400 leading-relaxed">Halaman ini hanya bisa menyimpan perubahan kalau token valid. Data produk sendiri memang publik (tampil di /products), jadi yang dilindungi adalah <i>izin menulis</i>, bukan isi katalog.</p>
+    </div>
+  </div>
+
+  <!-- ===================== APP ===================== -->
+  <div id="appView" class="hidden">
+    <header class="sticky top-0 z-40 frosted-nav border-b border-blue-100/70">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-3">
+        <div class="flex items-center gap-3 min-w-0">
+          <a href="/" class="shrink-0" aria-label="Beranda"><svg viewBox="0 0 40 40" class="w-9 h-9" aria-hidden="true"><defs><linearGradient id="lgC" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2563EB"/><stop offset="1" stop-color="#0A1931"/></linearGradient></defs><rect width="40" height="40" rx="11" fill="url(#lgC)"/><path d="M12 12h16l-12 16h12" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <div class="min-w-0"><div class="font-display font-extrabold text-zura-navy leading-none">Catalog</div><div id="repoPill" class="mt-1 text-[11px] font-semibold text-slate-500 truncate"></div></div>
+        </div>
+        <div class="flex items-center gap-2">
+          <a href="/products/" target="_blank" rel="noopener" class="hidden sm:flex px-3 py-2 rounded-xl border border-slate-200 bg-white/80 text-xs font-bold text-slate-700 hover:border-blue-400 transition items-center gap-1.5"><i data-lucide="external-link" class="w-4 h-4 text-blue-600"></i>Halaman publik</a>
+          <button id="btnCats" class="px-3 py-2 rounded-xl border border-slate-200 bg-white/80 text-xs font-bold text-slate-700 hover:border-blue-400 transition flex items-center gap-1.5"><i data-lucide="folders" class="w-4 h-4 text-blue-600"></i><span class="hidden sm:inline">Kategori</span></button>
+          <button id="btnRefresh" class="p-2.5 rounded-xl border border-slate-200 bg-white/80 text-slate-700 hover:border-blue-400 transition" aria-label="Segarkan"><i data-lucide="refresh-cw" class="w-4 h-4"></i></button>
+          <button id="btnNew" class="px-4 py-2.5 rounded-xl bg-zura-navy hover:bg-blue-700 text-white text-sm font-bold shadow-md transition flex items-center gap-1.5"><i data-lucide="plus" class="w-4 h-4"></i><span>Produk baru</span></button>
+          <button id="btnOut" class="p-2.5 rounded-xl border border-slate-200 bg-white/80 text-slate-500 hover:text-rose-600 hover:border-rose-300 transition" aria-label="Keluar" title="Putuskan GitHub"><i data-lucide="log-out" class="w-4 h-4"></i></button>
+        </div>
+      </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 pb-24">
+      <div id="stats" class="grid grid-cols-2 md:grid-cols-4 gap-3"></div>
+
+      <div class="mt-6 flex flex-col md:flex-row gap-3">
+        <div class="relative flex-1"><i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2"></i><input id="q" type="search" class="field pl-10" placeholder="Cari judul, kategori, tag, atau deskripsi…" /></div>
+        <select id="fCat" class="field md:w-56"></select>
+        <select id="fStatus" class="field md:w-44"><option value="all">Semua status</option><option value="pub">Tampil (published)</option><option value="draft">Draft</option></select>
+      </div>
+
+      <div id="groups" class="mt-8 space-y-10"></div>
+    </main>
+  </div>
+
+  <!-- ===================== DRAWER ===================== -->
+  <div id="drawerWrap" class="fixed inset-0 z-[80] hidden">
+    <div id="drawerBg" class="absolute inset-0 bg-zura-navy/50 backdrop-blur-sm"></div>
+    <aside id="drawer" class="drawer absolute right-0 top-0 h-full w-full max-w-2xl bg-white shadow-2xl flex flex-col" role="dialog" aria-modal="true">
+      <div id="drawerHead" class="shrink-0 px-5 sm:px-6 py-4 border-b border-slate-100 flex items-center justify-between gap-3"></div>
+      <div id="drawerBody" class="flex-1 overflow-y-auto px-5 sm:px-6 py-5"></div>
+      <div id="drawerFoot" class="shrink-0 px-5 sm:px-6 py-4 border-t border-slate-100 bg-slate-50/70"></div>
+    </aside>
+  </div>
+
+  <div id="modalRoot"></div>
+  <div id="busy" class="fixed inset-0 z-[250] hidden items-center justify-center bg-zura-navy/60 backdrop-blur-sm">
+    <div class="glass rounded-2xl px-6 py-5 flex items-center gap-3 text-sm font-bold text-zura-navy"><i data-lucide="loader-2" class="w-5 h-5 text-blue-600 animate-spin"></i><span id="busyText">Memproses…</span></div>
+  </div>
+
+<script>
+const { esc, slugify, fmtDate, groupByCategory, card, mountGallery, toast, normalize } = ZLP;
+const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const MAX_GALLERY = 15, MAX_DESC = 2000, MAX_TAGS = 12, MAX_TITLE = 100, MAX_CAT = 40;
+const CK = 'zl_catalog_conn';
+const S = { owner: '', repo: '', branch: 'main', token: '', remember: false, data: { products: [] }, q: '', cat: 'all', status: 'all' };
+let E = null;            // state editor
+let VIEWING = null;      // id produk yang sedang dilihat
+
+/* ===================== Koneksi ===================== */
+function loadConn() {
+  try {
+    const c = JSON.parse(localStorage.getItem(CK) || '{}');
+    S.owner = c.owner || ''; S.repo = c.repo || ''; S.branch = c.branch || 'main';
+    const tl = localStorage.getItem(CK + '_t'), ts = sessionStorage.getItem(CK + '_t');
+    S.token = tl || ts || ''; S.remember = !!tl;
+  } catch (e) {}
+}
+function saveConn() {
+  try {
+    localStorage.setItem(CK, JSON.stringify({ owner: S.owner, repo: S.repo, branch: S.branch }));
+    localStorage.removeItem(CK + '_t'); sessionStorage.removeItem(CK + '_t');
+    (S.remember ? localStorage : sessionStorage).setItem(CK + '_t', S.token);
+  } catch (e) {}
+}
+function disconnect() {
+  try { localStorage.removeItem(CK + '_t'); sessionStorage.removeItem(CK + '_t'); } catch (e) {}
+  S.token = ''; showConnect();
+}
+const R = () => encodeURIComponent(S.owner) + '/' + encodeURIComponent(S.repo);
+const RAW = () => `https://raw.githubusercontent.com/${S.owner}/${S.repo}/${S.branch}/`;
+const rawUrl = p => (!p ? '' : /^(https?:|blob:|data:)/.test(p) ? p : RAW() + p);
+
+/* ===================== GitHub API ===================== */
+async function gh(path, opts = {}) {
+  const r = await fetch('https://api.github.com' + path, { ...opts, headers: { Accept: 'application/vnd.github+json', Authorization: 'Bearer ' + S.token, 'X-GitHub-Api-Version': '2022-11-28', ...(opts.body ? { 'Content-Type': 'application/json' } : {}), ...(opts.headers || {}) } });
+  if (!r.ok) { let b = null; try { b = await r.json(); } catch (e) {} const err = new Error((b && b.message) || ('HTTP ' + r.status)); err.status = r.status; throw err; }
+  return r.status === 204 ? null : r.json();
+}
+function errMsg(e) {
+  if (e.status === 401) return 'Token tidak valid atau sudah kedaluwarsa. Hubungkan ulang dengan token baru.';
+  if (e.status === 403) return 'Akses ditolak (' + e.message + '). Pastikan token punya izin Contents: Read and write.';
+  if (e.status === 404) return 'Repo/branch tidak ditemukan, atau token tidak punya akses ke repo ini.';
+  if (e.status === 422) return 'GitHub menolak perubahan (' + e.message + '). Coba segarkan lalu ulangi.';
+  if (e instanceof TypeError) return 'Gagal terhubung ke GitHub. Periksa koneksi internetmu.';
+  return e.message || 'Terjadi kesalahan.';
+}
+async function loadRemote() {
+  const r = await fetch(`https://api.github.com/repos/${R()}/contents/data/products.json?ref=${encodeURIComponent(S.branch)}&t=${Date.now()}`, { cache: 'no-store', headers: { Accept: 'application/vnd.github.raw+json', Authorization: 'Bearer ' + S.token, 'X-GitHub-Api-Version': '2022-11-28' } });
+  if (r.status === 404) return { products: [], updatedAt: null };
+  if (!r.ok) { const e = new Error('HTTP ' + r.status); e.status = r.status; throw e; }
+  return normalize(JSON.parse(await r.text()));
+}
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+/* Satu commit atomik: files = [{path, text | base64}], deletePaths, deletePrefixes */
+async function commit({ message, files = [], deletePaths = [], deletePrefixes = [] }) {
+  const entries = [];
+  for (const f of files) {
+    if (f.base64) { const b = await gh(`/repos/${R()}/git/blobs`, { method: 'POST', body: JSON.stringify({ content: f.base64, encoding: 'base64' }) }); entries.push({ path: f.path, mode: '100644', type: 'blob', sha: b.sha }); }
+    else entries.push({ path: f.path, mode: '100644', type: 'blob', content: f.text });
+  }
+  let dels = [];
+  if (deletePaths.length || deletePrefixes.length) {
+    const tr = await gh(`/repos/${R()}/git/trees/${encodeURIComponent(S.branch)}?recursive=1`);
+    const existing = tr.tree.filter(x => x.type === 'blob').map(x => x.path);
+    dels = existing.filter(p => deletePaths.includes(p) || deletePrefixes.some(pre => p.startsWith(pre)));
+  }
+  dels.forEach(p => entries.push({ path: p, mode: '100644', type: 'blob', sha: null }));
+  for (let attempt = 0; attempt < 3; attempt++) {
+    try {
+      const ref = await gh(`/repos/${R()}/git/ref/heads/${S.branch}`); const head = ref.object.sha;
+      const c = await gh(`/repos/${R()}/git/commits/${head}`);
+      const tree = await gh(`/repos/${R()}/git/trees`, { method: 'POST', body: JSON.stringify({ base_tree: c.tree.sha, tree: entries }) });
+      const nc = await gh(`/repos/${R()}/git/commits`, { method: 'POST', body: JSON.stringify({ message, tree: tree.sha, parents: [head] }) });
+      await gh(`/repos/${R()}/git/refs/heads/${S.branch}`, { method: 'PATCH', body: JSON.stringify({ sha: nc.sha }) });
+      return;
+    } catch (e) { if ((e.status === 422 || e.status === 409) && attempt < 2) { await sleep(700); continue; } throw e; }
+  }
+}
+/* Ubah data terbaru dari GitHub lalu commit (aman dari tabrakan) */
+async function mutate(message, fn) {
+  const fresh = await loadRemote(); fn(fresh); fresh.updatedAt = new Date().toISOString();
+  await commit({ message, files: [{ path: 'data/products.json', text: JSON.stringify(fresh, null, 2) }] });
+  S.data = fresh; return fresh;
+}
+
+/* ===================== UI dasar ===================== */
+function setBusy(msg) { const b = $('#busy'); if (!msg) { b.classList.replace('flex', 'hidden'); return; } $('#busyText').textContent = msg; b.classList.replace('hidden', 'flex'); }
+function showConnect() {
+  $('#appView').classList.add('hidden'); $('#connectView').classList.replace('hidden', 'flex');
+  $('#cOwner').value = S.owner; $('#cRepo').value = S.repo; $('#cBranch').value = S.branch || 'main'; $('#cToken').value = ''; $('#cRemember').checked = S.remember;
+  lucide.createIcons();
+}
+function showApp() {
+  $('#connectView').classList.replace('flex', 'hidden'); $('#appView').classList.remove('hidden');
+  $('#repoPill').innerHTML = `<span class="inline-block w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1.5"></span>${esc(S.owner)}/${esc(S.repo)} @ ${esc(S.branch)}`;
+  render();
+}
+$('#connectForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  S.owner = $('#cOwner').value.trim(); S.repo = $('#cRepo').value.trim(); S.branch = $('#cBranch').value.trim() || 'main';
+  S.token = $('#cToken').value.trim(); S.remember = $('#cRemember').checked;
+  const err = $('#cErr'); err.classList.add('hidden'); setBusy('Menghubungkan ke GitHub…');
+  try {
+    const repo = await gh(`/repos/${R()}`);
+    if (repo.permissions && repo.permissions.push === false) throw Object.assign(new Error('Token tidak punya izin menulis.'), { status: 403 });
+    await gh(`/repos/${R()}/git/ref/heads/${S.branch}`);
+    S.data = await loadRemote(); saveConn(); showApp();
+  } catch (x) { err.textContent = errMsg(x); err.classList.remove('hidden'); }
+  finally { setBusy(false); }
+});
+$('#btnOut').addEventListener('click', async () => { if (await confirmBox({ title: 'Putuskan GitHub?', text: 'Token dihapus dari browser ini. Produk di website tidak berubah.', ok: 'Putuskan' })) disconnect(); });
+$('#btnRefresh').addEventListener('click', async () => { setBusy('Menyegarkan data…'); try { S.data = await loadRemote(); render(); toast('Data disegarkan dari GitHub.'); } catch (e) { toast(errMsg(e)); } finally { setBusy(false); } });
+$('#btnNew').addEventListener('click', () => openEditor(null));
+$('#btnCats').addEventListener('click', openCats);
+
+/* Modal konfirmasi */
+function confirmBox({ title, text, ok = 'Ya', danger = false }) {
+  return new Promise(res => {
+    const el = document.createElement('div'); el.className = 'fixed inset-0 z-[150] flex items-center justify-center bg-zura-navy/60 backdrop-blur-sm p-4';
+    el.innerHTML = `<div class="bg-white rounded-3xl shadow-2xl max-w-sm w-full p-6 text-center"><div class="w-12 h-12 rounded-2xl ${danger ? 'bg-rose-50 text-rose-600' : 'bg-blue-50 text-blue-600'} grid place-items-center mx-auto"><i data-lucide="${danger ? 'trash-2' : 'help-circle'}" class="w-6 h-6"></i></div><h3 class="font-display font-extrabold text-xl text-zura-navy mt-4">${esc(title)}</h3><p class="mt-2 text-sm text-slate-600">${esc(text)}</p><div class="mt-6 grid grid-cols-2 gap-3"><button data-n class="py-2.5 rounded-xl border border-slate-200 text-sm font-bold text-slate-700 hover:bg-slate-50">Batal</button><button data-y class="py-2.5 rounded-xl ${danger ? 'bg-rose-600 hover:bg-rose-700' : 'bg-zura-navy hover:bg-blue-700'} text-white text-sm font-bold">${esc(ok)}</button></div></div>`;
+    document.body.appendChild(el); lucide.createIcons();
+    const done = v => { el.remove(); res(v); };
+    el.addEventListener('click', ev => { if (ev.target.closest('[data-y]')) done(true); else if (ev.target.closest('[data-n]') || ev.target === el) done(false); });
+  });
+}
+
+/* ===================== Daftar produk ===================== */
+const cats = () => [...new Set(S.data.products.map(p => p.category).filter(Boolean))].sort((a, b) => a.localeCompare(b));
+function match(p) {
+  if (S.cat !== 'all' && p.category !== S.cat) return false;
+  if (S.status === 'pub' && !p.published) return false;
+  if (S.status === 'draft' && p.published) return false;
+  const q = S.q.trim().toLowerCase();
+  return !q || [p.title, p.category, p.description, ...p.tags].join(' ').toLowerCase().includes(q);
+}
+function footer(p) {
+  return `<div class="px-4 pb-4 flex items-center gap-2">
+    <button data-act="edit" data-id="${esc(p.id)}" class="flex-1 py-2 rounded-xl bg-blue-50 hover:bg-zura-navy text-blue-700 hover:text-white text-xs font-extrabold transition flex items-center justify-center gap-1.5"><i data-lucide="pencil" class="w-3.5 h-3.5"></i>Edit</button>
+    <button data-act="toggle" data-id="${esc(p.id)}" class="py-2 px-3 rounded-xl border border-slate-200 hover:border-blue-400 text-slate-600 text-xs font-bold transition flex items-center gap-1.5" title="${p.published ? 'Sembunyikan dari website' : 'Tampilkan di website'}"><i data-lucide="${p.published ? 'eye' : 'eye-off'}" class="w-3.5 h-3.5"></i></button>
+    <button data-act="del" data-id="${esc(p.id)}" class="py-2 px-3 rounded-xl border border-slate-200 hover:border-rose-300 hover:bg-rose-50 text-slate-500 hover:text-rose-600 text-xs font-bold transition" title="Hapus"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>
+  </div>`;
+}
+function render() {
+  const P = S.data.products, imgs = P.reduce((n, p) => n + (p.cover ? 1 : 0) + p.images.length, 0);
+  $('#stats').innerHTML = [['Produk', P.length, 'package'], ['Tampil di website', P.filter(p => p.published).length, 'eye'], ['Kategori', cats().length, 'folders'], ['Gambar', imgs, 'images']]
+    .map(([l, v, i]) => `<div class="glass rounded-2xl px-4 py-3.5 flex items-center gap-3"><span class="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 grid place-items-center"><i data-lucide="${i}" class="w-5 h-5"></i></span><div><div class="font-display text-xl font-extrabold text-zura-navy leading-none">${v}</div><div class="text-[11px] font-bold uppercase tracking-wide text-slate-500 mt-1">${l}</div></div></div>`).join('');
+  const sel = $('#fCat'); const cur = S.cat;
+  sel.innerHTML = `<option value="all">Semua kategori</option>` + cats().map(c => `<option value="${esc(c)}" ${c === cur ? 'selected' : ''}>${esc(c)}</option>`).join('');
+  if (cur !== 'all' && !cats().includes(cur)) S.cat = 'all';
+
+  const g = $('#groups');
+  if (!P.length) {
+    g.innerHTML = `<div class="glass rounded-3xl p-10 text-center max-w-xl mx-auto"><div class="w-14 h-14 rounded-2xl bg-zura-navy text-white grid place-items-center mx-auto"><i data-lucide="package-open" class="w-7 h-7"></i></div><h2 class="font-display mt-4 text-xl font-extrabold text-zura-navy">Belum ada produk</h2><p class="mt-2 text-sm text-slate-600">Tambahkan produk pertamamu. Setelah disimpan, produk langsung tampil di halaman Product.</p><button id="emptyNew" class="mt-5 px-5 py-3 rounded-xl bg-zura-navy hover:bg-blue-700 text-white text-sm font-bold transition inline-flex items-center gap-2"><i data-lucide="plus" class="w-4 h-4"></i>Produk baru</button></div>`;
+    $('#emptyNew').onclick = () => openEditor(null); lucide.createIcons(); return;
+  }
+  const list = P.filter(match).sort((a, b) => new Date(b.updatedAt || 0) - new Date(a.updatedAt || 0));
+  if (!list.length) { g.innerHTML = `<p class="text-center text-sm text-slate-500 py-10">Tidak ada produk yang cocok dengan filter.</p>`; return; }
+  let d = 0;
+  g.innerHTML = groupByCategory(list).map(([c, items]) => `
+    <section><div class="flex items-center gap-3 mb-4"><h2 class="font-display text-xl font-extrabold text-zura-navy">${esc(c || 'Lainnya')}</h2><span class="text-xs font-bold bg-blue-50 text-blue-700 rounded-md px-2 py-0.5">${items.length}</span><div class="flex-1 h-px bg-blue-100"></div></div>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">${items.map(p => card(p, { coverUrl: rawUrl(p.cover), showStatus: true, footer: footer(p), delay: Math.min(d++ * 40, 320) })).join('')}</div></section>`).join('');
+  lucide.createIcons();
+}
+$('#q').addEventListener('input', e => { clearTimeout($('#q')._t); $('#q')._t = setTimeout(() => { S.q = e.target.value; render(); }, 150); });
+$('#fCat').addEventListener('change', e => { S.cat = e.target.value; render(); });
+$('#fStatus').addEventListener('change', e => { S.status = e.target.value; render(); });
+$('#groups').addEventListener('click', async e => {
+  const a = e.target.closest('[data-act]');
+  if (a) {
+    const id = a.dataset.id, p = S.data.products.find(x => x.id === id); if (!p) return;
+    if (a.dataset.act === 'edit') openEditor(id);
+    else if (a.dataset.act === 'del') askDelete(id);
+    else if (a.dataset.act === 'toggle') togglePublish(id);
+    return;
+  }
+  const o = e.target.closest('[data-open]'); if (o) openView(o.dataset.open);
+});
+document.addEventListener('pointermove', e => { const s = e.target.closest && e.target.closest('.spot'); if (s) { const r = s.getBoundingClientRect(); s.style.setProperty('--mx', (e.clientX - r.left) + 'px'); s.style.setProperty('--my', (e.clientY - r.top) + 'px'); } });
+/* Gambar dari raw.githubusercontent gagal (mis. repo privat) -> coba dari situs */
+document.addEventListener('error', e => { const i = e.target; if (i && i.tagName === 'IMG' && S.owner && i.src.startsWith(RAW()) && !i.dataset.fb) { i.dataset.fb = 1; i.src = '/' + i.src.slice(RAW().length).split('?')[0]; } }, true);
+
+async function togglePublish(id) {
+  const p = S.data.products.find(x => x.id === id); const to = !p.published;
+  setBusy(to ? 'Menampilkan produk…' : 'Menyembunyikan produk…');
+  try { await mutate(`${to ? 'Tampilkan' : 'Sembunyikan'} produk: ${p.title}`, d => { const q = d.products.find(x => x.id === id); if (q) { q.published = to; q.updatedAt = new Date().toISOString(); } }); render(); toast(to ? 'Produk tampil di website.' : 'Produk disembunyikan (draft).'); }
+  catch (e) { toast(errMsg(e)); } finally { setBusy(false); }
+}
+async function askDelete(id) {
+  const p = S.data.products.find(x => x.id === id); if (!p) return;
+  if (!(await confirmBox({ title: 'Hapus produk ini?', text: `"${p.title}" dan seluruh gambarnya akan dihapus dari repo. Tindakan ini bisa dibatalkan lewat riwayat commit GitHub, tapi tidak dari halaman ini.`, ok: 'Ya, hapus', danger: true }))) return;
+  setBusy('Menghapus produk dan gambar…');
+  try {
+    const fresh = await loadRemote(); fresh.products = fresh.products.filter(x => x.id !== id); fresh.updatedAt = new Date().toISOString();
+    await commit({ message: `Hapus produk: ${p.title}`, files: [{ path: 'data/products.json', text: JSON.stringify(fresh, null, 2) }], deletePrefixes: [`assets/products/${id}/`] });
+    S.data = fresh; closeDrawer(true); render(); toast('Produk dihapus.');
+  } catch (e) { toast(errMsg(e)); } finally { setBusy(false); }
+}
+
+/* ===================== Drawer ===================== */
+let drawerGuard = null;
+function openDrawer() { const w = $('#drawerWrap'); w.classList.remove('hidden'); document.body.style.overflow = 'hidden'; requestAnimationFrame(() => $('#drawer').classList.add('open')); }
+function closeDrawer(force) {
+  if (!force && drawerGuard && !drawerGuard()) return;
+  $('#drawer').classList.remove('open'); document.body.style.overflow = '';
+  setTimeout(() => { if (!$('#drawer').classList.contains('open')) { $('#drawerWrap').classList.add('hidden'); } }, 300);
+  releaseEditor(); VIEWING = null; drawerGuard = null;
+}
+$('#drawerBg').addEventListener('click', () => requestClose());
+async function requestClose() {
+  if (E && E.dirty) { if (!(await confirmBox({ title: 'Buang perubahan?', text: 'Ada perubahan yang belum disimpan.', ok: 'Buang', danger: true }))) return; }
+  closeDrawer(true);
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && !$('#drawerWrap').classList.contains('hidden') && !document.querySelector('.fixed.z-\\[150\\]') && !document.querySelector('.fixed.z-\\[200\\]')) requestClose(); });
+function releaseEditor() { if (E) { [E.cover, ...E.gallery].forEach(i => i && i.blob && URL.revokeObjectURL(i.url)); E.trash.forEach(i => i.blob && URL.revokeObjectURL(i.url)); } E = null; }
+
+/* ----- Lihat detail ----- */
+function openView(id) {
+  const p = S.data.products.find(x => x.id === id); if (!p) return;
+  VIEWING = id; releaseEditor();
+  const urls = [p.cover, ...p.images].filter(Boolean).map(rawUrl);
+  $('#drawerHead').innerHTML = `<div class="min-w-0"><div class="text-[11px] font-extrabold uppercase tracking-widest text-blue-600">Detail produk</div><div class="font-display font-extrabold text-zura-navy truncate">${esc(p.title)}</div></div><button data-x class="w-10 h-10 rounded-full bg-slate-100 hover:bg-slate-200 grid place-items-center shrink-0" aria-label="Tutup"><i data-lucide="x" class="w-5 h-5"></i></button>`;
+  $('#drawerBody').innerHTML = `
+    <div id="vGal"></div>
+    <div class="mt-5 flex flex-wrap items-center gap-2"><span class="px-2.5 py-1 rounded-lg bg-zura-navy text-white text-[11px] font-semibold">${esc(p.category || 'Lainnya')}</span>
+      <span class="px-2.5 py-1 rounded-lg ${p.published ? 'bg-emerald-50 text-emerald-700' : 'bg-amber-100 text-amber-800'} text-[11px] font-extrabold">${p.published ? 'TAMPIL DI WEBSITE' : 'DRAFT'}</span></div>
+    <h2 class="font-display mt-3 text-2xl font-extrabold text-zura-navy leading-tight break-words">${esc(p.title)}</h2>
+    ${p.tags.length ? `<div class="mt-3 flex flex-wrap gap-1.5">${p.tags.map(x => `<span class="text-xs font-bold text-blue-700 bg-blue-50 rounded-md px-2.5 py-1">#${esc(x)}</span>`).join('')}</div>` : ''}
+    <div class="mt-4 text-sm text-slate-700 leading-relaxed whitespace-pre-line break-words">${esc(p.description)}</div>
+    <dl class="mt-6 grid grid-cols-2 gap-3 text-xs">
+      <div class="rounded-xl bg-slate-50 p-3"><dt class="font-extrabold uppercase tracking-wide text-slate-400">Gambar</dt><dd class="mt-1 font-bold text-slate-700">${urls.length} (cover + ${p.images.length})</dd></div>
+      <div class="rounded-xl bg-slate-50 p-3"><dt class="font-extrabold uppercase tracking-wide text-slate-400">Diperbarui</dt><dd class="mt-1 font-bold text-slate-700">${esc(fmtDate(p.updatedAt) || '-')}</dd></div>
+      <div class="rounded-xl bg-slate-50 p-3 col-span-2"><dt class="font-extrabold uppercase tracking-wide text-slate-400">Link publik</dt><dd class="mt-1 font-bold text-blue-700 break-all"><a href="/products/?p=${encodeURIComponent(p.slug)}" target="_blank" rel="noopener">/products/?p=${esc(p.slug)}</a></dd></div>
+    </dl>`;
+  $('#drawerFoot').innerHTML = `<div class="flex gap-3"><button data-edit class="flex-1 py-3 rounded-xl bg-zura-navy hover:bg-blue-700 text-white text-sm font-bold transition flex items-center justify-center gap-2"><i data-lucide="pencil" class="w-4 h-4"></i>Edit</button><button data-del class="px-5 py-3 rounded-xl border border-slate-200 hover:border-rose-300 hover:bg-rose-50 text-slate-600 hover:text-rose-600 text-sm font-bold transition flex items-center gap-2"><i data-lucide="trash-2" class="w-4 h-4"></i>Hapus</button></div>`;
+  mountGallery($('#vGal'), urls);
+  openDrawer(); lucide.createIcons();
+}
+$('#drawerHead').addEventListener('click', e => { if (e.target.closest('[data-x]')) requestClose(); });
+$('#drawerFoot').addEventListener('click', e => {
+  if (e.target.closest('[data-edit]') && VIEWING) openEditor(VIEWING);
+  else if (e.target.closest('[data-del]') && VIEWING) askDelete(VIEWING);
+  else if (e.target.closest('[data-cancel]')) requestClose();
+  else if (e.target.closest('[data-save]')) saveEditor();
+});
+
+/* ===================== Editor ===================== */
+const rid = () => Math.random().toString(36).slice(2, 10);
+function openEditor(id) {
+  releaseEditor();
+  const p = id ? S.data.products.find(x => x.id === id) : null;
+  const mk = path => ({ key: rid(), path, blob: null, url: rawUrl(path) });
+  E = {
+    isNew: !p, id: p ? p.id : 'p' + Date.now().toString(36) + rid().slice(0, 3), slug: p ? p.slug : '',
+    title: p ? p.title : '', category: p ? p.category : '', tags: p ? [...p.tags] : [], description: p ? p.description : '',
+    published: p ? p.published : true, createdAt: p ? p.createdAt : null,
+    cover: p && p.cover ? mk(p.cover) : null, gallery: p ? p.images.map(mk) : [], trash: [],
+    orig: new Set(p ? [p.cover, ...p.images].filter(Boolean) : []), dirty: false, working: 0
+  };
+  VIEWING = null;
+  $('#drawerHead').innerHTML = `<div><div class="text-[11px] font-extrabold uppercase tracking-widest text-blue-600">${E.isNew ? 'Produk baru' : 'Edit produk'}</div><div class="font-display font-extrabold text-zura-navy">${E.isNew ? 'Tambah ke katalog' : esc(p.title)}</div></div><button data-x class="w-10 h-10 rounded-full bg-slate-100 hover:bg-slate-200 grid place-items-center shrink-0" aria-label="Tutup"><i data-lucide="x" class="w-5 h-5"></i></button>`;
+  $('#drawerBody').innerHTML = `
+    <div class="space-y-6">
+      <div><label class="lbl" for="eTitle">Judul aplikasi <span class="text-rose-500">*</span></label><input id="eTitle" class="field" maxlength="${MAX_TITLE}" value="${esc(E.title)}" placeholder="mis. Sistem Stok Gudang Multi Cabang" /></div>
+      <div><label class="lbl" for="eCat">Kategori <span class="text-rose-500">*</span></label><input id="eCat" class="field" list="catList" maxlength="${MAX_CAT}" value="${esc(E.category)}" placeholder="Pilih yang ada, atau ketik nama baru" /><datalist id="catList">${cats().map(c => `<option value="${esc(c)}">`).join('')}</datalist></div>
+      <div><label class="lbl" for="eTagIn">Tags <span class="normal-case font-semibold text-slate-400">(Enter atau koma untuk menambah, maks ${MAX_TAGS})</span></label>
+        <div id="tagBox" class="field flex flex-wrap items-center gap-1.5 !py-2"><span id="tagChips" class="contents"></span><input id="eTagIn" list="tagList" class="flex-1 min-w-[120px] outline-none text-sm bg-transparent py-1" placeholder="tambah tag…" maxlength="30" /></div>
+        <datalist id="tagList">${[...new Set(S.data.products.flatMap(x => x.tags))].map(t => `<option value="${esc(t)}">`).join('')}</datalist></div>
+      <div><div class="flex items-end justify-between"><label class="lbl" for="eDesc">Deskripsi aplikasi</label><span id="descCount" class="text-[11px] font-bold text-slate-400"></span></div>
+        <textarea id="eDesc" class="field" rows="9" maxlength="${MAX_DESC}" placeholder="Jelaskan masalah yang diselesaikan, fitur utama, teknologi yang dipakai, dan hasilnya.">${esc(E.description)}</textarea></div>
+
+      <div><label class="lbl">Gambar cover <span class="text-rose-500">*</span></label>
+        <div id="coverZone"></div></div>
+
+      <div><div class="flex items-end justify-between"><label class="lbl">Galeri gambar</label><span id="galCount" class="text-[11px] font-bold text-slate-400"></span></div>
+        <div id="galZone"></div></div>
+
+      <label class="flex items-center gap-3 rounded-2xl border border-slate-200 p-4 cursor-pointer hover:border-blue-300 transition"><input id="ePub" type="checkbox" class="w-4 h-4" ${E.published ? 'checked' : ''} /><span><span class="block text-sm font-bold text-zura-navy">Tampilkan di website</span><span class="block text-xs text-slate-500">Matikan untuk menyimpan sebagai draft (tidak muncul di halaman Product).</span></span></label>
+      <p id="eErr" class="hidden text-sm font-semibold text-rose-600 bg-rose-50 border border-rose-100 rounded-xl px-3 py-2"></p>
+    </div>`;
+  $('#drawerFoot').innerHTML = `<div class="flex items-center gap-3"><span id="imgStatus" class="text-xs font-semibold text-slate-500 flex-1"></span><button data-cancel class="px-5 py-3 rounded-xl border border-slate-200 bg-white text-sm font-bold text-slate-700 hover:border-blue-400 transition">Batal</button><button data-save class="px-6 py-3 rounded-xl bg-zura-navy hover:bg-blue-700 text-white text-sm font-bold shadow-md transition flex items-center gap-2"><i data-lucide="save" class="w-4 h-4"></i>Simpan</button></div>`;
+  drawerGuard = () => !(E && E.dirty);
+  paintTags(); paintCover(); paintGallery(); paintDesc();
+  openDrawer(); lucide.createIcons();
+}
+const dirty = () => { if (E) E.dirty = true; };
+$('#drawerBody').addEventListener('input', e => {
+  if (!E) return;
+  if (e.target.id === 'eTitle') { E.title = e.target.value; dirty(); }
+  else if (e.target.id === 'eCat') { E.category = e.target.value; dirty(); }
+  else if (e.target.id === 'eDesc') { E.description = e.target.value; paintDesc(); dirty(); }
+  else if (e.target.id === 'eTagIn') { const v = e.target.value; if (v.includes(',')) { v.split(',').forEach(addTag); e.target.value = ''; } }
+});
+$('#drawerBody').addEventListener('change', e => {
+  if (!E) return;
+  if (e.target.id === 'ePub') { E.published = e.target.checked; dirty(); }
+  else if (e.target.id === 'fCover') { handleFiles([...e.target.files], 'cover'); e.target.value = ''; }
+  else if (e.target.id === 'fGal') { handleFiles([...e.target.files], 'gal'); e.target.value = ''; }
+  else if (e.target.id === 'eTagIn') { addTag(e.target.value); e.target.value = ''; }
+});
+$('#drawerBody').addEventListener('keydown', e => {
+  if (!E || e.target.id !== 'eTagIn') return;
+  if (e.key === 'Enter') { e.preventDefault(); addTag(e.target.value); e.target.value = ''; }
+  else if (e.key === 'Backspace' && !e.target.value && E.tags.length) { E.tags.pop(); paintTags(); dirty(); }
+});
+$('#drawerBody').addEventListener('click', e => {
+  if (!E) return;
+  const tg = e.target.closest('[data-tagx]'); if (tg) { E.tags.splice(+tg.dataset.tagx, 1); paintTags(); dirty(); return; }
+  if (e.target.closest('[data-cover-x]')) { if (E.cover) E.trash.push(E.cover); E.cover = null; paintCover(); dirty(); return; }
+  const g = e.target.closest('[data-g]'); if (g) galleryAction(g.dataset.g, g.dataset.k);
+});
+['dragover', 'dragenter'].forEach(ev => $('#drawerBody').addEventListener(ev, e => { if (E && e.target.closest('[data-drop]')) { e.preventDefault(); e.target.closest('[data-drop]').classList.add('ring-2', 'ring-blue-400'); } }));
+['dragleave', 'drop'].forEach(ev => $('#drawerBody').addEventListener(ev, e => { const z = e.target.closest('[data-drop]'); if (z) z.classList.remove('ring-2', 'ring-blue-400'); }));
+$('#drawerBody').addEventListener('drop', e => { const z = e.target.closest('[data-drop]'); if (!E || !z) return; e.preventDefault(); handleFiles([...e.dataTransfer.files], z.dataset.drop); });
+
+function addTag(raw) {
+  const v = String(raw || '').trim().replace(/^#+/, '').slice(0, 30); if (!v) return;
+  if (E.tags.length >= MAX_TAGS) return toast(`Maksimal ${MAX_TAGS} tag.`);
+  if (E.tags.some(t => t.toLowerCase() === v.toLowerCase())) return;
+  E.tags.push(v); paintTags(); dirty();
+}
+function paintTags() { $('#tagChips').innerHTML = E.tags.map((t, i) => `<span class="inline-flex items-center gap-1 bg-blue-50 text-blue-700 text-xs font-bold rounded-md pl-2 pr-1 py-1">#${esc(t)}<button type="button" data-tagx="${i}" class="w-4 h-4 rounded hover:bg-blue-200 grid place-items-center" aria-label="Hapus tag">✕</button></span>`).join(''); }
+function paintDesc() { const n = E.description.length, c = $('#descCount'); c.textContent = `${n} / ${MAX_DESC}`; c.className = 'text-[11px] font-bold ' + (n > MAX_DESC - 100 ? 'text-rose-500' : 'text-slate-400'); }
+function paintCover() {
+  const z = $('#coverZone');
+  z.innerHTML = E.cover
+    ? `<div class="relative rounded-2xl overflow-hidden border border-slate-200 bg-slate-100 aspect-[16/10] max-w-md group"><img src="${esc(E.cover.url)}" alt="" class="w-full h-full object-cover" /><span class="absolute top-2 left-2 px-2 py-1 rounded-md bg-zura-navy text-white text-[11px] font-bold">COVER</span><button type="button" data-cover-x class="absolute top-2 right-2 w-8 h-8 rounded-full bg-white/90 hover:bg-rose-50 hover:text-rose-600 grid place-items-center shadow" aria-label="Hapus cover"><i data-lucide="x" class="w-4 h-4"></i></button><label class="absolute bottom-2 right-2 px-3 py-1.5 rounded-lg bg-white/90 hover:bg-white text-xs font-bold text-slate-700 cursor-pointer shadow">Ganti<input id="fCover" type="file" accept="image/*" class="hidden" /></label></div>`
+    : `<label data-drop="cover" class="block rounded-2xl border-2 border-dashed border-blue-200 hover:border-blue-400 bg-blue-50/50 p-8 text-center cursor-pointer transition max-w-md"><i data-lucide="image-plus" class="w-8 h-8 mx-auto text-blue-500"></i><span class="mt-2 block text-sm font-bold text-zura-navy">Pilih atau tarik gambar cover</span><span class="block text-xs text-slate-500 mt-0.5">Otomatis diperkecil & dikompres (maks 1600px)</span><input id="fCover" type="file" accept="image/*" class="hidden" /></label>`;
+  lucide.createIcons();
+}
+function paintGallery() {
+  const n = E.gallery.length; $('#galCount').textContent = `${n} / ${MAX_GALLERY}`;
+  const tiles = E.gallery.map((it, i) => `<div class="relative rounded-xl overflow-hidden border border-slate-200 bg-slate-100 aspect-square"><img src="${esc(it.url)}" alt="" class="w-full h-full object-cover" />
+      <span class="absolute top-1 left-1 px-1.5 py-0.5 rounded bg-black/55 text-white text-[10px] font-bold">${i + 1}</span>
+      <button type="button" data-g="del" data-k="${it.key}" class="absolute top-1 right-1 w-7 h-7 rounded-full bg-white/90 hover:bg-rose-50 hover:text-rose-600 grid place-items-center shadow text-xs" aria-label="Hapus">✕</button>
+      <div class="absolute inset-x-0 bottom-0 flex items-center justify-between gap-1 p-1 bg-gradient-to-t from-black/65 to-transparent">
+        <button type="button" data-g="left" data-k="${it.key}" ${i === 0 ? 'disabled' : ''} class="w-7 h-7 rounded-md bg-white/85 disabled:opacity-30 text-xs font-bold" aria-label="Geser kiri">◀</button>
+        <button type="button" data-g="cover" data-k="${it.key}" class="px-2 h-7 rounded-md bg-white/85 text-[10px] font-extrabold text-blue-700" title="Jadikan cover">★ Cover</button>
+        <button type="button" data-g="right" data-k="${it.key}" ${i === n - 1 ? 'disabled' : ''} class="w-7 h-7 rounded-md bg-white/85 disabled:opacity-30 text-xs font-bold" aria-label="Geser kanan">▶</button></div></div>`).join('');
+  const add = n < MAX_GALLERY ? `<label data-drop="gal" class="rounded-xl border-2 border-dashed border-blue-200 hover:border-blue-400 bg-blue-50/50 aspect-square grid place-items-center text-center cursor-pointer transition p-2"><span><i data-lucide="plus" class="w-6 h-6 mx-auto text-blue-500"></i><span class="block text-[11px] font-bold text-zura-navy mt-1">Tambah gambar</span></span><input id="fGal" type="file" accept="image/*" multiple class="hidden" /></label>` : '';
+  $('#galZone').innerHTML = `<div class="grid grid-cols-3 sm:grid-cols-4 gap-3">${tiles}${add}</div>`;
+  lucide.createIcons();
+}
+function galleryAction(act, key) {
+  const i = E.gallery.findIndex(x => x.key === key); if (i < 0) return;
+  if (act === 'del') E.trash.push(E.gallery.splice(i, 1)[0]);
+  else if (act === 'left' && i > 0) [E.gallery[i - 1], E.gallery[i]] = [E.gallery[i], E.gallery[i - 1]];
+  else if (act === 'right' && i < E.gallery.length - 1) [E.gallery[i + 1], E.gallery[i]] = [E.gallery[i], E.gallery[i + 1]];
+  else if (act === 'cover') { const it = E.gallery.splice(i, 1)[0]; if (E.cover) E.gallery.splice(i, 0, E.cover); E.cover = it; paintCover(); }
+  paintGallery(); dirty();
+}
+
+/* ----- Pemrosesan gambar: perkecil + kompres ----- */
+async function processImage(file, maxSide = 1600) {
+  let src, w, h;
+  try { src = await createImageBitmap(file); w = src.width; h = src.height; }
+  catch (e) { src = await new Promise((res, rej) => { const im = new Image(); im.onload = () => res(im); im.onerror = rej; im.src = URL.createObjectURL(file); }); w = src.naturalWidth; h = src.naturalHeight; }
+  const sc = Math.min(1, maxSide / Math.max(w, h)), cw = Math.max(1, Math.round(w * sc)), ch = Math.max(1, Math.round(h * sc));
+  const c = document.createElement('canvas'); c.width = cw; c.height = ch; const g = c.getContext('2d');
+  const toBlob = (type, q) => new Promise(r => c.toBlob(r, type, q));
+  g.drawImage(src, 0, 0, cw, ch);
+  let blob = await toBlob('image/webp', .86), ext = 'webp';
+  if (!blob || blob.type !== 'image/webp') { g.globalCompositeOperation = 'destination-over'; g.fillStyle = '#fff'; g.fillRect(0, 0, cw, ch); blob = await toBlob('image/jpeg', .88); ext = 'jpg'; }
+  return { blob, ext };
+}
+async function handleFiles(files, target) {
+  files = files.filter(f => f.type.startsWith('image/')); if (!files.length) return toast('Pilih file gambar (JPG, PNG, WebP).');
+  if (target === 'cover') files = files.slice(0, 1);
+  else { const room = MAX_GALLERY - E.gallery.length; if (files.length > room) toast(`Hanya ${room} slot tersisa, sisanya diabaikan.`); files = files.slice(0, Math.max(0, room)); }
+  const st = $('#imgStatus');
+  for (let k = 0; k < files.length; k++) {
+    st.textContent = `Memproses gambar ${k + 1}/${files.length}…`;
+    try {
+      const { blob, ext } = await processImage(files[k]);
+      const it = { key: rid(), path: `assets/products/${E.id}/${rid()}.${ext}`, blob, url: URL.createObjectURL(blob) };
+      if (target === 'cover') { if (E.cover) E.trash.push(E.cover); E.cover = it; paintCover(); } else { E.gallery.push(it); paintGallery(); }
+      dirty();
+    } catch (e) { toast('Gambar tidak bisa dibaca: ' + files[k].name); }
+  }
+  st.textContent = '';
+}
+const blobToB64 = b => new Promise((res, rej) => { const r = new FileReader(); r.onload = () => res(String(r.result).split(',')[1]); r.onerror = rej; r.readAsDataURL(b); });
+
+/* ----- Simpan ----- */
+function validate() {
+  const e = E;
+  if (!e.title.trim()) return 'Judul aplikasi wajib diisi.';
+  if (!e.category.trim()) return 'Kategori wajib diisi.';
+  if (e.description.length > MAX_DESC) return `Deskripsi maksimal ${MAX_DESC} karakter.`;
+  if (!e.cover) return 'Gambar cover wajib ada.';
+  if (e.gallery.length > MAX_GALLERY) return `Galeri maksimal ${MAX_GALLERY} gambar.`;
+  return '';
+}
+async function saveEditor() {
+  if (!E) return; const e = E, err = $('#eErr');
+  const v = validate(); if (v) { err.textContent = v; err.classList.remove('hidden'); err.scrollIntoView({ block: 'center', behavior: 'smooth' }); return; }
+  err.classList.add('hidden');
+  setBusy('Menyiapkan gambar…');
+  try {
+    const items = [e.cover, ...e.gallery], files = [];
+    for (const it of items) if (it.blob) files.push({ path: it.path, base64: await blobToB64(it.blob) });
+    setBusy(files.length ? `Mengunggah ${files.length} gambar & menyimpan…` : 'Menyimpan…');
+    const fresh = await loadRemote(), now = new Date().toISOString();
+    const idx = fresh.products.findIndex(p => p.id === e.id);
+    let slug = e.slug;
+    if (!slug) { const base = slugify(e.title); slug = base; let n = 2; while (fresh.products.some(p => p.slug === slug && p.id !== e.id)) slug = base + '-' + n++; }
+    const prod = { id: e.id, slug, title: e.title.trim(), category: e.category.trim(), tags: e.tags, description: e.description, cover: e.cover.path, images: e.gallery.map(i => i.path), published: e.published, createdAt: e.createdAt || now, updatedAt: now };
+    if (idx >= 0) fresh.products[idx] = prod; else fresh.products.push(prod);
+    fresh.updatedAt = now;
+    const keep = new Set(items.map(i => i.path)), removed = [...e.orig].filter(p => !keep.has(p));
+    await commit({ message: `${e.isNew ? 'Tambah' : 'Ubah'} produk: ${prod.title}`, files: [{ path: 'data/products.json', text: JSON.stringify(fresh, null, 2) }, ...files], deletePaths: removed });
+    S.data = fresh; e.dirty = false; closeDrawer(true); render();
+    toast('Tersimpan. Halaman Product diperbarui dalam ±1–2 menit (menunggu GitHub Pages).');
+  } catch (x) { err.textContent = errMsg(x); err.classList.remove('hidden'); }
+  finally { setBusy(false); }
+}
+
+/* ===================== Kelola kategori ===================== */
+function openCats() {
+  const el = document.createElement('div'); el.className = 'fixed inset-0 z-[120] flex items-end sm:items-center justify-center bg-zura-navy/55 backdrop-blur-sm p-0 sm:p-4';
+  const count = c => S.data.products.filter(p => p.category === c).length;
+  el.innerHTML = `<div class="bg-white w-full max-w-lg max-h-[90vh] overflow-y-auto rounded-t-3xl sm:rounded-3xl shadow-2xl p-6">
+    <div class="flex items-center justify-between"><h3 class="font-display text-xl font-extrabold text-zura-navy">Kelola kategori</h3><button data-x class="w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 grid place-items-center" aria-label="Tutup"><i data-lucide="x" class="w-4 h-4"></i></button></div>
+    <p class="mt-1 text-xs text-slate-500">Ganti nama kategori untuk semua produk di dalamnya. Memberi nama yang sama dengan kategori lain akan menggabungkannya. Kategori baru dibuat saat menyimpan produk.</p>
+    <div class="mt-5 space-y-2.5">${cats().length ? cats().map(c => `<div class="flex items-center gap-2"><input data-old="${esc(c)}" class="field" value="${esc(c)}" maxlength="${MAX_CAT}" /><span class="shrink-0 text-xs font-bold bg-blue-50 text-blue-700 rounded-md px-2 py-1">${count(c)}</span><button data-save-cat class="shrink-0 px-3 py-2.5 rounded-xl bg-zura-navy hover:bg-blue-700 text-white text-xs font-bold transition">Simpan</button></div>`).join('') : '<p class="text-sm text-slate-500">Belum ada kategori.</p>'}</div>
+  </div>`;
+  document.body.appendChild(el); lucide.createIcons();
+  el.addEventListener('click', async ev => {
+    if (ev.target.closest('[data-x]') || ev.target === el) return el.remove();
+    const b = ev.target.closest('[data-save-cat]'); if (!b) return;
+    const inp = b.parentElement.querySelector('input'), oldN = inp.dataset.old, newN = inp.value.trim();
+    if (!newN || newN === oldN) return;
+    setBusy('Memperbarui kategori…');
+    try { await mutate(`Ganti nama kategori: ${oldN} → ${newN}`, d => d.products.forEach(p => { if (p.category === oldN) { p.category = newN; p.updatedAt = new Date().toISOString(); } })); el.remove(); render(); toast('Kategori diperbarui.'); }
+    catch (x) { toast(errMsg(x)); } finally { setBusy(false); }
+  });
+}
+
+/* ===================== Init ===================== */
+window.addEventListener('beforeunload', e => { if (E && E.dirty) { e.preventDefault(); e.returnValue = ''; } });
+(async function init() {
+  loadConn(); lucide.createIcons();
+  if (S.token && S.owner && S.repo) {
+    setBusy('Memuat produk…');
+    try { await gh(`/repos/${R()}/git/ref/heads/${S.branch}`); S.data = await loadRemote(); showApp(); }
+    catch (e) { showConnect(); const er = $('#cErr'); er.textContent = errMsg(e); er.classList.remove('hidden'); }
+    finally { setBusy(false); }
+  } else showConnect();
+})();
+</script>
+</body>
+</html>
