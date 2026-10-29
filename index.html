@@ -185,6 +185,7 @@
       <nav class="hidden lg:flex items-center gap-1 text-sm font-semibold text-slate-700">
         <a href="#start" class="px-3 py-2 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition"><span data-en="Start here">Mulai di sini</span></a>
         <a href="#showcase" class="px-3 py-2 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition"><span data-en="Skills">Keahlian</span></a>
+        <a href="/products/" data-track="nav_product" class="px-3 py-2 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition">Product</a>
         <a href="#solutions" class="px-3 py-2 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition"><span data-en="Solutions">Solusi</span></a>
         <a href="#process" class="px-3 py-2 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition"><span data-en="Process">Proses</span></a>
         <a href="#youtube" class="px-3 py-2 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition"><span data-en="Learn">Belajar</span></a>
@@ -205,6 +206,7 @@
       <div class="grid gap-1 text-sm font-semibold text-slate-800">
         <a href="#start" class="m-link py-2.5 border-b border-slate-100"><span data-en="Start here">Mulai di sini</span></a>
         <a href="#showcase" class="m-link py-2.5 border-b border-slate-100"><span data-en="Skills">Keahlian</span></a>
+        <a href="/products/" class="py-2.5 border-b border-slate-100">Product</a>
         <a href="#solutions" class="m-link py-2.5 border-b border-slate-100"><span data-en="Solutions">Solusi</span></a>
         <a href="#process" class="m-link py-2.5 border-b border-slate-100"><span data-en="Process">Proses</span></a>
         <a href="#youtube" class="m-link py-2.5 border-b border-slate-100"><span data-en="Learn">Belajar</span></a>
@@ -512,7 +514,7 @@
           <ul class="mt-5 space-y-2.5 text-sm font-semibold text-slate-700">
             <li class="flex gap-2.5"><i data-lucide="smartphone" class="w-5 h-5 text-blue-600 shrink-0"></i><span data-en="Responsive on every device">Responsif di semua perangkat</span></li>
             <li class="flex gap-2.5"><i data-lucide="gauge" class="w-5 h-5 text-blue-600 shrink-0"></i><span data-en="Performance and basic SEO">Performa dan SEO dasar</span></li>
-            <li class="flex gap-2.5"><i data-lucide="mouse-pointer-click" class="w-5 h-5 text-blue-600 shrink-0"></i><span data-en="Forms,  and analytics set up">Form, , dan analytics terpasang</span></li>
+            <li class="flex gap-2.5"><i data-lucide="mouse-pointer-click" class="w-5 h-5 text-blue-600 shrink-0"></i><span data-en="Forms, WhatsApp and analytics set up">Form, WhatsApp, dan analytics terpasang</span></li>
           </ul>
         </div>
         <div class="browser">
@@ -535,6 +537,20 @@
         </div>
       </div>
     </div>
+  </section>
+
+  <!-- =====================================================================
+       PRODUK (otomatis dari data/products.json, diatur lewat /catalog)
+       ===================================================================== -->
+  <section id="products" style="display:none" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20 scroll-mt-20">
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 reveal">
+      <div class="max-w-2xl">
+        <div class="text-xs font-extrabold uppercase tracking-[.2em] text-blue-600">Product</div>
+        <h2 class="font-display mt-2 text-3xl sm:text-4xl font-extrabold text-zura-navy tracking-tight" data-en="Apps already built">Aplikasi yang sudah dibangun</h2>
+      </div>
+      <a href="/products/" data-track="products_all" class="inline-flex items-center gap-1.5 text-sm font-bold text-blue-600 hover:underline"><span data-en="See all products">Lihat semua produk</span><i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+    </div>
+    <div id="prodStrip" class="mt-8 grid sm:grid-cols-2 lg:grid-cols-3 gap-5"></div>
   </section>
 
   <!-- =====================================================================
@@ -642,13 +658,13 @@
           <p class="mt-1.5 text-sm text-blue-100/85" data-en="Free blueprints, scripts and templates for automation.">Blueprint, script, dan template gratis untuk otomasi.</p>
           <span class="mt-4 inline-flex items-center gap-1.5 text-xs font-bold text-blue-200"><span data-en="Open">Buka</span><i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition"></i></span>
         </a>
-        <a href="/resources/formula-library/" data-track="res_formula" class="spot lift group rounded-2xl bg-white/10 hover:bg-white/15 border border-white/15 p-5 transition">
+        <a href="/zuraclass-formula-library/" data-track="res_formula" class="spot lift group rounded-2xl bg-white/10 hover:bg-white/15 border border-white/15 p-5 transition">
           <span class="w-11 h-11 rounded-xl bg-blue-600 grid place-items-center"><i data-lucide="sigma" class="w-5 h-5"></i></span>
           <h4 class="mt-4 font-bold text-lg">Formula Library</h4>
           <p class="mt-1.5 text-sm text-blue-100/85" data-en="100+ AppSheet and spreadsheet formulas ready to copy.">100+ formula AppSheet dan spreadsheet siap salin.</p>
           <span class="mt-4 inline-flex items-center gap-1.5 text-xs font-bold text-blue-200"><span data-en="Open">Buka</span><i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition"></i></span>
         </a>
-        <a href="/resources/svg-iconpack-free/" data-track="res_svg" class="spot lift group rounded-2xl bg-white/10 hover:bg-white/15 border border-white/15 p-5 transition">
+        <a href="/svg-library-lite/" data-track="res_svg" class="spot lift group rounded-2xl bg-white/10 hover:bg-white/15 border border-white/15 p-5 transition">
           <span class="w-11 h-11 rounded-xl bg-blue-600 grid place-items-center"><i data-lucide="shapes" class="w-5 h-5"></i></span>
           <h4 class="mt-4 font-bold text-lg">SVG Icon Library</h4>
           <p class="mt-1.5 text-sm text-blue-100/85" data-en="Free UI icons with instant Data URI copy for AppSheet and web.">Ikon UI gratis dengan salin Data URI instan untuk AppSheet dan web.</p>
@@ -723,7 +739,7 @@
           <textarea id="cfMsg" rows="4" required placeholder="Contoh: Tim gudang kami masih catat stok di kertas..." data-en-ph="Example: Our warehouse team still tracks stock on paper..." class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-100"></textarea>
         </div>
         <button type="submit" data-track="contact_submit" class="w-full py-3 rounded-xl bg-zura-navy hover:bg-blue-700 text-white font-bold text-sm shadow-md transition flex items-center justify-center gap-2"><i data-lucide="send" class="w-4 h-4"></i><span data-en="Send my brief">Kirim brief saya</span></button>
-        <p class="text-[11px] text-slate-500 text-center" data-en="Your message opens in WhatsApp so you can review before sending.">Pesan akan terbuka di WhatsApp supaya bisa kamu cek dulu sebelum dikirim.</p>
+        <p class="text-[11px] text-slate-500 text-center" data-en="Your message opens in WhatsApp or email so you can review before sending.">Pesan akan terbuka di WhatsApp atau email supaya bisa kamu cek dulu sebelum dikirim.</p>
       </form>
     </div>
   </section>
@@ -765,18 +781,18 @@
    Tambahkan ?dev=1 di URL untuk melihat semua elemen & daftar yang belum diisi.
    ========================================================================= */
 const CONFIG = {
-  whatsappUrl: "https://wa.me/6282177755114",  // link WhatsApp (dipakai semua tombol Konsultasi Gratis)
-  whatsapp: "6282177755114",            // opsional: nomor internasional tanpa +, dipakai kalau whatsappUrl kosong
+  whatsappUrl: "https://wa.me/zuralogic",  // link WhatsApp (dipakai semua tombol Konsultasi Gratis)
+  whatsapp: "",            // opsional: nomor internasional tanpa +, dipakai kalau whatsappUrl kosong
   email: "",               // contoh: "halo@zuralogic.com"
   youtubeChannelUrl: "https://youtube.com/@zuraclass",
   youtubeChannelId: "UC7E98cGagwKgc7E_F2CtZpQ",
   youtubePlaylistId: "PLNyPPzVOkZw6YwMI-eUnNZ_QVghISrTZC",
   youtubeDataUrl: "data/youtube.json",   // dibuat otomatis oleh GitHub Action (lihat scripts/update-youtube.mjs)
   youtubeMembers: "",      // jumlah member channel (angka). YouTube tidak membuka data ini lewat API publik, isi manual kalau mau ditampilkan
-  instagram: "https://instagram.com/zuralogic",
-  tiktok: "https://tiktok.com/@zuralogic",
-  threads: "https://threads.com/@zuralogic",
-  facebook: "https://facebook.com/zuraclass",
+  instagram: "",
+  tiktok: "",
+  threads: "",
+  facebook: "",
   discord: "https://discord.gg/QBjWZEdY2",
   ga4Id: "",               // contoh: "G-XXXXXXXXXX" (opsional, untuk analitik)
   /* Proyek asli. Kalau diisi, section "Studi kasus" muncul otomatis. Contoh:
@@ -1248,6 +1264,32 @@ $('#chGrid').addEventListener('click', e => {
   track('yt_video_play', { id: b.dataset.vid });
 });
 
+/* ======================= Produk (dari data/products.json) ======================= */
+async function loadHomeProducts() {
+  try {
+    const r = await fetch('data/products.json?t=' + Math.floor(Date.now() / 600000), { cache: 'no-cache' });
+    if (!r.ok) return;
+    const j = await r.json();
+    const list = (j.products || []).filter(p => p && p.id && p.title && p.published !== false)
+      .sort((a, b) => new Date(b.updatedAt || b.createdAt || 0) - new Date(a.updatedAt || a.createdAt || 0)).slice(0, 6);
+    if (!list.length) return;
+    $('#prodStrip').innerHTML = list.map((p, i) => `
+      <a href="/products/?p=${encodeURIComponent(p.slug || p.id)}" data-track="home_product_click" class="spot lift glass rounded-3xl overflow-hidden group flex flex-col reveal" style="--d:${i * 60}ms">
+        <div class="relative aspect-[16/10] overflow-hidden bg-gradient-to-br from-blue-100 to-sky-50">
+          ${p.cover ? `<img src="/${esc(String(p.cover).replace(/^\/+/, ''))}" alt="${esc(p.title)}" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" onerror="this.style.visibility='hidden'" />` : ''}
+          <span class="absolute top-3 left-3 px-2.5 py-1 rounded-lg bg-zura-navy/85 text-white text-[11px] font-semibold backdrop-blur">${esc(p.category || t('Lainnya', 'Other'))}</span>
+        </div>
+        <div class="p-5 flex-1 flex flex-col">
+          <h3 class="font-display font-extrabold text-zura-navy leading-snug line-clamp-2 group-hover:text-blue-600 transition">${esc(p.title)}</h3>
+          <div class="mt-2.5 flex flex-wrap gap-1.5">${(p.tags || []).slice(0, 3).map(x => `<span class="text-[11px] font-bold text-blue-700 bg-blue-50 rounded-md px-2 py-0.5">${esc(x)}</span>`).join('')}</div>
+          <span class="mt-auto pt-4 inline-flex items-center gap-1.5 text-sm font-bold text-blue-600">${t('Lihat detail', 'View details')}<i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition"></i></span>
+        </div>
+      </a>`).join('');
+    $('#products').style.display = '';
+    lucide.createIcons(); observeReveals();
+  } catch (e) { if (DEV) console.warn('products.json belum tersedia:', e.message); }
+}
+
 /* ======================= Reveal / anim observer ======================= */
 let io;
 function observeReveals() {
@@ -1322,6 +1364,7 @@ window.addEventListener('DOMContentLoaded', () => {
   renderYT();
   applyLang();       // juga memanggil renderDynamic()
   loadChannel();
+  loadHomeProducts();
   activatePath('build', false);
   const hash = location.hash; if (hash === '#learn') activatePath('learn', false);
   lucide.createIcons();
