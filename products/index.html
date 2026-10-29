@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Product — Zuralogic</title>
+  <meta id="metaDesc" name="description" content="Daftar aplikasi dan sistem yang sudah dibangun Zuralogic: AppSheet, Apps Script, Web App, dan Website untuk bisnis." />
+  <link rel="canonical" href="https://zuralogic.com/products/" />
+  <meta property="og:title" content="Product — Zuralogic" />
+  <meta property="og:image" content="https://zuralogic.com/assets/og-image.png" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='11' fill='%230A1931'/%3E%3Cpath d='M12 12h16l-12 16h12' fill='none' stroke='white' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@0.462.0/dist/umd/lucide.min.js"></script>
+  <script>
+    tailwind.config = { theme: { extend: {
+      fontFamily: { sans: ['Inter', 'sans-serif'], display: ['Sora', 'Inter', 'sans-serif'] },
+      colors: { zura: { navy: '#0A1931', deep: '#152A4A', blue: '#2563EB', light: '#EFF6FF', ice: '#DBEAFE' } }
+    } } }
+  </script>
+  <link rel="stylesheet" href="/assets/zl.css" />
+  <script src="/assets/zl-products.js"></script>
+</head>
+<body class="text-slate-900 antialiased overflow-x-hidden min-h-screen flex flex-col">
+
+  <div class="absolute inset-x-0 top-0 h-[700px] bg-grid pointer-events-none -z-10"></div>
+  <div class="absolute inset-x-0 top-0 h-[800px] overflow-hidden pointer-events-none -z-10">
+    <div class="absolute -right-24 -top-10 w-[460px] h-[460px] rounded-full bg-blue-400/25 blur-3xl blob"></div>
+    <div class="absolute -left-32 top-64 w-[380px] h-[380px] rounded-full bg-sky-300/30 blur-3xl blob" style="animation-delay:-5s"></div>
+  </div>
+
+  <!-- HEADER -->
+  <header class="sticky top-0 z-50 frosted-nav border-b border-blue-100/70">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-[68px] flex items-center justify-between gap-4">
+      <a href="/" class="flex items-center gap-3 shrink-0" aria-label="Zuralogic">
+        <svg viewBox="0 0 40 40" class="w-10 h-10 drop-shadow" aria-hidden="true"><defs><linearGradient id="lgA" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2563EB"/><stop offset="1" stop-color="#0A1931"/></linearGradient></defs><rect width="40" height="40" rx="11" fill="url(#lgA)"/><path d="M12 12h16l-12 16h12" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span class="flex flex-col leading-none"><span class="font-display text-lg font-extrabold text-zura-navy tracking-tight">Zuralogic<span class="text-blue-600">.com</span></span><span class="text-[11px] font-semibold text-slate-500 mt-1">Your Scale-Up Partner</span></span>
+      </a>
+      <nav class="hidden md:flex items-center gap-1 text-sm font-semibold text-slate-700">
+        <a href="/" class="px-3 py-2 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition" data-i="Beranda|Home"></a>
+        <a href="/products/" class="px-3 py-2 rounded-lg bg-blue-50 text-blue-700">Product</a>
+        <a href="/#showcase" class="px-3 py-2 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition" data-i="Keahlian|Skills"></a>
+        <a href="/#youtube" class="px-3 py-2 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition" data-i="Belajar|Learn"></a>
+      </nav>
+      <div class="flex items-center gap-2">
+        <button id="langBtn" class="px-3 py-2 rounded-xl border border-slate-200 bg-white/80 text-xs font-extrabold text-slate-700 hover:border-blue-400 transition flex items-center gap-1.5" aria-label="Language"><i data-lucide="languages" class="w-4 h-4 text-blue-600"></i><span id="langLabel">ID</span></button>
+        <a id="ctaWa" class="hidden sm:inline-flex px-5 py-2.5 rounded-full bg-zura-navy hover:bg-blue-700 text-white text-sm font-bold shadow-md transition items-center gap-2"><i data-lucide="message-circle" class="w-4 h-4"></i><span data-i="Konsultasi Gratis|Free consultation"></span></a>
+        <button id="menuBtn" class="md:hidden p-2.5 rounded-xl border border-slate-200 bg-white/80 text-slate-700" aria-label="Menu"><i data-lucide="menu" class="w-5 h-5"></i></button>
+      </div>
+    </div>
+    <div id="mobileMenu" style="display:none" class="md:hidden border-t border-blue-100 bg-white/95 backdrop-blur-xl px-5 py-4 grid gap-1 text-sm font-semibold text-slate-800">
+      <a href="/" class="py-2.5 border-b border-slate-100" data-i="Beranda|Home"></a>
+      <a href="/products/" class="py-2.5 border-b border-slate-100 text-blue-700">Product</a>
+      <a href="/#showcase" class="py-2.5 border-b border-slate-100" data-i="Keahlian|Skills"></a>
+      <a href="/#youtube" class="py-2.5 border-b border-slate-100" data-i="Belajar|Learn"></a>
+      <a id="ctaWaM" class="mt-3 py-3 rounded-xl bg-zura-navy text-white text-center font-bold" data-i="Konsultasi Gratis|Free consultation"></a>
+    </div>
+  </header>
+
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 pt-10 sm:pt-14 pb-16">
+    <div class="max-w-2xl fade-up">
+      <div class="text-xs font-extrabold uppercase tracking-[.2em] text-blue-600">Showcase</div>
+      <h1 class="font-display mt-2 text-3xl sm:text-5xl font-extrabold text-zura-navy tracking-tight leading-[1.1]"><span data-i="Aplikasi yang sudah dibangun|Apps already built"></span></h1>
+      <p class="mt-3 text-slate-600 text-base sm:text-lg" data-i="Jelajahi produk berdasarkan kategori. Klik salah satu untuk melihat detail dan semua gambarnya.|Browse products by category. Click one to see its details and all images."></p>
+    </div>
+
+    <!-- Controls -->
+    <div class="mt-8 flex flex-col lg:flex-row lg:items-center gap-4 fade-up" style="--d:80ms">
+      <div class="relative w-full lg:w-80 shrink-0">
+        <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2"></i>
+        <input id="q" type="search" class="field pl-10" data-ph="Cari produk, tag, atau kata kunci...|Search products, tags or keywords..." />
+      </div>
+      <div id="catChips" class="flex gap-2 overflow-x-auto no-scrollbar py-1"></div>
+    </div>
+    <div id="activeTag" class="mt-3"></div>
+
+    <div id="list" class="mt-8"></div>
+  </main>
+
+  <!-- DETAIL -->
+  <div id="detail" style="display:none" class="fixed inset-0 z-[90]">
+    <div class="absolute inset-0 bg-zura-navy/55 backdrop-blur-sm"></div>
+    <div id="detailScroll" class="absolute inset-0 overflow-y-auto">
+      <div class="min-h-full flex items-start sm:items-center justify-center p-0 sm:p-6">
+        <div id="detailBody" class="bg-white w-full max-w-5xl sm:rounded-3xl shadow-2xl p-5 sm:p-8 relative"></div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="bg-white/80 border-t border-slate-200/90">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-7 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-slate-500">
+      <span class="font-bold text-zura-navy">Zuralogic.com <span class="text-xs font-medium text-slate-400">• Your Scale-Up Partner</span></span>
+      <div class="flex gap-5 font-semibold text-slate-600 text-xs sm:text-sm"><a href="/terms.html" class="hover:text-blue-600">Terms of Service</a><a href="/privacy.html" class="hover:text-blue-600">Privacy Policy</a><a href="/gethelp/" class="hover:text-blue-600">Help Center</a></div>
+      <span>© zuralogic.com 2021–<span id="yr"></span></span>
+    </div>
+  </footer>
+
+<script>
+/* ===== CONFIG (halaman Product) ===== */
+const CONFIG = {
+  whatsappUrl: "https://wa.me/zuralogic",   // samakan dengan CONFIG.whatsappUrl di index.html
+  dataUrl: "/data/products.json"
+};
+
+const { t, LANG, esc, src, slugify, fmtDate, catLabel, waLink, loadProducts, groupByCategory, card, mountGallery, toast } = ZLP;
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+let ALL = [], loaded = false;
+const F = { cat: 'all', tag: '', q: '' };
+const baseTitle = document.title, baseDesc = $('#metaDesc').content;
+
+/* i18n untuk teks antarmuka */
+function applyStatic() {
+  document.documentElement.lang = LANG; $('#langLabel').textContent = LANG.toUpperCase();
+  $$('[data-i]').forEach(el => { const [a, b] = el.dataset.i.split('|'); el.textContent = LANG === 'id' ? a : b; });
+  $$('[data-ph]').forEach(el => { const [a, b] = el.dataset.ph.split('|'); el.placeholder = LANG === 'id' ? a : b; });
+}
+$('#langBtn').addEventListener('click', () => { try { localStorage.setItem('zl_lang', LANG === 'id' ? 'en' : 'id'); } catch (e) {} location.reload(); });
+$('#menuBtn').addEventListener('click', () => { const m = $('#mobileMenu'); m.style.display = m.style.display === 'none' ? 'grid' : 'none'; });
+$('#yr').textContent = new Date().getFullYear();
+
+/* WhatsApp */
+['#ctaWa', '#ctaWaM'].forEach(s => { const a = $(s); if (CONFIG.whatsappUrl) { a.href = CONFIG.whatsappUrl; a.target = '_blank'; a.rel = 'noopener noreferrer'; } else a.href = '/#contact'; });
+
+/* ===== Filter & render ===== */
+function matches(p) {
+  if (F.cat !== 'all' && (p.category || '') !== F.cat) return false;
+  if (F.tag && !p.tags.some(x => x.toLowerCase() === F.tag.toLowerCase())) return false;
+  if (F.q) { const q = F.q.toLowerCase(); if (!(p.title + ' ' + p.category + ' ' + p.tags.join(' ') + ' ' + p.description).toLowerCase().includes(q)) return false; }
+  return true;
+}
+const href = p => location.pathname + '?p=' + encodeURIComponent(p.slug);
+
+function renderChips() {
+  const counts = new Map(); ALL.forEach(p => counts.set(p.category || '', (counts.get(p.category || '') || 0) + 1));
+  const cats = [...counts.keys()].sort((a, b) => (a === '' ? 1 : b === '' ? -1 : a.localeCompare(b)));
+  const chip = (k, label, n) => `<button data-cat="${esc(k)}" class="shrink-0 px-4 py-2 rounded-xl text-sm font-bold transition border ${F.cat === k ? 'bg-zura-navy text-white border-zura-navy shadow-md' : 'bg-white text-slate-700 border-slate-200 hover:border-blue-400'}">${esc(label)} <span class="${F.cat === k ? 'text-blue-200' : 'text-slate-400'} font-semibold">${n}</span></button>`;
+  $('#catChips').innerHTML = ALL.length ? chip('all', t('Semua', 'All'), ALL.length) + cats.map(c => chip(c, catLabel(c), counts.get(c))).join('') : '';
+  $('#activeTag').innerHTML = F.tag ? `<button data-cleartag class="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-blue-600 text-white text-xs font-bold">#${esc(F.tag)} <i data-lucide="x" class="w-3.5 h-3.5"></i></button>` : '';
+}
+function renderList() {
+  const box = $('#list');
+  if (!loaded) { box.innerHTML = `<div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">${[0, 1, 2].map(() => '<div class="rounded-2xl overflow-hidden glass"><div class="aspect-[16/10] skel"></div><div class="p-4 space-y-2"><div class="h-4 w-3/4 rounded skel"></div><div class="h-3 w-1/2 rounded skel"></div></div></div>').join('')}</div>`; return; }
+  if (!ALL.length) {
+    box.innerHTML = `<div class="glass rounded-3xl p-10 sm:p-14 text-center max-w-2xl mx-auto">
+      <div class="mx-auto w-14 h-14 rounded-2xl bg-zura-navy text-white grid place-items-center"><i data-lucide="package-open" class="w-7 h-7"></i></div>
+      <h2 class="font-display mt-5 text-2xl font-extrabold text-zura-navy">${t('Produk segera hadir', 'Products coming soon')}</h2>
+      <p class="mt-2 text-slate-600">${t('Sementara itu, ceritakan kebutuhanmu dan kita bahas aplikasi yang paling cocok.', 'Meanwhile, tell me what you need and we\'ll discuss the best-fit app.')}</p>
+      <a href="${esc(CONFIG.whatsappUrl || '/#contact')}" target="_blank" rel="noopener" class="mt-6 inline-flex px-6 py-3 rounded-2xl bg-zura-navy hover:bg-blue-700 text-white font-bold transition">${t('Konsultasi gratis', 'Free consultation')}</a>
+    </div>`; return;
+  }
+  const list = ALL.filter(matches);
+  if (!list.length) {
+    box.innerHTML = `<div class="glass rounded-3xl p-10 text-center max-w-xl mx-auto"><p class="font-bold text-zura-navy">${t('Tidak ada produk yang cocok.', 'No matching products.')}</p><button data-reset class="mt-4 px-5 py-2.5 rounded-xl bg-blue-600 text-white text-sm font-bold">${t('Reset filter', 'Reset filters')}</button></div>`; return;
+  }
+  const grouped = F.cat === 'all' && !F.q && !F.tag;
+  let d = 0; const cardOf = p => card(p, { href: href(p), delay: Math.min(d++ * 50, 400) });
+  if (grouped) {
+    box.innerHTML = groupByCategory(list).map(([cat, items]) => `
+      <section class="mb-10">
+        <div class="flex items-center gap-3 mb-4"><h2 class="font-display text-xl font-extrabold text-zura-navy">${esc(catLabel(cat))}</h2><span class="text-xs font-bold bg-blue-50 text-blue-700 rounded-md px-2 py-0.5">${items.length}</span><div class="flex-1 h-px bg-blue-100"></div></div>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">${items.map(cardOf).join('')}</div>
+      </section>`).join('');
+  } else {
+    box.innerHTML = `<p class="text-sm font-semibold text-slate-500 mb-4">${list.length} ${t('produk ditemukan', 'products found')}</p><div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">${list.map(cardOf).join('')}</div>`;
+  }
+}
+function render() { renderChips(); renderList(); lucide.createIcons(); }
+
+document.addEventListener('click', e => {
+  const c = e.target.closest('[data-cat]'); if (c && c.closest('#catChips')) { F.cat = c.dataset.cat; render(); return; }
+  if (e.target.closest('[data-cleartag]')) { F.tag = ''; render(); return; }
+  if (e.target.closest('[data-reset]')) { F.cat = 'all'; F.tag = ''; F.q = ''; $('#q').value = ''; render(); return; }
+  const o = e.target.closest('a[data-open]');
+  if (o && !e.metaKey && !e.ctrlKey && !e.shiftKey && e.button === 0) { e.preventDefault(); openDetail(o.dataset.open, true); }
+});
+let qT; $('#q').addEventListener('input', e => { clearTimeout(qT); qT = setTimeout(() => { F.q = e.target.value.trim(); render(); }, 150); });
+
+/* ===== Detail ===== */
+function openDetail(id, push) {
+  const p = ALL.find(x => x.id === id || x.slug === id); if (!p) return;
+  const urls = [p.cover, ...p.images].filter(Boolean).map(src);
+  const rel = ALL.filter(x => x.id !== p.id && (x.category || '') === (p.category || '')).slice(0, 3);
+  const msg = t(`Halo Zuralogic, saya tertarik dengan "${p.title}". Bisa dibantu?`, `Hi Zuralogic, I'm interested in "${p.title}". Can you help?`);
+  const wa = CONFIG.whatsappUrl ? waLink(CONFIG.whatsappUrl, msg) : '/#contact';
+  $('#detailBody').innerHTML = `
+    <button data-close aria-label="Close" class="absolute top-3 right-3 sm:top-5 sm:right-5 z-10 w-10 h-10 rounded-full bg-slate-100 hover:bg-slate-200 grid place-items-center"><i data-lucide="x" class="w-5 h-5"></i></button>
+    <div class="grid lg:grid-cols-5 gap-7 lg:gap-10 pt-8 sm:pt-0">
+      <div class="lg:col-span-3 min-w-0" id="dGal"></div>
+      <div class="lg:col-span-2 min-w-0">
+        <span class="inline-block px-2.5 py-1 rounded-lg bg-zura-navy text-white text-[11px] font-semibold">${esc(catLabel(p.category))}</span>
+        <h2 class="font-display mt-3 text-2xl sm:text-3xl font-extrabold text-zura-navy leading-tight break-words">${esc(p.title)}</h2>
+        ${p.tags.length ? `<div class="mt-3 flex flex-wrap gap-1.5">${p.tags.map(x => `<button data-tag="${esc(x)}" class="text-xs font-bold text-blue-700 bg-blue-50 hover:bg-blue-100 rounded-md px-2.5 py-1 transition">#${esc(x)}</button>`).join('')}</div>` : ''}
+        <div class="mt-5 text-sm sm:text-[15px] text-slate-700 leading-relaxed whitespace-pre-line break-words">${esc(p.description)}</div>
+        <div class="mt-7 flex flex-col sm:flex-row gap-3">
+          <a href="${esc(wa)}" target="_blank" rel="noopener noreferrer" class="flex-1 px-5 py-3.5 rounded-2xl bg-zura-navy hover:bg-blue-700 text-white font-bold text-sm flex items-center justify-center gap-2 shadow-lg transition"><i data-lucide="message-circle" class="w-5 h-5"></i>${t('Tanya produk ini', 'Ask about this')}</a>
+          <button data-share class="px-5 py-3.5 rounded-2xl border border-slate-200 hover:border-blue-400 text-slate-700 font-bold text-sm flex items-center justify-center gap-2 transition"><i data-lucide="link" class="w-4 h-4"></i>${t('Salin link', 'Copy link')}</button>
+        </div>
+        ${p.updatedAt ? `<p class="mt-4 text-xs text-slate-400">${t('Diperbarui', 'Updated')} ${fmtDate(p.updatedAt)}</p>` : ''}
+      </div>
+    </div>
+    ${rel.length ? `<div class="mt-10 pt-8 border-t border-slate-100"><h3 class="font-display font-extrabold text-zura-navy mb-4">${t('Produk lain di kategori ini', 'More in this category')}</h3><div class="grid sm:grid-cols-3 gap-4">${rel.map(r => card(r, { href: href(r) })).join('')}</div></div>` : ''}`;
+  mountGallery($('#dGal'), urls);
+  const dv = $('#detail'); dv.style.display = 'block'; $('#detailScroll').scrollTop = 0; document.body.style.overflow = 'hidden';
+  document.title = p.title + ' — Zuralogic';
+  $('#metaDesc').content = p.description.replace(/\s+/g, ' ').slice(0, 155);
+  if (push) history.pushState({ detail: 1 }, '', href(p));
+  lucide.createIcons();
+}
+function closeDetail(push) {
+  $('#detail').style.display = 'none'; document.body.style.overflow = '';
+  document.title = baseTitle; $('#metaDesc').content = baseDesc;
+  if (push) { if (history.state && history.state.detail) history.back(); else history.replaceState(null, '', location.pathname); }
+}
+$('#detail').addEventListener('click', e => {
+  if (e.target.closest('[data-close]')) { closeDetail(true); return; }
+  if (!e.target.closest('#detailBody')) { closeDetail(true); return; }
+  const tg = e.target.closest('[data-tag]'); if (tg) { F.tag = tg.dataset.tag; F.cat = 'all'; closeDetail(true); render(); window.scrollTo({ top: 0, behavior: 'smooth' }); return; }
+  if (e.target.closest('[data-share]')) { navigator.clipboard && navigator.clipboard.writeText(location.href).then(() => toast(t('Link disalin', 'Link copied'))); return; }
+  const o = e.target.closest('a[data-open]'); if (o && !e.metaKey && !e.ctrlKey && e.button === 0) { e.preventDefault(); openDetail(o.dataset.open, true); }
+});
+window.addEventListener('keydown', e => { if (e.key === 'Escape' && $('#detail').style.display === 'block') closeDetail(true); });
+window.addEventListener('popstate', () => {
+  const p = new URLSearchParams(location.search).get('p');
+  if (p) openDetail(p, false); else closeDetail(false);
+});
+
+/* ===== Init ===== */
+(async function () {
+  applyStatic(); render();
+  const d = await loadProducts(CONFIG.dataUrl);
+  ALL = d.products.filter(p => p.published).sort((a, b) => new Date(b.updatedAt || 0) - new Date(a.updatedAt || 0));
+  loaded = true; render();
+  const p = new URLSearchParams(location.search).get('p'); if (p) openDetail(p, false);
+})();
+</script>
+</body>
+</html>
