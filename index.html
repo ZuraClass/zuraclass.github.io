@@ -1,1411 +1,1333 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="id" class="scroll-smooth">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Zuralogic.com — Your Scale-Up Partner | Global Business App Ecosystem</title>
-  
-  <!-- Tailwind CSS CDN -->
+  <title>Zuralogic — Aplikasi Custom, Web App & Kelas Bikin Aplikasi</title>
+  <meta name="description" content="Zuralogic: bangun aplikasi custom (AppSheet, Apps Script, Web App) dan website untuk bisnis, atau belajar membangunnya sendiri lewat channel YouTube. Your Scale-Up Partner." />
+  <meta name="theme-color" content="#F4F8FF" />
+  <link rel="canonical" href="https://zuralogic.com/" />
+
+  <!-- Open Graph (buat file /assets/og-image.png ukuran 1200x630) -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Zuralogic — Your Scale-Up Partner" />
+  <meta property="og:description" content="Aplikasi custom & web app untuk bisnis, plus kelas bikin aplikasi di YouTube." />
+  <meta property="og:url" content="https://zuralogic.com/" />
+  <meta property="og:image" content="https://zuralogic.com/assets/og-image.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='11' fill='%230A1931'/%3E%3Cpath d='M12 12h16l-12 16h12' fill='none' stroke='white' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    "name": "Zuralogic",
+    "url": "https://zuralogic.com/",
+    "slogan": "Your Scale-Up Partner",
+    "description": "Pembuatan aplikasi custom (AppSheet, Google Apps Script, Web App), website, dan edukasi membangun aplikasi.",
+    "knowsAbout": ["AppSheet", "Google Apps Script", "Web App", "Website", "Otomasi bisnis"]
+  }
+  </script>
+
   <script src="https://cdn.tailwindcss.com"></script>
-  
-  <!-- Google Fonts: Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  
-  <!-- Lucide Icons -->
-  <script src="https://unpkg.com/lucide@latest"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+  <!-- Versi dipatok supaya ikon brand (instagram, youtube, facebook) tetap tersedia -->
+  <script src="https://unpkg.com/lucide@0.462.0/dist/umd/lucide.min.js"></script>
 
   <script>
     tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: {
-            sans: ['Inter', 'sans-serif'],
-          },
-          colors: {
-            zura: {
-              navy: '#0A1931',
-              deep: '#152A4A',
-              blue: '#2563EB',
-              light: '#EFF6FF',
-              ice: '#DBEAFE'
-            }
-          }
-        }
-      }
+      theme: { extend: {
+        fontFamily: { sans: ['Inter', 'sans-serif'], display: ['Sora', 'Inter', 'sans-serif'] },
+        colors: { zura: { navy: '#0A1931', deep: '#152A4A', blue: '#2563EB', light: '#EFF6FF', ice: '#DBEAFE' } }
+      } }
     }
   </script>
 
   <style>
-    /* Custom Frosted Glass & Wave Styling */
-    .frosted-nav {
-      background: rgba(255, 255, 255, 0.86);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-    }
+    body { background: #F4F8FF; }
+    .font-display { font-family: 'Sora', 'Inter', sans-serif; }
 
-    /* Glassmorphism Navy-Blue-White Cards (3 Right Hero Buttons - Tanpa Pill Badge Kecil) */
-    .glass-action-card {
-      background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(239, 246, 255, 0.88) 55%, rgba(219, 234, 254, 0.82) 100%);
-      backdrop-filter: blur(24px);
-      -webkit-backdrop-filter: blur(24px);
-      border: 1px solid rgba(255, 255, 255, 0.92);
-      box-shadow: 0 16px 36px -8px rgba(10, 25, 49, 0.25), inset 0 1px 1px rgba(255, 255, 255, 0.95);
-      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    /* ---------- Background grid + blobs ---------- */
+    .bg-grid {
+      background-image: linear-gradient(rgba(37,99,235,.07) 1px, transparent 1px), linear-gradient(90deg, rgba(37,99,235,.07) 1px, transparent 1px);
+      background-size: 46px 46px;
+      -webkit-mask-image: radial-gradient(ellipse at 50% 15%, #000 25%, transparent 72%);
+      mask-image: radial-gradient(ellipse at 50% 15%, #000 25%, transparent 72%);
     }
+    @keyframes floaty { 0%,100% { transform: translateY(0) } 50% { transform: translateY(-22px) } }
+    .blob { animation: floaty 14s ease-in-out infinite; }
 
-    .glass-action-card:hover {
-      background: linear-gradient(135deg, rgba(10, 25, 49, 0.96) 0%, rgba(29, 78, 216, 0.92) 100%);
-      border-color: rgba(147, 197, 253, 0.65);
-      transform: translateY(-4px) scale(1.015);
-      box-shadow: 0 24px 48px -12px rgba(10, 25, 49, 0.5);
+    /* ---------- Glass ---------- */
+    .glass {
+      background: linear-gradient(135deg, rgba(255,255,255,.80), rgba(239,246,255,.55));
+      backdrop-filter: blur(18px) saturate(150%); -webkit-backdrop-filter: blur(18px) saturate(150%);
+      border: 1px solid rgba(255,255,255,.92);
+      box-shadow: 0 18px 40px -18px rgba(10,25,49,.28), inset 0 1px 0 rgba(255,255,255,.95);
     }
+    .glass-dark {
+      background: linear-gradient(135deg, rgba(10,25,49,.96), rgba(29,78,216,.90));
+      backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
+      border: 1px solid rgba(147,197,253,.35);
+      box-shadow: 0 30px 60px -24px rgba(10,25,49,.55);
+    }
+    .frosted-nav { background: rgba(255,255,255,.72); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); }
+    .text-grad { background: linear-gradient(90deg, #0A1931, #2563EB 60%, #38BDF8); -webkit-background-clip: text; background-clip: text; color: transparent; }
 
-    .glass-action-card:hover .card-title,
-    .glass-action-card:hover .card-desc,
-    .glass-action-card:hover .card-arrow {
-      color: #ffffff !important;
-    }
+    /* Spotlight yang mengikuti kursor */
+    .spot { position: relative; overflow: hidden; transition: transform .35s cubic-bezier(.16,1,.3,1), box-shadow .35s; }
+    .spot::before { content: ""; position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity .3s;
+      background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 50%), rgba(37,99,235,.16), transparent 45%); }
+    .spot:hover::before { opacity: 1; }
+    .lift:hover { transform: translateY(-5px); box-shadow: 0 28px 50px -20px rgba(10,25,49,.38); }
 
-    .glass-action-card:hover .card-icon-box {
-      background: rgba(255, 255, 255, 0.16);
-      color: #ffffff;
-      border-color: rgba(255, 255, 255, 0.35);
-    }
+    /* ---------- Reveal on scroll ---------- */
+    .reveal { opacity: 0; transform: translateY(26px); transition: opacity .8s ease, transform .8s cubic-bezier(.16,1,.3,1); transition-delay: var(--d, 0ms); }
+    .reveal.in { opacity: 1; transform: none; }
 
-    /* Multi-level Dropdown Hover */
-    .dropdown-menu {
-      opacity: 0;
-      visibility: hidden;
-      transform: translateY(10px);
-      transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
-    }
+    /* ---------- Animated chart parts ---------- */
+    .bar { height: var(--h); transform: scaleY(0); transform-origin: bottom; transition: transform .9s cubic-bezier(.2,.8,.2,1), filter .2s; transition-delay: calc(var(--i) * 70ms); }
+    .in .bar { transform: scaleY(1); }
+    .bar:hover { filter: brightness(1.18); }
+    .draw { stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 1.8s ease .3s; }
+    .in .draw { stroke-dashoffset: 0; }
+    @keyframes bob { 0%,100% { transform: translateY(0) } 50% { transform: translateY(-10px) } }
+    .bob { animation: bob 5s ease-in-out infinite; }
+    @keyframes scan { 0% { top: 6% } 50% { top: 86% } 100% { top: 6% } }
+    .scanline { position: absolute; left: 8%; right: 8%; height: 2px; border-radius: 2px; background: #38BDF8; box-shadow: 0 0 12px 2px rgba(56,189,248,.8); animation: scan 2.6s ease-in-out infinite; }
+    @keyframes dash { to { stroke-dashoffset: -24; } }
+    .flow { stroke-dasharray: 6 6; animation: dash 1.2s linear infinite; }
+    @keyframes shimmer { 0% { background-position: -200px 0 } 100% { background-position: 200px 0 } }
+    .skel { background: linear-gradient(90deg, #e2e8f0 25%, #f1f5f9 50%, #e2e8f0 75%); background-size: 400px 100%; animation: shimmer 1.8s linear infinite; }
+    @keyframes pagescroll { 0%, 8% { transform: translateY(0) } 50%, 58% { transform: translateY(-46%) } 100% { transform: translateY(0) } }
+    .pagescroll { animation: pagescroll 12s ease-in-out infinite; }
+    .pagescroll:hover, .browser:hover .pagescroll { animation-play-state: paused; }
+    @keyframes spin360 { to { transform: rotate(360deg) } }
+    .spin-slow { animation: spin360 5s linear infinite; }
+    @keyframes ping2 { 0% { transform: scale(.9); opacity: .7 } 100% { transform: scale(1.8); opacity: 0 } }
+    .ping2 { animation: ping2 2s ease-out infinite; }
 
-    .group:hover > .dropdown-menu,
-    .dropdown-group:hover > .dropdown-menu {
-      opacity: 1;
-      visibility: visible;
-      transform: translateY(0);
-    }
+    /* ---------- Marquee ---------- */
+    @keyframes marquee { to { transform: translateX(-50%); } }
+    .marquee-track { animation: marquee 32s linear infinite; width: max-content; }
+    .marquee:hover .marquee-track { animation-play-state: paused; }
 
-    .sub-dropdown-menu {
-      opacity: 0;
-      visibility: hidden;
-      transform: translateX(10px);
-      transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
-    }
+    /* ---------- Skill tabs ---------- */
+    .skill-panel { display: none; }
+    .skill-panel.active { display: grid; animation: fadeUp .5s ease both; }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(14px) } to { opacity: 1; transform: none } }
+    .ch-tab.active { background: #0A1931; color: #fff; border-color: #0A1931; box-shadow: 0 10px 24px -10px rgba(10,25,49,.6); }
+    .tab-btn.active { background: #0A1931; color: #fff; border-color: #0A1931; box-shadow: 0 10px 24px -10px rgba(10,25,49,.6); }
 
-    .sub-group:hover > .sub-dropdown-menu {
-      opacity: 1;
-      visibility: visible;
-      transform: translateX(0);
-    }
+    /* ---------- Path cards ---------- */
+    .path-card.active { border-color: #2563EB; box-shadow: 0 0 0 3px rgba(37,99,235,.18), 0 24px 48px -20px rgba(10,25,49,.4); }
+    .path-card.active .path-check { opacity: 1; transform: scale(1); }
+    .path-check { opacity: 0; transform: scale(.6); transition: all .3s; }
 
-    /* Hide scrollbar for category slider */
-    .no-scrollbar::-webkit-scrollbar {
-      display: none;
-    }
-    .no-scrollbar {
-      -ms-overflow-style: none;
-      scrollbar-width: none;
+    /* ---------- Wizard ---------- */
+    .opt { transition: all .2s; }
+    .opt.sel { border-color: #2563EB; background: #EFF6FF; box-shadow: 0 0 0 2px rgba(37,99,235,.2); }
+
+    /* ---------- Process ---------- */
+    .proc-step .dot { transition: all .5s; background: #fff; color: #64748b; border-color: #cbd5e1; }
+    .proc-step.on .dot { background: #0A1931; color: #fff; border-color: #2563EB; box-shadow: 0 0 0 6px rgba(37,99,235,.15); }
+    .proc-step .body { opacity: .45; transition: opacity .5s; }
+    .proc-step.on .body { opacity: 1; }
+
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+      .reveal { opacity: 1; transform: none; }
+      .bar { transform: none; } .draw { stroke-dashoffset: 0; }
     }
   </style>
 </head>
 
-<body class="bg-slate-50 text-slate-900 font-sans antialiased selection:bg-blue-600 selection:text-white flex flex-col min-h-screen">
+<body class="text-slate-900 font-sans antialiased selection:bg-blue-600 selection:text-white overflow-x-hidden">
 
-  <!-- =====================================================================
-       SIMULATOR BAR (Untuk ngetes fitur Creator Hub saat Login/Guest)
-       ===================================================================== -->
-  <div class="hidden bg-zura-navy text-blue-100 text-xs py-2 px-4 border-b border-blue-900/80">
-    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
-      <div class="flex items-center gap-2">
-        <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-        <span><strong>Enterprise Simulator:</strong> Test the <strong>"Creator Hub"</strong> member gate (Dashboard, Portfolio & Profile).</span>
-      </div>
-      <div class="flex items-center gap-3">
-        <div class="flex items-center gap-2">
-          <!-- Dummy Creator Avatar in Top Bar -->
-          <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=80&q=80" alt="User Avatar" class="w-5 h-5 rounded-full object-cover border border-blue-400" />
-          <span id="roleStatusLabel" class="text-blue-200 font-medium">Status: Public Guest</span>
-        </div>
-        <button onclick="toggleCreatorMode()" id="toggleCreatorBtn" class="px-3 py-1 rounded-md bg-blue-600 hover:bg-blue-500 text-white font-semibold transition flex items-center gap-1.5 shadow-sm">
-          <i data-lucide="user-check" class="w-3.5 h-3.5"></i>
-          <span id="toggleCreatorBtnText">Simulate Creator Login</span>
-        </button>
-      </div>
-    </div>
+  <!-- Scroll progress -->
+  <div class="fixed top-0 left-0 right-0 h-[3px] z-[70] pointer-events-none">
+    <div id="progress" class="h-full w-0 bg-gradient-to-r from-blue-600 via-sky-400 to-zura-navy"></div>
+  </div>
+
+  <!-- Dev notice (hanya muncul dengan ?dev=1) -->
+  <div id="devNotice" style="display:none" class="fixed bottom-24 left-4 z-[80] max-w-xs rounded-xl bg-rose-600 text-white text-xs p-3 shadow-xl"></div>
+
+  <!-- Background layers -->
+  <div class="absolute inset-x-0 top-0 h-[980px] bg-grid pointer-events-none -z-10"></div>
+  <div class="absolute inset-x-0 top-0 h-[1200px] overflow-hidden pointer-events-none -z-10">
+    <div data-speed="-0.06" class="absolute -right-24 -top-10 w-[520px] h-[520px] rounded-full bg-blue-400/25 blur-3xl blob"></div>
+    <div data-speed="-0.12" class="absolute -left-32 top-64 w-[420px] h-[420px] rounded-full bg-sky-300/30 blur-3xl blob" style="animation-delay:-5s"></div>
+    <div data-speed="-0.04" class="absolute right-1/4 top-[640px] w-[380px] h-[380px] rounded-full bg-zura-navy/15 blur-3xl blob" style="animation-delay:-9s"></div>
   </div>
 
   <!-- =====================================================================
-       HEADER / NAVBAR (Frosted Glass Sticky + Clean Vector Mega Menu)
+       NAVBAR
        ===================================================================== -->
-  <header class="sticky top-0 z-50 frosted-nav border-b border-blue-100/80 shadow-sm">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-3">
-      
-      <!-- 1. LOGO ZURALOGIC.COM & TAGLINE (Dengan Gambar Dummy) -->
-      <a href="https://zuralogic.com" class="flex items-center gap-3 group shrink-0">
-        <!-- GANTI URL LOGO DI SINI -->
-        <div class="relative w-11 h-11 rounded-xl overflow-hidden shadow-md border border-blue-200 group-hover:scale-105 transition bg-zura-navy flex items-center justify-center">
-          <img 
-            src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=160&q=80" 
-            onerror="this.src='https://placehold.co/96x96/0A1931/FFFFFF?text=ZL'"
-            alt="Zuralogic Logo" 
-            class="w-full h-full object-cover opacity-90"
-          />
-          <span class="absolute inset-0 flex items-center justify-center font-black text-white text-base tracking-tighter bg-zura-navy/50 backdrop-blur-[1px]">ZL</span>
-        </div>
-        <div class="flex flex-col">
-          <span class="text-xl font-black tracking-tight text-zura-navy group-hover:text-blue-600 transition leading-none">
-            Zuralogic<span class="text-blue-600">.com</span>
-          </span>
-          <span class="text-[11px] font-semibold text-slate-500 tracking-wide mt-1">
-            Your Scale-Up Partner
-          </span>
-        </div>
+  <header id="nav" class="sticky top-0 z-50 frosted-nav border-b border-blue-100/70 transition-shadow">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-[68px] flex items-center justify-between gap-4">
+      <a href="/" class="flex items-center gap-3 shrink-0" aria-label="Zuralogic">
+        <svg viewBox="0 0 40 40" class="w-10 h-10 drop-shadow" aria-hidden="true">
+          <defs><linearGradient id="lgA" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2563EB"/><stop offset="1" stop-color="#0A1931"/></linearGradient></defs>
+          <rect width="40" height="40" rx="11" fill="url(#lgA)"/>
+          <path d="M12 12h16l-12 16h12" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span class="flex flex-col leading-none">
+          <span class="font-display text-lg font-extrabold text-zura-navy tracking-tight">Zuralogic<span class="text-blue-600">.com</span></span>
+          <span class="text-[11px] font-semibold text-slate-500 mt-1">Your Scale-Up Partner</span>
+        </span>
       </a>
 
-      <!-- CENTER NAVIGATION MENUS (Clean Typography & Vector Icons — Tanpa Gambar) -->
-      <nav class="hidden xl:flex items-center gap-1.5">
-        
-        <!-- 2. MENU PRODUCT (Sub-menu & Sub-sub menu dengan Vector Icons) -->
-        <div class="relative group px-3 py-2">
-          <button class="flex items-center gap-1.5 text-sm font-semibold text-slate-700 hover:text-blue-600 transition">
-            <span>Product</span>
-            <i data-lucide="chevron-down" class="w-4 h-4 text-slate-400 group-hover:rotate-180 transition-transform"></i>
-          </button>
-
-          <!-- Level 1 Mega Dropdown -->
-          <div class="dropdown-menu absolute left-0 top-full pt-2 w-80 z-50">
-            <div class="bg-white/95 backdrop-blur-xl rounded-2xl shadow-2xl border border-blue-100 p-2.5 space-y-1">
-              
-              <!-- Sub-menu 1: Ready to Go Business Apps -->
-              <div class="relative sub-group">
-                <a href="#marketplace-section" class="flex items-center justify-between p-2.5 rounded-xl hover:bg-blue-50/90 transition group/sub">
-                  <div class="flex items-center gap-3">
-                    <div class="w-9 h-9 rounded-lg bg-blue-50 border border-blue-100 text-blue-600 flex items-center justify-center shrink-0 group-hover/sub:bg-blue-600 group-hover/sub:text-white transition">
-                      <i data-lucide="layout-grid" class="w-4 h-4"></i>
-                    </div>
-                    <div>
-                      <div class="text-sm font-bold text-slate-800 group-hover/sub:text-blue-600">Ready to Go Business Apps</div>
-                      <div class="text-[11px] text-slate-500">Instant deployment for operations</div>
-                    </div>
-                  </div>
-                  <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
-                </a>
-                <!-- Sub-sub Menu -->
-                <div class="sub-dropdown-menu absolute left-full top-0 pl-2 w-72 z-50">
-                  <div class="bg-white/95 backdrop-blur-xl rounded-2xl shadow-2xl border border-blue-100 p-2.5 space-y-1">
-                    <div class="px-3 py-1 text-[10px] font-extrabold uppercase tracking-wider text-blue-600">Select Business Line</div>
-                    <a href="#marketplace-section" onclick="filterApps('warehouse')" class="flex items-center gap-2.5 px-3 py-2 rounded-lg hover:bg-blue-50 text-xs font-semibold text-slate-700 hover:text-blue-600 transition">
-                      <i data-lucide="package-check" class="w-4 h-4 text-blue-600 shrink-0"></i>
-                      <span>Warehouse & Logistics ERP</span>
-                    </a>
-                    <a href="#marketplace-section" onclick="filterApps('hse')" class="flex items-center gap-2.5 px-3 py-2 rounded-lg hover:bg-blue-50 text-xs font-semibold text-slate-700 hover:text-blue-600 transition">
-                      <i data-lucide="shield-check" class="w-4 h-4 text-blue-600 shrink-0"></i>
-                      <span>SIM-APAR & HSE Inspection</span>
-                    </a>
-                    <a href="#marketplace-section" onclick="filterApps('retail')" class="flex items-center gap-2.5 px-3 py-2 rounded-lg hover:bg-blue-50 text-xs font-semibold text-slate-700 hover:text-blue-600 transition">
-                      <i data-lucide="shopping-bag" class="w-4 h-4 text-blue-600 shrink-0"></i>
-                      <span>Omnichannel POS & Retail</span>
-                    </a>
-                    <a href="#marketplace-section" onclick="filterApps('hr')" class="flex items-center gap-2.5 px-3 py-2 rounded-lg hover:bg-blue-50 text-xs font-semibold text-slate-700 hover:text-blue-600 transition">
-                      <i data-lucide="users" class="w-4 h-4 text-blue-600 shrink-0"></i>
-                      <span>HRIS & Field Attendance</span>
-                    </a>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Sub-menu 2: Courses -->
-              <div class="relative sub-group">
-                <a href="#marketplace-section" class="flex items-center justify-between p-2.5 rounded-xl hover:bg-blue-50/90 transition group/sub">
-                  <div class="flex items-center gap-3">
-                    <div class="w-9 h-9 rounded-lg bg-blue-50 border border-blue-100 text-blue-600 flex items-center justify-center shrink-0 group-hover/sub:bg-blue-600 group-hover/sub:text-white transition">
-                      <i data-lucide="graduation-cap" class="w-4 h-4"></i>
-                    </div>
-                    <div>
-                      <div class="text-sm font-bold text-slate-800 group-hover/sub:text-blue-600">Courses (ZuraClass)</div>
-                      <div class="text-[11px] text-slate-500">Global no-code academy</div>
-                    </div>
-                  </div>
-                  <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
-                </a>
-                <!-- Sub-sub Menu -->
-                <div class="sub-dropdown-menu absolute left-full top-0 pl-2 w-72 z-50">
-                  <div class="bg-white/95 backdrop-blur-xl rounded-2xl shadow-2xl border border-blue-100 p-2.5 space-y-1">
-                    <div class="px-3 py-1 text-[10px] font-extrabold uppercase tracking-wider text-blue-600">ZuraClass Tracks</div>
-                    <a href="#learn" onclick="showToast('AppSheet Zero to Hero Track')" class="flex items-center gap-2.5 px-3 py-2 rounded-lg hover:bg-blue-50 text-xs font-semibold text-slate-700 hover:text-blue-600 transition">
-                      <i data-lucide="Smartphone" class="w-4 h-4 text-blue-600 shrink-0"></i>
-                      <span>AppSheet Zero to Hero</span>
-                    </a>
-                    <a href="#learn" onclick="showToast('Google Apps Script Mastery')" class="flex items-center gap-2.5 px-3 py-2 rounded-lg hover:bg-blue-50 text-xs font-semibold text-slate-700 hover:text-blue-600 transition">
-                      <i data-lucide="code-2" class="w-4 h-4 text-blue-600 shrink-0"></i>
-                      <span>Google Apps Script Mastery</span>
-                    </a>
-                    <a href="#learn" onclick="showToast('Workspace Automation Bootcamp')" class="flex items-center gap-2.5 px-3 py-2 rounded-lg hover:bg-blue-50 text-xs font-semibold text-slate-700 hover:text-blue-600 transition">
-                      <i data-lucide="workflow" class="w-4 h-4 text-blue-600 shrink-0"></i>
-                      <span>Workspace Automation Bootcamp</span>
-                    </a>
-                    <a href="#learn" onclick="showToast('UI/UX Design for No-Code')" class="flex items-center gap-2.5 px-3 py-2 rounded-lg hover:bg-blue-50 text-xs font-semibold text-slate-700 hover:text-blue-600 transition">
-                      <i data-lucide="palette" class="w-4 h-4 text-blue-600 shrink-0"></i>
-                      <span>UI/UX Design for No-Code</span>
-                    </a>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Sub-menu 3: Enterprise Scale-Up Suite (Bisa diedit/dihapus) -->
-              <div class="relative sub-group">
-                <a href="#enterprise" class="flex items-center justify-between p-2.5 rounded-xl hover:bg-blue-50/90 transition group/sub">
-                  <div class="flex items-center gap-3">
-                    <div class="w-9 h-9 rounded-lg bg-blue-50 border border-blue-100 text-blue-600 flex items-center justify-center shrink-0 group-hover/sub:bg-blue-600 group-hover/sub:text-white transition">
-                      <i data-lucide="building-2" class="w-4 h-4"></i>
-                    </div>
-                    <div>
-                      <div class="text-sm font-bold text-slate-800 group-hover/sub:text-blue-600">Enterprise Scale-Up Suite</div>
-                      <div class="text-[11px] text-slate-500">Custom ERP & cloud architecture</div>
-                    </div>
-                  </div>
-                  <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
-                </a>
-                <!-- Sub-sub Menu -->
-                <div class="sub-dropdown-menu absolute left-full top-0 pl-2 w-64 z-50">
-                  <div class="bg-white/95 backdrop-blur-xl rounded-2xl shadow-2xl border border-blue-100 p-2.5 space-y-1">
-                    <div class="px-3 py-1 text-[10px] font-extrabold uppercase tracking-wider text-blue-600">Enterprise Solutions</div>
-                    <a href="#enterprise" onclick="openContactModal()" class="flex items-center gap-2.5 px-3 py-2 rounded-lg hover:bg-blue-50 text-xs font-semibold text-slate-700 hover:text-blue-600 transition">
-                      <i data-lucide="server" class="w-4 h-4 text-blue-600 shrink-0"></i>
-                      <span>Custom ERP Integration</span>
-                    </a>
-                    <a href="#enterprise" onclick="openContactModal()" class="flex items-center gap-2.5 px-3 py-2 rounded-lg hover:bg-blue-50 text-xs font-semibold text-slate-700 hover:text-blue-600 transition">
-                      <i data-lucide="database" class="w-4 h-4 text-blue-600 shrink-0"></i>
-                      <span>Dedicated Cloud Database</span>
-                    </a>
-                    <a href="#enterprise" onclick="openContactModal()" class="flex items-center gap-2.5 px-3 py-2 rounded-lg hover:bg-blue-50 text-xs font-semibold text-slate-700 hover:text-blue-600 transition">
-                      <i data-lucide="award" class="w-4 h-4 text-blue-600 shrink-0"></i>
-                      <span>White-Label App Solutions</span>
-                    </a>
-                  </div>
-                </div>
-              </div>
-
-            </div>
-          </div>
-        </div>
-
-        <!-- 3. MENU RESOURCES (Terhubung ke 3 Repo GitHub Pages — Tanpa Gambar di Menu) -->
-        <div class="relative group px-3 py-2">
-          <button class="flex items-center gap-1.5 text-sm font-semibold text-slate-700 hover:text-blue-600 transition">
-            <span>Resources</span>
-            <i data-lucide="chevron-down" class="w-4 h-4 text-slate-400 group-hover:rotate-180 transition-transform"></i>
-          </button>
-          <div class="dropdown-menu absolute left-0 top-full pt-2 w-80 z-50">
-            <div class="bg-white/95 backdrop-blur-xl rounded-2xl shadow-2xl border border-blue-100 p-2.5 space-y-1">
-              <!-- Templates -> /resource-vault-free/ -->
-              <a href="/resource-vault-free/" class="flex items-center gap-3 p-2.5 rounded-xl hover:bg-blue-50/90 transition group/item">
-                <div class="w-9 h-9 rounded-lg bg-blue-50 border border-blue-100 text-blue-600 flex items-center justify-center shrink-0 group-hover/item:bg-blue-600 group-hover/item:text-white transition">
-                  <i data-lucide="folder-kanban" class="w-4 h-4"></i>
-                </div>
-                <div>
-                  <div class="text-sm font-bold text-slate-800 group-hover/item:text-blue-600">Templates</div>
-                  <div class="text-xs text-slate-500">Free Resource Vault for Automation</div>
-                </div>
-              </a>
-              <!-- Formulas -> /zuraclass-formula-library/ -->
-              <a href="/resources/formula-library/" class="flex items-center gap-3 p-2.5 rounded-xl hover:bg-blue-50/90 transition group/item">
-                <div class="w-9 h-9 rounded-lg bg-blue-50 border border-blue-100 text-blue-600 flex items-center justify-center shrink-0 group-hover/item:bg-blue-600 group-hover/item:text-white transition">
-                  <i data-lucide="function-square" class="w-4 h-4"></i>
-                </div>
-                <div>
-                  <div class="text-sm font-bold text-slate-800 group-hover/item:text-blue-600">Formulas</div>
-                  <div class="text-xs text-slate-500">100+ AppSheet & Sheet Formulas</div>
-                </div>
-              </a>
-              <!-- Icon Packs -> /svg-library-lite/ -->
-              <a href="/resources/svg-iconpack-free/" class="flex items-center gap-3 p-2.5 rounded-xl hover:bg-blue-50/90 transition group/item">
-                <div class="w-9 h-9 rounded-lg bg-blue-50 border border-blue-100 text-blue-600 flex items-center justify-center shrink-0 group-hover/item:bg-blue-600 group-hover/item:text-white transition">
-                  <i data-lucide="shapes" class="w-4 h-4"></i>
-                </div>
-                <div>
-                  <div class="text-sm font-bold text-slate-800 group-hover/item:text-blue-600">Icon Packs</div>
-                  <div class="text-xs text-slate-500">Free SVG UI Icon Library Lite</div>
-                </div>
-              </a>
-            </div>
-          </div>
-        </div>
-
-        <!-- 4. MENU COMMUNITY -->
-        <div class="relative group px-3 py-2">
-          <button class="flex items-center gap-1.5 text-sm font-semibold text-slate-700 hover:text-blue-600 transition">
-            <span>Community</span>
-            <i data-lucide="chevron-down" class="w-4 h-4 text-slate-400 group-hover:rotate-180 transition-transform"></i>
-          </button>
-          <div class="dropdown-menu absolute left-0 top-full pt-2 w-72 z-50">
-            <div class="bg-white/95 backdrop-blur-xl rounded-2xl shadow-2xl border border-blue-100 p-2.5">
-              <a href="https://discord.gg/QBjWZEdY2" onclick="showToast('Opening ZuraClass Global Community Forum')" class="flex items-center gap-3 p-2.5 rounded-xl hover:bg-blue-50/90 transition group/item">
-                <div class="w-9 h-9 rounded-lg bg-blue-50 border border-blue-100 text-blue-600 flex items-center justify-center shrink-0 group-hover/item:bg-blue-600 group-hover/item:text-white transition">
-                  <i data-lucide="messages-square" class="w-4 h-4"></i>
-                </div>
-                <div>
-                  <div class="text-sm font-bold text-slate-800 group-hover/item:text-blue-600">ZuraClass Community</div>
-                  <div class="text-xs text-slate-500">Global builders & local chapters</div>
-                </div>
-              </a>
-            </div>
-          </div>
-        </div>
-
-        <!-- 5. MENU CREATOR HUB (Sub-menu: Dashboard, Portfolio, Profile) -->
-        <div class="relative group px-3 py-2">
-          <button onclick="handleCreatorHubClick()" class="flex items-center gap-1.5 text-sm font-semibold text-slate-700 hover:text-blue-600 transition">
-            <i id="creatorLockIcon" data-lucide="lock" class="w-3.5 h-3.5 text-amber-500"></i>
-            <span>Creator Hub</span>
-            <i data-lucide="chevron-down" class="w-4 h-4 text-slate-400 group-hover:rotate-180 transition-transform"></i>
-          </button>
-          <div class="dropdown-menu absolute left-0 top-full pt-2 w-72 z-50">
-            <div class="bg-white/95 backdrop-blur-xl rounded-2xl shadow-2xl border border-blue-100 p-2.5">
-              
-              <!-- State Belum Login Creator -->
-              <div id="creatorLockedBanner" class="p-3 mb-2 rounded-xl bg-amber-50/90 border border-amber-200/80 text-xs text-amber-900">
-                <div class="font-bold flex items-center gap-1.5 mb-1">
-                  <i data-lucide="shield-alert" class="w-4 h-4 text-amber-600"></i>
-                  <span>Creator Member Only</span>
-                </div>
-                <p id="creatorLockedDesc" class="text-amber-700 leading-relaxed mb-2">Sign in as a ZuraClass Creator to access your Dashboard, Portfolio, and Profile.</p>
-                <button onclick="window.location.href='/auth/?mode=register&role=creator'" class="w-full py-1.5 rounded-lg bg-zura-navy text-white font-semibold hover:bg-blue-700 transition">
-                  Unlock Creator Hub
-                </button>
-              </div>
-
-              <!-- Sub-menu Creator Hub: Dashboard, Portfolio, Profile (Tanpa Gambar) -->
-              <div id="creatorMenuLinks" class="space-y-1 opacity-50 pointer-events-none transition">
-                <a href="#dashboard" onclick="showToast('Opening Creator Hub: Dashboard')" class="flex items-center justify-between p-2.5 rounded-xl hover:bg-blue-50/90 transition group/c">
-                  <div class="flex items-center gap-3">
-                    <div class="w-8 h-8 rounded-lg bg-blue-50 border border-blue-100 text-blue-600 flex items-center justify-center group-hover/c:bg-blue-600 group-hover/c:text-white transition">
-                      <i data-lucide="bar-chart-3" class="w-4 h-4"></i>
-                    </div>
-                    <div>
-                      <div class="text-sm font-bold text-slate-800 group-hover/c:text-blue-600">Dashboard</div>
-                      <div class="text-[11px] text-slate-500">Revenue & analytics</div>
-                    </div>
-                  </div>
-                  <span class="text-[11px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-md">$2.4k</span>
-                </a>
-                <a href="#portfolio" onclick="showToast('Opening Creator Hub: Portfolio')" class="flex items-center justify-between p-2.5 rounded-xl hover:bg-blue-50/90 transition group/c">
-                  <div class="flex items-center gap-3">
-                    <div class="w-8 h-8 rounded-lg bg-blue-50 border border-blue-100 text-blue-600 flex items-center justify-center group-hover/c:bg-blue-600 group-hover/c:text-white transition">
-                      <i data-lucide="briefcase" class="w-4 h-4"></i>
-                    </div>
-                    <div>
-                      <div class="text-sm font-bold text-slate-800 group-hover/c:text-blue-600">Portfolio</div>
-                      <div class="text-[11px] text-slate-500">Manage built apps & assets</div>
-                    </div>
-                  </div>
-                  <span class="text-[11px] font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded-md">16 Live</span>
-                </a>
-                <a href="#profile" onclick="showToast('Opening Creator Hub: Profile')" class="flex items-center justify-between p-2.5 rounded-xl hover:bg-blue-50/90 transition group/c">
-                  <div class="flex items-center gap-3">
-                    <div class="w-8 h-8 rounded-lg bg-blue-50 border border-blue-100 text-blue-600 flex items-center justify-center group-hover/c:bg-blue-600 group-hover/c:text-white transition">
-                      <i data-lucide="user-Check" class="w-4 h-4"></i>
-                    </div>
-                    <div>
-                      <div class="text-sm font-bold text-slate-800 group-hover/c:text-blue-600">Profile</div>
-                      <div class="text-[11px] text-slate-500">Bio, payouts & badge</div>
-                    </div>
-                  </div>
-                  <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
-                </a>
-              </div>
-
-            </div>
-          </div>
-        </div>
-
-        <!-- 6. GET HELP (Dengan Ikon AI) -->
-        <button onclick="openAiHelpModal()" class="px-3 py-2 rounded-xl text-sm font-semibold text-slate-700 hover:text-blue-600 hover:bg-blue-50/80 transition flex items-center gap-1.5 group">
-          <span class="relative flex items-center justify-center w-6 h-6 rounded-lg bg-gradient-to-tr from-zura-navy via-blue-700 to-blue-500 text-white shadow-sm group-hover:scale-110 transition">
-            <i data-lucide="bot" class="w-3.5 h-3.5"></i>
-          </span>
-          <span>Get Help</span>
-          <span class="text-[10px] font-black uppercase tracking-wider text-blue-600">AI</span>
-        </button>
-
+      <nav class="hidden lg:flex items-center gap-1 text-sm font-semibold text-slate-700">
+        <a href="#start" class="px-3 py-2 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition"><span data-en="Start here">Mulai di sini</span></a>
+        <a href="#showcase" class="px-3 py-2 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition"><span data-en="Skills">Keahlian</span></a>
+        <a href="#solutions" class="px-3 py-2 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition"><span data-en="Solutions">Solusi</span></a>
+        <a href="#process" class="px-3 py-2 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition"><span data-en="Process">Proses</span></a>
+        <a href="#youtube" class="px-3 py-2 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition"><span data-en="Learn">Belajar</span></a>
       </nav>
 
-      <!-- RIGHT UTILITY BAR: Contact Us & Log in (Clean English Only) -->
-      <div class="hidden lg:flex items-center gap-3 shrink-0">
-        
-        <!-- 7. CONTACT US -->
-        <button onclick="openContactModal()" class="px-3.5 py-2 text-sm font-semibold text-slate-700 hover:text-blue-600 transition">
-          Contact Us
+      <div class="flex items-center gap-2">
+        <button id="langBtn" class="px-3 py-2 rounded-xl border border-slate-200 bg-white/80 text-xs font-extrabold text-slate-700 hover:border-blue-400 transition flex items-center gap-1.5" aria-label="Ganti bahasa / Switch language">
+          <i data-lucide="languages" class="w-4 h-4 text-blue-600"></i><span id="langLabel">ID</span>
         </button>
-
-        <!-- 8. USER IDENTITY BADGE (Muncul setelah Login: "Nama - [Creator/Explorer]") -->
-        <div id="headerUserBadge" class="hidden items-center gap-2.5 pl-2 pr-3.5 py-1.5 rounded-full bg-blue-50/90 border border-blue-200/90 text-xs font-bold text-zura-navy shadow-sm">
-          <span class="w-6 h-6 rounded-full bg-zura-navy text-white flex items-center justify-center text-[11px] font-black shrink-0" id="headerUserInitial">U</span>
-          <span id="headerUserLabel" class="tracking-tight">User - [Explorer]</span>
-        </div>
-
-        <!-- 9. LOGIN / LOGOUT BUTTON -->
-        <button onclick="handleHeaderAuthAction()" id="headerLoginBtn" class="px-5 py-2.5 rounded-full bg-zura-navy hover:bg-blue-700 text-white text-sm font-bold shadow-md hover:shadow-lg transition flex items-center gap-2">
-          <i id="headerLoginIcon" data-lucide="log-in" class="w-4 h-4"></i>
-          <span id="headerLoginText">Log in</span>
-        </button>
-
+        <a data-wa data-track="nav_cta" class="hidden sm:inline-flex px-5 py-2.5 rounded-full bg-zura-navy hover:bg-blue-700 text-white text-sm font-bold shadow-md transition items-center gap-2">
+          <i data-lucide="message-circle" class="w-4 h-4"></i><span data-en="Free consultation">Konsultasi Gratis</span>
+        </a>
+        <button id="menuBtn" class="lg:hidden p-2.5 rounded-xl border border-slate-200 bg-white/80 text-slate-700" aria-label="Menu"><i data-lucide="menu" class="w-5 h-5"></i></button>
       </div>
-
-      <!-- Mobile Menu Button -->
-      <div class="flex xl:hidden items-center gap-2">
-        <button onclick="toggleMobileMenu()" class="p-2.5 rounded-xl border border-slate-200 text-slate-700 hover:bg-blue-50">
-          <i data-lucide="menu" class="w-6 h-6"></i>
-        </button>
-      </div>
-
     </div>
 
-    <!-- Mobile Navigation Drawer -->
-    <div id="mobileMenu" class="hidden xl:hidden bg-white/95 backdrop-blur-xl border-b border-blue-100 px-6 py-5 space-y-4">
-      <div class="grid grid-cols-1 gap-2 text-sm font-semibold text-slate-800">
-        <a href="#marketplace-section" class="py-2 border-b border-slate-100 flex justify-between items-center"><span>Product</span><i data-lucide="chevron-right" class="w-4 h-4"></i></a>
-        <a href="/resource-vault-free/" class="py-2 border-b border-slate-100 flex justify-between items-center"><span>Templates</span><i data-lucide="external-link" class="w-4 h-4"></i></a>
-        <a href="/zuraclass-formula-library/" class="py-2 border-b border-slate-100 flex justify-between items-center"><span>Formulas</span><i data-lucide="external-link" class="w-4 h-4"></i></a>
-        <a href="/svg-library-lite/" class="py-2 border-b border-slate-100 flex justify-between items-center"><span>Icon Packs</span><i data-lucide="external-link" class="w-4 h-4"></i></a>
-        <a href="#community-section" class="py-2 border-b border-slate-100">ZuraClass Community</a>
-        <div class="py-2 border-b border-slate-100 space-y-1.5">
-          <div class="flex items-center justify-between text-blue-600">
-            <span>Creator Hub</span>
-            <i data-lucide="sparkles" class="w-4 h-4"></i>
-          </div>
-          <div class="pl-3 flex gap-4 text-xs text-slate-600 font-medium">
-            <a href="#dashboard" onclick="showToast('Opening Creator Dashboard')">Dashboard</a>
-            <a href="#portfolio" onclick="showToast('Opening Creator Portfolio')">Portfolio</a>
-            <a href="#profile" onclick="showToast('Opening Creator Profile')">Profile</a>
-          </div>
-        </div>
-        <button onclick="openAiHelpModal()" class="py-2 border-b border-slate-100 text-left flex items-center gap-2">
-          <i data-lucide="bot" class="w-4 h-4 text-blue-600"></i>
-          <span>Get Help (AI)</span>
-        </button>
-      </div>
-      <!-- Mobile User Badge -->
-      <div id="mobileUserBadge" class="hidden items-center justify-between px-3.5 py-2.5 rounded-xl bg-blue-50 border border-blue-200 text-xs font-bold text-zura-navy">
-        <span id="mobileUserLabel">User - [Explorer]</span>
-        <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
-      </div>
-      <div class="flex items-center gap-3 pt-2">
-        <button onclick="openContactModal()" class="w-1/2 py-2.5 rounded-xl border border-slate-300 text-sm font-bold text-slate-700">Contact Us</button>
-        <button onclick="handleHeaderAuthAction()" id="mobileAuthBtn" class="w-1/2 py-2.5 rounded-xl bg-zura-navy text-white text-sm font-bold">Log in</button>
+    <div id="mobileMenu" style="display:none" class="lg:hidden border-t border-blue-100 bg-white/95 backdrop-blur-xl px-5 py-4">
+      <div class="grid gap-1 text-sm font-semibold text-slate-800">
+        <a href="#start" class="m-link py-2.5 border-b border-slate-100"><span data-en="Start here">Mulai di sini</span></a>
+        <a href="#showcase" class="m-link py-2.5 border-b border-slate-100"><span data-en="Skills">Keahlian</span></a>
+        <a href="#solutions" class="m-link py-2.5 border-b border-slate-100"><span data-en="Solutions">Solusi</span></a>
+        <a href="#process" class="m-link py-2.5 border-b border-slate-100"><span data-en="Process">Proses</span></a>
+        <a href="#youtube" class="m-link py-2.5 border-b border-slate-100"><span data-en="Learn">Belajar</span></a>
+        <a data-wa class="m-link mt-3 py-3 rounded-xl bg-zura-navy text-white text-center font-bold"><span data-en="Free consultation">Konsultasi Gratis</span></a>
       </div>
     </div>
   </header>
 
-
+  <main>
   <!-- =====================================================================
-       HERO SECTION (Bubble.io Marketplace Layout + Wave-Shaped Frosted Glass
-       + 3 Clean Glassmorphism Action Cards TANPA Gambar & TANPA Pill Badge)
+       HERO
        ===================================================================== -->
-  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-8 w-full">
-    <div class="relative rounded-[32px] overflow-hidden border border-blue-200/90 shadow-2xl bg-gradient-to-br from-white via-[#F4F8FF] to-[#E5F0FF]">
-      
-      <!-- DECORATIVE WAVE-SHAPED LIGHT BLUE TO NAVY GRADIENT FROSTED-GLASS (Kanan) -->
-      <div class="absolute inset-0 pointer-events-none overflow-hidden">
-        <!-- Ambient Enterprise Glow -->
-        <div class="absolute -right-16 -top-20 w-[560px] h-[560px] rounded-full bg-blue-400/25 blur-3xl"></div>
-        <div class="absolute right-12 -bottom-24 w-[480px] h-[480px] rounded-full bg-zura-navy/35 blur-3xl"></div>
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 sm:pt-14 lg:pt-16 pb-10">
+    <div class="grid lg:grid-cols-12 gap-10 lg:gap-6 items-center">
 
-        <!-- Wave-Shaped Multi-Layered SVG (Light Blue to Deep Navy Gradient) -->
-        <svg class="hidden lg:block absolute right-0 top-0 h-full w-[65%] object-cover opacity-95" viewBox="0 0 800 620" fill="none" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <linearGradient id="zuraWaveGradMain" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stop-color="#93C5FD" stop-opacity="0.60" />
-              <stop offset="45%" stop-color="#2563EB" stop-opacity="0.82" />
-              <stop offset="100%" stop-color="#0A1931" stop-opacity="0.96" />
-            </linearGradient>
-            <linearGradient id="zuraWaveGradSoft" x1="10%" y1="0%" x2="100%" y2="90%">
-              <stop offset="0%" stop-color="#DBEAFE" stop-opacity="0.55" />
-              <stop offset="50%" stop-color="#1D4ED8" stop-opacity="0.68" />
-              <stop offset="100%" stop-color="#0A1931" stop-opacity="0.92" />
-            </linearGradient>
-          </defs>
-          <!-- First Wave Curve -->
-          <path d="M165 0 C 45 155, 295 315, 115 475 C 35 545, 95 595, 145 620 L 800 620 L 800 0 Z" fill="url(#zuraWaveGradSoft)" />
-          <!-- Second Deep Wave Curve -->
-          <path d="M255 0 C 130 165, 365 305, 195 480 C 120 555, 180 600, 225 620 L 800 620 L 800 0 Z" fill="url(#zuraWaveGradMain)" />
-        </svg>
+      <div class="lg:col-span-6 relative z-10">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full glass text-[11px] sm:text-xs font-extrabold tracking-[.16em] uppercase text-blue-700 reveal">
+          <span class="relative flex w-2 h-2"><span class="absolute inset-0 rounded-full bg-blue-500 ping2"></span><span class="relative w-2 h-2 rounded-full bg-blue-600"></span></span>
+          <span data-en="Apps · Automation · Education">Aplikasi · Otomasi · Edukasi</span>
+        </div>
 
-        <!-- Frosted Glass Overlay Layer -->
-        <div class="hidden lg:block absolute right-0 top-0 h-full w-[48%] backdrop-blur-[6px] bg-gradient-to-l from-zura-navy/30 via-blue-600/10 to-transparent"></div>
+        <h1 class="font-display mt-5 text-[34px] sm:text-5xl lg:text-[54px] font-extrabold text-zura-navy leading-[1.1] tracking-tight reveal" style="--d:80ms">
+          <span data-en="From messy processes to ">Dari proses yang ribet jadi </span><span id="rotWord" class="text-grad inline-block transition-all duration-300">aplikasi</span><br class="hidden sm:block" />
+          <span data-en=" that work for you."> yang bekerja untukmu.</span>
+        </h1>
+
+        <p class="mt-5 text-base sm:text-lg text-slate-600 leading-relaxed max-w-xl reveal" style="--d:160ms" data-en="I build custom apps, web apps and websites for your business — and teach you how to build them yourself on YouTube.">
+          Saya membangun aplikasi custom, web app, dan website untuk bisnis — dan mengajarkan caranya lewat YouTube supaya kamu bisa mandiri.
+        </p>
+
+        <div class="mt-7 flex flex-col sm:flex-row gap-3 reveal" style="--d:240ms">
+          <button data-path="build" data-track="hero_build" class="group px-6 py-3.5 rounded-2xl bg-zura-navy hover:bg-blue-700 text-white font-bold shadow-xl shadow-blue-900/20 transition flex items-center justify-center gap-2">
+            <i data-lucide="rocket" class="w-5 h-5"></i><span data-en="I need an app for my business">Saya butuh aplikasi untuk bisnis</span>
+            <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition"></i>
+          </button>
+          <button data-path="learn" data-track="hero_learn" class="group px-6 py-3.5 rounded-2xl glass hover:border-blue-400 text-zura-navy font-bold transition flex items-center justify-center gap-2">
+            <i data-lucide="graduation-cap" class="w-5 h-5 text-blue-600"></i><span data-en="I want to learn building apps">Saya mau belajar bikin aplikasi</span>
+          </button>
+        </div>
+
+        <ul class="mt-6 flex flex-wrap gap-x-5 gap-y-2 text-xs sm:text-sm font-semibold text-slate-600 reveal" style="--d:320ms">
+          <li class="flex items-center gap-1.5"><i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-500"></i><span data-en="Initial consultation, no commitment">Konsultasi awal tanpa komitmen</span></li>
+          <li class="flex items-center gap-1.5"><i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-500"></i><span data-en="Clear scope before we start">Scope jelas sebelum mulai</span></li>
+          <li class="flex items-center gap-1.5"><i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-500"></i><span data-en="Training included">Pelatihan penggunaan</span></li>
+        </ul>
       </div>
 
-      <!-- HERO CONTENT GRID -->
-      <div class="relative z-10 grid grid-cols-1 lg:grid-cols-12 items-center gap-10 px-6 sm:px-12 lg:px-16 py-12 lg:py-16">
-        
-        <!-- LEFT COLUMN: Heading, Description & Global Creator Avatars -->
-        <div class="lg:col-span-6 space-y-5 max-w-xl">
-          <div class="text-xs sm:text-sm font-extrabold tracking-[0.22em] uppercase text-blue-600">
-            ZURALOGIC GLOBAL ECOSYSTEM
-          </div>
-          
-          <h1 class="text-4xl sm:text-5xl lg:text-[52px] font-black text-zura-navy tracking-tight leading-[1.08]">
-            Learn, build, and scale your business with ready-made apps
-          </h1>
-          
-          <p class="text-base sm:text-lg text-slate-600 leading-relaxed font-normal pt-1">
-            Empowering global learners at ZuraClass, enabling creators to sell their built apps, and helping businesses deploy proven solutions on ZuraAppMarket.
-          </p>
-
-          <!-- Enterprise Trust Bar with Dummy Creator Avatars -->
-          <div class="pt-4 flex flex-wrap items-center gap-4 border-t border-blue-200/70">
-            <div class="flex -space-x-2.5">
-              <!-- GANTI URL GAMBAR AVATAR DI SINI -->
-              <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&q=80" alt="Creator 1" class="w-9 h-9 rounded-full object-cover ring-2 ring-white" />
-              <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=100&q=80" alt="Creator 2" class="w-9 h-9 rounded-full object-cover ring-2 ring-white" />
-              <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=100&q=80" alt="Creator 3" class="w-9 h-9 rounded-full object-cover ring-2 ring-white" />
-              <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=100&q=80" alt="Creator 4" class="w-9 h-9 rounded-full object-cover ring-2 ring-white" />
+      <!-- Interactive stage -->
+      <div class="lg:col-span-6 relative">
+        <div id="stage" class="relative h-[400px] sm:h-[470px] lg:h-[520px] in" data-anim>
+          <!-- Main dashboard -->
+          <div class="layer absolute inset-x-0 top-3 mx-auto w-[86%] max-w-[440px]" data-depth="10">
+            <div class="glass rounded-3xl p-5" data-tilt>
+              <div class="flex items-center justify-between">
+                <div class="flex gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-rose-300"></span><span class="w-2.5 h-2.5 rounded-full bg-amber-300"></span><span class="w-2.5 h-2.5 rounded-full bg-emerald-300"></span></div>
+                <div class="h-2.5 w-24 rounded-full bg-slate-200"></div>
+              </div>
+              <div class="mt-5 grid grid-cols-3 gap-3">
+                <div class="rounded-2xl bg-white/80 p-3"><div class="h-2 w-8 rounded bg-slate-200"></div><div class="mt-3 h-3.5 w-14 rounded bg-zura-navy/80"></div></div>
+                <div class="rounded-2xl bg-white/80 p-3"><div class="h-2 w-10 rounded bg-slate-200"></div><div class="mt-3 h-3.5 w-12 rounded bg-blue-500/80"></div></div>
+                <div class="rounded-2xl bg-white/80 p-3"><div class="h-2 w-7 rounded bg-slate-200"></div><div class="mt-3 h-3.5 w-16 rounded bg-sky-400/80"></div></div>
+              </div>
+              <div class="mt-5 flex items-end gap-2 h-28">
+                <div class="bar flex-1 rounded-t-lg bg-gradient-to-t from-blue-600 to-sky-300" style="--h:38%;--i:0"></div>
+                <div class="bar flex-1 rounded-t-lg bg-gradient-to-t from-blue-600 to-sky-300" style="--h:55%;--i:1"></div>
+                <div class="bar flex-1 rounded-t-lg bg-gradient-to-t from-blue-600 to-sky-300" style="--h:45%;--i:2"></div>
+                <div class="bar flex-1 rounded-t-lg bg-gradient-to-t from-blue-600 to-sky-300" style="--h:72%;--i:3"></div>
+                <div class="bar flex-1 rounded-t-lg bg-gradient-to-t from-blue-600 to-sky-300" style="--h:60%;--i:4"></div>
+                <div class="bar flex-1 rounded-t-lg bg-gradient-to-t from-zura-navy to-blue-500" style="--h:88%;--i:5"></div>
+                <div class="bar flex-1 rounded-t-lg bg-gradient-to-t from-blue-600 to-sky-300" style="--h:66%;--i:6"></div>
+                <div class="bar flex-1 rounded-t-lg bg-gradient-to-t from-zura-navy to-blue-500" style="--h:96%;--i:7"></div>
+              </div>
+              <svg viewBox="0 0 300 50" class="mt-4 w-full h-12" preserveAspectRatio="none" aria-hidden="true">
+                <path class="draw" pathLength="1" d="M0 40 C 30 38, 40 18, 75 22 S 130 44, 160 26 S 220 6, 250 14 S 285 8, 300 4" fill="none" stroke="#2563EB" stroke-width="3" stroke-linecap="round"/>
+              </svg>
             </div>
-            <div class="text-xs sm:text-sm text-slate-600">
-              <strong class="text-zura-navy font-extrabold">12,400+</strong> <span>Global Builders & Enterprise Teams across 40+ Countries</span>
+          </div>
+
+          <!-- Phone -->
+          <div class="layer absolute left-0 sm:left-2 bottom-2 w-[38%] max-w-[170px]" data-depth="26">
+            <div class="glass rounded-[26px] p-2.5 bob" style="animation-delay:-1.2s">
+              <div class="rounded-2xl bg-white/85 p-3 space-y-2">
+                <div class="relative h-24 rounded-xl bg-gradient-to-br from-blue-50 to-blue-100 overflow-hidden grid place-items-center">
+                  <i data-lucide="qr-code" class="w-10 h-10 text-zura-navy"></i><span class="scanline"></span>
+                </div>
+                <div class="h-2 rounded-full bg-slate-200 w-4/5"></div>
+                <div class="h-2 rounded-full bg-slate-200 w-3/5"></div>
+                <div class="flex items-center gap-1 text-[10px] font-bold text-emerald-600"><i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i><span data-en="Recorded">Tercatat</span></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Chips -->
+          <div class="layer absolute right-0 top-0 sm:right-1" data-depth="40">
+            <div class="glass rounded-2xl px-3.5 py-2.5 flex items-center gap-2 text-[11px] sm:text-xs font-bold text-zura-navy bob" style="animation-delay:-2.4s">
+              <span class="w-7 h-7 rounded-lg bg-blue-600 text-white grid place-items-center"><i data-lucide="mail-check" class="w-4 h-4"></i></span><span data-en="Report sent automatically">Laporan terkirim otomatis</span>
+            </div>
+          </div>
+          <div class="layer absolute right-2 bottom-8 sm:bottom-12" data-depth="34">
+            <div class="glass rounded-2xl px-3.5 py-2.5 flex items-center gap-2 text-[11px] sm:text-xs font-bold text-zura-navy bob" style="animation-delay:-.6s">
+              <span class="w-7 h-7 rounded-lg bg-zura-navy text-white grid place-items-center"><i data-lucide="refresh-cw" class="w-4 h-4 spin-slow"></i></span><span data-en="Data in sync">Data tersinkron</span>
             </div>
           </div>
         </div>
-
-        <!-- RIGHT COLUMN: 3 Staggered Glassmorphism Action Buttons (Navy-Blue-White, Tanpa Gambar & Tanpa Pill Badge Kecil) -->
-        <div class="lg:col-span-6 flex flex-col gap-4 sm:gap-5 w-full">
-          
-          <!-- Button 1: Learn to Build Apps (Shifted Right like Bubble.io) -->
-          <a href="#learn-section" onclick="highlightAction('learn')" class="glass-action-card rounded-2xl p-5 sm:p-6 lg:ml-12 lg:mr-1 flex items-center justify-between gap-4 group cursor-pointer">
-            <div class="flex items-start gap-4 min-w-0">
-              <div class="card-icon-box w-12 h-12 rounded-xl bg-zura-navy text-white border border-blue-200/50 flex items-center justify-center shrink-0 shadow-sm transition">
-                <i data-lucide="graduation-cap" class="w-6 h-6"></i>
-              </div>
-              <div class="min-w-0">
-                <h2 class="card-title text-lg sm:text-xl font-extrabold text-zura-navy transition">
-                  Learn to Build Apps
-                </h2>
-                <p class="card-desc text-xs sm:text-sm text-slate-600 mt-1 leading-relaxed transition">
-                  Master no-code app creation and business automation at ZuraClass
-                </p>
-              </div>
-            </div>
-            <i data-lucide="arrow-up-right" class="card-arrow w-5 h-5 text-zura-navy opacity-70 shrink-0 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition"></i>
-          </a>
-
-          <!-- Button 2: Find my Business Apps (Shifted Left like Bubble.io) -->
-          <a href="#marketplace-section" onclick="highlightAction('find')" class="glass-action-card rounded-2xl p-5 sm:p-6 lg:mr-12 lg:ml-0 flex items-center justify-between gap-4 group cursor-pointer">
-            <div class="flex items-start gap-4 min-w-0">
-              <div class="card-icon-box w-12 h-12 rounded-xl bg-blue-600 text-white border border-blue-200/50 flex items-center justify-center shrink-0 shadow-sm transition">
-                <i data-lucide="layout-template" class="w-6 h-6"></i>
-              </div>
-              <div class="min-w-0">
-                <h2 class="card-title text-lg sm:text-xl font-extrabold text-zura-navy transition">
-                  Find my Business Apps
-                </h2>
-                <p class="card-desc text-xs sm:text-sm text-slate-600 mt-1 leading-relaxed transition">
-                  Browse & deploy ready-to-use industry apps on ZuraAppMarket
-                </p>
-              </div>
-            </div>
-            <i data-lucide="arrow-up-right" class="card-arrow w-5 h-5 text-zura-navy opacity-70 shrink-0 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition"></i>
-          </a>
-
-          <!-- Button 3: Showcase my Built Apps (Shifted Right like Bubble.io) -->
-          <a href="/auth/?mode=register&role=creator" class="glass-action-card rounded-2xl p-5 sm:p-6 lg:ml-10 lg:mr-3 flex items-center justify-between gap-4 group cursor-pointer">
-            <div class="flex items-start gap-4 min-w-0">
-              <div class="card-icon-box w-12 h-12 rounded-xl bg-zura-navy text-white border border-blue-200/50 flex items-center justify-center shrink-0 shadow-sm transition">
-                <i data-lucide="rocket" class="w-6 h-6"></i>
-              </div>
-              <div class="min-w-0">
-                <h2 class="card-title text-lg sm:text-xl font-extrabold text-zura-navy transition">
-                  Showcase my Built Apps
-                </h2>
-                <p class="card-desc text-xs sm:text-sm text-slate-600 mt-1 leading-relaxed transition">
-                  Publish your built apps, reach global buyers, and earn revenue
-                </p>
-              </div>
-            </div>
-            <i data-lucide="arrow-up-right" class="card-arrow w-5 h-5 text-zura-navy opacity-70 shrink-0 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition"></i>
-          </a>
-
-        </div>
-
       </div>
     </div>
   </section>
 
-
-  <!-- =====================================================================
-       MODALS (App Preview Modal, AI Get Help, Logout Confirmation Modal, Toast)
-       ===================================================================== -->
-  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-6 w-full">
-    <div class="bg-white rounded-2xl border border-slate-200/80 px-6 py-4 shadow-sm flex flex-wrap items-center justify-between gap-4">
-      <div class="flex items-center gap-3">
+  <!-- Tech marquee -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-6">
+    <div class="glass rounded-2xl px-5 py-4 flex flex-col md:flex-row md:items-center gap-3 md:gap-6">
+      <div class="flex items-center gap-2.5 shrink-0">
         <span class="w-2.5 h-2.5 rounded-full bg-blue-600"></span>
-        <span class="text-xs font-extrabold uppercase tracking-wider text-slate-500" data-i18n="partnerStripTitle">TRUSTED BY MODERN SCALE-UP OPERATIONS</span>
+        <span class="text-[11px] font-extrabold uppercase tracking-wider text-slate-500" data-en="Tech I work with">Teknologi yang saya pakai</span>
       </div>
-      <div class="flex flex-wrap items-center gap-6 opacity-85">
-        <div class="flex items-center gap-2 text-xs font-bold text-slate-600">
-          <img src="https://placehold.co/32x32/0A1931/FFFFFF?text=G" class="w-6 h-6 rounded" alt="Google Workspace" />
-          <span>Google Workspace Ready</span>
+      <div class="marquee overflow-hidden flex-1" style="-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)">
+        <div class="marquee-track flex gap-3" id="marqueeTrack"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================================================================
+       START: PILIH JALUR
+       ===================================================================== -->
+  <section id="start" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20 scroll-mt-20">
+    <div class="max-w-2xl reveal">
+      <div class="text-xs font-extrabold uppercase tracking-[.2em] text-blue-600" data-en="Choose your path">Pilih jalurmu</div>
+      <h2 class="font-display mt-2 text-3xl sm:text-4xl font-extrabold text-zura-navy tracking-tight" data-en="What do you want to do today?">Kamu mau ngapain hari ini?</h2>
+      <p class="mt-3 text-slate-600" data-en="Two paths, one goal: get your work running on an app. Pick one — the content below adapts.">Dua jalur, satu tujuan: pekerjaanmu berjalan di atas aplikasi. Pilih salah satu, konten di bawah menyesuaikan.</p>
+    </div>
+
+    <div class="mt-8 grid md:grid-cols-2 gap-5">
+      <button data-path="build" class="path-card spot lift glass rounded-3xl p-6 text-left border-2 border-transparent relative active">
+        <span class="path-check absolute top-5 right-5 w-7 h-7 rounded-full bg-blue-600 text-white grid place-items-center"><i data-lucide="check" class="w-4 h-4"></i></span>
+        <div class="w-12 h-12 rounded-2xl bg-zura-navy text-white grid place-items-center shadow-lg"><i data-lucide="layout-template" class="w-6 h-6"></i></div>
+        <h3 class="font-display mt-4 text-xl font-extrabold text-zura-navy" data-en="Find a custom app for my operations">Cari aplikasi custom untuk operasional bisnis</h3>
+        <p class="mt-1.5 text-sm text-slate-600" data-en="Tell me how your team works. I'll design and build the app around it.">Ceritakan cara timmu bekerja. Saya rancang dan bangun aplikasinya mengikuti alur itu.</p>
+      </button>
+      <button data-path="learn" class="path-card spot lift glass rounded-3xl p-6 text-left border-2 border-transparent relative">
+        <span class="path-check absolute top-5 right-5 w-7 h-7 rounded-full bg-blue-600 text-white grid place-items-center"><i data-lucide="check" class="w-4 h-4"></i></span>
+        <div class="w-12 h-12 rounded-2xl bg-blue-600 text-white grid place-items-center shadow-lg"><i data-lucide="graduation-cap" class="w-6 h-6"></i></div>
+        <h3 class="font-display mt-4 text-xl font-extrabold text-zura-navy" data-en="Learn to build apps myself">Belajar membangun aplikasi sendiri</h3>
+        <p class="mt-1.5 text-sm text-slate-600" data-en="Free step-by-step tutorials on YouTube, plus templates and formulas you can copy.">Tutorial gratis step-by-step di YouTube, plus template dan formula yang bisa langsung disalin.</p>
+      </button>
+    </div>
+
+    <!-- PANEL: BUILD (wizard) -->
+    <div id="panel-build" class="mt-6 glass rounded-3xl p-5 sm:p-8 reveal">
+      <div class="flex flex-wrap items-center justify-between gap-3">
+        <div>
+          <h3 class="font-display text-xl sm:text-2xl font-extrabold text-zura-navy" data-en="Build your app brief in 60 seconds">Susun brief aplikasimu dalam 60 detik</h3>
+          <p class="text-sm text-slate-600 mt-1" data-en="Answer 3 quick questions. You get a stack recommendation and a ready-to-send brief.">Jawab 3 pertanyaan singkat. Kamu dapat rekomendasi teknologi dan brief siap kirim.</p>
         </div>
-        <div class="flex items-center gap-2 text-xs font-bold text-slate-600">
-          <img src="https://placehold.co/32x32/2563EB/FFFFFF?text=A" class="w-6 h-6 rounded" alt="AppSheet" />
-          <span>AppSheet Enterprise</span>
+        <div id="wzDots" class="flex items-center gap-2" aria-hidden="true"></div>
+      </div>
+      <div class="mt-5 h-1.5 rounded-full bg-blue-100 overflow-hidden"><div id="wzBar" class="h-full w-1/4 bg-gradient-to-r from-blue-600 to-sky-400 transition-all duration-500"></div></div>
+      <div id="wzBody" class="mt-6 min-h-[260px]"></div>
+      <div class="mt-6 flex items-center justify-between gap-3">
+        <button id="wzBack" class="px-4 py-2.5 rounded-xl border border-slate-200 bg-white text-sm font-bold text-slate-700 hover:border-blue-400 transition flex items-center gap-1.5"><i data-lucide="arrow-left" class="w-4 h-4"></i><span data-en="Back">Kembali</span></button>
+        <button id="wzNext" class="px-5 py-2.5 rounded-xl bg-zura-navy hover:bg-blue-700 text-white text-sm font-bold transition flex items-center gap-1.5 disabled:opacity-40 disabled:pointer-events-none"><span id="wzNextText">Lanjut</span><i data-lucide="arrow-right" class="w-4 h-4"></i></button>
+      </div>
+    </div>
+
+    <!-- PANEL: LEARN -->
+    <div id="panel-learn" style="display:none" class="mt-6 glass rounded-3xl p-5 sm:p-8">
+      <div class="grid lg:grid-cols-5 gap-8">
+        <div class="lg:col-span-2">
+          <h3 class="font-display text-xl sm:text-2xl font-extrabold text-zura-navy" data-en="A learning path that makes sense">Jalur belajar yang masuk akal</h3>
+          <p class="text-sm text-slate-600 mt-2" data-en="Start from zero. Each level unlocks the next — and every step is built on a real use case.">Mulai dari nol. Tiap level membuka level berikutnya — dan setiap langkah dibangun dari kasus nyata.</p>
+          <div class="mt-5 flex flex-col sm:flex-row lg:flex-col gap-3">
+            <a data-link="youtube" data-track="learn_subscribe" class="px-5 py-3 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-sm font-bold flex items-center justify-center gap-2 shadow-lg transition"><i data-lucide="youtube" class="w-5 h-5"></i><span data-en="Subscribe on YouTube">Subscribe di YouTube</span></a>
+            <a data-link="discord" data-track="learn_discord" class="px-5 py-3 rounded-xl glass hover:border-blue-400 text-zura-navy text-sm font-bold flex items-center justify-center gap-2 transition"><i data-lucide="messages-square" class="w-5 h-5 text-blue-600"></i><span data-en="Join the community">Gabung komunitas</span></a>
+          </div>
         </div>
-        <div class="flex items-center gap-2 text-xs font-bold text-slate-600">
-          <img src="https://placehold.co/32x32/1E40AF/FFFFFF?text=L" class="w-6 h-6 rounded" alt="Looker" />
-          <span>Looker BI Integrated</span>
+        <ol class="lg:col-span-3 grid sm:grid-cols-2 gap-4" id="roadmap"></ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================================================================
+       SHOWCASE: KEAHLIAN
+       ===================================================================== -->
+  <section id="showcase" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20 scroll-mt-20">
+    <div class="max-w-2xl reveal">
+      <div class="text-xs font-extrabold uppercase tracking-[.2em] text-blue-600" data-en="What I can build">Yang bisa saya bangun</div>
+      <h2 class="font-display mt-2 text-3xl sm:text-4xl font-extrabold text-zura-navy tracking-tight" data-en="Four skills. One goal: work that runs by itself.">Empat keahlian. Satu tujuan: kerja yang berjalan sendiri.</h2>
+      <p class="mt-3 text-slate-600" data-en="Hover and explore. These are illustrations of how each skill works, not client screenshots.">Coba hover dan jelajahi. Ini ilustrasi cara kerja tiap keahlian, bukan screenshot proyek klien.</p>
+    </div>
+
+    <div class="mt-7 flex gap-2.5 overflow-x-auto no-scrollbar pb-1 reveal" role="tablist">
+      <button class="tab-btn active shrink-0 px-4 py-2.5 rounded-xl border border-slate-200 bg-white text-sm font-bold text-slate-700 flex items-center gap-2 transition" data-skill="0"><i data-lucide="smartphone" class="w-4 h-4"></i>AppSheet</button>
+      <button class="tab-btn shrink-0 px-4 py-2.5 rounded-xl border border-slate-200 bg-white text-sm font-bold text-slate-700 flex items-center gap-2 transition" data-skill="1"><i data-lucide="workflow" class="w-4 h-4"></i>Apps Script</button>
+      <button class="tab-btn shrink-0 px-4 py-2.5 rounded-xl border border-slate-200 bg-white text-sm font-bold text-slate-700 flex items-center gap-2 transition" data-skill="2"><i data-lucide="layout-dashboard" class="w-4 h-4"></i>Web App</button>
+      <button class="tab-btn shrink-0 px-4 py-2.5 rounded-xl border border-slate-200 bg-white text-sm font-bold text-slate-700 flex items-center gap-2 transition" data-skill="3"><i data-lucide="globe" class="w-4 h-4"></i>Website</button>
+    </div>
+
+    <div class="mt-5 glass rounded-3xl p-5 sm:p-8 reveal">
+
+      <!-- 0 AppSheet -->
+      <div class="skill-panel active lg:grid-cols-2 gap-8 items-center" data-panel="0">
+        <div>
+          <h3 class="font-display text-2xl font-extrabold text-zura-navy">AppSheet</h3>
+          <p class="mt-2 text-slate-600" data-en="Mobile and web apps without heavy coding, running on top of Google Sheets and Workspace. Fast to build, easy for your team to manage.">Aplikasi mobile dan web tanpa coding berat, berjalan di atas Google Sheets dan Workspace. Cepat dibangun, mudah dikelola timmu.</p>
+          <ul class="mt-5 space-y-2.5 text-sm font-semibold text-slate-700">
+            <li class="flex gap-2.5"><i data-lucide="scan-line" class="w-5 h-5 text-blue-600 shrink-0"></i><span data-en="QR / barcode scanning and field forms">Scan QR / barcode dan form lapangan</span></li>
+            <li class="flex gap-2.5"><i data-lucide="map-pin" class="w-5 h-5 text-blue-600 shrink-0"></i><span data-en="GPS attendance, approvals and user roles">Absensi GPS, approval, dan hak akses pengguna</span></li>
+            <li class="flex gap-2.5"><i data-lucide="wifi-off" class="w-5 h-5 text-blue-600 shrink-0"></i><span data-en="Works for teams with unstable connections">Cocok untuk tim dengan koneksi tidak stabil</span></li>
+          </ul>
         </div>
-        <div class="flex items-center gap-2 text-xs font-bold text-slate-600">
-          <img src="https://placehold.co/32x32/0F172A/FFFFFF?text=AI" class="w-6 h-6 rounded" alt="ZuraAI" />
-          <span>ZuraAI Automation</span>
+        <div class="mx-auto w-[250px]" data-anim>
+          <div class="glass rounded-[34px] p-3" data-tilt>
+            <div class="rounded-[26px] bg-white/90 p-3 space-y-2.5">
+              <div class="flex items-center justify-between"><div class="h-2.5 w-20 rounded bg-slate-300"></div><i data-lucide="bell" class="w-4 h-4 text-slate-400"></i></div>
+              <div class="relative h-28 rounded-2xl overflow-hidden bg-zura-navy grid place-items-center">
+                <i data-lucide="qr-code" class="w-12 h-12 text-white/90"></i>
+                <span class="absolute top-2 left-2 w-4 h-4 border-t-2 border-l-2 border-sky-300 rounded-tl"></span><span class="absolute top-2 right-2 w-4 h-4 border-t-2 border-r-2 border-sky-300 rounded-tr"></span>
+                <span class="absolute bottom-2 left-2 w-4 h-4 border-b-2 border-l-2 border-sky-300 rounded-bl"></span><span class="absolute bottom-2 right-2 w-4 h-4 border-b-2 border-r-2 border-sky-300 rounded-br"></span>
+                <span class="scanline"></span>
+              </div>
+              <div class="flex items-center gap-2.5 rounded-xl bg-blue-50 p-2"><span class="w-8 h-8 rounded-lg bg-blue-600 text-white grid place-items-center"><i data-lucide="package" class="w-4 h-4"></i></span><div class="flex-1 space-y-1"><div class="h-2 w-3/4 rounded bg-slate-300"></div><div class="h-2 w-1/2 rounded bg-slate-200"></div></div><span class="text-[10px] font-extrabold text-emerald-600 bg-emerald-50 rounded px-1.5 py-0.5">OK</span></div>
+              <div class="flex items-center gap-2.5 rounded-xl bg-blue-50 p-2"><span class="w-8 h-8 rounded-lg bg-zura-navy text-white grid place-items-center"><i data-lucide="clipboard-check" class="w-4 h-4"></i></span><div class="flex-1 space-y-1"><div class="h-2 w-2/3 rounded bg-slate-300"></div><div class="h-2 w-2/5 rounded bg-slate-200"></div></div><span class="text-[10px] font-extrabold text-amber-600 bg-amber-50 rounded px-1.5 py-0.5" data-en="Check">Cek</span></div>
+              <div class="flex justify-around pt-1 text-slate-400"><i data-lucide="home" class="w-4 h-4 text-blue-600"></i><i data-lucide="list" class="w-4 h-4"></i><i data-lucide="plus-circle" class="w-4 h-4"></i><i data-lucide="user" class="w-4 h-4"></i></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 1 Apps Script -->
+      <div class="skill-panel lg:grid-cols-2 gap-8 items-center" data-panel="1">
+        <div>
+          <h3 class="font-display text-2xl font-extrabold text-zura-navy">Google Apps Script</h3>
+          <p class="mt-2 text-slate-600" data-en="Automation behind the scenes: from data recaps to sending reports, so nobody has to copy-paste again.">Otomasi di balik layar: dari rekap data sampai kirim laporan, supaya tidak ada lagi yang copy-paste manual.</p>
+          <ul class="mt-5 space-y-2.5 text-sm font-semibold text-slate-700">
+            <li class="flex gap-2.5"><i data-lucide="file-text" class="w-5 h-5 text-blue-600 shrink-0"></i><span data-en="Automatic PDF reports and emails">Laporan PDF dan email otomatis</span></li>
+            <li class="flex gap-2.5"><i data-lucide="clock" class="w-5 h-5 text-blue-600 shrink-0"></i><span data-en="Scheduled and event-based triggers">Trigger terjadwal dan berbasis kejadian</span></li>
+            <li class="flex gap-2.5"><i data-lucide="plug-zap" class="w-5 h-5 text-blue-600 shrink-0"></i><span data-en="API and webhook integrations">Integrasi API dan webhook</span></li>
+          </ul>
+        </div>
+        <div data-anim>
+          <svg viewBox="0 0 560 320" class="w-full h-auto" role="img" aria-label="Alur otomasi Apps Script">
+            <defs><linearGradient id="nodeNavy" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2563EB"/><stop offset="1" stop-color="#0A1931"/></linearGradient></defs>
+            <path id="f1" class="flow" d="M150 160 H220" stroke="#2563EB" stroke-width="2.5" fill="none"/>
+            <path id="f2" class="flow" d="M340 160 C 390 160, 390 62, 430 62" stroke="#2563EB" stroke-width="2.5" fill="none"/>
+            <path id="f3" class="flow" d="M340 160 H430" stroke="#2563EB" stroke-width="2.5" fill="none"/>
+            <path id="f4" class="flow" d="M340 160 C 390 160, 390 258, 430 258" stroke="#2563EB" stroke-width="2.5" fill="none"/>
+            <circle r="5" fill="#38BDF8"><animateMotion dur="1.8s" repeatCount="indefinite"><mpath href="#f1"/></animateMotion></circle>
+            <circle r="5" fill="#38BDF8"><animateMotion dur="2.2s" begin=".6s" repeatCount="indefinite"><mpath href="#f2"/></animateMotion></circle>
+            <circle r="5" fill="#38BDF8"><animateMotion dur="2s" begin=".3s" repeatCount="indefinite"><mpath href="#f3"/></animateMotion></circle>
+            <circle r="5" fill="#38BDF8"><animateMotion dur="2.2s" begin=".9s" repeatCount="indefinite"><mpath href="#f4"/></animateMotion></circle>
+            <g><rect x="30" y="125" width="120" height="70" rx="16" fill="#fff" stroke="#BFDBFE" stroke-width="2"/><text x="90" y="166" text-anchor="middle" font-size="14" font-weight="800" fill="#0A1931">Google Sheets</text></g>
+            <g><rect x="220" y="125" width="120" height="70" rx="16" fill="url(#nodeNavy)"/><text x="280" y="166" text-anchor="middle" font-size="14" font-weight="800" fill="#fff">Apps Script</text>
+               <rect x="205" y="88" width="150" height="24" rx="12" fill="#DBEAFE"/><text x="280" y="104" text-anchor="middle" font-size="11" font-weight="700" fill="#1D4ED8">Trigger: jadwal / form</text></g>
+            <g><rect x="430" y="32" width="110" height="60" rx="14" fill="#fff" stroke="#BFDBFE" stroke-width="2"/><text x="485" y="67" text-anchor="middle" font-size="13" font-weight="800" fill="#0A1931">PDF Laporan</text></g>
+            <g><rect x="430" y="130" width="110" height="60" rx="14" fill="#fff" stroke="#BFDBFE" stroke-width="2"/><text x="485" y="165" text-anchor="middle" font-size="13" font-weight="800" fill="#0A1931">Email / Chat</text></g>
+            <g><rect x="430" y="228" width="110" height="60" rx="14" fill="#fff" stroke="#BFDBFE" stroke-width="2"/><text x="485" y="263" text-anchor="middle" font-size="13" font-weight="800" fill="#0A1931">Drive / Kalender</text></g>
+          </svg>
+        </div>
+      </div>
+
+      <!-- 2 Web App -->
+      <div class="skill-panel lg:grid-cols-2 gap-8 items-center" data-panel="2">
+        <div>
+          <h3 class="font-display text-2xl font-extrabold text-zura-navy">Web App Custom</h3>
+          <p class="mt-2 text-slate-600" data-en="When needs go beyond no-code: custom interfaces, portals and dashboards that follow your business logic.">Saat kebutuhan melampaui no-code: antarmuka, portal, dan dashboard custom yang mengikuti logika bisnismu.</p>
+          <ul class="mt-5 space-y-2.5 text-sm font-semibold text-slate-700">
+            <li class="flex gap-2.5"><i data-lucide="bar-chart-3" class="w-5 h-5 text-blue-600 shrink-0"></i><span data-en="Dashboards and real-time reports">Dashboard dan laporan real-time</span></li>
+            <li class="flex gap-2.5"><i data-lucide="users" class="w-5 h-5 text-blue-600 shrink-0"></i><span data-en="Customer / partner portals with login">Portal pelanggan / mitra dengan login</span></li>
+            <li class="flex gap-2.5"><i data-lucide="database" class="w-5 h-5 text-blue-600 shrink-0"></i><span data-en="Database and API integration">Integrasi database dan API</span></li>
+          </ul>
+        </div>
+        <div data-anim class="browser">
+          <div class="glass rounded-2xl overflow-hidden" data-tilt>
+            <div class="flex items-center gap-2 px-3.5 py-2.5 bg-white/70 border-b border-blue-100">
+              <span class="w-2.5 h-2.5 rounded-full bg-rose-300"></span><span class="w-2.5 h-2.5 rounded-full bg-amber-300"></span><span class="w-2.5 h-2.5 rounded-full bg-emerald-300"></span>
+              <span class="ml-2 flex-1 h-5 rounded-md bg-slate-100 text-[10px] font-semibold text-slate-400 flex items-center px-2">aplikasi-bisnismu.com</span>
+            </div>
+            <div class="flex">
+              <div class="hidden sm:flex flex-col gap-2.5 p-3 w-14 bg-zura-navy/95 items-center"><i data-lucide="layout-dashboard" class="w-4 h-4 text-white"></i><i data-lucide="users" class="w-4 h-4 text-blue-300"></i><i data-lucide="package" class="w-4 h-4 text-blue-300"></i><i data-lucide="settings" class="w-4 h-4 text-blue-300"></i></div>
+              <div class="flex-1 p-4 space-y-3 bg-white/60">
+                <div class="grid grid-cols-3 gap-2.5">
+                  <div class="rounded-xl bg-white p-2.5"><div class="h-2 w-8 rounded skel"></div><div class="mt-2 h-3.5 w-12 rounded bg-zura-navy/80"></div></div>
+                  <div class="rounded-xl bg-white p-2.5"><div class="h-2 w-10 rounded skel"></div><div class="mt-2 h-3.5 w-10 rounded bg-blue-500/80"></div></div>
+                  <div class="rounded-xl bg-white p-2.5"><div class="h-2 w-7 rounded skel"></div><div class="mt-2 h-3.5 w-14 rounded bg-sky-400/80"></div></div>
+                </div>
+                <div class="grid grid-cols-5 gap-2.5">
+                  <div class="col-span-3 rounded-xl bg-white p-3 flex items-end gap-1.5 h-28">
+                    <div class="bar flex-1 rounded-t bg-gradient-to-t from-blue-600 to-sky-300" style="--h:30%;--i:0"></div><div class="bar flex-1 rounded-t bg-gradient-to-t from-blue-600 to-sky-300" style="--h:52%;--i:1"></div><div class="bar flex-1 rounded-t bg-gradient-to-t from-blue-600 to-sky-300" style="--h:44%;--i:2"></div><div class="bar flex-1 rounded-t bg-gradient-to-t from-blue-600 to-sky-300" style="--h:70%;--i:3"></div><div class="bar flex-1 rounded-t bg-gradient-to-t from-zura-navy to-blue-500" style="--h:90%;--i:4"></div><div class="bar flex-1 rounded-t bg-gradient-to-t from-blue-600 to-sky-300" style="--h:64%;--i:5"></div>
+                  </div>
+                  <div class="col-span-2 rounded-xl bg-white p-2 grid place-items-center">
+                    <svg viewBox="0 0 120 70" class="w-full"><path class="draw" pathLength="1" d="M4 58 C 20 56, 24 28, 44 34 S 76 60, 90 30 S 108 12, 116 8" fill="none" stroke="#2563EB" stroke-width="3.5" stroke-linecap="round"/></svg>
+                  </div>
+                </div>
+                <div class="space-y-2"><div class="h-3 rounded skel"></div><div class="h-3 rounded skel w-5/6"></div><div class="h-3 rounded skel w-4/6"></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3 Website -->
+      <div class="skill-panel lg:grid-cols-2 gap-8 items-center" data-panel="3">
+        <div>
+          <h3 class="font-display text-2xl font-extrabold text-zura-navy">Website</h3>
+          <p class="mt-2 text-slate-600" data-en="Fast, clean websites that earn trust and generate leads — landing pages, company profiles, and portfolios.">Website cepat dan rapi yang membangun kepercayaan dan menghasilkan prospek — landing page, company profile, dan portofolio.</p>
+          <ul class="mt-5 space-y-2.5 text-sm font-semibold text-slate-700">
+            <li class="flex gap-2.5"><i data-lucide="smartphone" class="w-5 h-5 text-blue-600 shrink-0"></i><span data-en="Responsive on every device">Responsif di semua perangkat</span></li>
+            <li class="flex gap-2.5"><i data-lucide="gauge" class="w-5 h-5 text-blue-600 shrink-0"></i><span data-en="Performance and basic SEO">Performa dan SEO dasar</span></li>
+            <li class="flex gap-2.5"><i data-lucide="mouse-pointer-click" class="w-5 h-5 text-blue-600 shrink-0"></i><span data-en="Forms, WhatsApp and analytics set up">Form, WhatsApp, dan analytics terpasang</span></li>
+          </ul>
+        </div>
+        <div class="browser">
+          <div class="glass rounded-2xl overflow-hidden" data-tilt>
+            <div class="flex items-center gap-2 px-3.5 py-2.5 bg-white/70 border-b border-blue-100">
+              <span class="w-2.5 h-2.5 rounded-full bg-rose-300"></span><span class="w-2.5 h-2.5 rounded-full bg-amber-300"></span><span class="w-2.5 h-2.5 rounded-full bg-emerald-300"></span>
+              <span class="ml-2 flex-1 h-5 rounded-md bg-slate-100 text-[10px] font-semibold text-slate-400 flex items-center px-2">websitemu.com</span>
+            </div>
+            <div class="h-[300px] overflow-hidden bg-white/70">
+              <div class="pagescroll p-4 space-y-4">
+                <div class="rounded-2xl bg-gradient-to-br from-zura-navy to-blue-600 p-5 space-y-2.5"><div class="h-3.5 w-3/4 rounded bg-white/90"></div><div class="h-3.5 w-1/2 rounded bg-white/70"></div><div class="h-2 w-2/3 rounded bg-white/40 mt-3"></div><div class="h-7 w-24 rounded-full bg-white mt-3"></div></div>
+                <div class="grid grid-cols-3 gap-2.5"><div class="rounded-xl bg-blue-50 p-3 space-y-2"><div class="w-6 h-6 rounded-lg bg-blue-600"></div><div class="h-2 rounded bg-slate-300"></div><div class="h-2 w-2/3 rounded bg-slate-200"></div></div><div class="rounded-xl bg-blue-50 p-3 space-y-2"><div class="w-6 h-6 rounded-lg bg-zura-navy"></div><div class="h-2 rounded bg-slate-300"></div><div class="h-2 w-2/3 rounded bg-slate-200"></div></div><div class="rounded-xl bg-blue-50 p-3 space-y-2"><div class="w-6 h-6 rounded-lg bg-sky-400"></div><div class="h-2 rounded bg-slate-300"></div><div class="h-2 w-2/3 rounded bg-slate-200"></div></div></div>
+                <div class="grid grid-cols-2 gap-2.5"><div class="h-24 rounded-xl bg-gradient-to-br from-sky-200 to-blue-300"></div><div class="space-y-2 pt-1"><div class="h-3 rounded bg-slate-300"></div><div class="h-2 rounded bg-slate-200"></div><div class="h-2 w-4/5 rounded bg-slate-200"></div><div class="h-2 w-3/5 rounded bg-slate-200"></div></div></div>
+                <div class="rounded-2xl bg-zura-navy p-5 flex items-center justify-between"><div class="space-y-2"><div class="h-3 w-28 rounded bg-white/90"></div><div class="h-2 w-20 rounded bg-white/50"></div></div><div class="h-8 w-20 rounded-full bg-blue-500"></div></div>
+                <div class="grid grid-cols-4 gap-2"><div class="h-2 rounded bg-slate-200"></div><div class="h-2 rounded bg-slate-200"></div><div class="h-2 rounded bg-slate-200"></div><div class="h-2 rounded bg-slate-200"></div></div>
+                <div class="h-16"></div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-
   <!-- =====================================================================
-       BUSINESS LINE FILTER SLIDER & ZURAAPPMARKET SHOWCASE
+       SOLUTIONS
        ===================================================================== -->
-  <section id="marketplace-section" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full flex-grow">
-    
-    <!-- Section Header + Search -->
-    <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-6">
-      <div>
-        <h2 class="text-2xl sm:text-3xl font-black text-zura-navy tracking-tight" data-i18n="marketTitle">
-          Explore Apps by Business Line
-        </h2>
-        <p class="text-sm sm:text-base text-slate-600 mt-1" data-i18n="marketSub">
-          Select your industry below to filter relevant, ready-to-deploy applications built by verified ZuraClass creators.
-        </p>
+  <section id="solutions" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20 scroll-mt-20">
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 reveal">
+      <div class="max-w-2xl">
+        <div class="text-xs font-extrabold uppercase tracking-[.2em] text-blue-600" data-en="Common use cases">Kasus yang sering dikerjakan</div>
+        <h2 class="font-display mt-2 text-3xl sm:text-4xl font-extrabold text-zura-navy tracking-tight" data-en="Which problem sounds like yours?">Masalah mana yang mirip dengan bisnismu?</h2>
       </div>
-
-      <!-- Quick Search Box -->
-      <div class="relative w-full md:w-80">
-        <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2"></i>
-        <input 
-          type="text" 
-          id="appSearchInput"
-          oninput="searchApps(this.value)"
-          placeholder="Search POS, Inventory, HSE, HR..." 
-          class="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white border border-slate-200 text-sm focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-100 transition shadow-sm"
-        />
-      </div>
+      <p class="text-sm text-slate-600 md:max-w-xs" data-en="Click a card to start a conversation about that case.">Klik kartu untuk memulai obrolan tentang kasus tersebut.</p>
     </div>
-
-    <!-- HORIZONTAL BUSINESS LINE SLIDER -->
-    <div class="relative flex items-center gap-2 mb-8">
-      <!-- Scroll Left Button -->
-      <button onclick="scrollSlider(-260)" class="p-2.5 rounded-xl bg-white border border-slate-200 text-slate-600 hover:text-blue-600 hover:border-blue-400 shadow-sm shrink-0 transition" aria-label="Scroll Left">
-        <i data-lucide="chevron-left" class="w-5 h-5"></i>
-      </button>
-
-      <!-- Scrollable Pill Track -->
-      <div id="industrySlider" class="flex items-center gap-2.5 overflow-x-auto no-scrollbar scroll-smooth py-1">
-        <button onclick="filterApps('all')" data-cat="all" class="industry-pill shrink-0 px-4 py-2.5 rounded-xl text-sm font-bold bg-zura-navy text-white shadow-sm transition flex items-center gap-2">
-          <i data-lucide="layers" class="w-4 h-4"></i>
-          <span data-i18n="pillAll">All Business Lines</span>
-        </button>
-        <button onclick="filterApps('warehouse')" data-cat="warehouse" class="industry-pill shrink-0 px-4 py-2.5 rounded-xl text-sm font-semibold bg-white text-slate-700 border border-slate-200 hover:border-blue-400 transition flex items-center gap-2">
-          <i data-lucide="package-check" class="w-4 h-4 text-blue-600"></i>
-          <span data-i18n="pillWarehouse">Warehouse & Logistics</span>
-        </button>
-        <button onclick="filterApps('retail')" data-cat="retail" class="industry-pill shrink-0 px-4 py-2.5 rounded-xl text-sm font-semibold bg-white text-slate-700 border border-slate-200 hover:border-blue-400 transition flex items-center gap-2">
-          <i data-lucide="shopping-bag" class="w-4 h-4 text-blue-600"></i>
-          <span data-i18n="pillRetail">Retail & POS</span>
-        </button>
-        <button onclick="filterApps('hse')" data-cat="hse" class="industry-pill shrink-0 px-4 py-2.5 rounded-xl text-sm font-semibold bg-white text-slate-700 border border-slate-200 hover:border-blue-400 transition flex items-center gap-2">
-          <i data-lucide="shield-check" class="w-4 h-4 text-blue-600"></i>
-          <span data-i18n="pillHse">Manufacturing & HSE</span>
-        </button>
-        <button onclick="filterApps('hr')" data-cat="hr" class="industry-pill shrink-0 px-4 py-2.5 rounded-xl text-sm font-semibold bg-white text-slate-700 border border-slate-200 hover:border-blue-400 transition flex items-center gap-2">
-          <i data-lucide="users" class="w-4 h-4 text-blue-600"></i>
-          <span data-i18n="pillHr">HR & Field Operations</span>
-        </button>
-        <button onclick="filterApps('finance')" data-cat="finance" class="industry-pill shrink-0 px-4 py-2.5 rounded-xl text-sm font-semibold bg-white text-slate-700 border border-slate-200 hover:border-blue-400 transition flex items-center gap-2">
-          <i data-lucide="wallet" class="w-4 h-4 text-blue-600"></i>
-          <span data-i18n="pillFinance">Finance & CRM</span>
-        </button>
-        <button onclick="filterApps('fnb')" data-cat="fnb" class="industry-pill shrink-0 px-4 py-2.5 rounded-xl text-sm font-semibold bg-white text-slate-700 border border-slate-200 hover:border-blue-400 transition flex items-center gap-2">
-          <i data-lucide="utensils" class="w-4 h-4 text-blue-600"></i>
-          <span data-i18n="pillFnb">F&B & Hospitality</span>
-        </button>
-      </div>
-
-      <!-- Scroll Right Button -->
-      <button onclick="scrollSlider(260)" class="p-2.5 rounded-xl bg-white border border-slate-200 text-slate-600 hover:text-blue-600 hover:border-blue-400 shadow-sm shrink-0 transition" aria-label="Scroll Right">
-        <i data-lucide="chevron-right" class="w-5 h-5"></i>
-      </button>
-    </div>
-
-    <!-- APPS MARKETPLACE GRID (Dynamically Rendered with High-Res Dummy Mockups & Creator Avatars) -->
-    <div id="appsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
-
+    <div id="solGrid" class="mt-8 grid sm:grid-cols-2 lg:grid-cols-3 gap-5"></div>
   </section>
 
+  <!-- Portfolio (otomatis tampil kalau CONFIG.projects diisi) -->
+  <section id="projects" style="display:none" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 scroll-mt-20">
+    <div class="max-w-2xl reveal">
+      <div class="text-xs font-extrabold uppercase tracking-[.2em] text-blue-600" data-en="Case studies">Studi kasus</div>
+      <h2 class="font-display mt-2 text-3xl sm:text-4xl font-extrabold text-zura-navy tracking-tight" data-en="Real projects, real results">Proyek nyata, hasil nyata</h2>
+    </div>
+    <div id="projGrid" class="mt-8 grid md:grid-cols-2 lg:grid-cols-3 gap-5"></div>
+  </section>
 
   <!-- =====================================================================
-       CONNECTED GITHUB PAGES ECOSYSTEM BANNER (3 Repo Pendukung dengan Gambar Dummy)
+       PROCESS
        ===================================================================== -->
-  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full">
+  <section id="process" class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20 scroll-mt-20">
+    <div class="max-w-2xl reveal">
+      <div class="text-xs font-extrabold uppercase tracking-[.2em] text-blue-600" data-en="How we work">Cara kerja</div>
+      <h2 class="font-display mt-2 text-3xl sm:text-4xl font-extrabold text-zura-navy tracking-tight" data-en="From idea to launch in four clear steps">Dari ide sampai rilis dalam empat langkah jelas</h2>
+    </div>
+    <div id="procTrack" class="relative mt-10 pl-12 sm:pl-16">
+      <div class="absolute left-[19px] sm:left-[27px] top-2 bottom-2 w-[3px] rounded bg-blue-100"><div id="procFill" class="w-full rounded bg-gradient-to-b from-blue-600 to-sky-400" style="height:0%"></div></div>
+      <div id="procList" class="space-y-9"></div>
+    </div>
+  </section>
+
+  <!-- Why -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5" id="whyGrid"></div>
+  </section>
+
+  <!-- =====================================================================
+       YOUTUBE
+       ===================================================================== -->
+  <section id="youtube" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20 scroll-mt-20">
+    <div class="glass rounded-[32px] p-6 sm:p-10 grid lg:grid-cols-2 gap-10 items-center">
+      <div class="reveal">
+        <div class="text-xs font-extrabold uppercase tracking-[.2em] text-rose-600" data-en="Free learning">Belajar gratis</div>
+        <h2 class="font-display mt-2 text-3xl sm:text-4xl font-extrabold text-zura-navy tracking-tight" data-en="Learn building apps on YouTube">Belajar bikin aplikasi di YouTube</h2>
+        <p class="mt-3 text-slate-600" data-en="Step-by-step tutorials on AppSheet, Apps Script and web apps — built around real business cases, not toy examples.">Tutorial step-by-step AppSheet, Apps Script, dan web app — dibangun dari kasus bisnis nyata, bukan contoh mainan.</p>
+        <ul class="mt-5 space-y-2.5 text-sm font-semibold text-slate-700">
+          <li class="flex gap-2.5"><i data-lucide="check-circle-2" class="w-5 h-5 text-emerald-500 shrink-0"></i><span data-en="Follow along: files and templates available">Bisa diikuti langsung: file dan template tersedia</span></li>
+          <li class="flex gap-2.5"><i data-lucide="check-circle-2" class="w-5 h-5 text-emerald-500 shrink-0"></i><span data-en="From beginner to automation">Dari pemula sampai otomasi</span></li>
+          <li class="flex gap-2.5"><i data-lucide="check-circle-2" class="w-5 h-5 text-emerald-500 shrink-0"></i><span data-en="Ask questions in the community">Tanya jawab di komunitas</span></li>
+        </ul>
+        <div class="mt-6 flex flex-col sm:flex-row gap-3">
+          <a data-link="youtube" data-track="yt_subscribe" class="px-6 py-3.5 rounded-2xl bg-rose-600 hover:bg-rose-700 text-white font-bold shadow-xl shadow-rose-900/20 transition flex items-center justify-center gap-2"><i data-lucide="youtube" class="w-5 h-5"></i><span data-en="Subscribe on YouTube">Subscribe di YouTube</span></a>
+          <a data-link="discord" data-track="yt_discord" class="px-6 py-3.5 rounded-2xl bg-white border border-slate-200 hover:border-blue-400 text-zura-navy font-bold transition flex items-center justify-center gap-2"><i data-lucide="messages-square" class="w-5 h-5 text-blue-600"></i><span data-en="Join the community">Gabung komunitas</span></a>
+        </div>
+      </div>
+      <div class="reveal" style="--d:120ms">
+        <div id="ytEmbed" class="relative aspect-video rounded-2xl overflow-hidden bg-gradient-to-br from-zura-navy to-blue-700 shadow-2xl grid place-items-center" data-tilt>
+          <div class="text-center text-white p-6">
+            <div class="mx-auto w-16 h-16 rounded-full bg-white/15 border border-white/40 grid place-items-center relative"><span class="absolute inset-0 rounded-full bg-white/30 ping2"></span><i data-lucide="play" class="w-7 h-7 fill-white"></i></div>
+            <p class="mt-4 text-sm font-semibold text-blue-100" data-en="Watch the latest tutorials on YouTube">Tonton tutorial terbaru di YouTube</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================================================================
+       CHANNEL HUB: data channel YouTube yang diperbarui otomatis
+       ===================================================================== -->
+  <section id="channel" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 scroll-mt-20">
+    <div class="glass rounded-[32px] p-5 sm:p-8 lg:p-10">
+      <div id="chSummary" class="flex flex-col lg:flex-row lg:items-center gap-6"></div>
+
+      <div class="mt-8 flex flex-wrap items-center justify-between gap-3">
+        <div class="flex gap-2 overflow-x-auto no-scrollbar" role="tablist">
+          <button class="ch-tab active shrink-0 px-4 py-2.5 rounded-xl border border-slate-200 bg-white text-sm font-bold text-slate-700 flex items-center gap-2 transition" data-chtab="latest"><i data-lucide="clock" class="w-4 h-4"></i><span data-en="Latest">Terbaru</span></button>
+          <button class="ch-tab shrink-0 px-4 py-2.5 rounded-xl border border-slate-200 bg-white text-sm font-bold text-slate-700 flex items-center gap-2 transition" data-chtab="popular"><i data-lucide="flame" class="w-4 h-4"></i><span data-en="Most popular">Terpopuler</span></button>
+          <button class="ch-tab shrink-0 px-4 py-2.5 rounded-xl border border-slate-200 bg-white text-sm font-bold text-slate-700 flex items-center gap-2 transition" data-chtab="playlist"><i data-lucide="list-video" class="w-4 h-4"></i><span data-en="Playlist">Playlist</span></button>
+        </div>
+        <p id="chMeta" class="text-xs font-semibold text-slate-500"></p>
+      </div>
+      <div id="chGrid" class="mt-5 grid sm:grid-cols-2 lg:grid-cols-4 gap-4"></div>
+    </div>
+  </section>
+
+  <!-- Resources -->
+  <section id="resources" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
     <div class="rounded-3xl bg-gradient-to-r from-zura-navy via-zura-deep to-blue-800 p-6 sm:p-10 text-white shadow-2xl border border-blue-800">
-      <div class="max-w-2xl mb-8">
-        <div class="text-xs font-extrabold uppercase tracking-widest text-blue-300 mb-2" data-i18n="repoEyebrow">OFFICIAL GITHUB PAGES REPOSITORIES</div>
-        <h3 class="text-2xl sm:text-3xl font-black tracking-tight" data-i18n="repoHeading">Build Faster with ZuraClass Open Libraries</h3>
-        <p class="text-sm sm:text-base text-blue-100/90 mt-2" data-i18n="repoSub">
-          Explore our integrated developer & business automation libraries hosted directly on the Zuralogic domain.
-        </p>
+      <div class="max-w-2xl mb-7">
+        <div class="text-xs font-extrabold uppercase tracking-widest text-blue-300" data-en="Free resources">Sumber daya gratis</div>
+        <h3 class="font-display mt-2 text-2xl sm:text-3xl font-extrabold tracking-tight" data-en="Copy, paste, and build faster">Salin, tempel, dan bangun lebih cepat</h3>
       </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <!-- Repo 1: svg-library-lite -->
-        <a href="/svg-library-lite/" class="group rounded-2xl bg-white/10 hover:bg-white/15 backdrop-blur-md border border-white/15 overflow-hidden transition flex flex-col justify-between shadow-lg">
-          <div>
-            <!-- Dummy Banner Image -->
-            <div class="relative h-36 overflow-hidden">
-              <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80" alt="SVG Library Preview" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
-              <div class="absolute inset-0 bg-gradient-to-t from-zura-navy/90 via-zura-navy/30 to-transparent"></div>
-              <span class="absolute bottom-3 left-4 text-[11px] font-bold uppercase tracking-wider bg-blue-600/90 px-2.5 py-0.5 rounded-md">UI Icon Pack</span>
-            </div>
-            <div class="p-5">
-              <h4 class="font-bold text-lg text-white group-hover:text-blue-200 transition">ZuraClass SVG Library Lite</h4>
-              <p class="text-xs text-blue-100/80 mt-1.5 leading-relaxed" data-i18n="repo1Desc">Free SVG UI Icon Library with instant Data URI copy for AppSheet & Web interfaces.</p>
-            </div>
-          </div>
-          <div class="px-5 pb-4 pt-3 border-t border-white/10 flex items-center justify-between text-xs font-bold text-blue-200">
-            <span>zuralogic.com/svg-library-lite</span>
-            <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition"></i>
-          </div>
+      <div class="grid md:grid-cols-3 gap-5">
+        <a href="/resource-vault-free/" data-track="res_vault" class="spot lift group rounded-2xl bg-white/10 hover:bg-white/15 border border-white/15 p-5 transition">
+          <span class="w-11 h-11 rounded-xl bg-blue-600 grid place-items-center"><i data-lucide="folder-kanban" class="w-5 h-5"></i></span>
+          <h4 class="mt-4 font-bold text-lg">Resource Vault</h4>
+          <p class="mt-1.5 text-sm text-blue-100/85" data-en="Free blueprints, scripts and templates for automation.">Blueprint, script, dan template gratis untuk otomasi.</p>
+          <span class="mt-4 inline-flex items-center gap-1.5 text-xs font-bold text-blue-200"><span data-en="Open">Buka</span><i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition"></i></span>
         </a>
-
-        <!-- Repo 2: resource-vault-free -->
-        <a href="/resource-vault-free/" class="group rounded-2xl bg-white/10 hover:bg-white/15 backdrop-blur-md border border-white/15 overflow-hidden transition flex flex-col justify-between shadow-lg">
-          <div>
-            <!-- Dummy Banner Image -->
-            <div class="relative h-36 overflow-hidden">
-              <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=600&q=80" alt="Resource Vault Preview" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
-              <div class="absolute inset-0 bg-gradient-to-t from-zura-navy/90 via-zura-navy/30 to-transparent"></div>
-              <span class="absolute bottom-3 left-4 text-[11px] font-bold uppercase tracking-wider bg-blue-600/90 px-2.5 py-0.5 rounded-md">Automation Vault</span>
-            </div>
-            <div class="p-5">
-              <h4 class="font-bold text-lg text-white group-hover:text-blue-200 transition">Resource Vault Free</h4>
-              <p class="text-xs text-blue-100/80 mt-1.5 leading-relaxed" data-i18n="repo2Desc">Free blueprints, scripts, and templates for your business automation workflow.</p>
-            </div>
-          </div>
-          <div class="px-5 pb-4 pt-3 border-t border-white/10 flex items-center justify-between text-xs font-bold text-blue-200">
-            <span>zuralogic.com/resource-vault-free</span>
-            <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition"></i>
-          </div>
+        <a href="/zuraclass-formula-library/" data-track="res_formula" class="spot lift group rounded-2xl bg-white/10 hover:bg-white/15 border border-white/15 p-5 transition">
+          <span class="w-11 h-11 rounded-xl bg-blue-600 grid place-items-center"><i data-lucide="sigma" class="w-5 h-5"></i></span>
+          <h4 class="mt-4 font-bold text-lg">Formula Library</h4>
+          <p class="mt-1.5 text-sm text-blue-100/85" data-en="100+ AppSheet and spreadsheet formulas ready to copy.">100+ formula AppSheet dan spreadsheet siap salin.</p>
+          <span class="mt-4 inline-flex items-center gap-1.5 text-xs font-bold text-blue-200"><span data-en="Open">Buka</span><i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition"></i></span>
         </a>
-
-        <!-- Repo 3: zuraclass-formula-library -->
-        <a href="/zuraclass-formula-library/" class="group rounded-2xl bg-white/10 hover:bg-white/15 backdrop-blur-md border border-white/15 overflow-hidden transition flex flex-col justify-between shadow-lg">
-          <div>
-            <!-- Dummy Banner Image -->
-            <div class="relative h-36 overflow-hidden">
-              <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=600&q=80" alt="Formula Library Preview" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
-              <div class="absolute inset-0 bg-gradient-to-t from-zura-navy/90 via-zura-navy/30 to-transparent"></div>
-              <span class="absolute bottom-3 left-4 text-[11px] font-bold uppercase tracking-wider bg-blue-600/90 px-2.5 py-0.5 rounded-md">100+ Formulas</span>
-            </div>
-            <div class="p-5">
-              <h4 class="font-bold text-lg text-white group-hover:text-blue-200 transition">ZuraClass Formula Library</h4>
-              <p class="text-xs text-blue-100/80 mt-1.5 leading-relaxed" data-i18n="repo3Desc">100+ AppSheet & Spreadsheets formulas ready to copy and implement.</p>
-            </div>
-          </div>
-          <div class="px-5 pb-4 pt-3 border-t border-white/10 flex items-center justify-between text-xs font-bold text-blue-200">
-            <span>zuralogic.com/zuraclass-formula-library</span>
-            <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition"></i>
-          </div>
+        <a href="/svg-library-lite/" data-track="res_svg" class="spot lift group rounded-2xl bg-white/10 hover:bg-white/15 border border-white/15 p-5 transition">
+          <span class="w-11 h-11 rounded-xl bg-blue-600 grid place-items-center"><i data-lucide="shapes" class="w-5 h-5"></i></span>
+          <h4 class="mt-4 font-bold text-lg">SVG Icon Library</h4>
+          <p class="mt-1.5 text-sm text-blue-100/85" data-en="Free UI icons with instant Data URI copy for AppSheet and web.">Ikon UI gratis dengan salin Data URI instan untuk AppSheet dan web.</p>
+          <span class="mt-4 inline-flex items-center gap-1.5 text-xs font-bold text-blue-200"><span data-en="Open">Buka</span><i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition"></i></span>
         </a>
       </div>
     </div>
   </section>
 
-
- <!-- =====================================================================
-       FOOTER (Dengan Footer Links + teks copyright zuralogic.com @ 2021)
+  <!-- =====================================================================
+       SOCIAL
        ===================================================================== -->
-  <footer class="bg-white border-t border-slate-200/90 mt-auto">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col md:flex-row items-center justify-between gap-6">
-      <div class="flex items-center gap-3">
-        <!-- Dummy Logo Footer -->
-        <a href="/" class="relative w-8 h-8 rounded-lg overflow-hidden bg-zura-navy flex items-center justify-center">
-          <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=80&q=80" alt="Zuralogic Logo" class="w-full h-full object-cover opacity-80" />
-          <span class="absolute font-black text-white text-xs">ZL</span>
-        </a>
-        <span class="font-bold text-sm text-zura-navy">Zuralogic.com</span>
-        <span class="text-xs text-slate-400">• <span data-i18n="tagline">Your Scale-Up Partner</span></span>
+  <section id="social" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20">
+    <div class="text-center max-w-2xl mx-auto reveal">
+      <div class="text-xs font-extrabold uppercase tracking-[.2em] text-blue-600" data-en="Stay connected">Tetap terhubung</div>
+      <h2 class="font-display mt-2 text-3xl sm:text-4xl font-extrabold text-zura-navy tracking-tight" data-en="Tips, behind-the-scenes, and new tutorials">Tips, di balik layar, dan tutorial baru</h2>
+      <p class="mt-3 text-slate-600" data-en="Short tips on Instagram, TikTok and Threads. Full tutorials on YouTube.">Tips singkat di Instagram, TikTok, dan Threads. Tutorial lengkap di YouTube.</p>
+    </div>
+    <div class="mt-9 grid grid-cols-2 md:grid-cols-5 gap-4">
+      <a data-link="youtube" data-track="soc_youtube" class="spot lift glass rounded-2xl p-5 flex flex-col items-center gap-3 text-center reveal group">
+        <span class="w-12 h-12 rounded-2xl bg-rose-600 text-white grid place-items-center group-hover:scale-110 transition"><i data-lucide="youtube" class="w-6 h-6"></i></span><span class="font-bold text-zura-navy text-sm">YouTube</span>
+      </a>
+      <a data-link="instagram" data-track="soc_instagram" class="spot lift glass rounded-2xl p-5 flex flex-col items-center gap-3 text-center reveal group" style="--d:60ms">
+        <span class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-amber-400 via-rose-500 to-fuchsia-600 text-white grid place-items-center group-hover:scale-110 transition"><i data-lucide="instagram" class="w-6 h-6"></i></span><span class="font-bold text-zura-navy text-sm">Instagram</span>
+      </a>
+      <a data-link="tiktok" data-track="soc_tiktok" class="spot lift glass rounded-2xl p-5 flex flex-col items-center gap-3 text-center reveal group" style="--d:120ms">
+        <span class="w-12 h-12 rounded-2xl bg-zura-navy text-white grid place-items-center group-hover:scale-110 transition"><svg viewBox="0 0 24 24" class="w-6 h-6" fill="currentColor" aria-hidden="true"><path d="M16.6 3c.3 2.3 1.7 3.9 4 4.1v3.1a7.2 7.2 0 0 1-4-1.3v6.2a5.6 5.6 0 1 1-5.6-5.6c.3 0 .7 0 1 .1v3.2a2.5 2.5 0 1 0 1.5 2.3V3h3.1z"/></svg></span><span class="font-bold text-zura-navy text-sm">TikTok</span>
+      </a>
+      <a data-link="threads" data-track="soc_threads" class="spot lift glass rounded-2xl p-5 flex flex-col items-center gap-3 text-center reveal group" style="--d:180ms">
+        <span class="w-12 h-12 rounded-2xl bg-slate-900 text-white grid place-items-center group-hover:scale-110 transition"><i data-lucide="at-sign" class="w-6 h-6"></i></span><span class="font-bold text-zura-navy text-sm">Threads</span>
+      </a>
+      <a data-link="facebook" data-track="soc_facebook" class="spot lift glass rounded-2xl p-5 flex flex-col items-center gap-3 text-center reveal group col-span-2 md:col-span-1" style="--d:240ms">
+        <span class="w-12 h-12 rounded-2xl bg-blue-600 text-white grid place-items-center group-hover:scale-110 transition"><i data-lucide="facebook" class="w-6 h-6"></i></span><span class="font-bold text-zura-navy text-sm">Facebook</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- =====================================================================
+       CONTACT
+       ===================================================================== -->
+  <section id="contact" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16 sm:pb-24 scroll-mt-20">
+    <div class="glass-dark rounded-[32px] p-6 sm:p-10 lg:p-12 text-white grid lg:grid-cols-2 gap-10 items-start relative overflow-hidden">
+      <div class="absolute -right-20 -top-24 w-80 h-80 rounded-full bg-sky-400/20 blur-3xl pointer-events-none"></div>
+      <div class="relative">
+        <div class="text-xs font-extrabold uppercase tracking-[.2em] text-sky-300" data-en="Let's talk">Ayo ngobrol</div>
+        <h2 class="font-display mt-2 text-3xl sm:text-4xl font-extrabold tracking-tight" data-en="Tell me what's slowing your work or business down.">Ceritakan apa yang bikin pekerjaan atau bisnismu lambat.</h2>
+        <p class="mt-3 text-blue-100/90" data-en="Share a short description. I'll reply with initial thoughts on the best approach — no pressure, no commitment.">Tulis deskripsi singkat. Saya balas dengan masukan awal soal pendekatan terbaik — tanpa tekanan, tanpa komitmen.</p>
+        <div class="mt-6 flex flex-col sm:flex-row gap-3">
+          <a id="ctaWa" style="display:none" data-track="contact_wa" class="px-5 py-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-white font-bold text-sm flex items-center justify-center gap-2 transition"><i data-lucide="message-circle" class="w-5 h-5"></i>WhatsApp</a>
+          <a id="ctaMail" style="display:none" data-track="contact_mail" class="px-5 py-3 rounded-xl bg-white/15 hover:bg-white/25 border border-white/25 text-white font-bold text-sm flex items-center justify-center gap-2 transition"><i data-lucide="mail" class="w-5 h-5"></i>Email</a>
+        </div>
       </div>
 
-      <!-- Footer Legal & Ecosystem Links -->
-      <div class="flex flex-wrap items-center justify-center gap-6 text-xs sm:text-sm font-semibold text-slate-600">
+      <form id="contactForm" class="relative bg-white/95 rounded-2xl p-5 sm:p-6 text-slate-800 space-y-4 shadow-2xl">
+        <div>
+          <label class="block text-xs font-extrabold uppercase text-slate-500 mb-1" for="cfName" data-en="Your name">Nama kamu</label>
+          <input id="cfName" required class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-100" />
+        </div>
+        <div>
+          <label class="block text-xs font-extrabold uppercase text-slate-500 mb-1" for="cfType" data-en="I need">Saya butuh</label>
+          <select id="cfType" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm bg-white focus:outline-none focus:border-blue-600">
+            <option value="appsheet">Aplikasi operasional (AppSheet)</option>
+            <option value="script">Otomasi (Apps Script)</option>
+            <option value="webapp">Web App custom</option>
+            <option value="website">Website</option>
+            <option value="learn">Belajar / pelatihan</option>
+            <option value="other">Belum yakin, mau diskusi</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-xs font-extrabold uppercase text-slate-500 mb-1" for="cfMsg" data-en="Describe your case">Ceritakan kasusmu</label>
+          <textarea id="cfMsg" rows="4" required placeholder="Contoh: Tim gudang kami masih catat stok di kertas..." data-en-ph="Example: Our warehouse team still tracks stock on paper..." class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-100"></textarea>
+        </div>
+        <button type="submit" data-track="contact_submit" class="w-full py-3 rounded-xl bg-zura-navy hover:bg-blue-700 text-white font-bold text-sm shadow-md transition flex items-center justify-center gap-2"><i data-lucide="send" class="w-4 h-4"></i><span data-en="Send my brief">Kirim brief saya</span></button>
+        <p class="text-[11px] text-slate-500 text-center" data-en="Your message opens in WhatsApp or email so you can review before sending.">Pesan akan terbuka di WhatsApp atau email supaya bisa kamu cek dulu sebelum dikirim.</p>
+      </form>
+    </div>
+  </section>
+  </main>
+
+  <!-- =====================================================================
+       FOOTER
+       ===================================================================== -->
+  <footer class="bg-white/80 border-t border-slate-200/90">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col md:flex-row items-center justify-between gap-5">
+      <div class="flex items-center gap-3">
+        <svg viewBox="0 0 40 40" class="w-8 h-8" aria-hidden="true"><defs><linearGradient id="lgB" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2563EB"/><stop offset="1" stop-color="#0A1931"/></linearGradient></defs><rect width="40" height="40" rx="11" fill="url(#lgB)"/><path d="M12 12h16l-12 16h12" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span class="font-bold text-sm text-zura-navy">Zuralogic.com</span>
+        <span class="text-xs text-slate-400">• Your Scale-Up Partner</span>
+      </div>
+      <div class="flex flex-wrap items-center justify-center gap-5 text-xs sm:text-sm font-semibold text-slate-600">
         <a href="/terms.html" class="hover:text-blue-600 transition">Terms of Service</a>
         <a href="/privacy.html" class="hover:text-blue-600 transition">Privacy Policy</a>
         <a href="/gethelp/" class="hover:text-blue-600 transition">Help Center</a>
-        <button onclick="openContactModal()" class="hover:text-blue-600 transition">Contact Us</button>
+        <a href="#contact" class="hover:text-blue-600 transition"><span data-en="Contact">Kontak</span></a>
       </div>
-
-      <p class="text-sm font-medium text-slate-500">
-        copyright © zuralogic.com @ 2021
-      </p>
+      <p class="text-sm font-medium text-slate-500">© zuralogic.com 2021–<span id="yr"></span></p>
     </div>
   </footer>
 
+  <!-- Floating CTA -->
+  <a id="fab" data-wa data-track="fab_cta" style="display:none" class="fixed bottom-5 right-4 sm:right-6 z-40 px-5 py-3 rounded-full bg-zura-navy hover:bg-blue-700 text-white text-sm font-bold shadow-2xl shadow-blue-900/30 items-center gap-2 transition">
+    <i data-lucide="message-circle" class="w-4 h-4"></i><span data-en="Free consultation">Konsultasi Gratis</span>
+  </a>
 
-  <!-- =====================================================================
-       MODALS (App Preview Modal, AI Get Help, Login / Creator Switch, Toast)
-       ===================================================================== -->
-  <!-- Live App Preview Modal (Menampilkan Gambar Dummy Screenshot Besar) -->
-  <div id="appPreviewModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-zura-navy/60 backdrop-blur-sm p-4">
-    <div class="bg-white rounded-3xl max-w-2xl w-full overflow-hidden shadow-2xl border border-blue-100">
-      <div class="relative h-64 sm:h-72 bg-slate-900">
-        <img id="previewModalImg" src="" alt="App Preview" class="w-full h-full object-cover" />
-        <button onclick="closeModals()" class="absolute top-4 right-4 p-2 rounded-full bg-zura-navy/80 text-white hover:bg-zura-navy">
-          <i data-lucide="x" class="w-5 h-5"></i>
-        </button>
-        <div id="previewModalPrice" class="absolute bottom-4 right-4 px-4 py-1.5 rounded-xl bg-white text-zura-navy font-black text-base shadow-lg"></div>
+  <!-- Toast -->
+  <div id="toast" style="display:none" class="fixed bottom-24 left-1/2 -translate-x-1/2 z-[80] max-w-[90vw] items-center gap-2.5 bg-zura-navy text-white px-4 py-3 rounded-2xl shadow-xl border border-blue-400/30 text-sm font-medium">
+    <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400 shrink-0"></i><span id="toastText"></span>
+  </div>
+
+<script>
+/* =========================================================================
+   CONFIG — ISI BAGIAN INI SAJA. Kosongkan (\"\") untuk menyembunyikan elemen terkait.
+   Tambahkan ?dev=1 di URL untuk melihat semua elemen & daftar yang belum diisi.
+   ========================================================================= */
+const CONFIG = {
+  whatsappUrl: "https://wa.me/zuralogic",  // link WhatsApp (dipakai semua tombol Konsultasi Gratis)
+  whatsapp: "@zuralogic",            // opsional: nomor internasional tanpa +, dipakai kalau whatsappUrl kosong
+  email: "",               // contoh: "halo@zuralogic.com"
+  youtubeChannelUrl: "https://youtube.com/@zuraclass",
+  youtubeChannelId: "UC7E98cGagwKgc7E_F2CtZpQ",
+  youtubePlaylistId: "PLNyPPzVOkZw6YwMI-eUnNZ_QVghISrTZC",
+  youtubeDataUrl: "data/youtube.json",   // dibuat otomatis oleh GitHub Action (lihat scripts/update-youtube.mjs)
+  youtubeMembers: "",      // jumlah member channel (angka). YouTube tidak membuka data ini lewat API publik, isi manual kalau mau ditampilkan
+  instagram: "https://instagram.com/zuralogic",
+  tiktok: "https://tiktok.com/@zuralogic",
+  threads: "https://threads.com/zuralogic",
+  facebook: "",
+  discord: "https://discord.gg/QBjWZEdY2",
+  ga4Id: "",               // contoh: "G-XXXXXXXXXX" (opsional, untuk analitik)
+  /* Proyek asli. Kalau diisi, section "Studi kasus" muncul otomatis. Contoh:
+  projects: [
+    { title: "Sistem Stok Gudang", tag: "AppSheet", desc: "Ringkasan masalah dan hasilnya.", image: "/assets/proyek-1.png", link: "https://..." }
+  ] */
+  projects: []
+};
+
+/* ======================= Helpers ======================= */
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const DEV = /[?&]dev=1/.test(location.search);
+const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const HOVER = matchMedia('(hover: hover)').matches;
+let LANG = 'id';
+try { LANG = localStorage.getItem('zl_lang') || ((navigator.language || 'id').toLowerCase().startsWith('id') ? 'id' : 'en'); } catch (e) {}
+const t = (id, en) => (LANG === 'id' ? id : en);
+const clamp = (n, a, b) => Math.min(b, Math.max(a, n));
+
+/* ======================= Analytics (opsional) ======================= */
+window.dataLayer = window.dataLayer || [];
+function gtag() { dataLayer.push(arguments); }
+if (CONFIG.ga4Id) {
+  const s = document.createElement('script'); s.async = true; s.src = 'https://www.googletagmanager.com/gtag/js?id=' + CONFIG.ga4Id; document.head.appendChild(s);
+  gtag('js', new Date()); gtag('config', CONFIG.ga4Id);
+}
+function track(name, params) { try { if (CONFIG.ga4Id) gtag('event', name, params || {}); if (DEV) console.log('[track]', name, params || ''); } catch (e) {} }
+document.addEventListener('click', e => { const el = e.target.closest('[data-track]'); if (el) track(el.dataset.track); });
+
+/* ======================= Toast ======================= */
+let toastTimer;
+function toast(msg) {
+  const b = $('#toast'); $('#toastText').textContent = msg; b.style.display = 'flex';
+  clearTimeout(toastTimer); toastTimer = setTimeout(() => (b.style.display = 'none'), 3600);
+}
+
+/* ======================= Links dari CONFIG ======================= */
+const missing = [];
+function wireLinks() {
+  const map = { youtube: CONFIG.youtubeChannelUrl, instagram: CONFIG.instagram, tiktok: CONFIG.tiktok, threads: CONFIG.threads, facebook: CONFIG.facebook, discord: CONFIG.discord };
+  $$('[data-link]').forEach(a => {
+    const k = a.dataset.link; let u = map[k];
+    if (!u) { if (!missing.includes(k)) missing.push(k); if (DEV) { u = '#'; a.style.outline = '2px dashed #e11d48'; a.style.display = ''; } else { a.style.display = 'none'; return; } }
+    a.href = u; if (u !== '#') { a.target = '_blank'; a.rel = 'noopener noreferrer'; }
+  });
+  const waBase = waLink();
+  const w = $('#ctaWa'), m = $('#ctaMail');
+  $$('[data-wa]').forEach(a => {
+    if (waBase) { a.href = waBase; a.target = '_blank'; a.rel = 'noopener noreferrer'; }
+    else { a.href = '#contact'; }
+  });
+  if (waBase) { w.href = waBase; w.target = '_blank'; w.rel = 'noopener'; w.style.display = 'flex'; } else { missing.push('whatsapp'); if (DEV) { w.style.display = 'flex'; w.style.outline = '2px dashed #e11d48'; } }
+  if (CONFIG.email) { m.href = 'mailto:' + CONFIG.email; m.style.display = 'flex'; } else { missing.push('email'); if (DEV) { m.style.display = 'flex'; m.style.outline = '2px dashed #e11d48'; } }
+  if (!DEV) {
+    const socialKeys = ['youtube', 'instagram', 'tiktok', 'threads', 'facebook'];
+    if (socialKeys.every(k => !map[k])) $('#social').style.display = 'none';
+  }
+  if (DEV) { const d = $('#devNotice'); d.style.display = 'block'; d.innerHTML = '<b>DEV MODE</b><br>Belum diisi di CONFIG: ' + (missing.length ? missing.join(', ') : 'semua terisi ✓'); }
+}
+
+function waLink() {
+  if (CONFIG.whatsappUrl) return CONFIG.whatsappUrl;
+  const n = (CONFIG.whatsapp || '').replace(/\D/g, '');
+  return n ? 'https://wa.me/' + n : '';
+}
+function sendMessage(text) {
+  const wa = waLink();
+  if (wa) { window.open(wa + (wa.includes('?') ? '&' : '?') + 'text=' + encodeURIComponent(text), '_blank', 'noopener'); return; }
+  if (CONFIG.email) { location.href = 'mailto:' + CONFIG.email + '?subject=' + encodeURIComponent('Konsultasi Zuralogic') + '&body=' + encodeURIComponent(text); return; }
+  try { navigator.clipboard && navigator.clipboard.writeText(text); } catch (e) {}
+  toast(t('Kontak belum diisi di CONFIG. Brief disalin ke clipboard.', 'Contact not set in CONFIG. Brief copied to clipboard.'));
+}
+
+/* ======================= i18n ======================= */
+function applyLang() {
+  document.documentElement.lang = LANG;
+  $('#langLabel').textContent = LANG.toUpperCase();
+  $$('[data-en]').forEach(el => {
+    if (el.dataset.id === undefined) el.dataset.id = el.textContent;
+    el.textContent = LANG === 'en' ? el.dataset.en : el.dataset.id;
+  });
+  $$('[data-en-ph]').forEach(el => {
+    if (el.dataset.phId === undefined) el.dataset.phId = el.placeholder;
+    el.placeholder = LANG === 'en' ? el.dataset.enPh : el.dataset.phId;
+  });
+  renderDynamic();
+}
+$('#langBtn').addEventListener('click', () => {
+  LANG = LANG === 'id' ? 'en' : 'id';
+  try { localStorage.setItem('zl_lang', LANG); } catch (e) {}
+  applyLang(); track('lang_switch', { lang: LANG });
+});
+
+/* ======================= Data konten ======================= */
+const TECH = ['Google AppSheet', 'Google Apps Script', 'Google Sheets', 'Google Workspace', 'Web App', 'HTML · CSS · JavaScript', t('Integrasi API', 'API Integration'), t('Laporan PDF Otomatis', 'Automatic PDF Reports'), t('Otomasi Email', 'Email Automation')];
+
+const SOLUTIONS = [
+  { k: 'stok', icon: 'package-check', id: ['Gudang & Stok', 'Pencatatan masuk-keluar barang, scan QR/barcode, dan peringatan stok menipis.'], en: ['Warehouse & Stock', 'In/out tracking, QR/barcode scanning and low-stock alerts.'], tags: ['AppSheet', 'Sheets'] },
+  { k: 'hse', icon: 'shield-check', id: ['Inspeksi & HSE', 'Checklist inspeksi, laporan temuan lapangan, dan jadwal pemeriksaan otomatis.'], en: ['Inspection & HSE', 'Inspection checklists, field findings reports and automated schedules.'], tags: ['AppSheet', 'Apps Script'] },
+  { k: 'absen', icon: 'map-pin', id: ['Absensi & Tim Lapangan', 'Absensi selfie + GPS, pengajuan cuti, dan rekap otomatis.'], en: ['Attendance & Field Teams', 'Selfie + GPS attendance, leave requests and automatic recaps.'], tags: ['AppSheet'] },
+  { k: 'pos', icon: 'shopping-bag', id: ['Penjualan & Kasir', 'Pencatatan transaksi, struk digital, dan ringkasan penjualan harian.'], en: ['Sales & POS', 'Transaction logging, digital receipts and daily sales summaries.'], tags: ['Web App', 'Apps Script'] },
+  { k: 'invoice', icon: 'receipt', id: ['Invoice & CRM', 'Pantau prospek sampai pembayaran, invoice PDF otomatis, dan pengingat tagihan.'], en: ['Invoice & CRM', 'Track leads through payment, auto PDF invoices and payment reminders.'], tags: ['Apps Script', 'Web App'] },
+  { k: 'dash', icon: 'bar-chart-3', id: ['Dashboard & Laporan Otomatis', 'Satukan data dari banyak sumber jadi satu dashboard yang selalu update.'], en: ['Dashboards & Auto Reports', 'Combine data from many sources into one always-fresh dashboard.'], tags: ['Web App', 'Sheets'] }
+];
+
+const ROADMAP = [
+  { n: '01', icon: 'smartphone', id: ['AppSheet Dasar', 'Bikin aplikasi pertamamu dari Google Sheets.'], en: ['AppSheet Basics', 'Build your first app from Google Sheets.'] },
+  { n: '02', icon: 'sigma', id: ['Data & Formula', 'Struktur tabel, relasi, dan formula yang rapi.'], en: ['Data & Formulas', 'Table structure, relations and clean formulas.'] },
+  { n: '03', icon: 'workflow', id: ['Otomasi Apps Script', 'Laporan, notifikasi, dan sinkronisasi otomatis.'], en: ['Apps Script Automation', 'Reports, notifications and automatic sync.'] },
+  { n: '04', icon: 'layout-dashboard', id: ['Web App & Rilis', 'Bangun antarmuka sendiri dan luncurkan ke pengguna.'], en: ['Web Apps & Launch', 'Build your own interface and ship it to users.'] }
+];
+
+const PROCESS = [
+  { icon: 'search', id: ['Diskusi & audit alur kerja', 'Kita petakan cara kerja saat ini, titik macet, dan hasil yang kamu inginkan. Di akhir tahap ini scope sudah jelas.'], en: ['Discovery & workflow audit', 'We map how work happens today, the bottlenecks and the outcome you want. By the end, scope is clear.'] },
+  { icon: 'pen-tool', id: ['Blueprint & prototipe', 'Struktur data, alur layar, dan hak akses dirancang dan disepakati sebelum dibangun.'], en: ['Blueprint & prototype', 'Data structure, screen flow and permissions are designed and agreed before building.'] },
+  { icon: 'hammer', id: ['Bangun & uji bersama', 'Dibangun bertahap. Kamu mencoba versi yang bisa dipakai sejak awal dan memberi masukan.'], en: ['Build & test together', 'Built in increments. You try a working version early and give feedback.'] },
+  { icon: 'rocket', id: ['Rilis, pelatihan & dukungan', 'Timmu dilatih memakainya, dokumentasi diserahkan, dan ada masa dukungan setelah rilis.'], en: ['Launch, training & support', 'Your team is trained, documentation handed over, with a support window after launch.'] }
+];
+
+const WHY = [
+  { icon: 'graduation-cap', id: ['Praktisi yang juga mengajar', 'Caranya dibahas terbuka di YouTube. Kamu bisa menilai kualitasnya sebelum bekerja sama.'], en: ['A practitioner who teaches', 'The methods are shown openly on YouTube. Judge the quality before working together.'] },
+  { icon: 'zap', id: ['Cepat dan hemat', 'Ekosistem Google dan no-code memangkas waktu dibanding membangun dari nol.'], en: ['Fast and cost-effective', 'Google and no-code tooling cuts time compared to building from scratch.'] },
+  { icon: 'key-round', id: ['Kamu pegang kendali', 'Dokumentasi dan pelatihan membuat timmu mandiri, bukan bergantung selamanya.'], en: ['You stay in control', 'Documentation and training make your team self-sufficient, not dependent forever.'] },
+  { icon: 'file-check-2', id: ['Scope jelas', 'Kesepakatan tertulis di awal, jadi tidak ada kejutan di tengah jalan.'], en: ['Clear scope', 'Written agreement up front, so no surprises midway.'] }
+];
+
+/* ======================= Render dinamis ======================= */
+function renderDynamic() {
+  // marquee
+  const items = TECH.map(x => `<span class="shrink-0 px-3.5 py-1.5 rounded-full bg-white border border-blue-100 text-xs font-bold text-slate-700">${x}</span>`).join('');
+  $('#marqueeTrack').innerHTML = items + items;
+
+  // rotating words
+  startRotator();
+
+  // solutions
+  $('#solGrid').innerHTML = SOLUTIONS.map((s, i) => `
+    <button data-sol="${s.k}" class="spot lift glass rounded-3xl p-6 text-left reveal in group" style="--d:${i * 60}ms">
+      <div class="flex items-center justify-between">
+        <span class="w-12 h-12 rounded-2xl bg-zura-navy text-white grid place-items-center shadow-lg group-hover:bg-blue-600 group-hover:scale-110 transition"><i data-lucide="${s.icon}" class="w-6 h-6"></i></span>
+        <i data-lucide="arrow-up-right" class="w-5 h-5 text-slate-400 group-hover:text-blue-600 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition"></i>
       </div>
-      <div class="p-6 space-y-4">
-        <div class="flex items-center justify-between">
-          <span id="previewModalCat" class="text-xs font-extrabold uppercase tracking-wider text-blue-600"></span>
-          <span id="previewModalLang" class="text-xs font-semibold text-slate-500"></span>
+      <h3 class="font-display mt-4 text-lg font-extrabold text-zura-navy">${t(...[s.id[0], s.en[0]])}</h3>
+      <p class="mt-1.5 text-sm text-slate-600 leading-relaxed">${LANG === 'id' ? s.id[1] : s.en[1]}</p>
+      <div class="mt-4 flex flex-wrap gap-1.5">${s.tags.map(x => `<span class="text-[11px] font-bold text-blue-700 bg-blue-50 rounded-md px-2 py-0.5">${x}</span>`).join('')}</div>
+    </button>`).join('');
+  $$('[data-sol]').forEach(b => b.addEventListener('click', () => pickSolution(b.dataset.sol)));
+
+  // roadmap
+  $('#roadmap').innerHTML = ROADMAP.map(r => `
+    <li class="spot rounded-2xl bg-white/80 border border-blue-100 p-4">
+      <div class="flex items-center gap-3"><span class="font-display text-2xl font-extrabold text-blue-200">${r.n}</span><span class="w-9 h-9 rounded-xl bg-blue-50 text-blue-600 grid place-items-center"><i data-lucide="${r.icon}" class="w-5 h-5"></i></span></div>
+      <h4 class="mt-2 font-bold text-zura-navy">${LANG === 'id' ? r.id[0] : r.en[0]}</h4>
+      <p class="text-xs text-slate-600 mt-1">${LANG === 'id' ? r.id[1] : r.en[1]}</p>
+    </li>`).join('');
+
+  // process
+  $('#procList').innerHTML = PROCESS.map((p, i) => `
+    <div class="proc-step relative" data-i="${i}">
+      <span class="dot absolute -left-12 sm:-left-16 top-0 w-10 h-10 sm:w-14 sm:h-14 rounded-full border-2 grid place-items-center"><i data-lucide="${p.icon}" class="w-5 h-5 sm:w-6 sm:h-6"></i></span>
+      <div class="body glass rounded-2xl p-5 sm:p-6">
+        <div class="text-[11px] font-extrabold uppercase tracking-widest text-blue-600">${t('Langkah', 'Step')} ${i + 1}</div>
+        <h3 class="font-display mt-1 text-lg sm:text-xl font-extrabold text-zura-navy">${LANG === 'id' ? p.id[0] : p.en[0]}</h3>
+        <p class="mt-1.5 text-sm text-slate-600 leading-relaxed">${LANG === 'id' ? p.id[1] : p.en[1]}</p>
+      </div>
+    </div>`).join('');
+
+  // why
+  $('#whyGrid').innerHTML = WHY.map((w, i) => `
+    <div class="spot lift glass rounded-2xl p-5 reveal in" style="--d:${i * 70}ms">
+      <span class="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 grid place-items-center"><i data-lucide="${w.icon}" class="w-5 h-5"></i></span>
+      <h4 class="mt-3 font-bold text-zura-navy">${LANG === 'id' ? w.id[0] : w.en[0]}</h4>
+      <p class="mt-1 text-sm text-slate-600 leading-relaxed">${LANG === 'id' ? w.id[1] : w.en[1]}</p>
+    </div>`).join('');
+
+  // projects
+  const ps = $('#projects');
+  if (CONFIG.projects && CONFIG.projects.length) {
+    ps.style.display = '';
+    $('#projGrid').innerHTML = CONFIG.projects.map(p => `
+      <a ${p.link ? `href="${p.link}" target="_blank" rel="noopener"` : ''} class="spot lift glass rounded-3xl overflow-hidden block">
+        ${p.image ? `<img src="${p.image}" alt="${p.title}" loading="lazy" class="w-full h-44 object-cover" />` : ''}
+        <div class="p-5"><span class="text-[11px] font-bold text-blue-700 bg-blue-50 rounded-md px-2 py-0.5">${p.tag || ''}</span>
+        <h3 class="font-display mt-2 text-lg font-extrabold text-zura-navy">${p.title}</h3><p class="mt-1 text-sm text-slate-600">${p.desc || ''}</p></div>
+      </a>`).join('');
+  }
+
+  // wizard + select options
+  renderWizard();
+  const sel = $('#cfType'), cur = sel.value;
+  const opts = { appsheet: ['Aplikasi operasional (AppSheet)', 'Operational app (AppSheet)'], script: ['Otomasi (Apps Script)', 'Automation (Apps Script)'], webapp: ['Web App custom', 'Custom Web App'], website: ['Website', 'Website'], learn: ['Belajar / pelatihan', 'Learning / training'], other: ['Belum yakin, mau diskusi', 'Not sure yet, let\'s talk'] };
+  [...sel.options].forEach(o => o.textContent = LANG === 'id' ? opts[o.value][0] : opts[o.value][1]); sel.value = cur;
+
+  renderChannel();
+  lucide.createIcons();
+  observeReveals();
+}
+
+/* ======================= Rotating headline word ======================= */
+let rotTimer, rotI = 0;
+function startRotator() {
+  const words = LANG === 'id' ? ['aplikasi', 'dashboard', 'otomasi', 'web app'] : ['apps', 'dashboards', 'automation', 'web apps'];
+  const el = $('#rotWord'); el.textContent = words[rotI % words.length];
+  clearInterval(rotTimer);
+  if (REDUCED) return;
+  rotTimer = setInterval(() => {
+    el.style.opacity = 0; el.style.transform = 'translateY(8px)';
+    setTimeout(() => { rotI++; el.textContent = words[rotI % words.length]; el.style.opacity = 1; el.style.transform = 'none'; }, 280);
+  }, 2600);
+}
+
+/* ======================= Jalur: build / learn ======================= */
+function activatePath(p, scroll = true) {
+  $$('.path-card').forEach(c => c.classList.toggle('active', c.dataset.path === p));
+  $('#panel-build').style.display = p === 'build' ? '' : 'none';
+  $('#panel-learn').style.display = p === 'learn' ? '' : 'none';
+  if (p === 'build') $('#panel-build').classList.add('in');
+  track('path_select', { path: p });
+  if (scroll) $('#start').scrollIntoView({ behavior: REDUCED ? 'auto' : 'smooth', block: 'start' });
+}
+$$('[data-path]').forEach(b => b.addEventListener('click', () => activatePath(b.dataset.path)));
+
+/* ======================= Wizard ======================= */
+const WZ = { step: 0, type: null, features: new Set(), scale: null };
+const W_TYPES = [
+  { k: 'appsheet', icon: 'smartphone', id: ['Aplikasi operasional', 'Untuk tim lapangan, gudang, inspeksi, absensi (AppSheet)'], en: ['Operational app', 'For field, warehouse, inspection, attendance teams (AppSheet)'] },
+  { k: 'script', icon: 'workflow', id: ['Otomasi proses', 'Rekap, laporan, notifikasi otomatis (Apps Script)'], en: ['Process automation', 'Recaps, reports, automatic notifications (Apps Script)'] },
+  { k: 'webapp', icon: 'layout-dashboard', id: ['Web App custom', 'Portal, dashboard, atau sistem dengan alur khusus'], en: ['Custom web app', 'Portals, dashboards or systems with special flows'] },
+  { k: 'website', icon: 'globe', id: ['Website', 'Landing page, company profile, atau portofolio'], en: ['Website', 'Landing page, company profile or portfolio'] }
+];
+const W_FEATS = [
+  { k: 'login', icon: 'lock', id: 'Login & hak akses', en: 'Login & roles' },
+  { k: 'scan', icon: 'qr-code', id: 'Scan QR / barcode', en: 'QR / barcode scan' },
+  { k: 'gps', icon: 'map-pin', id: 'Absensi / lokasi GPS', en: 'GPS attendance / location' },
+  { k: 'pdf', icon: 'file-text', id: 'Laporan & PDF otomatis', en: 'Auto reports & PDF' },
+  { k: 'dash', icon: 'bar-chart-3', id: 'Dashboard & grafik', en: 'Dashboard & charts' },
+  { k: 'notif', icon: 'bell', id: 'Notifikasi email / chat', en: 'Email / chat notifications' },
+  { k: 'integ', icon: 'plug-zap', id: 'Integrasi sistem lain', en: 'Integration with other systems' },
+  { k: 'multi', icon: 'building-2', id: 'Multi cabang / outlet', en: 'Multi-branch / outlet' }
+];
+const W_SCALES = [
+  { k: 's', id: ['Tim kecil', '1–10 pengguna'], en: ['Small team', '1–10 users'] },
+  { k: 'm', id: ['Menengah', '10–50 pengguna'], en: ['Medium', '10–50 users'] },
+  { k: 'l', id: ['Besar', '50+ pengguna'], en: ['Large', '50+ users'] }
+];
+const L = o => (LANG === 'id' ? o.id : o.en);
+
+function wizardResult() {
+  const base = { appsheet: 1, script: 1, webapp: 3, website: 1 }[WZ.type] || 1;
+  const fScore = [...WZ.features].reduce((n, f) => n + (f === 'integ' || f === 'multi' ? 1.5 : 1), 0);
+  const sScore = { s: 0, m: 1, l: 2 }[WZ.scale] || 0;
+  const score = base + fScore + sScore;
+  const level = score <= 4 ? 0 : score <= 8 ? 1 : 2;
+  const levelName = [t('Ringan', 'Light'), t('Menengah', 'Medium'), t('Kompleks', 'Complex')][level];
+  let stack = {
+    appsheet: 'Google AppSheet + Google Sheets / Workspace',
+    script: 'Google Apps Script + Google Workspace',
+    webapp: t('Web App custom (HTML/JS) + Apps Script / API + database', 'Custom Web App (HTML/JS) + Apps Script / API + database'),
+    website: t('Website responsif (HTML/CSS/JS) + form, WhatsApp & analytics', 'Responsive website (HTML/CSS/JS) + forms, WhatsApp & analytics')
+  }[WZ.type];
+  const notes = [];
+  if (WZ.type === 'appsheet' && (WZ.features.has('integ') || WZ.features.has('pdf') || WZ.features.has('notif'))) { stack += ' + Apps Script'; notes.push(t('Apps Script ditambahkan untuk otomasi dan integrasi.', 'Apps Script added for automation and integration.')); }
+  if (WZ.type === 'appsheet' && WZ.scale === 'l') notes.push(t('Dengan 50+ pengguna, perlu dipertimbangkan database yang lebih kuat dari Sheets.', 'With 50+ users, consider a stronger database than Sheets.'));
+  if (WZ.type === 'appsheet' && WZ.features.has('multi')) notes.push(t('Multi cabang butuh desain hak akses dan data yang matang sejak awal.', 'Multi-branch needs solid permission and data design from the start.'));
+  if (WZ.type === 'website' && WZ.features.has('login')) notes.push(t('Fitur login pada website biasanya berarti kamu butuh Web App, bukan website biasa.', 'Login on a website usually means you need a Web App rather than a plain website.'));
+  return { level, levelName, stack, notes };
+}
+function wizardBrief() {
+  const r = wizardResult();
+  const ty = W_TYPES.find(x => x.k === WZ.type), sc = W_SCALES.find(x => x.k === WZ.scale);
+  const feats = [...WZ.features].map(k => L(W_FEATS.find(f => f.k === k))).join(', ') || '-';
+  return t(
+    `Halo Zuralogic, saya mau konsultasi.\n\nKebutuhan: ${ty.id[0]}\nFitur: ${feats}\nSkala: ${sc.id[0]} (${sc.id[1]})\nRekomendasi awal: ${r.stack}\nPerkiraan kompleksitas: ${r.levelName}\n\nCerita singkat kasus saya:\n`,
+    `Hi Zuralogic, I'd like a consultation.\n\nNeed: ${ty.en[0]}\nFeatures: ${feats}\nScale: ${sc.en[0]} (${sc.en[1]})\nInitial recommendation: ${r.stack}\nEstimated complexity: ${r.levelName}\n\nShort story of my case:\n`
+  );
+}
+function renderWizard() {
+  const body = $('#wzBody'); if (!body) return;
+  const total = 4;
+  $('#wzBar').style.width = ((WZ.step + 1) / total * 100) + '%';
+  $('#wzDots').innerHTML = [0, 1, 2, 3].map(i => `<span class="w-2.5 h-2.5 rounded-full ${i <= WZ.step ? 'bg-blue-600' : 'bg-blue-200'} transition"></span>`).join('');
+  $('#wzBack').style.visibility = WZ.step === 0 ? 'hidden' : 'visible';
+  const next = $('#wzNext'), nt = $('#wzNextText');
+
+  if (WZ.step === 0) {
+    body.innerHTML = `<h4 class="font-bold text-zura-navy mb-3">1. ${t('Apa yang ingin kamu bangun?', 'What do you want to build?')}</h4>
+      <div class="grid sm:grid-cols-2 gap-3">${W_TYPES.map(o => `
+        <button data-type="${o.k}" class="opt spot text-left rounded-2xl border-2 border-slate-200 bg-white p-4 flex items-start gap-3 ${WZ.type === o.k ? 'sel' : ''}">
+          <span class="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 grid place-items-center shrink-0"><i data-lucide="${o.icon}" class="w-5 h-5"></i></span>
+          <span><span class="block font-bold text-zura-navy text-sm">${L(o)[0]}</span><span class="block text-xs text-slate-600 mt-0.5">${L(o)[1]}</span></span>
+        </button>`).join('')}</div>`;
+    nt.textContent = t('Lanjut', 'Next'); next.disabled = !WZ.type;
+    $$('[data-type]', body).forEach(b => b.addEventListener('click', () => { WZ.type = b.dataset.type; renderWizard(); lucide.createIcons(); }));
+  } else if (WZ.step === 1) {
+    body.innerHTML = `<h4 class="font-bold text-zura-navy mb-1">2. ${t('Fitur apa yang kamu perlukan?', 'Which features do you need?')}</h4><p class="text-xs text-slate-500 mb-3">${t('Boleh pilih lebih dari satu, atau lewati.', 'Pick several, or skip.')}</p>
+      <div class="grid sm:grid-cols-2 gap-3">${W_FEATS.map(o => `
+        <button data-feat="${o.k}" class="opt spot text-left rounded-2xl border-2 border-slate-200 bg-white p-3.5 flex items-center gap-3 ${WZ.features.has(o.k) ? 'sel' : ''}">
+          <span class="w-9 h-9 rounded-lg bg-blue-50 text-blue-600 grid place-items-center shrink-0"><i data-lucide="${o.icon}" class="w-4 h-4"></i></span><span class="font-bold text-sm text-zura-navy">${L(o)}</span>
+        </button>`).join('')}</div>`;
+    nt.textContent = t('Lanjut', 'Next'); next.disabled = false;
+    $$('[data-feat]', body).forEach(b => b.addEventListener('click', () => { const k = b.dataset.feat; WZ.features.has(k) ? WZ.features.delete(k) : WZ.features.add(k); renderWizard(); lucide.createIcons(); }));
+  } else if (WZ.step === 2) {
+    body.innerHTML = `<h4 class="font-bold text-zura-navy mb-3">3. ${t('Berapa orang yang akan memakainya?', 'How many people will use it?')}</h4>
+      <div class="grid sm:grid-cols-3 gap-3">${W_SCALES.map(o => `
+        <button data-scale="${o.k}" class="opt spot text-left rounded-2xl border-2 border-slate-200 bg-white p-4 ${WZ.scale === o.k ? 'sel' : ''}">
+          <span class="block font-bold text-zura-navy">${L(o)[0]}</span><span class="block text-xs text-slate-600 mt-0.5">${L(o)[1]}</span>
+        </button>`).join('')}</div>`;
+    nt.textContent = t('Lihat hasil', 'See result'); next.disabled = !WZ.scale;
+    $$('[data-scale]', body).forEach(b => b.addEventListener('click', () => { WZ.scale = b.dataset.scale; renderWizard(); lucide.createIcons(); }));
+  } else {
+    const r = wizardResult();
+    body.innerHTML = `
+      <div class="grid md:grid-cols-5 gap-5">
+        <div class="md:col-span-3 rounded-2xl bg-white p-5 border border-blue-100">
+          <div class="text-[11px] font-extrabold uppercase tracking-widest text-blue-600">${t('Rekomendasi awal', 'Initial recommendation')}</div>
+          <p class="mt-1.5 font-display text-lg font-extrabold text-zura-navy">${r.stack}</p>
+          ${r.notes.length ? `<ul class="mt-3 space-y-1.5 text-sm text-slate-600">${r.notes.map(n => `<li class="flex gap-2"><i data-lucide="info" class="w-4 h-4 text-blue-500 shrink-0 mt-0.5"></i><span>${n}</span></li>`).join('')}</ul>` : ''}
+          <p class="mt-4 text-xs text-slate-500">${t('Ini estimasi awal untuk membuka diskusi. Scope dan penawaran final disepakati setelah konsultasi.', 'This is an initial estimate to start the conversation. Final scope and quote follow after consultation.')}</p>
         </div>
-        <h3 id="previewModalTitle" class="text-2xl font-black text-zura-navy"></h3>
-        <p id="previewModalDesc" class="text-sm text-slate-600 leading-relaxed"></p>
-        <div class="flex items-center justify-between pt-4 border-t border-slate-100">
-          <div class="flex items-center gap-2.5">
-            <img id="previewModalAvatar" src="" alt="Creator" class="w-9 h-9 rounded-full object-cover border border-blue-200" />
-            <div>
-              <div id="previewModalCreator" class="text-xs font-bold text-zura-navy"></div>
-              <div class="text-[11px] text-emerald-600 font-semibold">✓ Verified ZuraClass Creator</div>
-            </div>
-          </div>
-          <div class="flex gap-2">
-            <button onclick="closeModals()" class="px-4 py-2.5 rounded-xl border border-slate-200 text-xs font-bold text-slate-600 hover:bg-slate-50">Close</button>
-            <button onclick="closeModals(); showToast('Redirecting to ZuraAppMarket Checkout...')" class="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold shadow-md">Deploy This App</button>
-          </div>
+        <div class="md:col-span-2 rounded-2xl bg-white p-5 border border-blue-100">
+          <div class="text-[11px] font-extrabold uppercase tracking-widest text-blue-600">${t('Kompleksitas', 'Complexity')}</div>
+          <div class="mt-3 flex gap-1.5">${[0, 1, 2].map(i => `<span class="h-2.5 flex-1 rounded-full ${i <= r.level ? 'bg-gradient-to-r from-blue-600 to-sky-400' : 'bg-slate-200'}"></span>`).join('')}</div>
+          <p class="mt-2 font-extrabold text-zura-navy">${r.levelName}</p>
         </div>
+      </div>
+      <div class="mt-5 flex flex-col sm:flex-row gap-3">
+        <button id="wzSend" data-track="wizard_send" class="px-5 py-3 rounded-xl bg-zura-navy hover:bg-blue-700 text-white font-bold text-sm flex items-center justify-center gap-2 transition"><i data-lucide="send" class="w-4 h-4"></i>${t('Kirim brief ini', 'Send this brief')}</button>
+        <button id="wzReset" class="px-5 py-3 rounded-xl border border-slate-200 bg-white text-slate-700 font-bold text-sm hover:border-blue-400 transition flex items-center justify-center gap-2"><i data-lucide="rotate-ccw" class="w-4 h-4"></i>${t('Ulangi', 'Start over')}</button>
+      </div>`;
+    next.style.visibility = 'hidden';
+    $('#wzSend').addEventListener('click', () => { track('wizard_complete', { type: WZ.type, level: r.level }); sendMessage(wizardBrief()); });
+    $('#wzReset').addEventListener('click', () => { WZ.step = 0; WZ.type = null; WZ.features.clear(); WZ.scale = null; renderWizard(); lucide.createIcons(); });
+    return;
+  }
+  next.style.visibility = 'visible';
+}
+$('#wzNext').addEventListener('click', () => { if (WZ.step < 3) { WZ.step++; renderWizard(); lucide.createIcons(); } });
+$('#wzBack').addEventListener('click', () => { if (WZ.step > 0) { WZ.step--; renderWizard(); lucide.createIcons(); } });
+
+/* ======================= Skill tabs ======================= */
+function setSkill(i) {
+  $$('.tab-btn').forEach(b => b.classList.toggle('active', +b.dataset.skill === i));
+  $$('.skill-panel').forEach(p => p.classList.toggle('active', +p.dataset.panel === i));
+  const act = $(`.skill-panel[data-panel="${i}"]`);
+  $$('[data-anim]', act).forEach(el => { el.classList.remove('in'); void el.offsetWidth; el.classList.add('in'); });
+  track('skill_tab', { skill: i });
+}
+$$('.tab-btn').forEach(b => b.addEventListener('click', () => setSkill(+b.dataset.skill)));
+
+/* ======================= Solusi -> kontak ======================= */
+function pickSolution(k) {
+  const s = SOLUTIONS.find(x => x.k === k);
+  const map = { stok: 'appsheet', hse: 'appsheet', absen: 'appsheet', pos: 'webapp', invoice: 'script', dash: 'webapp' };
+  $('#cfType').value = map[k] || 'other';
+  $('#cfMsg').value = t(`Saya tertarik dengan solusi "${s.id[0]}". Kondisi saat ini: `, `I'm interested in the "${s.en[0]}" solution. Current situation: `);
+  track('solution_pick', { solution: k });
+  $('#contact').scrollIntoView({ behavior: REDUCED ? 'auto' : 'smooth' });
+  setTimeout(() => $('#cfMsg').focus({ preventScroll: true }), 700);
+}
+
+/* ======================= Form kontak ======================= */
+$('#contactForm').addEventListener('submit', e => {
+  e.preventDefault();
+  const sel = $('#cfType');
+  const text = t(
+    `Halo Zuralogic, saya ${$('#cfName').value}.\nKebutuhan: ${sel.options[sel.selectedIndex].textContent}\n\n${$('#cfMsg').value}`,
+    `Hi Zuralogic, I'm ${$('#cfName').value}.\nNeed: ${sel.options[sel.selectedIndex].textContent}\n\n${$('#cfMsg').value}`
+  );
+  track('contact_form_submit', { type: sel.value });
+  sendMessage(text);
+});
+
+/* ======================= YouTube embed ======================= */
+function renderYT() {
+  const id = CONFIG.youtubeChannelId;
+  if (/^UC[\w-]{22}$/.test(id)) {
+    $('#ytEmbed').innerHTML = `<iframe class="absolute inset-0 w-full h-full" src="https://www.youtube-nocookie.com/embed/videoseries?list=UU${id.slice(2)}" title="YouTube" loading="lazy" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>`;
+    $('#ytEmbed').removeAttribute('data-tilt');
+  } else if (CONFIG.youtubeChannelUrl) {
+    const box = $('#ytEmbed'); box.style.cursor = 'pointer';
+    box.addEventListener('click', () => window.open(CONFIG.youtubeChannelUrl, '_blank', 'noopener'));
+  }
+}
+
+/* ======================= Channel Hub (data dari data/youtube.json) ======================= */
+let CH = null, chTab = 'latest';
+const fmtN = n => new Intl.NumberFormat(LANG === 'id' ? 'id-ID' : 'en-US', { notation: 'compact', maximumFractionDigits: 1 }).format(n);
+const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+function ago(iso) {
+  const d = (new Date(iso) - Date.now()) / 1000, rtf = new Intl.RelativeTimeFormat(LANG === 'id' ? 'id' : 'en', { numeric: 'auto' });
+  for (const [u, s] of [['year', 31536000], ['month', 2592000], ['week', 604800], ['day', 86400], ['hour', 3600]]) if (Math.abs(d) >= s) return rtf.format(Math.round(d / s), u);
+  return rtf.format(0, 'day');
+}
+async function loadChannel() {
+  try {
+    const r = await fetch(CONFIG.youtubeDataUrl + '?t=' + Math.floor(Date.now() / 3600000), { cache: 'no-cache' });
+    if (!r.ok) throw new Error(r.status);
+    CH = await r.json();
+  } catch (e) { CH = null; if (DEV) console.warn('youtube.json belum tersedia:', e.message); }
+  renderChannel();
+}
+const videoCard = v => `
+  <article class="spot lift glass rounded-2xl overflow-hidden group">
+    <button data-vid="${esc(v.id)}" class="block w-full text-left" aria-label="${esc(v.title)}">
+      <div class="vthumb relative aspect-video bg-slate-200 overflow-hidden">
+        <img src="https://i.ytimg.com/vi/${esc(v.id)}/hqdefault.jpg" loading="lazy" alt="" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
+        <span class="absolute inset-0 grid place-items-center"><span class="w-12 h-12 rounded-full bg-white/90 text-rose-600 grid place-items-center shadow-lg group-hover:scale-110 transition"><i data-lucide="play" class="w-5 h-5 fill-current"></i></span></span>
+      </div>
+      <div class="p-3.5">
+        <h4 class="text-sm font-bold text-zura-navy line-clamp-2">${esc(v.title)}</h4>
+        <p class="mt-1.5 text-xs text-slate-500">${v.views != null ? fmtN(v.views) + ' ' + t('tayangan', 'views') + ' · ' : ''}${v.published ? ago(v.published) : ''}</p>
+      </div>
+    </button>
+  </article>`;
+function renderChannel() {
+  const box = $('#chSummary'); if (!box) return;
+  const c = (CH && CH.channel) || {};
+  const name = c.title || 'ZuraClass', handle = c.handle || '@zuraclass', url = c.url || CONFIG.youtubeChannelUrl;
+  const stats = [];
+  if (c.subscribers != null && !c.subscribersHidden) stats.push([fmtN(c.subscribers), t('Subscriber', 'Subscribers'), 'users']);
+  if (c.videos != null) stats.push([fmtN(c.videos), 'Video', 'video']);
+  const hasMembers = CONFIG.youtubeMembers !== '' && CONFIG.youtubeMembers != null;
+  if (hasMembers) stats.push([fmtN(+CONFIG.youtubeMembers), t('Member channel', 'Channel members'), 'crown']);
+  else if (c.views != null) stats.push([fmtN(c.views), t('Total tayangan', 'Total views'), 'eye']);
+  box.innerHTML = `
+    <div class="flex items-center gap-4 min-w-0">
+      ${c.thumbnail ? `<img src="${esc(c.thumbnail)}" alt="${esc(name)}" referrerpolicy="no-referrer" class="w-20 h-20 sm:w-24 sm:h-24 rounded-full object-cover ring-4 ring-white shadow-xl shrink-0" />`
+        : `<span class="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-gradient-to-br from-zura-navy to-blue-600 text-white grid place-items-center shrink-0 shadow-xl"><i data-lucide="youtube" class="w-9 h-9"></i></span>`}
+      <div class="min-w-0">
+        <div class="text-[11px] font-extrabold uppercase tracking-widest text-rose-600">${t('Channel YouTube', 'YouTube channel')}</div>
+        <h3 class="font-display text-2xl sm:text-3xl font-extrabold text-zura-navy truncate">${esc(name)}</h3>
+        <p class="text-sm font-semibold text-slate-500">${esc(handle)}</p>
       </div>
     </div>
-  </div>
-
-  <!-- AI Help Modal -->
-  <div id="aiHelpModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-zura-navy/50 backdrop-blur-sm p-4">
-    <div class="bg-white rounded-3xl max-w-lg w-full p-6 shadow-2xl border border-blue-100">
-      <div class="flex items-center justify-between pb-4 border-b border-slate-100">
-        <div class="flex items-center gap-2.5">
-          <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-zura-navy to-blue-600 text-white flex items-center justify-center">
-            <i data-lucide="bot" class="w-5 h-5"></i>
-          </div>
-          <div>
-            <h3 class="font-extrabold text-zura-navy">ZuraAI Ecosystem Assistant</h3>
-            <p class="text-xs text-slate-500">Multilingual support for courses, apps & formulas</p>
-          </div>
-        </div>
-        <button onclick="closeModals()" class="p-1.5 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100">
-          <i data-lucide="x" class="w-5 h-5"></i>
-        </button>
-      </div>
-      <div class="py-4 space-y-3 text-sm">
-        <div class="p-3.5 rounded-2xl bg-blue-50/80 text-slate-700 leading-relaxed" data-i18n="aiModalGreeting">
-          👋 Hi! I can help you find the right ready-to-go business app for your industry, or guide you to the right ZuraClass course. What are you looking to build or automate today?
-        </div>
-        <input type="text" placeholder="e.g., Warehouse inventory app with QR barcode..." class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:border-blue-600 text-sm" />
-      </div>
-      <div class="flex justify-end gap-2 pt-2">
-        <button onclick="closeModals()" class="px-4 py-2 rounded-xl text-sm font-semibold text-slate-600 hover:bg-slate-100">Close</button>
-        <button onclick="closeModals(); showToast('ZuraAI is generating your custom recommendation...')" class="px-5 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold">Ask ZuraAI</button>
-      </div>
+    <div class="flex-1 grid grid-cols-${Math.max(1, Math.min(3, stats.length || 1))} gap-3">
+      ${stats.map(s => `<div class="rounded-2xl bg-white/85 border border-blue-100 p-3.5 sm:p-4 text-center"><i data-lucide="${s[2]}" class="w-4 h-4 mx-auto text-blue-600"></i><div class="mt-1 font-display text-xl sm:text-2xl font-extrabold text-zura-navy">${s[0]}</div><div class="text-[11px] font-bold uppercase tracking-wide text-slate-500">${s[1]}</div></div>`).join('')}
     </div>
-  </div>
+    <a href="${esc(url)}" target="_blank" rel="noopener noreferrer" data-track="channel_subscribe" class="shrink-0 px-6 py-3.5 rounded-2xl bg-rose-600 hover:bg-rose-700 text-white font-bold shadow-xl shadow-rose-900/20 transition flex items-center justify-center gap-2"><i data-lucide="bell-plus" class="w-5 h-5"></i>${t('Subscribe', 'Subscribe')}</a>`;
 
-  <!-- Login Modal -->
-  <div id="loginModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-zura-navy/50 backdrop-blur-sm p-4">
-    <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border border-blue-100">
-      <div class="flex items-center justify-between pb-4 border-b border-slate-100">
-        <div class="flex items-center gap-2.5">
-          <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&q=80" alt="Creator Avatar" class="w-9 h-9 rounded-full object-cover border border-blue-200" />
-          <h3 class="font-extrabold text-lg text-zura-navy" data-i18n="navLogin">Log in</h3>
-        </div>
-        <button onclick="closeModals()" class="p-1.5 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100">
-          <i data-lucide="x" class="w-5 h-5"></i>
-        </button>
-      </div>
-      <div class="py-4 space-y-4">
-        <div>
-          <label class="block text-xs font-bold uppercase text-slate-500 mb-1">Email Address</label>
-          <input type="email" value="creator@zuralogic.com" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:border-blue-600" />
-        </div>
-        <div>
-          <label class="block text-xs font-bold uppercase text-slate-500 mb-1">Password</label>
-          <input type="password" value="••••••••••••" class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:border-blue-600" />
-        </div>
-        <button onclick="enableCreatorAndClose()" class="w-full py-3 rounded-xl bg-zura-navy hover:bg-blue-700 text-white font-bold text-sm shadow-md transition">
-          Sign In & Unlock Creator Hub
-        </button>
-      </div>
-    </div>
-  </div>
+  const g = $('#chGrid'), meta = $('#chMeta');
+  const pl = CH && CH.playlist;
+  const plUrl = 'https://www.youtube.com/playlist?list=' + CONFIG.youtubePlaylistId;
+  const list = !CH ? [] : chTab === 'latest' ? CH.latest : chTab === 'popular' ? CH.popular : (pl && pl.items) || [];
+  const upd = CH && CH.updatedAt ? ' · ' + t('diperbarui ', 'updated ') + ago(CH.updatedAt) : '';
+  if (chTab === 'latest') meta.textContent = t('Upload terbaru', 'Newest uploads') + upd;
+  else if (chTab === 'popular') meta.textContent = t('Diurutkan berdasarkan jumlah tayangan', 'Sorted by view count') + upd;
+  else meta.innerHTML = (pl && pl.title ? esc(pl.title) + ' · ' : '') + `<a href="${plUrl}" target="_blank" rel="noopener" class="text-blue-600 hover:underline">${t('Buka playlist', 'Open playlist')} →</a>`;
 
-  <!-- Logout Confirmation Modal -->
-  <div id="logoutConfirmModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-zura-navy/60 backdrop-blur-sm p-4">
-    <div class="bg-white rounded-3xl max-w-sm w-full p-6 shadow-2xl border border-blue-100 text-center">
-      <div class="w-12 h-12 rounded-2xl bg-rose-50 border border-rose-100 text-rose-600 flex items-center justify-center mx-auto mb-4">
-        <i data-lucide="log-out" class="w-6 h-6"></i>
-      </div>
-      <h3 class="font-black text-xl text-zura-navy">Confirm Logout</h3>
-      <p class="text-xs sm:text-sm text-slate-600 mt-2 leading-relaxed">
-        Are you sure you want to log out from <strong id="logoutModalUserName" class="text-zura-navy">your account</strong>?
-      </p>
-      <div class="grid grid-cols-2 gap-3 mt-6">
-        <button type="button" onclick="closeModals()" class="py-2.5 px-4 rounded-xl border border-slate-200 hover:bg-slate-50 text-xs sm:text-sm font-bold text-slate-700 transition">
-          Cancel
-        </button>
-        <button type="button" onclick="confirmLogout()" class="py-2.5 px-4 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-xs sm:text-sm font-bold shadow-md transition flex items-center justify-center gap-1.5">
-          <i data-lucide="log-out" class="w-4 h-4"></i>
-          <span>Yes, Logout</span>
-        </button>
-      </div>
-    </div>
-  </div>
+  if (list && list.length) {
+    g.innerHTML = list.slice(0, 8).map(videoCard).join('');
+  } else if (chTab === 'popular') {
+    g.innerHTML = `<div class="col-span-full rounded-2xl bg-white/80 border border-blue-100 p-8 text-center text-sm text-slate-600">${t('Data video terpopuler akan tampil setelah GitHub Action YouTube dijalankan.', 'Most-popular data appears once the YouTube GitHub Action has run.')}</div>`;
+  } else {
+    const src = chTab === 'playlist' ? 'https://www.youtube-nocookie.com/embed/videoseries?list=' + CONFIG.youtubePlaylistId : 'https://www.youtube-nocookie.com/embed/videoseries?list=UU' + CONFIG.youtubeChannelId.slice(2);
+    g.innerHTML = `<div class="col-span-full relative aspect-video max-w-3xl mx-auto w-full rounded-2xl overflow-hidden shadow-xl"><iframe class="absolute inset-0 w-full h-full" src="${src}" title="YouTube" loading="lazy" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe></div>`;
+  }
+  lucide.createIcons();
+}
+$$('.ch-tab').forEach(b => b.addEventListener('click', () => {
+  chTab = b.dataset.chtab;
+  $$('.ch-tab').forEach(x => x.classList.toggle('active', x === b));
+  renderChannel(); track('channel_tab', { tab: chTab });
+}));
+$('#chGrid').addEventListener('click', e => {
+  const b = e.target.closest('[data-vid]'); if (!b) return;
+  const th = $('.vthumb', b); if (!th) return;
+  th.innerHTML = `<iframe class="absolute inset-0 w-full h-full" src="https://www.youtube-nocookie.com/embed/${encodeURIComponent(b.dataset.vid)}?autoplay=1&rel=0" title="Video" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>`;
+  track('yt_video_play', { id: b.dataset.vid });
+});
 
-  <!-- Toast Notification -->
-  <div id="toastBox" class="fixed bottom-5 right-5 z-50 hidden items-center gap-2.5 bg-zura-navy text-white px-4 py-3 rounded-2xl shadow-xl border border-blue-400/30 text-sm font-medium">
-    <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400 shrink-0"></i>
-    <span id="toastText">Action completed</span>
-  </div>
+/* ======================= Reveal / anim observer ======================= */
+let io;
+function observeReveals() {
+  if (!io) io = new IntersectionObserver(es => es.forEach(en => { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } }), { threshold: .12, rootMargin: '0px 0px -40px 0px' });
+  $$('.reveal:not(.in), [data-anim]:not(.in)').forEach(el => io.observe(el));
+}
 
+/* ======================= Spotlight + tilt ======================= */
+document.addEventListener('pointermove', e => {
+  const s = e.target.closest && e.target.closest('.spot');
+  if (s) { const r = s.getBoundingClientRect(); s.style.setProperty('--mx', (e.clientX - r.left) + 'px'); s.style.setProperty('--my', (e.clientY - r.top) + 'px'); }
+});
+if (HOVER && !REDUCED) {
+  document.addEventListener('pointermove', e => {
+    const el = e.target.closest && e.target.closest('[data-tilt]');
+    $$('[data-tilt].tilting').forEach(o => { if (o !== el) { o.style.transform = ''; o.classList.remove('tilting'); } });
+    if (!el) return;
+    const r = el.getBoundingClientRect(), x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5;
+    el.classList.add('tilting'); el.style.transition = 'transform .12s ease-out';
+    el.style.transform = `perspective(900px) rotateX(${(-y * 7).toFixed(2)}deg) rotateY(${(x * 9).toFixed(2)}deg)`;
+  });
+  document.addEventListener('pointerleave', () => $$('[data-tilt].tilting').forEach(o => { o.style.transform = ''; o.classList.remove('tilting'); }), true);
+}
 
-  <!-- =====================================================================
-       JAVASCRIPT LOGIC: ENTERPRISE APP FILTER, AUTH SESSION & MODALS
-       ===================================================================== -->
-  <script>
-    let activeCategory = 'all';
-    let isCreatorLoggedIn = false;
-    let currentSessionUser = null;
-
-    // Read active session from /auth/ page (localStorage or sessionStorage)
-    function getActiveSession() {
-      try {
-        const raw = localStorage.getItem('zl_demo_session') || sessionStorage.getItem('zl_demo_session');
-        return raw ? JSON.parse(raw) : null;
-      } catch (e) {
-        return null;
-      }
+/* ======================= Hero parallax ======================= */
+(function heroParallax() {
+  const stage = $('#stage'), layers = $$('.layer', stage);
+  let mx = 0, my = 0, tx = 0, ty = 0, visible = true;
+  stage.addEventListener('pointermove', e => { const r = stage.getBoundingClientRect(); tx = (e.clientX - r.left) / r.width - .5; ty = (e.clientY - r.top) / r.height - .5; });
+  stage.addEventListener('pointerleave', () => { tx = ty = 0; });
+  new IntersectionObserver(es => { visible = es[0].isIntersecting; }, { threshold: 0 }).observe(stage);
+  if (REDUCED) return;
+  (function loop() {
+    if (visible) {
+      mx += (tx - mx) * .08; my += (ty - my) * .08;
+      const s = Math.min(window.scrollY, 700);
+      layers.forEach(l => { const d = +l.dataset.depth; l.style.translate = `${(-mx * d * 1.3).toFixed(1)}px ${(-my * d * 1.3 - s * d / 300).toFixed(1)}px`; });
     }
+    requestAnimationFrame(loop);
+  })();
+})();
 
-    // Format Role Badge: creator -> Creator, buyer -> Explorer
-    function formatRoleDisplay(role) {
-      return role === 'creator' ? 'Creator' : 'Explorer';
-    }
+/* ======================= Scroll effects ======================= */
+let ticking = false;
+function onScroll() {
+  if (ticking) return; ticking = true;
+  requestAnimationFrame(() => {
+    const y = window.scrollY, h = document.documentElement.scrollHeight - innerHeight;
+    $('#progress').style.width = (h > 0 ? y / h * 100 : 0) + '%';
+    $('#nav').classList.toggle('shadow-md', y > 10);
+    $('#fab').style.display = y > 700 ? 'inline-flex' : 'none';
+    if (!REDUCED) $$('[data-speed]').forEach(el => { el.style.translate = `0 ${(y * parseFloat(el.dataset.speed)).toFixed(1)}px`; });
+    // process line
+    const track_ = $('#procTrack'), r = track_.getBoundingClientRect();
+    const p = clamp((innerHeight * .62 - r.top) / r.height, 0, 1);
+    $('#procFill').style.height = (p * 100) + '%';
+    $$('.proc-step').forEach((s, i) => s.classList.toggle('on', p >= (i + .15) / PROCESS.length));
+    ticking = false;
+  });
+}
+addEventListener('scroll', onScroll, { passive: true });
+addEventListener('resize', onScroll);
 
-    // Sync Header UI & Creator Hub Gate with active session
-    function syncAuthSessionUI() {
-      currentSessionUser = getActiveSession();
-      isCreatorLoggedIn = Boolean(currentSessionUser && currentSessionUser.role === 'creator');
+/* ======================= Mobile menu ======================= */
+$('#menuBtn').addEventListener('click', () => { const m = $('#mobileMenu'); m.style.display = m.style.display === 'none' ? 'block' : 'none'; });
+$$('.m-link').forEach(a => a.addEventListener('click', () => { $('#mobileMenu').style.display = 'none'; }));
 
-      const userBadge = document.getElementById('headerUserBadge');
-      const userInitial = document.getElementById('headerUserInitial');
-      const userLabel = document.getElementById('headerUserLabel');
-      const mobileUserBadge = document.getElementById('mobileUserBadge');
-      const mobileUserLabel = document.getElementById('mobileUserLabel');
-
-      const loginBtn = document.getElementById('headerLoginBtn');
-      const loginIcon = document.getElementById('headerLoginIcon');
-      const loginText = document.getElementById('headerLoginText');
-      const mobileAuthBtn = document.getElementById('mobileAuthBtn');
-
-      const lockedBanner = document.getElementById('creatorLockedBanner');
-      const lockedDesc = document.getElementById('creatorLockedDesc');
-      const creatorLinks = document.getElementById('creatorMenuLinks');
-      const lockIcon = document.getElementById('creatorLockIcon');
-
-      if (currentSessionUser) {
-        const roleTag = formatRoleDisplay(currentSessionUser.role);
-        const formattedLabel = `${currentSessionUser.name} - [${roleTag}]`;
-
-        // Show User Badge in Header: "user - [Creator/Explorer]"
-        userLabel.textContent = formattedLabel;
-        userInitial.textContent = (currentSessionUser.name || 'U').trim().charAt(0).toUpperCase();
-        userBadge.classList.replace('hidden', 'flex');
-
-        if (mobileUserBadge && mobileUserLabel) {
-          mobileUserLabel.textContent = formattedLabel;
-          mobileUserBadge.classList.replace('hidden', 'flex');
-        }
-
-        // Change Log in button -> Logout button
-        loginText.textContent = 'Logout';
-        loginIcon.setAttribute('data-lucide', 'log-out');
-        loginBtn.className = 'px-5 py-2.5 rounded-full bg-rose-600 hover:bg-rose-700 text-white text-sm font-bold shadow-md hover:shadow-lg transition flex items-center gap-2';
-        if (mobileAuthBtn) {
-          mobileAuthBtn.textContent = 'Logout';
-          mobileAuthBtn.className = 'w-1/2 py-2.5 rounded-xl bg-rose-600 text-white text-sm font-bold';
-        }
-
-        // Unlock Creator Hub if role === 'creator'
-        if (isCreatorLoggedIn) {
-          lockedBanner.classList.add('hidden');
-          creatorLinks.classList.remove('opacity-50', 'pointer-events-none');
-          lockIcon.setAttribute('data-lucide', 'sparkles');
-          lockIcon.classList.replace('text-amber-500', 'text-blue-600');
-        } else {
-          lockedBanner.classList.remove('hidden');
-          if (lockedDesc) {
-            lockedDesc.textContent = 'You are signed in as an Explorer. Upgrade or register a Creator account to unlock Dashboard, Portfolio & Profile.';
-          }
-          creatorLinks.classList.add('opacity-50', 'pointer-events-none');
-          lockIcon.setAttribute('data-lucide', 'lock');
-          lockIcon.classList.replace('text-blue-600', 'text-amber-500');
-        }
-      } else {
-        // Guest State
-        userBadge.classList.replace('flex', 'hidden');
-        if (mobileUserBadge) mobileUserBadge.classList.replace('flex', 'hidden');
-
-        loginText.textContent = 'Log in';
-        loginIcon.setAttribute('data-lucide', 'log-in');
-        loginBtn.className = 'px-5 py-2.5 rounded-full bg-zura-navy hover:bg-blue-700 text-white text-sm font-bold shadow-md hover:shadow-lg transition flex items-center gap-2';
-        if (mobileAuthBtn) {
-          mobileAuthBtn.textContent = 'Log in';
-          mobileAuthBtn.className = 'w-1/2 py-2.5 rounded-xl bg-zura-navy text-white text-sm font-bold';
-        }
-
-        lockedBanner.classList.remove('hidden');
-        if (lockedDesc) {
-          lockedDesc.textContent = 'Sign in as a ZuraClass Creator to access your Dashboard, Portfolio, and Profile.';
-        }
-        creatorLinks.classList.add('opacity-50', 'pointer-events-none');
-        lockIcon.setAttribute('data-lucide', 'lock');
-        lockIcon.classList.replace('text-blue-600', 'text-amber-500');
-      }
-
-      lucide.createIcons();
-    }
-
-    // Header Button Click: If logged in -> Open Logout Confirmation Popup; Else -> Go to Login Page
-    function handleHeaderAuthAction() {
-      if (currentSessionUser) {
-        const roleTag = formatRoleDisplay(currentSessionUser.role);
-        document.getElementById('logoutModalUserName').textContent = `${currentSessionUser.name} - [${roleTag}]`;
-        document.getElementById('logoutConfirmModal').classList.replace('hidden', 'flex');
-        lucide.createIcons();
-      } else {
-        openLoginModal();
-      }
-    }
-
-    // Confirm Logout Action: Clear session, close popup, update UI & redirect to homepage
-    function confirmLogout() {
-      try {
-        localStorage.removeItem('zl_demo_session');
-        sessionStorage.removeItem('zl_demo_session');
-      } catch (e) {}
-      closeModals();
-      syncAuthSessionUI();
-      showToast('You have been logged out. Redirecting to homepage...');
-      setTimeout(() => {
-        window.location.href = '/';
-      }, 600);
-    }
-
-    // High-Resolution Enterprise Dummy Apps Data (English Standard + Dummy Screenshots & Creator Avatars)
-    const appsData = [
-      {
-        id: 1,
-        category: "hse",
-        price: "$49",
-        rating: "4.9",
-        creator: "ZuraClass Official",
-        /* GANTI URL GAMBAR AVATAR KREATOR DI SINI */
-        creatorAvatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=120&q=80",
-        language: "Global Ready",
-        /* GANTI URL GAMBAR SCREENSHOT APLIKASI DI SINI */
-        image: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=800&q=80",
-        title: "SIM-APAR & HSE Safety Inspection Pro",
-        catLabel: "Manufacturing & HSE",
-        desc: "Complete fire extinguisher QR inspection, hazard reporting, and automated ISO compliance dashboard."
-      },
-      {
-        id: 2,
-        category: "warehouse",
-        price: "$39",
-        rating: "5.0",
-        creator: "Andi Pratama",
-        creatorAvatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=120&q=80",
-        language: "Global Ready",
-        image: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=800&q=80",
-        title: "Multi-Branch Warehouse & Stock Opname QR",
-        catLabel: "Warehouse & Logistics",
-        desc: "Real-time inbound/outbound stock tracking, mobile barcode scanner, and automated low-stock alerts."
-      },
-      {
-        id: 3,
-        category: "retail",
-        price: "$55",
-        rating: "4.8",
-        creator: "ZuraLab Global",
-        creatorAvatar: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=120&q=80",
-        language: "Global Ready",
-        image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=800&q=80",
-        title: "Omnichannel Cloud POS & Loyalty Cashier",
-        catLabel: "Retail & POS",
-        desc: "Fast tablet & mobile point-of-sale, WhatsApp digital receipt sender, and daily profit analytics."
-      },
-      {
-        id: 4,
-        category: "hr",
-        price: "$29",
-        rating: "4.9",
-        creator: "Siti Rahma",
-        creatorAvatar: "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=120&q=80",
-        language: "Global Ready",
-        image: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80",
-        title: "Geo-Tagging Field Attendance & Payroll Sync",
-        catLabel: "HR & Field Operations",
-        desc: "Selfie + GPS attendance verification, leave approval workflow, and one-click payslip generation."
-      },
-      {
-        id: 5,
-        category: "finance",
-        price: "$45",
-        rating: "4.8",
-        creator: "Carlos Mendez",
-        creatorAvatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=120&q=80",
-        language: "Global Ready",
-        image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80",
-        title: "B2B Sales Pipeline, Automated Invoice & Cashflow",
-        catLabel: "Finance & CRM",
-        desc: "Track client deals from lead to paid invoice with automated PDF billing and cashflow forecasting."
-      },
-      {
-        id: 6,
-        category: "fnb",
-        price: "$35",
-        rating: "4.9",
-        creator: "Kenji Sato",
-        creatorAvatar: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=120&q=80",
-        language: "Global Ready",
-        image: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=800&q=80",
-        title: "Central Kitchen Recipe Costing & Outlet Supply",
-        catLabel: "F&B & Hospitality",
-        desc: "Manage COGS food cost per menu, multi-outlet ingredient requisitions, and kitchen waste logs."
-      }
-    ];
-
-    // Render App Cards with Dummy Screenshots & Creator Avatars
-    function renderApps(list) {
-      const grid = document.getElementById('appsGrid');
-
-      if (list.length === 0) {
-        grid.innerHTML = `
-          <div class="col-span-full bg-white rounded-2xl p-10 text-center border border-slate-200">
-            <p class="text-slate-600 font-semibold">No business apps found matching your filter.</p>
-          </div>
-        `;
-        return;
-      }
-
-      grid.innerHTML = list.map(app => {
-        return `
-        <div class="group bg-white rounded-2xl border border-slate-200/90 overflow-hidden shadow-sm hover:shadow-2xl hover:border-blue-500 transition-all duration-300 flex flex-col">
-          <!-- Browser Mockup Header Bar -->
-          <div class="bg-slate-100 px-3.5 py-2 border-b border-slate-200/80 flex items-center justify-between">
-            <div class="flex items-center gap-1.5">
-              <span class="w-2.5 h-2.5 rounded-full bg-rose-400"></span>
-              <span class="w-2.5 h-2.5 rounded-full bg-amber-400"></span>
-              <span class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
-            </div>
-            <span class="text-[10px] font-bold text-slate-400 tracking-wide">zuraappmarket.com/app-${app.id}</span>
-          </div>
-
-          <!-- High-Res Dummy App Screenshot -->
-          <div class="relative h-48 overflow-hidden bg-slate-900 cursor-pointer" onclick="openAppPreview(${app.id})">
-            <img 
-              src="${app.image}" 
-              alt="${app.title}" 
-              class="w-full h-full object-cover group-hover:scale-105 transition duration-500 opacity-95"
-            />
-            <div class="absolute inset-0 bg-gradient-to-t from-zura-navy/75 via-transparent to-transparent"></div>
-            <div class="absolute top-3 left-3 px-3 py-1 rounded-lg bg-zura-navy/85 backdrop-blur-md text-white text-xs font-semibold border border-white/15">
-              ${app.catLabel}
-            </div>
-            <div class="absolute top-3 right-3 px-3 py-1 rounded-lg bg-white/95 backdrop-blur-md text-zura-navy text-xs font-black shadow-md">
-              ${app.price}
-            </div>
-            <div class="absolute bottom-3 left-3 right-3 flex items-center justify-between text-white text-xs">
-              <span class="font-semibold flex items-center gap-1 bg-black/40 backdrop-blur-sm px-2.5 py-1 rounded-md">
-                🌐 ${app.language}
-              </span>
-              <span class="font-bold bg-blue-600/90 px-2.5 py-1 rounded-md shadow">
-                ★ ${app.rating}
-              </span>
-            </div>
-          </div>
-
-          <!-- Card Body -->
-          <div class="p-5 flex-1 flex flex-col justify-between">
-            <div>
-              <h3 onclick="openAppPreview(${app.id})" class="cursor-pointer font-extrabold text-lg text-zura-navy group-hover:text-blue-600 transition leading-snug">
-                ${app.title}
-              </h3>
-              <p class="text-xs text-slate-500 mt-2 leading-relaxed line-clamp-2">
-                ${app.desc}
-              </p>
-            </div>
-
-            <!-- Creator Avatar & Action -->
-            <div class="mt-5 pt-4 border-t border-slate-100 flex items-center justify-between">
-              <div class="flex items-center gap-2.5">
-                <img src="${app.creatorAvatar}" alt="${app.creator}" class="w-8 h-8 rounded-full object-cover border border-blue-200" />
-                <div>
-                  <div class="text-xs font-bold text-slate-800 leading-none">${app.creator}</div>
-                  <div class="text-[10px] font-semibold text-emerald-600 mt-0.5">✓ Verified App</div>
-                </div>
-              </div>
-
-              <button onclick="openAppPreview(${app.id})" class="px-3.5 py-2 rounded-xl bg-blue-50 hover:bg-zura-navy text-blue-600 hover:text-white text-xs font-extrabold transition flex items-center gap-1">
-                <span>Live Preview</span>
-                <span>→</span>
-              </button>
-            </div>
-          </div>
-        </div>
-        `;
-      }).join('');
-    }
-
-    // Filter Apps by Business Line
-    function filterApps(category) {
-      activeCategory = category;
-      document.querySelectorAll('.industry-pill').forEach(btn => {
-        if (btn.dataset.cat === category) {
-          btn.className = "industry-pill shrink-0 px-4 py-2.5 rounded-xl text-sm font-bold bg-zura-navy text-white shadow-sm transition flex items-center gap-2";
-        } else {
-          btn.className = "industry-pill shrink-0 px-4 py-2.5 rounded-xl text-sm font-semibold bg-white text-slate-700 border border-slate-200 hover:border-blue-400 transition flex items-center gap-2";
-        }
-      });
-
-      const filtered = category === 'all' ? appsData : appsData.filter(a => a.category === category);
-      renderApps(filtered);
-      lucide.createIcons();
-    }
-
-    // Search Apps
-    function searchApps(query) {
-      const q = query.toLowerCase().trim();
-      const filtered = appsData.filter(app => {
-        return (
-          app.title.toLowerCase().includes(q) ||
-          app.catLabel.toLowerCase().includes(q) ||
-          app.desc.toLowerCase().includes(q)
-        );
-      });
-      renderApps(filtered);
-    }
-
-    // Open Live App Preview Modal with Dummy Image
-    function openAppPreview(appId) {
-      const app = appsData.find(a => a.id === appId);
-      if (!app) return;
-
-      document.getElementById('previewModalImg').src = app.image;
-      document.getElementById('previewModalPrice').textContent = app.price;
-      document.getElementById('previewModalCat').textContent = app.catLabel;
-      document.getElementById('previewModalLang').textContent = '🌐 ' + app.language;
-      document.getElementById('previewModalTitle').textContent = app.title;
-      document.getElementById('previewModalDesc').textContent = app.desc;
-      document.getElementById('previewModalAvatar').src = app.creatorAvatar;
-      document.getElementById('previewModalCreator').textContent = app.creator;
-
-      document.getElementById('appPreviewModal').classList.replace('hidden', 'flex');
-      lucide.createIcons();
-    }
-
-    // Horizontal Slider Controls
-    function scrollSlider(amount) {
-      document.getElementById('industrySlider').scrollBy({ left: amount, behavior: 'smooth' });
-    }
-
-    // Update Creator Hub UI State (Simulator fallback)
-    function updateCreatorUIState() {
-      syncAuthSessionUI();
-    }
-
-    function toggleCreatorMode() {
-      if (currentSessionUser) {
-        confirmLogout();
-      } else {
-        const demoCreator = { name: 'Creator Demo', email: 'creator@zuralogic.com', role: 'creator' };
-        try { sessionStorage.setItem('zl_demo_session', JSON.stringify(demoCreator)); } catch (e) {}
-        syncAuthSessionUI();
-        showToast('Creator Hub Unlocked! Signed in as Creator Demo - [Creator].');
-      }
-    }
-
-    function handleCreatorHubClick() {
-      if (!isCreatorLoggedIn) {
-        openLoginModal();
-      }
-    }
-
-    function enableCreatorAndClose() {
-      const demoCreator = { name: 'Creator Demo', email: 'creator@zuralogic.com', role: 'creator' };
-      try { sessionStorage.setItem('zl_demo_session', JSON.stringify(demoCreator)); } catch (e) {}
-      syncAuthSessionUI();
-      closeModals();
-    }
-
-    // Hero 3 Buttons Feedback
-    function highlightAction(type) {
-      if (type === 'learn') showToast('Opening ZuraClass Multilingual Academy...');
-      if (type === 'find') document.getElementById('marketplace-section').scrollIntoView({ behavior: 'smooth' });
-      if (type === 'showcase') {
-        if (!isCreatorLoggedIn) openLoginModal();
-      }
-    }
-
-    // Modals & Mobile Menu
-    function openAiHelpModal() {
-      window.location.href = '/gethelp/';
-    }
-    function openLoginModal() {
-      window.location.href = '/auth/?mode=login';
-    }
-    function openContactModal() {
-      showToast('Opening Zuralogic Enterprise Partner Inquiry...');
-    }
-    function closeModals() {
-      document.getElementById('aiHelpModal').classList.replace('flex', 'hidden');
-      document.getElementById('loginModal').classList.replace('flex', 'hidden');
-      document.getElementById('appPreviewModal').classList.replace('flex', 'hidden');
-      const logoutModal = document.getElementById('logoutConfirmModal');
-      if (logoutModal) logoutModal.classList.replace('flex', 'hidden');
-    }
-    function toggleMobileMenu() {
-      document.getElementById('mobileMenu').classList.toggle('hidden');
-    }
-
-    // Toast Helper
-    let toastTimer;
-    function showToast(message) {
-      const box = document.getElementById('toastBox');
-      document.getElementById('toastText').textContent = message;
-      box.classList.replace('hidden', 'flex');
-      clearTimeout(toastTimer);
-      toastTimer = setTimeout(() => {
-        box.classList.replace('flex', 'hidden');
-      }, 3200);
-    }
-
-    // Initialize on load
-    window.addEventListener('DOMContentLoaded', () => {
-      renderApps(appsData);
-      syncAuthSessionUI();
-      lucide.createIcons();
-    });
-  </script>
+/* ======================= Init ======================= */
+window.addEventListener('DOMContentLoaded', () => {
+  $('#yr').textContent = new Date().getFullYear();
+  wireLinks();
+  renderYT();
+  applyLang();       // juga memanggil renderDynamic()
+  loadChannel();
+  activatePath('build', false);
+  const hash = location.hash; if (hash === '#learn') activatePath('learn', false);
+  lucide.createIcons();
+  observeReveals();
+  onScroll();
+});
+</script>
 </body>
 </html>
