@@ -1,23 +1,4 @@
 {
-  "products": [
-    {
-      "id": "pmw97sjs8gmx",
-      "slug": "zura-pos-lite",
-      "title": "ZURA POS Lite",
-      "category": "Appsheet",
-      "tags": [
-        "retail",
-        "kasir",
-        "POS",
-        "UMKM"
-      ],
-      "description": "Masih mencatat penjualan manual atau sering bingung mencocokkan uang kas dengan transaksi harian?\n\nZURA POS Lite adalah template aplikasi kasir berbasis Google AppSheet dan Google Sheets untuk membantu usaha kecil mencatat penjualan, pembayaran, dan pemeriksaan kasir dengan lebih praktis.\n\n✨ Fitur Utama\n\n🛒 Transaksi praktis: Katalog produk bergambar dan harga, tombol +/− untuk mengatur jumlah, serta subtotal otomatis.\n\n💳 Pembayaran rapi: Catat pembayaran tunai/non-tunai, nomor referensi, dan cetak struk menggunakan perangkat yang kompatibel.\n\n🔐 Tutup shift lebih terkontrol: Login kasir, pencatatan modal awal, ringkasan transaksi, serta perhitungan dan pemeriksaan selisih kas berdasarkan data yang dicatat.\n\n📦 Yang Kamu Dapatkan\n✅ Template POS Lite di AppSheet\n✅ Database Google Sheets untuk akunmu sendiri\n✅ Panduan penyalinan dan setup aplikasi\n✅ Video tutorial upgrade fitur\n✅ Bantuan teknis setup sesuai cakupan dukungan\n\nBayar sekali untuk template, tanpa biaya langganan template dari Zuralogic.\n\n👥 Cocok untuk\nPemilik usaha kecil, pengguna AppSheet yang ingin belajar/mengembangkan POS, dan bisnis yang ingin mengelola data di Google Sheets sendiri.\n\n⚙️ Penting Diketahui\n- Membutuhkan akun Google dan akses AppSheet yang sesuai.\n- Biaya lisensi AppSheet (jika berlaku) mengikuti kebijakan Google dan tidak termasuk harga template.\n- Kompatibilitas printer thermal/perangkat tambahan perlu dipastikan.\n- Ini produk digital, bukan perangkat kasir fisik.\n- Pengembalian dana mengikuti ketentuan pembelian dan peraturan yang berlaku. Jika ada kendala akses/setup, hubungi kami.\n\n🚀 Siap merapikan transaksi kasirmu? Dapatkan POS Lite, ikuti panduan, lalu sesuaikan katalog produk dengan kebutuhan usaha.\n\n💬 WhatsApp Support: https://wa.me/6282177755114\n\nZuralogic — Work Smarter. Automate Better. Scale Further.",
-      "cover": "assets/products/pmw97sjs8gmx/l00gg1oy.webp",
-      "images": [],
-      "published": true,
-      "createdAt": "2026-11-09T12:16:32.676Z",
-      "updatedAt": "2026-11-09T12:24:19.410Z"
-    }
-  ],
-  "updatedAt": "2026-11-09T12:24:19.410Z"
+  "products": [],
+  "updatedAt": "2026-11-09T12:41:10.413Z"
 }
