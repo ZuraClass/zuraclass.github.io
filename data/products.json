@@ -13,15 +13,15 @@
         "UMKM"
       ],
       "description": "Masih mencatat penjualan secara manual? Atau sering kesulitan mencocokkan uang di laci kasir dengan transaksi harian?\nPOS Lite adalah template aplikasi kasir berbasis Google AppSheet yang dirancang untuk membantu usaha kecil mengelola transaksi penjualan dengan lebih praktis.\nKamu bisa memilih produk dari katalog visual, menghitung belanja secara otomatis, mencatat pembayaran, dan membantu memeriksa hasil penjualan saat kasir selesai bertugas.\n\n✨ Apa yang Bisa Kamu Lakukan?\n\n🛒 1. Transaksi Penjualan Lebih Praktis\nKatalog produk dengan gambar dan harga.\nTambahkan atau kurangi jumlah pesanan menggunakan tombol + dan −.\nSubtotal belanja dihitung otomatis.\n\n💳 2. Catat Pembayaran dengan Lebih Rapi\nMendukung pencatatan pembayaran tunai dan non-tunai.\nTersedia kolom nomor referensi pembayaran.\nMendukung fitur cetak struk dengan perangkat yang sesuai.\n\n🔐 3. Bantu Pemeriksaan Kasir Saat Tutup Shift\nKasir melakukan login sebelum memulai sesi.\nCatat modal awal atau uang kas pembuka.\nLihat ringkasan transaksi saat sesi kasir ditutup.\nBantu menghitung dan memeriksa selisih kas berdasarkan data yang dicatat.\n\n📦 Apa yang Kamu Dapatkan?\n✅ Template aplikasi POS Lite berbasis Google AppSheet.\n✅ Database Google Sheets untuk digunakan di akun Google milikmu.\n✅ Panduan menyalin aplikasi ke akun AppSheet sendiri.\n✅ Video tutorial Upgrade Fitur. \n✅ Bantuan teknis untuk kendala setup sesuai cakupan dukungan produk.\n\nPembayaran satu kali untuk mendapatkan template. Tidak ada biaya langganan template dari Zuralogic.\n\n👥 Cocok untuk Siapa?\nPemilik usaha kecil yang membutuhkan pencatatan transaksi kasir.\nPengguna AppSheet yang ingin mempelajari atau mengembangkan template POS.\nPelaku usaha yang ingin menggunakan database Google Sheets milik sendiri.\n\n⚙️ Persyaratan dan Ketentuan\nPlatform: Google AppSheet dan Google Sheets.\nAkun: Memerlukan akun Google dan akses AppSheet yang sesuai.\nLisensi platform: Biaya penggunaan AppSheet, jika berlaku, mengikuti paket, ketentuan deployment, dan jumlah pengguna sesuai kebijakan Google. Harga produk ini tidak mencakup langganan AppSheet berbayar.\nPerangkat: Kompatibilitas printer thermal dan perangkat pendukung perlu diperiksa sebelum penggunaan.\nProduk digital: Pembelian memberikan akses ke template dan materi pendukung, bukan perangkat kasir fisik.\nPengembalian dana: Karena berupa produk digital, pengembalian dana mengikuti ketentuan pembelian dan peraturan yang berlaku. Hubungi kami apabila terdapat masalah akses atau setup.\n\n🚀 Mulai Gunakan POS Lite\n\nDapatkan template POS Lite, ikuti panduan setup, lalu sesuaikan data produk dengan kebutuhan usahamu.\nPunya pertanyaan sebelum membeli?\n\nWhatsApp Support: https://wa.me/6282177755114\n\nZuralogic — Work Smarter. Automate Better. Scale Further. ",
-      "normalPrice": 299000,
+      "normalPrice": 299900,
       "promoPrice": 149900,
       "checkoutUrl": "https://zurastore.myr.id/pl/appsheet-pos-lite/",
       "cover": "assets/products/pmw9b1or1zyo/fs19l474.webp",
       "images": [],
       "published": true,
       "createdAt": "2026-11-09T13:39:57.320Z",
-      "updatedAt": "2026-11-09T13:39:57.320Z"
+      "updatedAt": "2026-11-09T13:42:25.370Z"
     }
   ],
-  "updatedAt": "2026-11-09T13:39:57.320Z"
+  "updatedAt": "2026-11-09T13:42:25.370Z"
 }
