@@ -279,6 +279,7 @@ function openDetail(id, push) {
   $('#metaDesc').content = p.description.replace(/\s+/g, ' ').slice(0, 155);
   if (push) history.pushState({ detail: 1 }, '', href(p));
 
+// Kirim event analytics saat detail produk dibuka
 trackProductView(p);
 
 lucide.createIcons();
