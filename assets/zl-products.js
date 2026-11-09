@@ -11,10 +11,39 @@
   const catLabel = c => c || t('Lainnya', 'Other');
   const waLink = (base, text) => (base ? base + (base.includes('?') ? '&' : '?') + 'text=' + encodeURIComponent(text) : '');
 
+  /* Harga Rupiah bulat. null = harga belum diisi (bukan Rp0). */
+  function parsePrice(value) {
+    if (value === null || value === undefined || value === '') return null;
+    if (typeof value === 'number') return Number.isSafeInteger(value) && value >= 0 ? value : null;
+    const cleaned = String(value).trim().replace(/^Rp\s*/i, '').replace(/[.\s]/g, '');
+    if (!/^\d+$/.test(cleaned)) return null;
+    const n = Number(cleaned);
+    return Number.isSafeInteger(n) && n >= 0 ? n : null;
+  }
+  const fmtPrice = price => 'Rp' + Number(price).toLocaleString('id-ID', { maximumFractionDigits: 0 });
+  function priceMarkup(p, opts = {}) {
+    const normal = parsePrice(p.normalPrice), promo = parsePrice(p.promoPrice);
+    const large = !!opts.large, sale = normal !== null && promo !== null && promo < normal;
+    if (normal === null) return `<span class="text-sm font-semibold text-slate-500">${t('Harga belum tersedia', 'Price not available')}</span>`;
+    return `<div class="flex flex-wrap gap-x-2.5 gap-y-1 items-baseline">
+      ${sale ? `<del class="text-sm font-medium text-slate-400">${esc(fmtPrice(normal))}</del>` : ''}
+      <strong class="font-display font-extrabold ${large ? 'text-3xl sm:text-4xl' : 'text-xl'} text-zura-navy">${esc(fmtPrice(sale ? promo : normal))}</strong>
+      ${sale ? `<span class="self-center rounded-md px-2 py-0.5 text-[11px] font-extrabold bg-rose-50 text-rose-600">${t('PROMO', 'SALE')}</span>` : ''}
+    </div>`;
+  }
+  /* Link beli hanya boleh HTTPS; jangan diam-diam mengganti checkout dengan WhatsApp. */
+  function checkoutHref(p) {
+    try {
+      const url = new URL(String(p.checkoutUrl || '').trim());
+      return url.protocol === 'https:' && url.hostname ? url.href : '';
+    } catch (e) { return ''; }
+  }
+
   function normalize(d) {
     const ps = (d && Array.isArray(d.products) ? d.products : []).map(p => ({
       id: String(p.id), slug: String(p.slug || p.id), title: String(p.title || ''), category: String(p.category || ''),
       tags: Array.isArray(p.tags) ? p.tags.map(String) : [], description: String(p.description || ''), checkoutUrl: String(p.checkoutUrl || ''),
+       normalPrice: parsePrice(p.normalPrice), promoPrice: parsePrice(p.promoPrice),
       cover: p.cover || null, images: Array.isArray(p.images) ? p.images.slice(0, 15) : [],
       published: p.published !== false, createdAt: p.createdAt || null, updatedAt: p.updatedAt || p.createdAt || null
     }));
@@ -33,20 +62,24 @@
     return [...m.entries()].sort((a, b) => (a[0] === '' ? 1 : b[0] === '' ? -1 : a[0].localeCompare(b[0])));
   }
 
-  /* Kartu produk. o: {href, coverUrl, imageCount, showStatus, footer, delay} */
-  function card(p, o) {
-    o = o || {};
+  /* Kartu produk. Kartu admin memakai footer; kartu publik memiliki dua CTA. */
+  function card(p, o = {}) {
     const cover = o.coverUrl !== undefined ? o.coverUrl : src(p.cover);
     const n = o.imageCount !== undefined ? o.imageCount : (p.images || []).length + (p.cover ? 1 : 0);
     const open = o.href ? `<a href="${esc(o.href)}" data-open="${esc(p.id)}"` : `<button type="button" data-open="${esc(p.id)}"`;
     const close = o.href ? '</a>' : '</button>';
     const tags = (p.tags || []).slice(0, 3).map(x => `<span class="text-[11px] font-bold text-blue-700 bg-blue-50 rounded-md px-2 py-0.5">${esc(x)}</span>`).join('');
     const more = (p.tags || []).length > 3 ? `<span class="text-[11px] font-bold text-slate-400">+${p.tags.length - 3}</span>` : '';
+    const checkout = checkoutHref(p);
+    const buttons = o.href ? `<div class="px-4 pb-4 grid grid-cols-2 gap-2.5">
+      ${checkout ? `<a href="${esc(checkout)}" target="_blank" rel="noopener noreferrer" data-buy class="min-w-0 px-2.5 py-3 text-center rounded-xl bg-zura-navy hover:bg-blue-700 text-white text-xs sm:text-sm font-extrabold transition flex items-center justify-center gap-1.5"><i data-lucide="shopping-cart" class="w-4 h-4 shrink-0"></i>${t('Beli Sekarang', 'Buy Now')}</a>` : `<span aria-disabled="true" title="${t('Link checkout belum diisi', 'Checkout link is missing')}" class="min-w-0 px-2 py-3 text-center rounded-xl bg-slate-100 text-slate-400 text-xs sm:text-sm font-bold flex items-center justify-center">${t('Belum Tersedia', 'Unavailable')}</span>`}
+      <a href="${esc(o.href)}" data-open="${esc(p.id)}" class="min-w-0 px-2.5 py-3 rounded-xl border border-blue-200 hover:border-blue-600 hover:bg-blue-50 text-blue-700 text-xs sm:text-sm font-extrabold transition flex items-center justify-center gap-1.5"><i data-lucide="eye" class="w-4 h-4 shrink-0"></i>${t('Lihat Detail', 'View Details')}</a>
+    </div>` : '';
     return `
     <article class="spot lift glass rounded-2xl overflow-hidden group flex flex-col fade-up" style="--d:${o.delay || 0}ms">
       ${open} class="block text-left w-full flex-1 flex flex-col" aria-label="${esc(p.title)}">
-        <div class="relative aspect-square bg-gradient-to-br from-blue-100 to-sky-50 overflow-hidden">
-          ${cover ? `<img src="${esc(cover)}" loading="lazy" alt="" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" />`
+        <div class="relative aspect-square bg-white overflow-hidden">
+          ${cover ? `<img src="${esc(cover)}" loading="lazy" alt="${esc(p.title)}" class="w-full h-full object-contain group-hover:scale-105 transition duration-500" />`
             : `<span class="absolute inset-0 grid place-items-center text-blue-300"><i data-lucide="image" class="w-10 h-10"></i></span>`}
           <span class="absolute top-3 left-3 px-2.5 py-1 rounded-lg bg-zura-navy/85 text-white text-[11px] font-semibold backdrop-blur">${esc(catLabel(p.category))}</span>
           ${n ? `<span class="absolute bottom-3 right-3 px-2 py-1 rounded-md bg-black/45 text-white text-[11px] font-bold backdrop-blur flex items-center gap-1"><i data-lucide="images" class="w-3 h-3"></i>${n}</span>` : ''}
@@ -54,9 +87,11 @@
         </div>
         <div class="p-4 flex-1">
           <h3 class="font-display font-extrabold text-zura-navy leading-snug line-clamp-2">${esc(p.title)}</h3>
-          <div class="mt-2.5 flex flex-wrap items-center gap-1.5">${tags}${more}</div>
+          ${tags || more ? `<div class="mt-2.5 flex flex-wrap items-center gap-1.5">${tags}${more}</div>` : ''}
+          <div class="mt-4">${priceMarkup(p)}</div>
         </div>
       ${close}
+      ${buttons}
       ${o.footer || ''}
     </article>`;
   }
@@ -99,14 +134,14 @@
     }
     el.innerHTML = `
       <div data-main class="relative aspect-square rounded-2xl overflow-hidden bg-white/80 border border-white shadow-lg select-none touch-pan-y">
-        <img data-img alt="" draggable="false" class="w-full h-full object-cover cursor-zoom-in" />
+        <img data-img alt="" draggable="false" class="w-full h-full object-contain cursor-zoom-in" />
         ${n > 1 ? `<button type="button" data-prev aria-label="Prev" class="absolute left-2 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-white/90 shadow grid place-items-center hover:bg-white"><i data-lucide="chevron-left" class="w-5 h-5"></i></button>
         <button type="button" data-next aria-label="Next" class="absolute right-2 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-white/90 shadow grid place-items-center hover:bg-white"><i data-lucide="chevron-right" class="w-5 h-5"></i></button>
         <span data-count class="absolute bottom-2 right-2 text-[11px] font-bold bg-zura-navy/80 text-white rounded-md px-2 py-0.5"></span>` : ''}
         <span class="absolute top-2 right-2 w-8 h-8 rounded-full bg-white/85 grid place-items-center text-slate-600 pointer-events-none"><i data-lucide="maximize-2" class="w-4 h-4"></i></span>
       </div>
       ${n > 1 ? `<div data-thumbs class="mt-3 flex gap-2 overflow-x-auto no-scrollbar pb-1">${urls.map((u, k) =>
-        `<button type="button" data-k="${k}" class="shrink-0 w-16 h-16 rounded-lg overflow-hidden border-2 border-transparent transition"><img src="${esc(u)}" loading="lazy" alt="" class="w-full h-full object-cover" /></button>`).join('')}</div>` : ''}`;
+        `<button type="button" data-k="${k}" class="shrink-0 w-16 h-16 rounded-lg overflow-hidden border-2 border-transparent transition"><img src="${esc(u)}" loading="lazy" alt="" class="w-full h-full object-contain bg-white" /></button>`).join('')}</div>` : ''}`;
     const img = el.querySelector('[data-img]'), count = el.querySelector('[data-count]'), box = el.querySelector('[data-thumbs]'), main = el.querySelector('[data-main]');
     const thumbs = [...el.querySelectorAll('[data-k]')];
     let i = 0;
@@ -133,5 +168,5 @@
     b.textContent = msg; b.style.display = 'block'; clearTimeout(b._t); b._t = setTimeout(() => { b.style.display = 'none'; }, 4200);
   }
 
-  window.ZLP = { LANG, t, esc, src, slugify, fmtDate, catLabel, waLink, normalize, loadProducts, groupByCategory, card, lightbox, mountGallery, toast };
+  window.ZLP = { LANG, t, esc, src, slugify, fmtDate, catLabel, waLink, parsePrice, fmtPrice, priceMarkup, checkoutHref, normalize, loadProducts, groupByCategory, card, lightbox, mountGallery, toast };
 })();
