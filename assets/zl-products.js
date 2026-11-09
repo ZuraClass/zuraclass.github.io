@@ -14,7 +14,7 @@
   function normalize(d) {
     const ps = (d && Array.isArray(d.products) ? d.products : []).map(p => ({
       id: String(p.id), slug: String(p.slug || p.id), title: String(p.title || ''), category: String(p.category || ''),
-      tags: Array.isArray(p.tags) ? p.tags.map(String) : [], description: String(p.description || ''),
+      tags: Array.isArray(p.tags) ? p.tags.map(String) : [], description: String(p.description || ''), checkoutUrl: String(p.checkoutUrl || ''),
       cover: p.cover || null, images: Array.isArray(p.images) ? p.images.slice(0, 15) : [],
       published: p.published !== false, createdAt: p.createdAt || null, updatedAt: p.updatedAt || p.createdAt || null
     }));
@@ -45,7 +45,7 @@
     return `
     <article class="spot lift glass rounded-2xl overflow-hidden group flex flex-col fade-up" style="--d:${o.delay || 0}ms">
       ${open} class="block text-left w-full flex-1 flex flex-col" aria-label="${esc(p.title)}">
-        <div class="relative aspect-[16/10] bg-gradient-to-br from-blue-100 to-sky-50 overflow-hidden">
+        <div class="relative aspect-square bg-gradient-to-br from-blue-100 to-sky-50 overflow-hidden">
           ${cover ? `<img src="${esc(cover)}" loading="lazy" alt="" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" />`
             : `<span class="absolute inset-0 grid place-items-center text-blue-300"><i data-lucide="image" class="w-10 h-10"></i></span>`}
           <span class="absolute top-3 left-3 px-2.5 py-1 rounded-lg bg-zura-navy/85 text-white text-[11px] font-semibold backdrop-blur">${esc(catLabel(p.category))}</span>
@@ -94,19 +94,19 @@
   function mountGallery(el, urls) {
     urls = (urls || []).filter(Boolean); const n = urls.length;
     if (!n) {
-      el.innerHTML = `<div class="aspect-[16/10] rounded-2xl bg-gradient-to-br from-blue-100 to-sky-50 grid place-items-center text-blue-300"><i data-lucide="image" class="w-12 h-12"></i></div>`;
+      el.innerHTML = `<div class="aspect-square rounded-2xl bg-gradient-to-br from-blue-100 to-sky-50 grid place-items-center text-blue-300"><i data-lucide="image" class="w-12 h-12"></i></div>`;
       return;
     }
     el.innerHTML = `
-      <div data-main class="relative aspect-[16/10] rounded-2xl overflow-hidden bg-white/80 border border-white shadow-lg select-none touch-pan-y">
-        <img data-img alt="" draggable="false" class="w-full h-full object-contain cursor-zoom-in" />
+      <div data-main class="relative aspect-square rounded-2xl overflow-hidden bg-white/80 border border-white shadow-lg select-none touch-pan-y">
+        <img data-img alt="" draggable="false" class="w-full h-full object-cover cursor-zoom-in" />
         ${n > 1 ? `<button type="button" data-prev aria-label="Prev" class="absolute left-2 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-white/90 shadow grid place-items-center hover:bg-white"><i data-lucide="chevron-left" class="w-5 h-5"></i></button>
         <button type="button" data-next aria-label="Next" class="absolute right-2 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-white/90 shadow grid place-items-center hover:bg-white"><i data-lucide="chevron-right" class="w-5 h-5"></i></button>
         <span data-count class="absolute bottom-2 right-2 text-[11px] font-bold bg-zura-navy/80 text-white rounded-md px-2 py-0.5"></span>` : ''}
         <span class="absolute top-2 right-2 w-8 h-8 rounded-full bg-white/85 grid place-items-center text-slate-600 pointer-events-none"><i data-lucide="maximize-2" class="w-4 h-4"></i></span>
       </div>
       ${n > 1 ? `<div data-thumbs class="mt-3 flex gap-2 overflow-x-auto no-scrollbar pb-1">${urls.map((u, k) =>
-        `<button type="button" data-k="${k}" class="shrink-0 w-20 h-14 rounded-lg overflow-hidden border-2 border-transparent transition"><img src="${esc(u)}" loading="lazy" alt="" class="w-full h-full object-cover" /></button>`).join('')}</div>` : ''}`;
+        `<button type="button" data-k="${k}" class="shrink-0 w-16 h-16 rounded-lg overflow-hidden border-2 border-transparent transition"><img src="${esc(u)}" loading="lazy" alt="" class="w-full h-full object-cover" /></button>`).join('')}</div>` : ''}`;
     const img = el.querySelector('[data-img]'), count = el.querySelector('[data-count]'), box = el.querySelector('[data-thumbs]'), main = el.querySelector('[data-main]');
     const thumbs = [...el.querySelectorAll('[data-k]')];
     let i = 0;
