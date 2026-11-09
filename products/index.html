@@ -204,6 +204,37 @@ document.addEventListener('click', e => {
   if (o && !e.metaKey && !e.ctrlKey && !e.shiftKey && e.button === 0) { e.preventDefault(); openDetail(o.dataset.open, true); }
 });
 let qT; $('#q').addEventListener('input', e => { clearTimeout(qT); qT = setTimeout(() => { F.q = e.target.value.trim(); render(); }, 150); });
+  
+/* ===== PRODUCT ANALYTICS ===== */
+function trackProductView(p) {
+  const normal = ZLP.parsePrice(p.normalPrice);
+  const promo = ZLP.parsePrice(p.promoPrice);
+
+  const price =
+    normal !== null && promo !== null && promo < normal
+      ? promo
+      : normal;
+
+  window.dataLayer = window.dataLayer || [];
+
+  // Bersihkan ecommerce dari event sebelumnya
+  window.dataLayer.push({ ecommerce: null });
+
+  window.dataLayer.push({
+    event: "view_item",
+    ecommerce: {
+      currency: "IDR",
+      ...(price !== null ? { value: price } : {}),
+      items: [{
+        item_id: String(p.id),
+        item_name: p.title,
+        item_category: p.category,
+        ...(price !== null ? { price: price } : {}),
+        quantity: 1
+      }]
+    }
+  });
+}
 
 /* ===== Detail ===== */
 function openDetail(id, push) {
@@ -247,7 +278,10 @@ function openDetail(id, push) {
   document.title = p.title + ' — Zuralogic';
   $('#metaDesc').content = p.description.replace(/\s+/g, ' ').slice(0, 155);
   if (push) history.pushState({ detail: 1 }, '', href(p));
-  lucide.createIcons();
+
+trackProductView(p);
+
+lucide.createIcons();
 }
 function closeDetail(push) {
   $('#detail').style.display = 'none'; document.body.style.overflow = '';
