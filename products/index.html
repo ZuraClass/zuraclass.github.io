@@ -196,6 +196,26 @@ function renderList() {
 }
 function render() { renderChips(); renderList(); lucide.createIcons(); }
 
+  
+/* ===== TRACK BUY NOW CLICK ===== */
+document.addEventListener("click", function (e) {
+  const buyButton = e.target.closest(
+    'a[data-track-checkout]'
+  );
+
+  if (!buyButton) return;
+
+  const productId = buyButton.dataset.trackCheckout;
+
+  const product = ALL.find(
+    p => p.id === productId || p.slug === productId
+  );
+
+  if (!product) return;
+
+  trackBeginCheckout(product);
+});
+
 document.addEventListener('click', e => {
   const c = e.target.closest('[data-cat]'); if (c && c.closest('#catChips')) { F.cat = c.dataset.cat; render(); return; }
   if (e.target.closest('[data-cleartag]')) { F.tag = ''; render(); return; }
@@ -236,6 +256,37 @@ function trackProductView(p) {
   });
 }
 
+  
+/* ===== BEGIN CHECKOUT ANALYTICS ===== */
+function trackBeginCheckout(p) {
+  const normal = ZLP.parsePrice(p.normalPrice);
+  const promo = ZLP.parsePrice(p.promoPrice);
+
+  const price =
+    normal !== null && promo !== null && promo < normal
+      ? promo
+      : normal;
+
+  window.dataLayer = window.dataLayer || [];
+
+  window.dataLayer.push({ ecommerce: null });
+
+  window.dataLayer.push({
+    event: "begin_checkout",
+    ecommerce: {
+      currency: "IDR",
+      ...(price !== null ? { value: price } : {}),
+      items: [{
+        item_id: String(p.id),
+        item_name: p.title,
+        item_category: p.category,
+        ...(price !== null ? { price: price } : {}),
+        quantity: 1
+      }]
+    }
+  });
+}
+
 /* ===== Detail ===== */
 function openDetail(id, push) {
   const p = ALL.find(x => x.id === id || x.slug === id); if (!p) return;
@@ -256,7 +307,7 @@ function openDetail(id, push) {
         <div class="mt-5">${priceMarkup(p, { large: true })}</div>
         <div class="mt-5 text-sm sm:text-[15px] text-slate-700 leading-relaxed whitespace-pre-line break-words">${esc(p.description)}</div>
         <div class="mt-7 space-y-3">
-          ${buy ? `<a href="${esc(buy)}" target="_blank" rel="noopener noreferrer" data-buy class="w-full px-5 py-4 rounded-2xl bg-zura-navy hover:bg-blue-700 text-white font-extrabold text-base flex items-center justify-center gap-2 shadow-xl shadow-blue-900/20 transition"><i data-lucide="shopping-cart" class="w-5 h-5"></i>${t('Beli Sekarang', 'Buy Now')}</a>` : `<div aria-disabled="true" class="w-full px-5 py-4 rounded-2xl bg-slate-100 text-slate-500 text-sm font-semibold text-center">${t('Checkout belum tersedia — hubungi kami melalui WhatsApp.', 'Checkout is unavailable — contact us via WhatsApp.')}</div>`}
+          ${buy ? `<a href="${esc(buy)}" target="_blank" rel="noopener noreferrer" data-track-checkout="${ZLP.esc(String(p.id))}" data-buy class="w-full px-5 py-4 rounded-2xl bg-zura-navy hover:bg-blue-700 text-white font-extrabold text-base flex items-center justify-center gap-2 shadow-xl shadow-blue-900/20 transition"><i data-lucide="shopping-cart" class="w-5 h-5"></i>${t('Beli Sekarang', 'Buy Now')}</a>` : `<div aria-disabled="true" class="w-full px-5 py-4 rounded-2xl bg-slate-100 text-slate-500 text-sm font-semibold text-center">${t('Checkout belum tersedia — hubungi kami melalui WhatsApp.', 'Checkout is unavailable — contact us via WhatsApp.')}</div>`}
           <div class="grid grid-cols-2 gap-3">
             <a href="${esc(wa)}" target="_blank" rel="noopener noreferrer" class="px-4 py-3 rounded-2xl border border-slate-200 hover:border-blue-400 bg-white text-slate-700 font-bold text-sm flex items-center justify-center gap-2 transition"><i data-lucide="message-circle" class="w-4 h-4 text-emerald-600"></i>${t('Tanya produk ini', 'Ask about this')}</a>
             <div class="relative" data-sharewrap>
