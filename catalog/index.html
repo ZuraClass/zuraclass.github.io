@@ -105,7 +105,7 @@
   </div>
 
 <script>
-const { esc, slugify, fmtDate, groupByCategory, card, mountGallery, toast, normalize } = ZLP;
+const { esc, slugify, fmtDate, groupByCategory, card, mountGallery, toast, normalize, parsePrice, priceMarkup, checkoutHref } = ZLP;
 const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [...r.querySelectorAll(s)];
 const MAX_GALLERY = 15, MAX_DESC = 10000, MAX_TAGS = 12, MAX_TITLE = 100, MAX_CAT = 40;
 const CK = 'zl_catalog_conn';
@@ -332,6 +332,7 @@ function openView(id) {
       <span class="px-2.5 py-1 rounded-lg ${p.published ? 'bg-emerald-50 text-emerald-700' : 'bg-amber-100 text-amber-800'} text-[11px] font-extrabold">${p.published ? 'TAMPIL DI WEBSITE' : 'DRAFT'}</span></div>
     <h2 class="font-display mt-3 text-2xl font-extrabold text-zura-navy leading-tight break-words">${esc(p.title)}</h2>
     ${p.tags.length ? `<div class="mt-3 flex flex-wrap gap-1.5">${p.tags.map(x => `<span class="text-xs font-bold text-blue-700 bg-blue-50 rounded-md px-2.5 py-1">#${esc(x)}</span>`).join('')}</div>` : ''}
+    <div class="mt-4">${priceMarkup(p, { large: true })}</div>
     <div class="mt-4 text-sm text-slate-700 leading-relaxed whitespace-pre-line break-words">${esc(p.description)}</div>
     <dl class="mt-6 grid grid-cols-2 gap-3 text-xs">
       <div class="rounded-xl bg-slate-50 p-3"><dt class="font-extrabold uppercase tracking-wide text-slate-400">Gambar</dt><dd class="mt-1 font-bold text-slate-700">${urls.length} (cover + ${p.images.length})</dd></div>
@@ -361,6 +362,8 @@ function openEditor(id) {
     isNew: !p, id: p ? p.id : 'p' + Date.now().toString(36) + rid().slice(0, 3), slug: p ? p.slug : '',
     title: p ? p.title : '', category: p ? p.category : '', tags: p ? [...p.tags] : [], description: p ? p.description : '',
     published: p ? p.published : true, createdAt: p ? p.createdAt : null, checkoutUrl: p ? (p.checkoutUrl || '') : '',
+    normalPrice: p && p.normalPrice !== null ? String(p.normalPrice) : '',
+    promoPrice: p && p.promoPrice !== null ? String(p.promoPrice) : '',
     cover: p && p.cover ? mk(p.cover) : null, gallery: p ? p.images.map(mk) : [], trash: [],
     orig: new Set(p ? [p.cover, ...p.images].filter(Boolean) : []), dirty: false, working: 0
   };
@@ -375,9 +378,18 @@ function openEditor(id) {
         <datalist id="tagList">${[...new Set(S.data.products.flatMap(x => x.tags))].map(t => `<option value="${esc(t)}">`).join('')}</datalist></div>
       <div><div class="flex items-end justify-between"><label class="lbl" for="eDesc">Deskripsi aplikasi</label><span id="descCount" class="text-[11px] font-bold text-slate-400"></span></div>
         <textarea id="eDesc" class="field" rows="12" maxlength="${MAX_DESC}" placeholder="Jelaskan masalah yang diselesaikan, fitur utama, teknologi yang dipakai, dan hasilnya.">${esc(E.description)}</textarea></div>
+      <div class="grid sm:grid-cols-2 gap-3">
+        <div><label class="lbl" for="eNormalPrice">Harga Normal (Rp)</label>
+          <input id="eNormalPrice" type="text" inputmode="numeric" maxlength="20" class="field" value="${esc(formatInputPrice(E.normalPrice))}" placeholder="contoh: 149.900" autocomplete="off" />
+          <p class="mt-1 text-[11px] text-slate-500">Harga jual sebelum diskon.</p></div>
+        <div><label class="lbl" for="ePromoPrice">Harga Promo (Rp) <span class="normal-case font-semibold text-slate-400">(opsional)</span></label>
+          <input id="ePromoPrice" type="text" inputmode="numeric" maxlength="20" class="field" value="${esc(formatInputPrice(E.promoPrice))}" placeholder="contoh: 129.900" autocomplete="off" />
+          <p class="mt-1 text-[11px] text-slate-500">Harus lebih rendah daripada harga normal.</p></div>
+      </div>
+      <div class="rounded-xl border border-blue-100 bg-blue-50/60 p-3"><div class="text-[11px] font-bold uppercase tracking-wide text-slate-500 mb-1">Pratinjau harga</div><div id="pricePreview"></div></div>
       <div><label class="lbl" for="eCheckout">Link checkout <span class="normal-case font-semibold text-slate-400">(tujuan tombol "Beli Sekarang")</span></label>
         <input id="eCheckout" type="url" inputmode="url" class="field" value="${esc(E.checkoutUrl)}" placeholder="https://..." />
-        <p class="mt-1.5 text-[11px] text-slate-500">Opsional. Kalau kosong, tombol "Beli Sekarang" mengarah ke WhatsApp.</p></div>
+        <p class="mt-1.5 text-[11px] text-slate-500">Gunakan URL HTTPS lengkap. Jika kosong, tombol beli di halaman publik dinonaktifkan; pengunjung masih bisa melihat detail dan bertanya melalui WhatsApp.</p></div>
 
       <div class="mb-4"><label class="lbl">Format gambar (semua gambar dijadikan 1:1)</label>
         <div class="inline-flex rounded-xl border border-slate-200 bg-white p-1 text-xs font-bold">
@@ -395,7 +407,7 @@ function openEditor(id) {
     </div>`;
   $('#drawerFoot').innerHTML = `<div class="flex items-center gap-3"><span id="imgStatus" class="text-xs font-semibold text-slate-500 flex-1"></span><button data-cancel class="px-5 py-3 rounded-xl border border-slate-200 bg-white text-sm font-bold text-slate-700 hover:border-blue-400 transition">Batal</button><button data-save class="px-6 py-3 rounded-xl bg-zura-navy hover:bg-blue-700 text-white text-sm font-bold shadow-md transition flex items-center gap-2"><i data-lucide="save" class="w-4 h-4"></i>Simpan</button></div>`;
   drawerGuard = () => !(E && E.dirty);
-  paintTags(); paintCover(); paintGallery(); paintDesc(); paintFit();
+  paintTags(); paintCover(); paintGallery(); paintDesc(); paintFit(); paintPricePreview();
   openDrawer(); lucide.createIcons();
 }
 const dirty = () => { if (E) E.dirty = true; };
@@ -404,6 +416,11 @@ $('#drawerBody').addEventListener('input', e => {
   if (e.target.id === 'eTitle') { E.title = e.target.value; dirty(); }
   else if (e.target.id === 'eCat') { E.category = e.target.value; dirty(); }
   else if (e.target.id === 'eCheckout') { E.checkoutUrl = e.target.value; dirty(); }
+  else if (e.target.id === 'eNormalPrice' || e.target.id === 'ePromoPrice') {
+    const key = e.target.id === 'eNormalPrice' ? 'normalPrice' : 'promoPrice';
+    E[key] = e.target.value.replace(/\D/g, '').slice(0, 15);
+    e.target.value = formatInputPrice(E[key]); paintPricePreview(); dirty();
+  }
   else if (e.target.id === 'eDesc') { E.description = e.target.value; paintDesc(); dirty(); }
   else if (e.target.id === 'eTagIn') { const v = e.target.value; if (v.includes(',')) { v.split(',').forEach(addTag); e.target.value = ''; } }
 });
@@ -439,16 +456,18 @@ function addTag(raw) {
 function paintTags() { $('#tagChips').innerHTML = E.tags.map((t, i) => `<span class="inline-flex items-center gap-1 bg-blue-50 text-blue-700 text-xs font-bold rounded-md pl-2 pr-1 py-1">#${esc(t)}<button type="button" data-tagx="${i}" class="w-4 h-4 rounded hover:bg-blue-200 grid place-items-center" aria-label="Hapus tag">✕</button></span>`).join(''); }
 function paintFit() { $$('.fit-btn').forEach(b => { const on = b.dataset.fit === FIT; b.classList.toggle('bg-zura-navy', on); b.classList.toggle('text-white', on); b.classList.toggle('text-slate-600', !on); }); }
 function paintDesc() { const n = E.description.length, c = $('#descCount'); c.textContent = `${n} / ${MAX_DESC}`; c.className = 'text-[11px] font-bold ' + (n > MAX_DESC - 100 ? 'text-rose-500' : 'text-slate-400'); }
+function formatInputPrice(raw) { const digits = String(raw || '').replace(/\D/g, '').slice(0, 15); return digits ? Number(digits).toLocaleString('id-ID') : ''; }
+function paintPricePreview() { const el = $('#pricePreview'); if (!el || !E) return; const p = { normalPrice: parsePrice(E.normalPrice), promoPrice: parsePrice(E.promoPrice) }; el.innerHTML = priceMarkup(p) + (E.promoPrice && (p.normalPrice === null || p.promoPrice >= p.normalPrice) ? '<p class=\"mt-1 text-xs font-semibold text-rose-600\">Harga promo harus lebih rendah daripada harga normal.</p>' : ''); }
 function paintCover() {
   const z = $('#coverZone');
   z.innerHTML = E.cover
-    ? `<div class="relative rounded-2xl overflow-hidden border border-slate-200 bg-slate-100 aspect-square max-w-xs group"><img src="${esc(E.cover.url)}" alt="" class="w-full h-full object-cover" /><span class="absolute top-2 left-2 px-2 py-1 rounded-md bg-zura-navy text-white text-[11px] font-bold">COVER</span><button type="button" data-cover-x class="absolute top-2 right-2 w-8 h-8 rounded-full bg-white/90 hover:bg-rose-50 hover:text-rose-600 grid place-items-center shadow" aria-label="Hapus cover"><i data-lucide="x" class="w-4 h-4"></i></button><label class="absolute bottom-2 right-2 px-3 py-1.5 rounded-lg bg-white/90 hover:bg-white text-xs font-bold text-slate-700 cursor-pointer shadow">Ganti<input id="fCover" type="file" accept="image/*" class="hidden" /></label></div>`
+    ? `<div class="relative rounded-2xl overflow-hidden border border-slate-200 bg-slate-100 aspect-square max-w-xs group"><img src="${esc(E.cover.url)}" alt="" class="w-full h-full object-contain bg-white" /><span class="absolute top-2 left-2 px-2 py-1 rounded-md bg-zura-navy text-white text-[11px] font-bold">COVER</span><button type="button" data-cover-x class="absolute top-2 right-2 w-8 h-8 rounded-full bg-white/90 hover:bg-rose-50 hover:text-rose-600 grid place-items-center shadow" aria-label="Hapus cover"><i data-lucide="x" class="w-4 h-4"></i></button><label class="absolute bottom-2 right-2 px-3 py-1.5 rounded-lg bg-white/90 hover:bg-white text-xs font-bold text-slate-700 cursor-pointer shadow">Ganti<input id="fCover" type="file" accept="image/*" class="hidden" /></label></div>`
     : `<label data-drop="cover" class="grid place-items-center aspect-square rounded-2xl border-2 border-dashed border-blue-200 hover:border-blue-400 bg-blue-50/50 p-6 text-center cursor-pointer transition max-w-xs"><span><i data-lucide="image-plus" class="w-8 h-8 mx-auto text-blue-500"></i><span class="mt-2 block text-sm font-bold text-zura-navy">Pilih atau tarik gambar cover</span><span class="block text-xs text-slate-500 mt-0.5">Otomatis dijadikan 1:1 (maks 1200×1200) &amp; dikompres</span><input id="fCover" type="file" accept="image/*" class="hidden" /></span></label>`;
   lucide.createIcons();
 }
 function paintGallery() {
   const n = E.gallery.length; $('#galCount').textContent = `${n} / ${MAX_GALLERY}`;
-  const tiles = E.gallery.map((it, i) => `<div class="relative rounded-xl overflow-hidden border border-slate-200 bg-slate-100 aspect-square"><img src="${esc(it.url)}" alt="" class="w-full h-full object-cover" />
+  const tiles = E.gallery.map((it, i) => `<div class="relative rounded-xl overflow-hidden border border-slate-200 bg-slate-100 aspect-square"><img src="${esc(it.url)}" alt="" class="w-full h-full object-contain bg-white" />
       <span class="absolute top-1 left-1 px-1.5 py-0.5 rounded bg-black/55 text-white text-[10px] font-bold">${i + 1}</span>
       <button type="button" data-g="del" data-k="${it.key}" class="absolute top-1 right-1 w-7 h-7 rounded-full bg-white/90 hover:bg-rose-50 hover:text-rose-600 grid place-items-center shadow text-xs" aria-label="Hapus">✕</button>
       <div class="absolute inset-x-0 bottom-0 flex items-center justify-between gap-1 p-1 bg-gradient-to-t from-black/65 to-transparent">
@@ -469,16 +488,17 @@ function galleryAction(act, key) {
 }
 
 /* ----- Pemrosesan gambar: perkecil + kompres ----- */
-let FIT = 'crop';   // 'crop' = potong dari tengah, 'contain' = muat penuh + latar putih
+let FIT = 'contain';   // default: semua gambar 1:1 tanpa memotong screenshot produk
 async function processImage(file, side = 1200) {
   let src, w, h;
   try { src = await createImageBitmap(file); w = src.width; h = src.height; }
-  catch (e) { src = await new Promise((res, rej) => { const im = new Image(); im.onload = () => res(im); im.onerror = rej; im.src = URL.createObjectURL(file); }); w = src.naturalWidth; h = src.naturalHeight; }
+  catch (e) { src = await new Promise((res, rej) => { const im = new Image(), url = URL.createObjectURL(file); im.onload = () => { URL.revokeObjectURL(url); res(im); }; im.onerror = () => { URL.revokeObjectURL(url); rej(new Error('Gambar tidak valid')); }; im.src = url; }); w = src.naturalWidth; h = src.naturalHeight; }
   const m = FIT === 'crop' ? Math.min(w, h) : Math.max(w, h), out = Math.max(1, Math.min(side, m));
   const c = document.createElement('canvas'); c.width = out; c.height = out; const g = c.getContext('2d');
   g.fillStyle = '#fff'; g.fillRect(0, 0, out, out);
   if (FIT === 'crop') g.drawImage(src, (w - m) / 2, (h - m) / 2, m, m, 0, 0, out, out);
   else { const sc = out / m, dw = w * sc, dh = h * sc; g.drawImage(src, (out - dw) / 2, (out - dh) / 2, dw, dh); }
+  if (typeof src.close === 'function') src.close();
   const toBlob = (type, q) => new Promise(r => c.toBlob(r, type, q));
   let blob = await toBlob('image/webp', .86), ext = 'webp';
   if (!blob || blob.type !== 'image/webp') { blob = await toBlob('image/jpeg', .88); ext = 'jpg'; }
@@ -508,10 +528,15 @@ function validate() {
   if (!e.title.trim()) return 'Judul aplikasi wajib diisi.';
   if (!e.category.trim()) return 'Kategori wajib diisi.';
   if (e.description.length > MAX_DESC) return `Deskripsi maksimal ${MAX_DESC} karakter.`;
+  const normal = parsePrice(e.normalPrice), promo = parsePrice(e.promoPrice);
+  if (e.normalPrice !== '' && normal === null) return 'Harga normal harus berupa angka Rupiah yang valid.';
+  if (e.promoPrice !== '' && promo === null) return 'Harga promo harus berupa angka Rupiah yang valid.';
+  if (promo !== null && normal === null) return 'Isi harga normal sebelum menetapkan harga promo.';
+  if (promo !== null && promo >= normal) return 'Harga promo harus lebih kecil daripada harga normal.';
   if (!e.cover) return 'Gambar cover wajib ada.';
   if (e.gallery.length > MAX_GALLERY) return `Galeri maksimal ${MAX_GALLERY} gambar.`;
   const cu = e.checkoutUrl.trim();
-  if (cu) { try { if (!/^https?:$/.test(new URL(cu).protocol)) throw 0; } catch (x) { return 'Link checkout harus berupa URL lengkap yang diawali https://'; } }
+  if (cu && !checkoutHref({ checkoutUrl: cu })) return 'Link checkout harus URL HTTPS valid (https://...).';
   return '';
 }
 async function saveEditor() {
@@ -527,7 +552,7 @@ async function saveEditor() {
     const idx = fresh.products.findIndex(p => p.id === e.id);
     let slug = e.slug;
     if (!slug) { const base = slugify(e.title); slug = base; let n = 2; while (fresh.products.some(p => p.slug === slug && p.id !== e.id)) slug = base + '-' + n++; }
-    const prod = { id: e.id, slug, title: e.title.trim(), category: e.category.trim(), tags: e.tags, description: e.description, checkoutUrl: e.checkoutUrl.trim(), cover: e.cover.path, images: e.gallery.map(i => i.path), published: e.published, createdAt: e.createdAt || now, updatedAt: now };
+    const prod = { id: e.id, slug, title: e.title.trim(), category: e.category.trim(), tags: e.tags, description: e.description, normalPrice: parsePrice(e.normalPrice), promoPrice: parsePrice(e.promoPrice), checkoutUrl: e.checkoutUrl.trim(), cover: e.cover.path, images: e.gallery.map(i => i.path), published: e.published, createdAt: e.createdAt || now, updatedAt: now };
     if (idx >= 0) fresh.products[idx] = prod; else fresh.products.push(prod);
     fresh.updatedAt = now;
     const keep = new Set(items.map(i => i.path)), removed = [...e.orig].filter(p => !keep.has(p));
