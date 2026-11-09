@@ -108,7 +108,7 @@ const CONFIG = {
 const { t, LANG, esc, src, slugify, fmtDate, catLabel, waLink, loadProducts, groupByCategory, card, mountGallery, toast } = ZLP;
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
-let ALL = [], loaded = false;
+let ALL = [], loaded = false, SHARE = null;
 const F = { cat: 'all', tag: '', q: '' };
 const baseTitle = document.title, baseDesc = $('#metaDesc').content;
 
@@ -143,7 +143,7 @@ function renderChips() {
 }
 function renderList() {
   const box = $('#list');
-  if (!loaded) { box.innerHTML = `<div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">${[0, 1, 2].map(() => '<div class="rounded-2xl overflow-hidden glass"><div class="aspect-[16/10] skel"></div><div class="p-4 space-y-2"><div class="h-4 w-3/4 rounded skel"></div><div class="h-3 w-1/2 rounded skel"></div></div></div>').join('')}</div>`; return; }
+  if (!loaded) { box.innerHTML = `<div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">${[0, 1, 2].map(() => '<div class="rounded-2xl overflow-hidden glass"><div class="aspect-square skel"></div><div class="p-4 space-y-2"><div class="h-4 w-3/4 rounded skel"></div><div class="h-3 w-1/2 rounded skel"></div></div></div>').join('')}</div>`; return; }
   if (!ALL.length) {
     box.innerHTML = `<div class="glass rounded-3xl p-10 sm:p-14 text-center max-w-2xl mx-auto">
       <div class="mx-auto w-14 h-14 rounded-2xl bg-zura-navy text-white grid place-items-center"><i data-lucide="package-open" class="w-7 h-7"></i></div>
@@ -186,18 +186,31 @@ function openDetail(id, push) {
   const rel = ALL.filter(x => x.id !== p.id && (x.category || '') === (p.category || '')).slice(0, 3);
   const msg = t(`Halo Zuralogic, saya tertarik dengan "${p.title}". Bisa dibantu?`, `Hi Zuralogic, I'm interested in "${p.title}". Can you help?`);
   const wa = CONFIG.whatsappUrl ? waLink(CONFIG.whatsappUrl, msg) : '/#contact';
+  const buyRaw = (p.checkoutUrl || '').trim();
+  const buy = /^https?:\/\//i.test(buyRaw) ? buyRaw : wa;   // tanpa link checkout -> arahkan ke WhatsApp
+  SHARE = { title: p.title, url: new URL(href(p), location.origin).href };
   $('#detailBody').innerHTML = `
     <button data-close aria-label="Close" class="absolute top-3 right-3 sm:top-5 sm:right-5 z-10 w-10 h-10 rounded-full bg-slate-100 hover:bg-slate-200 grid place-items-center"><i data-lucide="x" class="w-5 h-5"></i></button>
     <div class="grid lg:grid-cols-5 gap-7 lg:gap-10 pt-8 sm:pt-0">
-      <div class="lg:col-span-3 min-w-0" id="dGal"></div>
-      <div class="lg:col-span-2 min-w-0">
+      <div class="lg:col-span-2 min-w-0" id="dGal"></div>
+      <div class="lg:col-span-3 min-w-0">
         <span class="inline-block px-2.5 py-1 rounded-lg bg-zura-navy text-white text-[11px] font-semibold">${esc(catLabel(p.category))}</span>
         <h2 class="font-display mt-3 text-2xl sm:text-3xl font-extrabold text-zura-navy leading-tight break-words">${esc(p.title)}</h2>
         ${p.tags.length ? `<div class="mt-3 flex flex-wrap gap-1.5">${p.tags.map(x => `<button data-tag="${esc(x)}" class="text-xs font-bold text-blue-700 bg-blue-50 hover:bg-blue-100 rounded-md px-2.5 py-1 transition">#${esc(x)}</button>`).join('')}</div>` : ''}
         <div class="mt-5 text-sm sm:text-[15px] text-slate-700 leading-relaxed whitespace-pre-line break-words">${esc(p.description)}</div>
-        <div class="mt-7 flex flex-col sm:flex-row gap-3">
-          <a href="${esc(wa)}" target="_blank" rel="noopener noreferrer" class="flex-1 px-5 py-3.5 rounded-2xl bg-zura-navy hover:bg-blue-700 text-white font-bold text-sm flex items-center justify-center gap-2 shadow-lg transition"><i data-lucide="message-circle" class="w-5 h-5"></i>${t('Tanya produk ini', 'Ask about this')}</a>
-          <button data-share class="px-5 py-3.5 rounded-2xl border border-slate-200 hover:border-blue-400 text-slate-700 font-bold text-sm flex items-center justify-center gap-2 transition"><i data-lucide="link" class="w-4 h-4"></i>${t('Salin link', 'Copy link')}</button>
+        <div class="mt-7 space-y-3">
+          <a href="${esc(buy)}" target="_blank" rel="noopener noreferrer" data-buy class="w-full px-5 py-4 rounded-2xl bg-zura-navy hover:bg-blue-700 text-white font-extrabold text-base flex items-center justify-center gap-2 shadow-xl shadow-blue-900/20 transition"><i data-lucide="shopping-cart" class="w-5 h-5"></i>${t('Beli Sekarang', 'Buy Now')}</a>
+          <div class="grid grid-cols-2 gap-3">
+            <a href="${esc(wa)}" target="_blank" rel="noopener noreferrer" class="px-4 py-3 rounded-2xl border border-slate-200 hover:border-blue-400 bg-white text-slate-700 font-bold text-sm flex items-center justify-center gap-2 transition"><i data-lucide="message-circle" class="w-4 h-4 text-emerald-600"></i>${t('Tanya produk ini', 'Ask about this')}</a>
+            <div class="relative" data-sharewrap>
+              <button type="button" data-share aria-haspopup="true" class="w-full px-4 py-3 rounded-2xl border border-slate-200 hover:border-blue-400 bg-white text-slate-700 font-bold text-sm flex items-center justify-center gap-2 transition"><i data-lucide="share-2" class="w-4 h-4 text-blue-600"></i>${t('Bagikan', 'Share')}</button>
+              <div id="shareMenu" class="hidden absolute right-0 bottom-full mb-2 w-56 rounded-2xl bg-white border border-slate-200 shadow-2xl p-1.5 z-20">
+                <button type="button" data-share-act="copy" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-blue-50 text-sm font-semibold text-slate-700 text-left"><span class="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 grid place-items-center"><i data-lucide="link" class="w-4 h-4"></i></span>${t('Salin link', 'Copy link')}</button>
+                <button type="button" data-share-act="wa" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-emerald-50 text-sm font-semibold text-slate-700 text-left"><span class="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 grid place-items-center"><i data-lucide="message-circle" class="w-4 h-4"></i></span>WhatsApp</button>
+                <button type="button" data-share-act="tg" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-sky-50 text-sm font-semibold text-slate-700 text-left"><span class="w-8 h-8 rounded-lg bg-sky-50 text-sky-600 grid place-items-center"><i data-lucide="send" class="w-4 h-4"></i></span>Telegram</button>
+              </div>
+            </div>
+          </div>
         </div>
         ${p.updatedAt ? `<p class="mt-4 text-xs text-slate-400">${t('Diperbarui', 'Updated')} ${fmtDate(p.updatedAt)}</p>` : ''}
       </div>
@@ -216,10 +229,13 @@ function closeDetail(push) {
   if (push) { if (history.state && history.state.detail) history.back(); else history.replaceState(null, '', location.pathname); }
 }
 $('#detail').addEventListener('click', e => {
+  const sm = $('#shareMenu'); if (sm && !e.target.closest('[data-sharewrap]')) sm.classList.add('hidden');
   if (e.target.closest('[data-close]')) { closeDetail(true); return; }
   if (!e.target.closest('#detailBody')) { closeDetail(true); return; }
   const tg = e.target.closest('[data-tag]'); if (tg) { F.tag = tg.dataset.tag; F.cat = 'all'; closeDetail(true); render(); window.scrollTo({ top: 0, behavior: 'smooth' }); return; }
-  if (e.target.closest('[data-share]')) { navigator.clipboard && navigator.clipboard.writeText(location.href).then(() => toast(t('Link disalin', 'Link copied'))); return; }
+  if (e.target.closest('[data-share]')) { $('#shareMenu').classList.toggle('hidden'); return; }
+  const sa = e.target.closest('[data-share-act]');
+  if (sa && SHARE) { shareTo(sa.dataset.shareAct); $('#shareMenu').classList.add('hidden'); return; }
   const o = e.target.closest('a[data-open]'); if (o && !e.metaKey && !e.ctrlKey && e.button === 0) { e.preventDefault(); openDetail(o.dataset.open, true); }
 });
 window.addEventListener('keydown', e => { if (e.key === 'Escape' && $('#detail').style.display === 'block') closeDetail(true); });
@@ -227,6 +243,18 @@ window.addEventListener('popstate', () => {
   const p = new URLSearchParams(location.search).get('p');
   if (p) openDetail(p, false); else closeDetail(false);
 });
+
+/* ===== Bagikan: salin link / WhatsApp / Telegram ===== */
+function shareTo(kind) {
+  const { title, url } = SHARE, text = title + ' — Zuralogic';
+  if (kind === 'wa') window.open('https://wa.me/?text=' + encodeURIComponent(text + '\n' + url), '_blank', 'noopener');
+  else if (kind === 'tg') window.open('https://t.me/share/url?url=' + encodeURIComponent(url) + '&text=' + encodeURIComponent(text), '_blank', 'noopener');
+  else {
+    const ok = () => toast(t('Link disalin', 'Link copied'));
+    const fallback = () => { const ta = document.createElement('textarea'); ta.value = url; ta.style.position = 'fixed'; ta.style.opacity = '0'; document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); ok(); } catch (x) { toast(url); } ta.remove(); };
+    if (navigator.clipboard && typeof navigator.clipboard.writeText === 'function' && window.isSecureContext) navigator.clipboard.writeText(url).then(ok, fallback); else fallback();
+  }
+}
 
 /* ===== Init ===== */
 (async function () {
