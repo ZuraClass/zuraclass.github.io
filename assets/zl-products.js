@@ -39,10 +39,24 @@
     } catch (e) { return ''; }
   }
 
+  /* Teks beberapa baris -> daftar poin (satu baris = satu poin).
+     Format "Judul | keterangan": judul ditebalkan. inline=true -> "Judul: keterangan" dalam satu baris. */
+  function listMarkup(text, inline) {
+    const rows = String(text || '').split(/\r?\n/).map(s => s.trim().replace(/^[-*•]\s+/, '')).filter(Boolean).slice(0, 40);
+    const dot = '<span class="mt-[7px] w-1.5 h-1.5 rounded-full bg-blue-600 shrink-0"></span>';
+    return rows.map(row => {
+      const i = row.indexOf('|');
+      const head = i > 0 ? row.slice(0, i).trim() : '', body = (i >= 0 ? row.slice(i + 1) : row).trim();
+      if (inline) return `<li class="flex gap-2.5 text-[13px] leading-relaxed text-slate-700">${dot}<span class="min-w-0 break-words">${head ? `<b class="font-bold text-zura-navy">${esc(head)}:</b> ` : ''}${esc(body)}</span></li>`;
+      return `<li class="flex gap-2.5">${dot}<div class="min-w-0"><div class="text-sm break-words ${head ? 'font-bold text-zura-navy' : 'text-slate-700'}">${esc(head || body)}</div>${head && body ? `<div class="text-[13px] leading-relaxed text-slate-600 break-words">${esc(body)}</div>` : ''}</div></li>`;
+    }).join('');
+  }
+
   function normalize(d) {
     const ps = (d && Array.isArray(d.products) ? d.products : []).map(p => ({
       id: String(p.id), slug: String(p.slug || p.id), title: String(p.title || ''), category: String(p.category || ''),
       tags: Array.isArray(p.tags) ? p.tags.map(String) : [], description: String(p.description || ''), checkoutUrl: String(p.checkoutUrl || ''),
+      features: String(p.features || ''), includes: String(p.includes || ''), terms: String(p.terms || ''),
        normalPrice: parsePrice(p.normalPrice), promoPrice: parsePrice(p.promoPrice),
       cover: p.cover || null, images: Array.isArray(p.images) ? p.images.slice(0, 15) : [],
       published: p.published !== false, createdAt: p.createdAt || null, updatedAt: p.updatedAt || p.createdAt || null
@@ -168,5 +182,5 @@
     b.textContent = msg; b.style.display = 'block'; clearTimeout(b._t); b._t = setTimeout(() => { b.style.display = 'none'; }, 4200);
   }
 
-  window.ZLP = { LANG, t, esc, src, slugify, fmtDate, catLabel, waLink, parsePrice, fmtPrice, priceMarkup, checkoutHref, normalize, loadProducts, groupByCategory, card, lightbox, mountGallery, toast };
+  window.ZLP = { LANG, t, esc, src, slugify, fmtDate, catLabel, waLink, parsePrice, fmtPrice, priceMarkup, checkoutHref, listMarkup, normalize, loadProducts, groupByCategory, card, lightbox, mountGallery, toast };
 })();
