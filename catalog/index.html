@@ -105,9 +105,9 @@
   </div>
 
 <script>
-const { esc, slugify, fmtDate, groupByCategory, card, mountGallery, toast, normalize, parsePrice, priceMarkup, checkoutHref } = ZLP;
+const { esc, slugify, fmtDate, groupByCategory, card, mountGallery, toast, normalize, parsePrice, priceMarkup, checkoutHref, listMarkup } = ZLP;
 const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [...r.querySelectorAll(s)];
-const MAX_GALLERY = 15, MAX_DESC = 10000, MAX_TAGS = 12, MAX_TITLE = 100, MAX_CAT = 40;
+const MAX_GALLERY = 15, MAX_DESC = 10000, MAX_TAGS = 12, MAX_TITLE = 100, MAX_CAT = 40, MAX_BLOCK = 4000;
 const CK = 'zl_catalog_conn';
 const S = { owner: '', repo: '', branch: 'main', token: '', remember: false, data: { products: [] }, q: '', cat: 'all', status: 'all' };
 let E = null;            // state editor
@@ -334,6 +334,7 @@ function openView(id) {
     ${p.tags.length ? `<div class="mt-3 flex flex-wrap gap-1.5">${p.tags.map(x => `<span class="text-xs font-bold text-blue-700 bg-blue-50 rounded-md px-2.5 py-1">#${esc(x)}</span>`).join('')}</div>` : ''}
     <div class="mt-4">${priceMarkup(p, { large: true })}</div>
     <div class="mt-4 text-sm text-slate-700 leading-relaxed whitespace-pre-line break-words">${esc(p.description)}</div>
+    ${[['Fitur', p.features, false], ['Yang Kamu Dapatkan (Isi Paket)', p.includes, false], ['Persyaratan dan Ketentuan', p.terms, true]].filter(x => (x[1] || '').trim()).map(x => `<div class="mt-5"><h3 class="font-display font-extrabold text-zura-navy text-sm">${x[0]}</h3><ul class="mt-2.5 space-y-2.5">${listMarkup(x[1], x[2])}</ul></div>`).join('')}
     <dl class="mt-6 grid grid-cols-2 gap-3 text-xs">
       <div class="rounded-xl bg-slate-50 p-3"><dt class="font-extrabold uppercase tracking-wide text-slate-400">Gambar</dt><dd class="mt-1 font-bold text-slate-700">${urls.length} (cover + ${p.images.length})</dd></div>
       <div class="rounded-xl bg-slate-50 p-3"><dt class="font-extrabold uppercase tracking-wide text-slate-400">Diperbarui</dt><dd class="mt-1 font-bold text-slate-700">${esc(fmtDate(p.updatedAt) || '-')}</dd></div>
@@ -362,6 +363,7 @@ function openEditor(id) {
     isNew: !p, id: p ? p.id : 'p' + Date.now().toString(36) + rid().slice(0, 3), slug: p ? p.slug : '',
     title: p ? p.title : '', category: p ? p.category : '', tags: p ? [...p.tags] : [], description: p ? p.description : '',
     published: p ? p.published : true, createdAt: p ? p.createdAt : null, checkoutUrl: p ? (p.checkoutUrl || '') : '',
+    features: p ? (p.features || '') : '', includes: p ? (p.includes || '') : '', terms: p ? (p.terms || '') : '',
     normalPrice: p && p.normalPrice !== null ? String(p.normalPrice) : '',
     promoPrice: p && p.promoPrice !== null ? String(p.promoPrice) : '',
     cover: p && p.cover ? mk(p.cover) : null, gallery: p ? p.images.map(mk) : [], trash: [],
@@ -376,8 +378,18 @@ function openEditor(id) {
       <div><label class="lbl" for="eTagIn">Tags <span class="normal-case font-semibold text-slate-400">(Enter atau koma untuk menambah, maks ${MAX_TAGS})</span></label>
         <div id="tagBox" class="field flex flex-wrap items-center gap-1.5 !py-2"><span id="tagChips" class="contents"></span><input id="eTagIn" list="tagList" class="flex-1 min-w-[120px] outline-none text-sm bg-transparent py-1" placeholder="tambah tag…" maxlength="30" /></div>
         <datalist id="tagList">${[...new Set(S.data.products.flatMap(x => x.tags))].map(t => `<option value="${esc(t)}">`).join('')}</datalist></div>
-      <div><div class="flex items-end justify-between"><label class="lbl" for="eDesc">Deskripsi aplikasi</label><span id="descCount" class="text-[11px] font-bold text-slate-400"></span></div>
+      <div><div class="flex items-end justify-between"><label class="lbl" for="eDesc">Deskripsi aplikasi <span class="normal-case font-semibold text-slate-400">(tampil di kanan atas halaman detail, bisa dibuka-tutup)</span></label><span id="descCount" class="text-[11px] font-bold text-slate-400"></span></div>
         <textarea id="eDesc" class="field" rows="12" maxlength="${MAX_DESC}" placeholder="Jelaskan masalah yang diselesaikan, fitur utama, teknologi yang dipakai, dan hasilnya.">${esc(E.description)}</textarea></div>
+      <div class="rounded-2xl border border-blue-100 bg-blue-50/40 p-4 space-y-5">
+        <div><div class="text-[11px] font-extrabold uppercase tracking-widest text-blue-600">Konten halaman detail (3 kolom)</div>
+          <p class="mt-1 text-xs text-slate-600">Satu baris = satu poin. Tulis <b>Judul | keterangan</b> untuk judul tebal + keterangan di bawahnya. Kolom yang dikosongkan tidak ditampilkan.</p></div>
+        <div><label class="lbl" for="eFeatures">1. Fitur</label>
+          <textarea id="eFeatures" class="field" rows="6" maxlength="${MAX_BLOCK}" placeholder="Transaksi Penjualan Lebih Praktis | Katalog produk dengan gambar dan harga.&#10;Catat Pembayaran dengan Lebih Rapi | Mendukung tunai dan non-tunai.">${esc(E.features)}</textarea></div>
+        <div><label class="lbl" for="eIncludes">2. Yang Kamu Dapatkan (Isi Paket)</label>
+          <textarea id="eIncludes" class="field" rows="5" maxlength="${MAX_BLOCK}" placeholder="Template AppSheet siap pakai&#10;Panduan setup | Video dan dokumen langkah demi langkah">${esc(E.includes)}</textarea></div>
+        <div><label class="lbl" for="eTerms">3. Persyaratan dan Ketentuan</label>
+          <textarea id="eTerms" class="field" rows="5" maxlength="${MAX_BLOCK}" placeholder="Platform | Google AppSheet dan Google Sheets&#10;Pengembalian dana | Produk digital, mengikuti ketentuan yang berlaku.">${esc(E.terms)}</textarea></div>
+      </div>
       <div class="grid sm:grid-cols-2 gap-3">
         <div><label class="lbl" for="eNormalPrice">Harga Normal (Rp)</label>
           <input id="eNormalPrice" type="text" inputmode="numeric" maxlength="20" class="field" value="${esc(formatInputPrice(E.normalPrice))}" placeholder="contoh: 149.900" autocomplete="off" />
@@ -421,6 +433,9 @@ $('#drawerBody').addEventListener('input', e => {
     E[key] = e.target.value.replace(/\D/g, '').slice(0, 15);
     e.target.value = formatInputPrice(E[key]); paintPricePreview(); dirty();
   }
+  else if (e.target.id === 'eFeatures') { E.features = e.target.value; dirty(); }
+  else if (e.target.id === 'eIncludes') { E.includes = e.target.value; dirty(); }
+  else if (e.target.id === 'eTerms') { E.terms = e.target.value; dirty(); }
   else if (e.target.id === 'eDesc') { E.description = e.target.value; paintDesc(); dirty(); }
   else if (e.target.id === 'eTagIn') { const v = e.target.value; if (v.includes(',')) { v.split(',').forEach(addTag); e.target.value = ''; } }
 });
@@ -528,6 +543,7 @@ function validate() {
   if (!e.title.trim()) return 'Judul aplikasi wajib diisi.';
   if (!e.category.trim()) return 'Kategori wajib diisi.';
   if (e.description.length > MAX_DESC) return `Deskripsi maksimal ${MAX_DESC} karakter.`;
+  if ([e.features, e.includes, e.terms].some(x => x.length > MAX_BLOCK)) return `Fitur, Isi Paket, dan Ketentuan maksimal ${MAX_BLOCK} karakter per kolom.`;
   const normal = parsePrice(e.normalPrice), promo = parsePrice(e.promoPrice);
   if (e.normalPrice !== '' && normal === null) return 'Harga normal harus berupa angka Rupiah yang valid.';
   if (e.promoPrice !== '' && promo === null) return 'Harga promo harus berupa angka Rupiah yang valid.';
@@ -552,7 +568,7 @@ async function saveEditor() {
     const idx = fresh.products.findIndex(p => p.id === e.id);
     let slug = e.slug;
     if (!slug) { const base = slugify(e.title); slug = base; let n = 2; while (fresh.products.some(p => p.slug === slug && p.id !== e.id)) slug = base + '-' + n++; }
-    const prod = { id: e.id, slug, title: e.title.trim(), category: e.category.trim(), tags: e.tags, description: e.description, normalPrice: parsePrice(e.normalPrice), promoPrice: parsePrice(e.promoPrice), checkoutUrl: e.checkoutUrl.trim(), cover: e.cover.path, images: e.gallery.map(i => i.path), published: e.published, createdAt: e.createdAt || now, updatedAt: now };
+    const prod = { id: e.id, slug, title: e.title.trim(), category: e.category.trim(), tags: e.tags, description: e.description, features: e.features.trim(), includes: e.includes.trim(), terms: e.terms.trim(), normalPrice: parsePrice(e.normalPrice), promoPrice: parsePrice(e.promoPrice), checkoutUrl: e.checkoutUrl.trim(), cover: e.cover.path, images: e.gallery.map(i => i.path), published: e.published, createdAt: e.createdAt || now, updatedAt: now };
     if (idx >= 0) fresh.products[idx] = prod; else fresh.products.push(prod);
     fresh.updatedAt = now;
     const keep = new Set(items.map(i => i.path)), removed = [...e.orig].filter(p => !keep.has(p));
