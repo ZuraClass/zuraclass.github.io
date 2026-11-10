@@ -17,11 +17,19 @@
       "promoPrice": 149900,
       "checkoutUrl": "https://zurastore.myr.id/pl/appsheet-pos-lite/",
       "cover": "assets/products/pmw9b1or1zyo/fs19l474.webp",
-      "images": [],
+      "images": [
+        "assets/products/pmw9b1or1zyo/hsxjh2lq.webp",
+        "assets/products/pmw9b1or1zyo/y1is9umv.webp",
+        "assets/products/pmw9b1or1zyo/bipdxtk8.webp",
+        "assets/products/pmw9b1or1zyo/gv43jz5s.webp",
+        "assets/products/pmw9b1or1zyo/x4n1wvt0.webp",
+        "assets/products/pmw9b1or1zyo/vrl4ftsv.webp",
+        "assets/products/pmw9b1or1zyo/jliqqcmu.webp"
+      ],
       "published": true,
       "createdAt": "2026-11-09T13:39:57.320Z",
-      "updatedAt": "2026-11-09T13:42:25.370Z"
+      "updatedAt": "2026-11-10T03:03:18.714Z"
     }
   ],
-  "updatedAt": "2026-11-09T13:42:25.370Z"
+  "updatedAt": "2026-11-10T03:03:18.714Z"
 }
