@@ -13,27 +13,6 @@
   <link rel="canonical" href="https://zuralogic.com/about/">
   <title>Tentang Kami — Zuralogic | Business Systems Studio</title>
   <style>
-    /* Wrapper logo header */
-.brand-mark {
-  width: auto;
-  height: 40px;
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  border-radius: 11px;
-}
-
-/* Logo menyesuaikan ukuran wrapper */
-.header-logo {
-  display: block;
-  max-width: 100%;
-  max-height: 100%;
-  width: auto;
-  height: auto;
-  object-fit: contain;
-}
     :root{color-scheme:dark;--bg:#07132d;--bg2:#0b1c40;--card:#0f2449;--line:rgba(173,211,255,.17);--text:#f6faff;--muted:#a9bbd5;--cyan:#51d8ee;--blue:#477af6;--gold:#f6bd70;--max:1150px;--radius:22px}
     *,*::before,*::after{box-sizing:border-box}
     html{scroll-behavior:smooth;scroll-padding-top:96px}
@@ -45,7 +24,10 @@
     .site-header{position:sticky;top:0;z-index:30;background:rgba(7,19,45,.78);backdrop-filter:blur(18px);border-bottom:1px solid var(--line)}
     .nav{display:flex;align-items:center;justify-content:space-between;gap:22px;min-height:78px}
     .brand{display:inline-flex;align-items:center;gap:11px;font-weight:850;letter-spacing:-.035em;font-size:21px;white-space:nowrap}
-    .brand-mark{width:auto;height:40px;display:grid;place-items:center}
+    /* Header logo: explicit dimensions prevent oversized images */
+    .site-header .brand{display:inline-flex;align-items:center;flex:0 1 auto;min-width:0;max-width:220px}
+    .site-header .header-logo{display:block;width:auto;height:36px;max-width:200px;object-fit:contain;object-position:left center}
+    .brand-mark{width:37px;height:37px;display:grid;place-items:center;border-radius:11px;background:linear-gradient(145deg,#2e63ed,#41d2ed)}
     .brand-mark svg{width:23px;height:23px}
     .brand span span{color:var(--cyan)}
     .nav-links{display:flex;align-items:center;gap:28px}.nav-links a{font-size:13px;font-weight:650;color:#c8d8ee;transition:color .2s}.nav-links a:hover,.nav-links a[aria-current="page"]{color:#fff}
@@ -109,6 +91,7 @@
     .reveal{opacity:1;transform:none}
     @media (prefers-reduced-motion:no-preference){.js .reveal{opacity:0;transform:translateY(20px);transition:opacity .65s ease,transform .65s ease}.js .reveal.visible{opacity:1;transform:none}.visual{animation:float 8s ease-in-out infinite}@keyframes float{50%{transform:translateY(-9px)}}}
     @media (max-width:920px){.hero-layout{grid-template-columns:1fr;gap:45px}.hero{padding:75px 0}.visual{max-width:620px}.steps{grid-template-columns:repeat(2,1fr)}.nav-links{gap:16px}.nav-links a{font-size:12px}}
+    @media (max-width:850px){.site-header .brand{max-width:calc(100% - 64px)}.site-header .header-logo{height:30px;max-width:min(170px,100%)}}
     @media (max-width:850px){.container{width:min(calc(100% - 34px),var(--max))}.nav{min-height:68px}.brand{font-size:19px}.nav-toggle{display:block}.nav-links{display:none;position:absolute;left:0;right:0;top:68px;background:#0a1b3b;border-bottom:1px solid var(--line);padding:16px 20px 23px;flex-direction:column;align-items:stretch;gap:3px}.nav-links.open{display:flex}.nav-links a{padding:10px 12px;font-size:14px}.nav-links .nav-cta{margin-top:8px}.hero{padding:58px 0 66px}.hero h1{font-size:clamp(37px,10vw,52px)}.hero p{font-size:15px}.hero-actions{flex-direction:column;align-items:stretch}.hero-actions .btn{width:100%}.visual{padding:18px}.strip-inner{grid-template-columns:1fr;gap:14px;padding:22px 0}section.content{padding:75px 0}.section-head{margin-bottom:29px}.section-head h2{font-size:34px}.about-grid,.services,.product-grid,.learning{grid-template-columns:1fr;gap:15px}.about-grid{gap:28px}.steps{grid-template-columns:1fr}.learning{padding:27px}.learning .btn{width:100%}.footer-inner{align-items:flex-start;flex-direction:column}.final-cta{padding:65px 0}}
   </style>
   <script type="application/ld+json">
@@ -120,11 +103,7 @@
   <header class="site-header">
     <div class="container nav">
       <a class="brand" href="/" aria-label="Zuralogic, kembali ke beranda">
-        <span class="brand-mark">
-  <img src="/contents/imgheader.png"
-       alt="Zuralogic"
-       class="header-logo" />
-</span>
+        <img src="/contents/imgheader.png" alt="Zuralogic" class="header-logo" width="200" height="36">
       </a>
       <button class="nav-toggle" type="button" aria-label="Buka menu navigasi" aria-expanded="false" aria-controls="main-nav"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
       <nav class="nav-links" id="main-nav" aria-label="Navigasi utama">
