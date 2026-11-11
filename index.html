@@ -3,9 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Zuralogic — Aplikasi Custom, Web App & Kelas Bikin Aplikasi</title>
-  <meta name="description" content="Zuralogic: bangun aplikasi custom (AppSheet, Apps Script, Web App) dan website untuk bisnis, atau belajar membangunnya sendiri lewat channel YouTube. Your Scale-Up Partner." />
+  <title>Zuralogic — Practical Business Apps, Automation & Digital Solutions</title>
+  <meta name="description" content="Discover ready-to-use business app templates, custom systems, automation and practical training at Zuralogic. Indonesia-based, built for a global audience." />
   <meta name="theme-color" content="#F4F8FF" />
+  <meta name="robots" content="index, follow, max-image-preview:large" />
+  <meta property="og:site_name" content="Zuralogic" />
+  <meta name="twitter:title" content="Zuralogic — Practical Business Systems" />
   <link rel="canonical" href="https://zuralogic.com/" />
 
   <!-- Google Tag Manager -->
@@ -26,7 +29,7 @@
   <!-- Open Graph (buat file /assets/og-image.png ukuran 1200x630) -->
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Zuralogic — Your Scale-Up Partner" />
-  <meta property="og:description" content="Aplikasi custom & web app untuk bisnis, plus kelas bikin aplikasi di YouTube." />
+  <meta property="og:description" content="Ready-to-use business templates, custom systems, automation and practical learning. Built in Indonesia, ready for the world." />
   <meta property="og:url" content="https://zuralogic.com/" />
   <meta property="og:image" content="https://zuralogic.com/assets/og-image.png" />
   <meta name="twitter:card" content="summary_large_image" />
@@ -41,8 +44,8 @@
     "name": "Zuralogic",
     "url": "https://zuralogic.com/",
     "slogan": "Your Scale-Up Partner",
-    "description": "Pembuatan aplikasi custom (AppSheet, Google Apps Script, Web App), website, dan edukasi membangun aplikasi.",
-    "knowsAbout": ["AppSheet", "Google Apps Script", "Web App", "Website", "Otomasi bisnis"]
+    "description": "Indonesia-based business systems studio offering ready-to-use digital product templates, custom business applications, automation, websites and training.",
+    "knowsAbout": ["AppSheet", "Google Apps Script", "Web App", "Business process automation", "Digital product templates", "SME training"]
   }
   </script>
 
@@ -152,6 +155,20 @@
     .proc-step .body { opacity: .45; transition: opacity .5s; }
     .proc-step.on .body { opacity: 1; }
 
+    /* 2026 update: unified product, services & training funnels */
+    .journey-card.active { border-color: #2563EB; box-shadow: 0 0 0 3px rgba(37,99,235,.12), 0 24px 48px -24px rgba(10,25,49,.36); }
+    .journey-card .path-check { opacity:0; transform:scale(.6); }
+    .journey-card.active .path-check { opacity:1; transform:scale(1); }
+    .path-card.active { border-color: #2563EB; }
+    .product-note { background: linear-gradient(135deg,rgba(219,234,254,.58),rgba(255,255,255,.84)); border:1px solid #dbeafe; }
+    .faq-grid details { background:white; border:1px solid #dbeafe; border-radius:16px; }
+    .faq-grid details summary { cursor:pointer; padding:18px 20px; font-weight:750; list-style:none; display:flex; gap:12px; align-items:center; justify-content:space-between; }
+    .faq-grid details summary::-webkit-details-marker { display:none; }
+    .faq-grid details summary::after { content:'+'; color:#2563EB; font-size:24px; font-weight:400; line-height:1; }
+    .faq-grid details[open] summary::after { content:'−'; }
+    .faq-grid details p { padding:0 20px 20px; margin:0; color:#475569; font-size:14px; line-height:1.8; }
+    :focus-visible { outline: 3px solid #38BDF8; outline-offset: 3px; }
+    @media (max-width: 640px) { .shop-actions a { width:100%; } }
     .no-scrollbar::-webkit-scrollbar { display: none; }
     .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
@@ -164,6 +181,7 @@
 </head>
 
 <body class="text-slate-900 font-sans antialiased selection:bg-blue-600 selection:text-white overflow-x-hidden">
+  <a href="#start" class="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[100] focus:bg-white focus:p-3 focus:rounded-xl">Skip to content</a>
 
   <!-- Google Tag Manager (noscript) -->
 <noscript>
@@ -199,16 +217,14 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-[68px] flex items-center justify-between gap-4">
       <a href="/" class="flex items-center gap-3 shrink-0" aria-label="Zuralogic">
         <img src="/contents/imgheader.png" alt="Zuralogic" class="h-6 w-auto" />
-          <span class="text-[11px] font-semibold text-slate-500 mt-1">Your Scale-Up Partner</span>
-        </span>
+        <span class="hidden sm:inline text-[11px] font-semibold text-slate-500 mt-1">Your Scale-Up Partner</span>
       </a>
 
       <nav class="hidden lg:flex items-center gap-1 text-sm font-semibold text-slate-700">
-        <a href="#start" class="px-3 py-2 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition"><span data-en="Start here">Mulai di sini</span></a>
-        <a href="#showcase" class="px-3 py-2 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition"><span data-en="Skills">Keahlian</span></a>
-        <a href="/products/" data-track="nav_product" class="px-3 py-2 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition"><span data-en="Product">Produk</span></a>
+        <a href="/products/" data-track="nav_product" class="px-3 py-2 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition"><span data-en="Products">Produk</span></a>
+        <a href="#start" class="px-3 py-2 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition"><span data-en="Find your path">Pilih jalur</span></a>
         <a href="#solutions" class="px-3 py-2 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition"><span data-en="Solutions">Solusi</span></a>
-        <a href="#process" class="px-3 py-2 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition"><span data-en="Process">Proses</span></a>
+        <a href="#umkm" class="px-3 py-2 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition"><span data-en="MSME training">Pelatihan UMKM</span></a>
         <a href="#youtube" class="px-3 py-2 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition"><span data-en="Learn">Belajar</span></a>
         <a href="/about/" class="px-3 py-2 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition"><span data-en="About">Tentang</span></a>
       </nav>
@@ -218,7 +234,7 @@
           <i data-lucide="languages" class="w-4 h-4 text-blue-600"></i><span id="langLabel">ID</span>
         </button>
         <a data-wa data-track="nav_cta" class="hidden sm:inline-flex px-5 py-2.5 rounded-full bg-zura-navy hover:bg-blue-700 text-white text-sm font-bold shadow-md transition items-center gap-2">
-          <i data-lucide="message-circle" class="w-4 h-4"></i><span data-en="Free consultation">Konsultasi Gratis</span>
+          <i data-lucide="message-circle" class="w-4 h-4"></i><span data-en="Discuss your project">Diskusikan proyek</span>
         </a>
         <button id="menuBtn" class="lg:hidden p-2.5 rounded-xl border border-slate-200 bg-white/80 text-slate-700" aria-label="Menu"><i data-lucide="menu" class="w-5 h-5"></i></button>
       </div>
@@ -226,18 +242,18 @@
 
     <div id="mobileMenu" style="display:none" class="lg:hidden border-t border-blue-100 bg-white/95 backdrop-blur-xl px-5 py-4">
       <div class="grid gap-1 text-sm font-semibold text-slate-800">
-        <a href="#start" class="m-link py-2.5 border-b border-slate-100"><span data-en="Start here">Mulai di sini</span></a>
-        <a href="#showcase" class="m-link py-2.5 border-b border-slate-100"><span data-en="Skills">Keahlian</span></a>
-        <a href="/products/" class="py-2.5 border-b border-slate-100">Product</a>
+        <a href="/products/" class="py-2.5 border-b border-slate-100"><span data-en="Products">Produk</span></a>
+        <a href="#start" class="m-link py-2.5 border-b border-slate-100"><span data-en="Find your path">Pilih jalur</span></a>
         <a href="#solutions" class="m-link py-2.5 border-b border-slate-100"><span data-en="Solutions">Solusi</span></a>
-        <a href="#process" class="m-link py-2.5 border-b border-slate-100"><span data-en="Process">Proses</span></a>
+        <a href="#umkm" class="m-link py-2.5 border-b border-slate-100"><span data-en="MSME training">Pelatihan UMKM</span></a>
         <a href="#youtube" class="m-link py-2.5 border-b border-slate-100"><span data-en="Learn">Belajar</span></a>
-        <a data-wa class="m-link mt-3 py-3 rounded-xl bg-zura-navy text-white text-center font-bold"><span data-en="Free consultation">Konsultasi Gratis</span></a>
+        <a href="/about/" class="py-2.5 border-b border-slate-100"><span data-en="About">Tentang</span></a>
+        <a data-wa class="m-link mt-3 py-3 rounded-xl bg-zura-navy text-white text-center font-bold"><span data-en="Discuss your project">Diskusikan proyek</span></a>
       </div>
     </div>
   </header>
 
-  <main>
+  <main id="main">
   <!-- =====================================================================
        HERO
        ===================================================================== -->
@@ -245,35 +261,25 @@
     <div class="grid lg:grid-cols-12 gap-10 lg:gap-6 items-center">
 
       <div class="lg:col-span-6 relative z-10">
-        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full glass text-[11px] sm:text-xs font-extrabold tracking-[.16em] uppercase text-blue-700 reveal">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full glass text-[11px] sm:text-xs font-extrabold tracking-[.12em] uppercase text-blue-700 reveal">
           <span class="relative flex w-2 h-2"><span class="absolute inset-0 rounded-full bg-blue-500 ping2"></span><span class="relative w-2 h-2 rounded-full bg-blue-600"></span></span>
-          <span data-en="Apps · Automation · Education">Aplikasi · Otomasi · Edukasi</span>
+          <span data-en="Digital products · Systems · Learning">Produk digital · Sistem · Edukasi</span>
         </div>
-
         <h1 class="font-display mt-5 text-[34px] sm:text-5xl lg:text-[54px] font-extrabold text-zura-navy leading-[1.1] tracking-tight reveal" style="--d:80ms">
-          <span data-en="From messy processes to ">Dari proses yang rumit jadi </span><span id="rotWord" class="text-grad inline-block transition-all duration-300">aplikasi</span><br class="hidden sm:block" />
-          <span data-en=" that work for you."> yang bekerja untukmu.</span>
+          <span data-en="Practical systems for">Sistem praktis untuk</span><br />
+          <span class="text-grad" data-en="real business growth.">bisnis yang berkembang.</span>
         </h1>
-
-        <p class="mt-5 text-base sm:text-lg text-slate-600 leading-relaxed max-w-xl reveal" style="--d:160ms" data-en="I build custom apps, web apps and websites for your business — and teach you how to build them yourself on YouTube.">
-          Saya membangun aplikasi custom, web app, dan website untuk bisnis — dan mengajarkan caranya lewat YouTube supaya kamu bisa mandiri.
-        </p>
-
-        <div class="mt-7 flex flex-col sm:flex-row gap-3 reveal" style="--d:240ms">
-          <button data-path="build" data-track="hero_build" class="group px-6 py-3.5 rounded-2xl bg-zura-navy hover:bg-blue-700 text-white font-bold shadow-xl shadow-blue-900/20 transition flex items-center justify-center gap-2">
-            <i data-lucide="rocket" class="w-5 h-5"></i><span data-en="I need an app for my business">Saya butuh aplikasi untuk bisnis</span>
-            <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition"></i>
-          </button>
-          <button data-path="learn" data-track="hero_learn" class="group px-6 py-3.5 rounded-2xl glass hover:border-blue-400 text-zura-navy font-bold transition flex items-center justify-center gap-2">
-            <i data-lucide="graduation-cap" class="w-5 h-5 text-blue-600"></i><span data-en="I want to learn building apps">Saya mau belajar bikin aplikasi</span>
-          </button>
+        <p class="mt-5 text-base sm:text-lg text-slate-600 leading-relaxed max-w-xl reveal" style="--d:160ms" data-en="Explore ready-to-use apps, build a solution for your workflow, or learn the skills yourself. Made in Indonesia. Built for businesses everywhere.">Temukan aplikasi siap pakai, bangun sistem sesuai alur kerja, atau pelajari cara membuatnya sendiri. Dibangun di Indonesia, untuk bisnis di mana saja.</p>
+        <div class="mt-7 flex flex-col sm:flex-row flex-wrap gap-3 reveal" style="--d:240ms">
+          <a href="/products/" data-track="hero_shop" class="group px-6 py-3.5 rounded-2xl bg-zura-navy hover:bg-blue-700 text-white font-bold shadow-xl shadow-blue-900/20 transition flex items-center justify-center gap-2"><i data-lucide="shopping-bag" class="w-5 h-5"></i><span data-en="Explore products">Jelajahi produk</span><i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition"></i></a>
+          <button data-path="build" data-track="hero_build" class="group px-6 py-3.5 rounded-2xl glass hover:border-blue-400 text-zura-navy font-bold transition flex items-center justify-center gap-2"><i data-lucide="workflow" class="w-5 h-5 text-blue-600"></i><span data-en="Build a custom system">Buat sistem custom</span></button>
+          <a href="#youtube" data-track="hero_learn" class="group px-5 py-3.5 rounded-2xl border border-blue-200 bg-white/80 hover:bg-blue-50 text-zura-navy font-bold transition flex items-center justify-center gap-2"><i data-lucide="graduation-cap" class="w-5 h-5 text-blue-600"></i><span data-en="Learn for free">Belajar gratis</span></a>
         </div>
-
-        <ul class="mt-6 flex flex-wrap gap-x-5 gap-y-2 text-xs sm:text-sm font-semibold text-slate-600 reveal" style="--d:320ms">
-          <li class="flex items-center gap-1.5"><i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-500"></i><span data-en="Initial consultation, no commitment">Konsultasi awal tanpa komitmen</span></li>
-          <li class="flex items-center gap-1.5"><i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-500"></i><span data-en="Clear scope before we start">Scope jelas sebelum mulai</span></li>
-          <li class="flex items-center gap-1.5"><i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-500"></i><span data-en="Training included">Pelatihan penggunaan</span></li>
-        </ul>
+        <div class="mt-6 flex flex-wrap gap-x-5 gap-y-2 text-xs sm:text-sm font-semibold text-slate-600 reveal" style="--d:320ms">
+          <span class="flex items-center gap-1.5"><i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-500"></i><span data-en="Templates & custom work">Template & solusi custom</span></span>
+          <span class="flex items-center gap-1.5"><i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-500"></i><span data-en="Clear scope and licensing">Scope dan lisensi jelas</span></span>
+          <span class="flex items-center gap-1.5"><i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-500"></i><span data-en="Learning through ZuraClass">Edukasi bersama ZuraClass</span></span>
+        </div>
       </div>
 
       <!-- Interactive stage -->
@@ -354,58 +360,73 @@
        START: PILIH JALUR
        ===================================================================== -->
   <section id="start" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20 scroll-mt-20">
-    <div class="max-w-2xl reveal">
-      <div class="text-xs font-extrabold uppercase tracking-[.2em] text-blue-600" data-en="Choose your path">Pilih jalurmu</div>
-      <h2 class="font-display mt-2 text-3xl sm:text-4xl font-extrabold text-zura-navy tracking-tight" data-en="What do you want to do today?">Kamu mau ngapain hari ini?</h2>
-      <p class="mt-3 text-slate-600" data-en="Two paths, one goal: get your work running on an app. Pick one — the content below adapts.">Dua jalur, satu tujuan: pekerjaanmu berjalan di atas aplikasi. Pilih salah satu, konten di bawah menyesuaikan.</p>
+    <div class="max-w-3xl reveal">
+      <div class="text-xs font-extrabold uppercase tracking-[.2em] text-blue-600" data-en="Find the right path">Mulai sesuai kebutuhan</div>
+      <h2 class="font-display mt-2 text-3xl sm:text-4xl font-extrabold text-zura-navy tracking-tight" data-en="What would help you most today?">Apa yang paling membantu bisnismu hari ini?</h2>
+      <p class="mt-3 text-slate-600" data-en="A ready-made template, a tailored system, or the skills to build it yourself? Choose a path and get a practical next step.">Butuh template siap pakai, sistem yang dibuat khusus, atau ingin belajar sendiri? Pilih jalur dan dapatkan langkah selanjutnya.</p>
     </div>
-
-    <div class="mt-8 grid md:grid-cols-2 gap-5">
-      <button data-path="build" class="path-card spot lift glass rounded-3xl p-6 text-left border-2 border-transparent relative active">
+    <div class="mt-8 grid md:grid-cols-3 gap-4">
+      <button data-path="shop" data-track="path_shop" aria-pressed="true" class="journey-card path-card active spot lift glass rounded-3xl p-6 text-left border-2 border-transparent relative">
         <span class="path-check absolute top-5 right-5 w-7 h-7 rounded-full bg-blue-600 text-white grid place-items-center"><i data-lucide="check" class="w-4 h-4"></i></span>
-        <div class="w-12 h-12 rounded-2xl bg-zura-navy text-white grid place-items-center shadow-lg"><i data-lucide="layout-template" class="w-6 h-6"></i></div>
-        <h3 class="font-display mt-4 text-xl font-extrabold text-zura-navy" data-en="Find a custom app for my operations">Cari aplikasi custom untuk operasional bisnis</h3>
-        <p class="mt-1.5 text-sm text-slate-600" data-en="Tell me how your team works. I'll design and build the app around it.">Ceritakan cara timmu bekerja. Saya rancang dan bangun aplikasinya mengikuti alur itu.</p>
+        <div class="w-12 h-12 rounded-2xl bg-zura-navy text-white grid place-items-center"><i data-lucide="shopping-bag" class="w-6 h-6"></i></div>
+        <h3 class="font-display mt-4 text-lg font-extrabold text-zura-navy" data-en="Buy a ready-to-use template">Beli template siap pakai</h3>
+        <p class="mt-2 text-sm leading-relaxed text-slate-600" data-en="Explore digital products with clear features, requirements and checkout options.">Lihat produk digital, fitur, persyaratan, dan pilihan pembayaran yang jelas.</p>
       </button>
-      <button data-path="learn" class="path-card spot lift glass rounded-3xl p-6 text-left border-2 border-transparent relative">
+      <button data-path="build" data-track="path_build" aria-pressed="false" class="journey-card path-card spot lift glass rounded-3xl p-6 text-left border-2 border-transparent relative">
         <span class="path-check absolute top-5 right-5 w-7 h-7 rounded-full bg-blue-600 text-white grid place-items-center"><i data-lucide="check" class="w-4 h-4"></i></span>
-        <div class="w-12 h-12 rounded-2xl bg-blue-600 text-white grid place-items-center shadow-lg"><i data-lucide="graduation-cap" class="w-6 h-6"></i></div>
-        <h3 class="font-display mt-4 text-xl font-extrabold text-zura-navy" data-en="Learn to build apps myself">Belajar membangun aplikasi sendiri</h3>
-        <p class="mt-1.5 text-sm text-slate-600" data-en="Free step-by-step tutorials on YouTube, plus templates and formulas you can copy.">Tutorial gratis step-by-step di YouTube, plus template dan formula yang bisa langsung disalin.</p>
+        <div class="w-12 h-12 rounded-2xl bg-blue-600 text-white grid place-items-center"><i data-lucide="blocks" class="w-6 h-6"></i></div>
+        <h3 class="font-display mt-4 text-lg font-extrabold text-zura-navy" data-en="Build a custom solution">Bangun sistem custom</h3>
+        <p class="mt-2 text-sm leading-relaxed text-slate-600" data-en="Tell us about your workflow and generate a structured project brief.">Jelaskan alur kerja, lalu susun brief proyek yang terstruktur.</p>
+      </button>
+      <button data-path="learn" data-track="path_learn" aria-pressed="false" class="journey-card path-card spot lift glass rounded-3xl p-6 text-left border-2 border-transparent relative">
+        <span class="path-check absolute top-5 right-5 w-7 h-7 rounded-full bg-blue-600 text-white grid place-items-center"><i data-lucide="graduation-cap" class="w-6 h-6"></i></div>
+        <h3 class="font-display mt-4 text-lg font-extrabold text-zura-navy" data-en="Learn to build apps">Belajar membangun aplikasi</h3>
+        <p class="mt-2 text-sm leading-relaxed text-slate-600" data-en="Start with real-world tutorials, practical tools and the ZuraClass community.">Mulai dari tutorial nyata, tools praktis, dan komunitas ZuraClass.</p>
       </button>
     </div>
-
-    <!-- PANEL: BUILD (wizard) -->
-    <div id="panel-build" class="mt-6 glass rounded-3xl p-5 sm:p-8 reveal">
-      <div class="flex flex-wrap items-center justify-between gap-3">
-        <div>
-          <h3 class="font-display text-xl sm:text-2xl font-extrabold text-zura-navy" data-en="Build your app brief in 60 seconds">Susun brief aplikasimu dalam 60 detik</h3>
-          <p class="text-sm text-slate-600 mt-1" data-en="Answer 3 quick questions. You get a stack recommendation and a ready-to-send brief.">Jawab 3 pertanyaan singkat. Kamu dapat rekomendasi teknologi dan brief siap kirim.</p>
+    <div id="panel-shop" class="mt-6 glass rounded-3xl p-6 sm:p-8 reveal in">
+      <div class="grid lg:grid-cols-5 gap-7 items-center">
+        <div class="lg:col-span-3">
+          <span class="inline-flex px-3 py-1 rounded-full bg-blue-50 text-blue-700 font-bold text-xs" data-en="Fastest way to get started">Cara paling praktis untuk memulai</span>
+          <h3 class="font-display mt-3 text-xl sm:text-2xl font-extrabold text-zura-navy" data-en="Start with a template. Upgrade only when needed.">Mulai dari template. Kembangkan saat diperlukan.</h3>
+          <p class="mt-3 text-sm leading-relaxed text-slate-600" data-en="Browse editable digital products, review what is included, and choose Indonesia (IDR) or international (USD) checkout on each product page.">Pilih produk digital yang bisa disesuaikan, pelajari isi paket, lalu tentukan checkout Indonesia (IDR) atau internasional (USD) di halaman produk.</p>
+          <div class="shop-actions mt-5 flex flex-wrap gap-3"><a href="/products/" data-track="journey_catalog" class="inline-flex justify-center items-center gap-2 rounded-xl bg-zura-navy text-white font-bold text-sm px-6 py-3 hover:bg-blue-700 transition"><span data-en="Browse product catalog">Buka katalog produk</span><i data-lucide="arrow-right" class="w-4 h-4"></i></a><a href="#product-fit" data-track="journey_compare" class="inline-flex justify-center items-center gap-2 rounded-xl border border-blue-200 bg-white text-zura-navy font-bold text-sm px-6 py-3 hover:border-blue-500 transition"><span data-en="Compare options">Bandingkan pilihan</span></a></div>
         </div>
+        <div class="lg:col-span-2 product-note rounded-2xl p-5">
+          <div class="flex items-center gap-2"><i data-lucide="info" class="w-5 h-5 text-blue-600"></i><span class="text-sm font-extrabold text-zura-navy" data-en="Know before you buy">Penting sebelum membeli</span></div>
+          <p class="text-sm text-slate-600 mt-2 leading-relaxed" data-en="Template purchases do not automatically include third-party platform licenses, custom development or hardware unless stated in the product details.">Pembelian template tidak otomatis mencakup lisensi platform pihak ketiga, pengembangan custom, atau perangkat, kecuali dinyatakan di detail produk.</p>
+        </div>
+      </div>
+    </div>
+    <div id="panel-build" style="display:none" class="mt-6 glass rounded-3xl p-5 sm:p-8 reveal">
+      <div class="flex flex-wrap items-center justify-between gap-3">
+        <div><h3 class="font-display text-xl sm:text-2xl font-extrabold text-zura-navy" data-en="Build a brief for your custom app">Susun brief aplikasi custom</h3><p class="text-sm text-slate-600 mt-1" data-en="Answer three questions. Get an initial recommendation and a message you can send for a consultation.">Jawab tiga pertanyaan. Dapatkan rekomendasi awal dan brief siap kirim untuk konsultasi.</p></div>
         <div id="wzDots" class="flex items-center gap-2" aria-hidden="true"></div>
       </div>
       <div class="mt-5 h-1.5 rounded-full bg-blue-100 overflow-hidden"><div id="wzBar" class="h-full w-1/4 bg-gradient-to-r from-blue-600 to-sky-400 transition-all duration-500"></div></div>
       <div id="wzBody" class="mt-6 min-h-[260px]"></div>
-      <div class="mt-6 flex items-center justify-between gap-3">
-        <button id="wzBack" class="px-4 py-2.5 rounded-xl border border-slate-200 bg-white text-sm font-bold text-slate-700 hover:border-blue-400 transition flex items-center gap-1.5"><i data-lucide="arrow-left" class="w-4 h-4"></i><span data-en="Back">Kembali</span></button>
-        <button id="wzNext" class="px-5 py-2.5 rounded-xl bg-zura-navy hover:bg-blue-700 text-white text-sm font-bold transition flex items-center gap-1.5 disabled:opacity-40 disabled:pointer-events-none"><span id="wzNextText">Lanjut</span><i data-lucide="arrow-right" class="w-4 h-4"></i></button>
-      </div>
+      <div class="mt-6 flex items-center justify-between gap-3"><button id="wzBack" class="px-4 py-2.5 rounded-xl border border-slate-200 bg-white text-sm font-bold text-slate-700 hover:border-blue-400 transition flex items-center gap-1.5"><i data-lucide="arrow-left" class="w-4 h-4"></i><span data-en="Back">Kembali</span></button><button id="wzNext" class="px-5 py-2.5 rounded-xl bg-zura-navy hover:bg-blue-700 text-white text-sm font-bold transition flex items-center gap-1.5 disabled:opacity-40 disabled:pointer-events-none"><span id="wzNextText">Lanjut</span><i data-lucide="arrow-right" class="w-4 h-4"></i></button></div>
     </div>
-
-    <!-- PANEL: LEARN -->
     <div id="panel-learn" style="display:none" class="mt-6 glass rounded-3xl p-5 sm:p-8">
       <div class="grid lg:grid-cols-5 gap-8">
-        <div class="lg:col-span-2">
-          <h3 class="font-display text-xl sm:text-2xl font-extrabold text-zura-navy" data-en="A learning path that makes sense">Jalur belajar yang masuk akal</h3>
-          <p class="text-sm text-slate-600 mt-2" data-en="Start from zero. Each level unlocks the next — and every step is built on a real use case.">Mulai dari nol. Tiap level membuka level berikutnya — dan setiap langkah dibangun dari kasus nyata.</p>
-          <div class="mt-5 flex flex-col sm:flex-row lg:flex-col gap-3">
-            <a data-link="youtube" data-track="learn_subscribe" class="px-5 py-3 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-sm font-bold flex items-center justify-center gap-2 shadow-lg transition"><i data-lucide="youtube" class="w-5 h-5"></i><span data-en="Subscribe on YouTube">Subscribe di YouTube</span></a>
-            <a data-link="discord" data-track="learn_discord" class="px-5 py-3 rounded-xl glass hover:border-blue-400 text-zura-navy text-sm font-bold flex items-center justify-center gap-2 transition"><i data-lucide="messages-square" class="w-5 h-5 text-blue-600"></i><span data-en="Join the community">Gabung komunitas</span></a>
-          </div>
-        </div>
+        <div class="lg:col-span-2"><h3 class="font-display text-xl sm:text-2xl font-extrabold text-zura-navy" data-en="A practical learning path">Jalur belajar yang praktis</h3><p class="text-sm text-slate-600 mt-2" data-en="Learn at your own pace through ZuraClass tutorials built around everyday business use cases.">Belajar sesuai waktumu lewat tutorial ZuraClass yang memakai kasus operasional bisnis sehari-hari.</p><div class="mt-5 flex flex-col gap-3"><a data-link="youtube" data-track="learn_subscribe" class="px-5 py-3 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-sm font-bold flex items-center justify-center gap-2 shadow-lg transition"><i data-lucide="youtube" class="w-5 h-5"></i><span data-en="Watch on YouTube">Tonton di YouTube</span></a><a data-link="discord" data-track="learn_discord" class="px-5 py-3 rounded-xl glass hover:border-blue-400 text-zura-navy text-sm font-bold flex items-center justify-center gap-2 transition"><i data-lucide="messages-square" class="w-5 h-5 text-blue-600"></i><span data-en="Join the community">Gabung komunitas</span></a></div></div>
         <ol class="lg:col-span-3 grid sm:grid-cols-2 gap-4" id="roadmap"></ol>
       </div>
     </div>
+  </section>
+
+  <!-- =====================================================================
+       PRODUK (otomatis dari data/products.json, diatur lewat /catalog)
+       ===================================================================== -->
+  <section id="products" style="display:none" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20 scroll-mt-20">
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 reveal">
+      <div class="max-w-2xl">
+        <div class="text-xs font-extrabold uppercase tracking-[.2em] text-blue-600">Product</div>
+        <h2 class="font-display mt-2 text-3xl sm:text-4xl font-extrabold text-zura-navy tracking-tight" data-en="Explore business-ready templates">Jelajahi template aplikasi untuk bisnis</h2>
+      </div>
+      <a href="/products/" data-track="products_all" class="inline-flex items-center gap-1.5 text-sm font-bold text-blue-600 hover:underline"><span data-en="See all products">Lihat semua produk</span><i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+    </div>
+    <div id="prodStrip" class="mt-8 grid sm:grid-cols-2 lg:grid-cols-3 gap-5"></div>
   </section>
 
   <!-- =====================================================================
@@ -414,7 +435,7 @@
   <section id="showcase" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20 scroll-mt-20">
     <div class="max-w-2xl reveal">
       <div class="text-xs font-extrabold uppercase tracking-[.2em] text-blue-600" data-en="What I can build">Yang bisa saya bangun</div>
-      <h2 class="font-display mt-2 text-3xl sm:text-4xl font-extrabold text-zura-navy tracking-tight" data-en="Four skills. One goal: work that runs by itself.">Empat keahlian. Satu tujuan: kerja yang berjalan sendiri.</h2>
+      <h2 class="font-display mt-2 text-3xl sm:text-4xl font-extrabold text-zura-navy tracking-tight" data-en="Flexible tools, grounded in actual workflows.">Teknologi fleksibel, sesuai alur kerja nyata.</h2>
       <p class="mt-3 text-slate-600" data-en="Hover and explore. These are illustrations of how each skill works, not client screenshots.">Coba hover dan jelajahi. Ini ilustrasi cara kerja tiap keahlian, bukan screenshot proyek klien.</p>
     </div>
 
@@ -536,7 +557,7 @@
           <ul class="mt-5 space-y-2.5 text-sm font-semibold text-slate-700">
             <li class="flex gap-2.5"><i data-lucide="smartphone" class="w-5 h-5 text-blue-600 shrink-0"></i><span data-en="Responsive on every device">Responsif di semua perangkat</span></li>
             <li class="flex gap-2.5"><i data-lucide="gauge" class="w-5 h-5 text-blue-600 shrink-0"></i><span data-en="Performance and basic SEO">Performa dan SEO dasar</span></li>
-            <li class="flex gap-2.5"><i data-lucide="mouse-pointer-click" class="w-5 h-5 text-blue-600 shrink-0"></i><span data-en="Forms,  and analytics set up">Form, , dan analytics terpasang</span></li>
+            <li class="flex gap-2.5"><i data-lucide="mouse-pointer-click" class="w-5 h-5 text-blue-600 shrink-0"></i><span data-en="Forms, WhatsApp and analytics integration">Form, WhatsApp, dan integrasi analytics</span></li>
           </ul>
         </div>
         <div class="browser">
@@ -561,18 +582,14 @@
     </div>
   </section>
 
-  <!-- =====================================================================
-       PRODUK (otomatis dari data/products.json, diatur lewat /catalog)
-       ===================================================================== -->
-  <section id="products" style="display:none" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20 scroll-mt-20">
-    <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 reveal">
-      <div class="max-w-2xl">
-        <div class="text-xs font-extrabold uppercase tracking-[.2em] text-blue-600">Product</div>
-        <h2 class="font-display mt-2 text-3xl sm:text-4xl font-extrabold text-zura-navy tracking-tight" data-en="Apps already built">Aplikasi siap pakai untuk Bisnismu</h2>
-      </div>
-      <a href="/products/" data-track="products_all" class="inline-flex items-center gap-1.5 text-sm font-bold text-blue-600 hover:underline"><span data-en="See all products">Lihat semua produk</span><i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+  <!-- PRODUCT FIT: actionable self-service guidance -->
+  <section id="product-fit" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 scroll-mt-24">
+    <div class="reveal max-w-2xl"><div class="text-xs font-extrabold uppercase tracking-[.2em] text-blue-600" data-en="Choose with confidence">Pilih solusi dengan lebih yakin</div><h2 class="font-display mt-2 text-2xl sm:text-3xl font-extrabold text-zura-navy" data-en="Do you need a template, setup help, or a custom build?">Perlu template, bantuan setup, atau aplikasi custom?</h2><p class="mt-3 text-sm text-slate-600" data-en="The right fit depends on your workflow, budget and time—not on how many features an app can advertise.">Pilihan tepat bergantung pada alur kerja, anggaran, dan waktu—bukan banyaknya fitur di brosur.</p></div>
+    <div class="mt-7 grid md:grid-cols-3 gap-4">
+      <div class="glass rounded-2xl p-6"><i data-lucide="package-check" class="w-7 h-7 text-blue-600"></i><h3 class="mt-4 text-lg font-extrabold text-zura-navy" data-en="Ready-made template">Template siap pakai</h3><p class="mt-2 text-sm text-slate-600" data-en="Best when your needs match the existing functions and you can follow the setup guide.">Cocok ketika fitur standar sudah memenuhi kebutuhan dan kamu bisa mengikuti panduan setup.</p><a class="mt-4 inline-flex items-center gap-1.5 text-blue-700 font-bold text-sm" href="/products/" data-track="fit_template"><span data-en="Explore templates">Lihat template</span><i data-lucide="arrow-right" class="w-4 h-4"></i></a></div>
+      <div class="glass rounded-2xl p-6"><i data-lucide="settings-2" class="w-7 h-7 text-blue-600"></i><h3 class="mt-4 text-lg font-extrabold text-zura-navy" data-en="Setup & customization">Setup & penyesuaian</h3><p class="mt-2 text-sm text-slate-600" data-en="Best when a template almost fits but needs guided configuration or agreed changes.">Cocok ketika template hampir sesuai tetapi perlu bantuan konfigurasi atau perubahan tertentu.</p><a class="mt-4 inline-flex items-center gap-1.5 text-blue-700 font-bold text-sm" href="#contact" data-contact-topic="setup" data-track="fit_setup"><span data-en="Discuss the scope">Diskusikan scope</span><i data-lucide="arrow-right" class="w-4 h-4"></i></a></div>
+      <div class="glass rounded-2xl p-6"><i data-lucide="workflow" class="w-7 h-7 text-blue-600"></i><h3 class="mt-4 text-lg font-extrabold text-zura-navy" data-en="Custom system">Sistem custom</h3><p class="mt-2 text-sm text-slate-600" data-en="Best for unique workflows, integrations, roles or reporting requirements.">Cocok untuk alur kerja unik, integrasi, hak akses, atau kebutuhan pelaporan khusus.</p><button class="mt-4 inline-flex items-center gap-1.5 text-blue-700 font-bold text-sm" data-path="build" data-track="fit_custom"><span data-en="Start project brief">Mulai brief proyek</span><i data-lucide="arrow-right" class="w-4 h-4"></i></button></div>
     </div>
-    <div id="prodStrip" class="mt-8 grid sm:grid-cols-2 lg:grid-cols-3 gap-5"></div>
   </section>
 
   <!-- =====================================================================
@@ -683,7 +700,7 @@
         <a href="/resources/formula-library/" data-track="res_formula" class="spot lift group rounded-2xl bg-white/10 hover:bg-white/15 border border-white/15 p-5 transition">
           <span class="w-11 h-11 rounded-xl bg-blue-600 grid place-items-center"><i data-lucide="sigma" class="w-5 h-5"></i></span>
           <h4 class="mt-4 font-bold text-lg">Formula Library</h4>
-          <p class="mt-1.5 text-sm text-blue-100/85" data-en="100+ AppSheet and spreadsheet formulas ready to copy.">100+ formula AppSheet dan spreadsheet siap salin.</p>
+          <p class="mt-1.5 text-sm text-blue-100/85" data-en="AppSheet and spreadsheet formulas you can explore and copy.">Rumus AppSheet dan spreadsheet yang bisa dijelajahi dan disalin.</p>
           <span class="mt-4 inline-flex items-center gap-1.5 text-xs font-bold text-blue-200"><span data-en="Open">Buka</span><i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition"></i></span>
         </a>
         <a href="/resources/svg-iconpack-free/" data-track="res_svg" class="spot lift group rounded-2xl bg-white/10 hover:bg-white/15 border border-white/15 p-5 transition">
@@ -724,6 +741,41 @@
     </div>
   </section>
 
+  <!-- INDONESIAN MSME / INSTITUTIONAL SERVICES -->
+  <section id="umkm" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 scroll-mt-24">
+    <div class="glass rounded-[32px] overflow-hidden border border-blue-100">
+      <div class="grid lg:grid-cols-5 gap-0">
+        <div class="lg:col-span-3 p-7 sm:p-10 lg:p-12">
+          <div class="text-xs font-extrabold uppercase tracking-[.2em] text-blue-600" data-en="Indonesia · MSMEs & institutions">Indonesia · UMKM & institusi</div>
+          <h2 class="font-display mt-3 text-3xl sm:text-4xl font-extrabold text-zura-navy leading-tight" data-en="Digital tools only matter when people can use them.">Digitalisasi baru berarti saat pelaku usaha bisa memanfaatkannya.</h2>
+          <p class="mt-4 text-slate-600 leading-relaxed" data-en="We also explore Indonesian-language workshops, practical app training, and scoped implementation programs with MSME communities, organizations and local institutions.">Kami membuka peluang webinar, pelatihan aplikasi praktis, dan program implementasi terarah untuk komunitas UMKM, lembaga, serta pemerintah daerah dalam bahasa Indonesia.</p>
+          <div class="mt-6 flex flex-col sm:flex-row gap-3"><a href="#contact" data-contact-topic="umkm" data-track="umkm_inquiry" class="px-5 py-3.5 rounded-xl bg-zura-navy hover:bg-blue-700 text-white font-bold text-sm inline-flex items-center justify-center gap-2"><i data-lucide="handshake" class="w-4 h-4"></i><span data-en="Discuss training or collaboration">Diskusikan program atau kerja sama</span></a><a href="/about/" data-track="umkm_about" class="px-5 py-3.5 rounded-xl border border-blue-200 bg-white hover:border-blue-500 text-zura-navy font-bold text-sm inline-flex items-center justify-center gap-2"><span data-en="How we work">Cara kami bekerja</span><i data-lucide="arrow-right" class="w-4 h-4"></i></a></div>
+        </div>
+        <div class="lg:col-span-2 bg-gradient-to-br from-zura-navy via-blue-900 to-blue-600 text-white p-7 sm:p-10 flex flex-col justify-center gap-3">
+          <div class="w-12 h-12 rounded-xl bg-white/15 grid place-items-center"><i data-lucide="graduation-cap" class="w-6 h-6"></i></div>
+          <div class="font-display font-extrabold text-xl" data-en="Possible collaboration formats">Contoh format kerja sama</div>
+          <div class="flex items-center gap-3 text-sm text-blue-100"><i data-lucide="video" class="w-5 h-5 text-sky-300"></i><span data-en="Practical online workshops">Webinar praktik digitalisasi</span></div>
+          <div class="flex items-center gap-3 text-sm text-blue-100"><i data-lucide="users" class="w-5 h-5 text-sky-300"></i><span data-en="In-person training & onboarding">Pelatihan langsung & pendampingan</span></div>
+          <div class="flex items-center gap-3 text-sm text-blue-100"><i data-lucide="clipboard-check" class="w-5 h-5 text-sky-300"></i><span data-en="Scoped operational digitization pilot">Pilot project digitalisasi operasional</span></div>
+          <p class="text-[11px] text-blue-200 mt-3" data-en="Formats are subject to discussion, scope, and agreement; this is not a claim of government partnership or funding.">Program dibahas berdasarkan kebutuhan dan kesepakatan; bukan klaim kemitraan atau pendanaan pemerintah yang sudah diperoleh.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQs -->
+  <section id="faq" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 scroll-mt-24">
+    <div class="text-center max-w-2xl mx-auto reveal"><div class="text-xs font-extrabold uppercase tracking-[.2em] text-blue-600">FAQ</div><h2 class="font-display mt-2 text-3xl sm:text-4xl font-extrabold text-zura-navy" data-en="Questions before you start?">Masih ada pertanyaan sebelum memulai?</h2></div>
+    <div class="faq-grid mt-7 grid md:grid-cols-2 gap-4">
+      <details><summary><span data-en="Is a template the same as a fully managed app?">Apakah template sama dengan aplikasi yang sudah dikelola penuh?</span></summary><p data-en="No. Templates generally require account setup, configuration, testing and platform compliance. Read the product's included items and requirements before purchasing.">Tidak. Template umumnya perlu setup akun, konfigurasi, pengujian, dan kepatuhan pada platform. Cek isi paket serta persyaratan tiap produk.</p></details>
+      <details><summary><span data-en="Are AppSheet licenses included?">Apakah biaya lisensi AppSheet sudah termasuk?</span></summary><p data-en="Not automatically. AppSheet and other third-party services have their own pricing and terms. Each product or project quote should specify what is included.">Tidak otomatis. AppSheet dan layanan pihak ketiga punya biaya dan ketentuan tersendiri. Detail produk atau penawaran proyek menjelaskan cakupan masing-masing.</p></details>
+      <details><summary><span data-en="Can I pay from outside Indonesia?">Bisakah pembeli dari luar Indonesia membayar?</span></summary><p data-en="For eligible products, choose International checkout on the product page. Availability depends on the product's configured payment link and payment provider.">Untuk produk yang mendukung, pilih checkout International pada halaman produk. Ketersediaannya bergantung pada konfigurasi dan penyedia pembayaran.</p></details>
+      <details><summary><span data-en="Do you provide installation or customization?">Apakah tersedia bantuan instalasi atau customization?</span></summary><p data-en="Depending on scope and availability, setup, training and customization can be quoted separately. Share your workflow to discuss the right option.">Berdasarkan scope dan kapasitas, setup, pelatihan, atau customization dapat ditawarkan terpisah. Ceritakan alur kerja untuk menentukan opsi yang sesuai.</p></details>
+      <details><summary><span data-en="How do I choose between a template and custom development?">Bagaimana memilih antara template dan sistem custom?</span></summary><p data-en="Start with a template if its workflow already fits. Choose a scoped custom build when your roles, integrations or approval process require different behavior. The project brief tool can help.">Mulai dari template jika alur dan fiturnya sesuai. Pilih custom saat ada kebutuhan hak akses, integrasi, atau proses khusus. Wizard brief dapat membantu memetakannya.</p></details>
+      <details><summary><span data-en="Do you offer MSME training in Indonesia?">Apakah ada pelatihan untuk UMKM Indonesia?</span></summary><p data-en="We welcome discussions about Indonesian-language webinars, workshops and practical implementation programs with communities and institutions. Scope and schedule are agreed case by case.">Kami membuka diskusi webinar, workshop, dan program implementasi praktis bersama komunitas serta institusi. Scope dan jadwal disepakati per kegiatan.</p></details>
+    </div>
+  </section>
+
   <!-- =====================================================================
        CONTACT
        ===================================================================== -->
@@ -732,8 +784,8 @@
       <div class="absolute -right-20 -top-24 w-80 h-80 rounded-full bg-sky-400/20 blur-3xl pointer-events-none"></div>
       <div class="relative">
         <div class="text-xs font-extrabold uppercase tracking-[.2em] text-sky-300" data-en="Let's talk">Ayo ngobrol</div>
-        <h2 class="font-display mt-2 text-3xl sm:text-4xl font-extrabold tracking-tight" data-en="Tell me what's slowing your work or business down.">Ceritakan apa yang bikin pekerjaan atau bisnismu lambat.</h2>
-        <p class="mt-3 text-blue-100/90" data-en="Share a short description. I'll reply with initial thoughts on the best approach — no pressure, no commitment.">Tulis deskripsi singkat. Saya balas dengan masukan awal soal pendekatan terbaik — tanpa tekanan, tanpa komitmen.</p>
+        <h2 class="font-display mt-2 text-3xl sm:text-4xl font-extrabold tracking-tight" data-en="Tell us what you need to improve.">Ceritakan proses yang ingin kamu benahi.</h2>
+        <p class="mt-3 text-blue-100/90" data-en="Share a little context so we can discuss an appropriate approach, scope and next steps—without committing to a project yet.">Ceritakan konteksnya agar kita bisa mendiskusikan pendekatan, scope, dan langkah berikutnya—tanpa harus langsung memulai proyek.</p>
         <div class="mt-6 flex flex-col sm:flex-row gap-3">
           <a id="ctaWa" style="display:none" data-track="contact_wa" class="px-5 py-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-white font-bold text-sm flex items-center justify-center gap-2 transition"><i data-lucide="message-circle" class="w-5 h-5"></i>Let's Talk on </a>
           <a id="ctaMail" style="display:none" data-track="contact_mail" class="px-5 py-3 rounded-xl bg-white/15 hover:bg-white/25 border border-white/25 text-white font-bold text-sm flex items-center justify-center gap-2 transition"><i data-lucide="mail" class="w-5 h-5"></i>Email</a>
@@ -753,6 +805,8 @@
             <option value="webapp">Web App custom</option>
             <option value="website">Website</option>
             <option value="learn">Belajar / pelatihan</option>
+            <option value="training">Pelatihan UMKM / kerja sama institusi</option>
+            <option value="setup">Setup / customization template</option>
             <option value="other">Belum yakin, mau diskusi</option>
           </select>
         </div>
@@ -761,7 +815,7 @@
           <textarea id="cfMsg" rows="4" required placeholder="Contoh: Tim gudang kami masih catat stok di kertas..." data-en-ph="Example: Our warehouse team still tracks stock on paper..." class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-100"></textarea>
         </div>
         <button type="submit" data-track="contact_submit" class="w-full py-3 rounded-xl bg-zura-navy hover:bg-blue-700 text-white font-bold text-sm shadow-md transition flex items-center justify-center gap-2"><i data-lucide="send" class="w-4 h-4"></i><span data-en="Send my brief">Kirim brief saya</span></button>
-        <p class="text-[11px] text-slate-500 text-center" data-en="Your message opens in  or email so you can review before sending.">Pesan akan terbuka di  atau email supaya bisa kamu cek dulu sebelum dikirim.</p>
+        <p class="text-[11px] text-slate-500 text-center" data-en="We prepare a message in WhatsApp or email for your review. Nothing is submitted to a server by this form.">Form ini menyiapkan pesan di WhatsApp atau email untuk kamu periksa. Belum ada data yang dikirim ke server melalui form ini.</p>
       </form>
     </div>
   </section>
@@ -780,15 +834,16 @@
         <a href="/terms.html" class="hover:text-blue-600 transition">Terms of Service</a>
         <a href="/privacy.html" class="hover:text-blue-600 transition">Privacy Policy</a>
         <a href="/gethelp/" class="hover:text-blue-600 transition">Help Center</a>
+        <a href="/about/" class="hover:text-blue-600 transition"><span data-en="About">Tentang</span></a>
         <a href="#contact" class="hover:text-blue-600 transition"><span data-en="Contact">Kontak</span></a>
       </div>
-      <p class="text-sm font-medium text-slate-500">© zuralogic.com 2021–<span id="yr"></span></p>
+      <p class="text-sm font-medium text-slate-500">© Zuralogic <span id="yr"></span></p>
     </div>
   </footer>
 
   <!-- Floating CTA -->
   <a id="fab" data-wa data-track="fab_cta" style="display:none" class="fixed bottom-5 right-4 sm:right-6 z-40 px-5 py-3 rounded-full bg-zura-navy hover:bg-blue-700 text-white text-sm font-bold shadow-2xl shadow-blue-900/30 items-center gap-2 transition">
-    <i data-lucide="message-circle" class="w-4 h-4"></i><span data-en="Free consultation">Konsultasi Gratis</span>
+    <i data-lucide="message-circle" class="w-4 h-4"></i><span data-en="Discuss your project">Diskusikan proyek</span>
   </a>
 
   <!-- Toast -->
@@ -841,7 +896,7 @@ if (CONFIG.ga4Id) {
   const s = document.createElement('script'); s.async = true; s.src = 'https://www.googletagmanager.com/gtag/js?id=' + CONFIG.ga4Id; document.head.appendChild(s);
   gtag('js', new Date()); gtag('config', CONFIG.ga4Id);
 }
-function track(name, params) { try { if (CONFIG.ga4Id) gtag('event', name, params || {}); if (DEV) console.log('[track]', name, params || ''); } catch (e) {} }
+function track(name, params) { try { const payload = { event: name, ...(params || {}) }; if (CONFIG.ga4Id) gtag('event', name, params || {}); else window.dataLayer.push(payload); if (DEV) console.log('[track]', payload); } catch (e) {} }
 document.addEventListener('click', e => { const el = e.target.closest('[data-track]'); if (el) track(el.dataset.track); });
 
 /* ======================= Toast ======================= */
@@ -858,7 +913,7 @@ function wireLinks() {
   $$('[data-link]').forEach(a => {
     const k = a.dataset.link; let u = map[k];
     if (!u) { if (!missing.includes(k)) missing.push(k); if (DEV) { u = '#'; a.style.outline = '2px dashed #e11d48'; a.style.display = ''; } else { a.style.display = 'none'; return; } }
-    a.href = u; if (u !== '#') { a.target = '_blank'; a.rel = 'noopener noreferrer'; }
+    a.href = u === '#' ? '#' : (/^https?:\/\//i.test(u) ? u : 'https://' + String(u).replace(/^\/\//, '')); if (u !== '#') { a.target = '_blank'; a.rel = 'noopener noreferrer'; }
   });
   const waBase = waLink();
   const w = $('#ctaWa'), m = $('#ctaMail');
@@ -909,15 +964,15 @@ $('#langBtn').addEventListener('click', () => {
 });
 
 /* ======================= Data konten ======================= */
-const TECH = ['Google AppSheet', 'Google Apps Script', 'Google Sheets', 'Google Workspace', 'Web App', 'HTML · CSS · JavaScript', t('Integrasi API', 'API Integration'), t('Laporan PDF Otomatis', 'Automatic PDF Reports'), t('Otomasi Email', 'Email Automation')];
+const TECH = () => ['Google AppSheet', 'Google Apps Script', 'Google Sheets', 'Google Workspace', 'Web App', 'HTML · CSS · JavaScript', t('Integrasi API', 'API Integration'), t('Laporan PDF Otomatis', 'Automatic PDF Reports'), t('Otomasi Email', 'Email Automation')];
 
 const SOLUTIONS = [
-  { k: 'stok', icon: 'package-check', id: ['Gudang & Stok', 'Pencatatan masuk-keluar barang, scan QR/barcode, dan peringatan stok menipis.'], en: ['Warehouse & Stock', 'In/out tracking, QR/barcode scanning and low-stock alerts.'], tags: ['AppSheet', 'Sheets'] },
+  { k: 'stok', icon: 'package-check', id: ['Gudang & Stok', 'Pemetaan barang masuk-keluar, lokasi penyimpanan, serta kontrol dan pelaporan stok.'], en: ['Warehouse & Stock', 'Track stock movements, storage locations and inventory reporting.'], tags: ['AppSheet', 'Sheets'] },
   { k: 'hse', icon: 'shield-check', id: ['Inspeksi & HSE', 'Checklist inspeksi, laporan temuan lapangan, dan jadwal pemeriksaan otomatis.'], en: ['Inspection & HSE', 'Inspection checklists, field findings reports and automated schedules.'], tags: ['AppSheet', 'Apps Script'] },
-  { k: 'absen', icon: 'map-pin', id: ['Absensi & Tim Lapangan', 'Absensi selfie + GPS, pengajuan cuti, dan rekap otomatis.'], en: ['Attendance & Field Teams', 'Selfie + GPS attendance, leave requests and automatic recaps.'], tags: ['AppSheet'] },
-  { k: 'pos', icon: 'shopping-bag', id: ['Penjualan & Kasir', 'Pencatatan transaksi, struk digital, dan ringkasan penjualan harian.'], en: ['Sales & POS', 'Transaction logging, digital receipts and daily sales summaries.'], tags: ['Web App', 'Apps Script'] },
+  { k: 'absen', icon: 'map-pin', id: ['Absensi & Tim Lapangan', 'Proses absensi dan tim lapangan, sesuai kebutuhan lokasi dan izin pengguna.'], en: ['Attendance & Field Teams', 'Attendance and field workflows designed around access and location needs.'], tags: ['AppSheet'] },
+  { k: 'pos', icon: 'shopping-bag', id: ['Penjualan & Kasir', 'Pencatatan transaksi, rekonsiliasi kasir, dan ringkasan penjualan.'], en: ['Sales & POS', 'Transaction records, cashier reconciliation and sales summaries.'], tags: ['Web App', 'Apps Script'] },
   { k: 'invoice', icon: 'receipt', id: ['Invoice & CRM', 'Pantau prospek sampai pembayaran, invoice PDF otomatis, dan pengingat tagihan.'], en: ['Invoice & CRM', 'Track leads through payment, auto PDF invoices and payment reminders.'], tags: ['Apps Script', 'Web App'] },
-  { k: 'dash', icon: 'bar-chart-3', id: ['Dashboard & Laporan Otomatis', 'Satukan data dari banyak sumber jadi satu dashboard yang selalu update.'], en: ['Dashboards & Auto Reports', 'Combine data from many sources into one always-fresh dashboard.'], tags: ['Web App', 'Sheets'] }
+  { k: 'dash', icon: 'bar-chart-3', id: ['Dashboard & Laporan Otomatis', 'Rancang dashboard dari sumber data yang benar-benar tersedia dan relevan.'], en: ['Dashboards & Auto Reports', 'Build reporting views around the data sources your business actually uses.'], tags: ['Web App', 'Sheets'] }
 ];
 
 const ROADMAP = [
@@ -931,24 +986,24 @@ const PROCESS = [
   { icon: 'search', id: ['Diskusi & audit alur kerja', 'Kita petakan cara kerja saat ini, titik macet, dan hasil yang kamu inginkan. Di akhir tahap ini scope sudah jelas.'], en: ['Discovery & workflow audit', 'We map how work happens today, the bottlenecks and the outcome you want. By the end, scope is clear.'] },
   { icon: 'pen-tool', id: ['Blueprint & prototipe', 'Struktur data, alur layar, dan hak akses dirancang dan disepakati sebelum dibangun.'], en: ['Blueprint & prototype', 'Data structure, screen flow and permissions are designed and agreed before building.'] },
   { icon: 'hammer', id: ['Bangun & uji bersama', 'Dibangun bertahap. Kamu mencoba versi yang bisa dipakai sejak awal dan memberi masukan.'], en: ['Build & test together', 'Built in increments. You try a working version early and give feedback.'] },
-  { icon: 'rocket', id: ['Rilis, pelatihan & dukungan', 'Timmu dilatih memakainya, dokumentasi diserahkan, dan ada masa dukungan setelah rilis.'], en: ['Launch, training & support', 'Your team is trained, documentation handed over, with a support window after launch.'] }
+  { icon: 'rocket', id: ['Rilis & serah terima', 'Panduan penggunaan, pelatihan, dan dukungan ditentukan sesuai kesepakatan proyek.'], en: ['Launch & handover', 'Documentation, training and support are provided according to the agreed project scope.'] }
 ];
 
 const WHY = [
   { icon: 'graduation-cap', id: ['Praktisi yang juga mengajar', 'Caranya dibahas terbuka di YouTube. Kamu bisa menilai kualitasnya sebelum bekerja sama.'], en: ['A practitioner who teaches', 'The methods are shown openly on YouTube. Judge the quality before working together.'] },
-  { icon: 'zap', id: ['Cepat dan hemat', 'Ekosistem Google dan no-code memangkas waktu dibanding membangun dari nol.'], en: ['Fast and cost-effective', 'Google and no-code tooling cuts time compared to building from scratch.'] },
-  { icon: 'key-round', id: ['Kamu pegang kendali', 'Dokumentasi dan pelatihan membuat timmu mandiri, bukan bergantung selamanya.'], en: ['You stay in control', 'Documentation and training make your team self-sufficient, not dependent forever.'] },
-  { icon: 'file-check-2', id: ['Scope jelas', 'Kesepakatan tertulis di awal, jadi tidak ada kejutan di tengah jalan.'], en: ['Clear scope', 'Written agreement up front, so no surprises midway.'] }
+  { icon: 'zap', id: ['Efisien saat sesuai', 'No-code membantu mempercepat pekerjaan untuk kebutuhan yang cocok, dengan batasan yang dijelaskan.'], en: ['Efficient when appropriate', 'No-code tools can reduce build effort for suitable use cases, with limitations explained.'] },
+  { icon: 'key-round', id: ['Kamu paham sistemnya', 'Kami mengutamakan dokumentasi dan pemahaman pengguna sesuai cakupan proyek.'], en: ['Understand your systems', 'We prioritize documentation and user understanding as agreed in scope.'] },
+  { icon: 'file-check-2', id: ['Scope yang disepakati', 'Kebutuhan, deliverable dan batas dukungan dibahas sebelum pengerjaan.'], en: ['Agreed scope', 'Requirements, deliverables and support boundaries are discussed before the build.'] }
 ];
 
 /* ======================= Render dinamis ======================= */
 function renderDynamic() {
   // marquee
-  const items = TECH.map(x => `<span class="shrink-0 px-3.5 py-1.5 rounded-full bg-white border border-blue-100 text-xs font-bold text-slate-700">${x}</span>`).join('');
+  const items = TECH().map(x => `<span class="shrink-0 px-3.5 py-1.5 rounded-full bg-white border border-blue-100 text-xs font-bold text-slate-700">${x}</span>`).join('');
   $('#marqueeTrack').innerHTML = items + items;
 
   // rotating words
-  startRotator();
+  // Headline is intentionally stable for clarity and accessibility.
 
   // solutions
   $('#solGrid').innerHTML = SOLUTIONS.map((s, i) => `
@@ -1005,7 +1060,7 @@ function renderDynamic() {
   // wizard + select options
   renderWizard();
   const sel = $('#cfType'), cur = sel.value;
-  const opts = { appsheet: ['Aplikasi operasional (AppSheet)', 'Operational app (AppSheet)'], script: ['Otomasi (Apps Script)', 'Automation (Apps Script)'], webapp: ['Web App custom', 'Custom Web App'], website: ['Website', 'Website'], learn: ['Belajar / pelatihan', 'Learning / training'], other: ['Belum yakin, mau diskusi', 'Not sure yet, let\'s talk'] };
+  const opts = { appsheet: ['Aplikasi operasional (AppSheet)', 'Operational app (AppSheet)'], script: ['Otomasi (Apps Script)', 'Automation (Apps Script)'], webapp: ['Web App custom', 'Custom Web App'], website: ['Website', 'Website'], learn: ['Belajar / pelatihan', 'Learning / training'], training: ['Pelatihan UMKM / kerja sama institusi', 'MSME training / institutional collaboration'], setup: ['Setup / customization template', 'Template setup / customization'], other: ['Belum yakin, mau diskusi', 'Not sure yet, let\'s talk'] };
   [...sel.options].forEach(o => o.textContent = LANG === 'id' ? opts[o.value][0] : opts[o.value][1]); sel.value = cur;
 
   renderChannel();
@@ -1017,7 +1072,7 @@ function renderDynamic() {
 let rotTimer, rotI = 0;
 function startRotator() {
   const words = LANG === 'id' ? ['aplikasi', 'dashboard', 'otomasi', 'web app'] : ['apps', 'dashboards', 'automation', 'web apps'];
-  const el = $('#rotWord'); el.textContent = words[rotI % words.length];
+  const el = $('#rotWord'); if (!el) return; el.textContent = words[rotI % words.length];
   clearInterval(rotTimer);
   if (REDUCED) return;
   rotTimer = setInterval(() => {
@@ -1028,10 +1083,12 @@ function startRotator() {
 
 /* ======================= Jalur: build / learn ======================= */
 function activatePath(p, scroll = true) {
-  $$('.path-card').forEach(c => c.classList.toggle('active', c.dataset.path === p));
+  if (!['shop', 'build', 'learn'].includes(p)) p = 'shop';
+  $$('.path-card').forEach(c => { c.classList.toggle('active', c.dataset.path === p); c.setAttribute('aria-pressed', String(c.dataset.path === p)); });
+  $('#panel-shop').style.display = p === 'shop' ? '' : 'none';
   $('#panel-build').style.display = p === 'build' ? '' : 'none';
   $('#panel-learn').style.display = p === 'learn' ? '' : 'none';
-  if (p === 'build') $('#panel-build').classList.add('in');
+  $('#panel-'+p).classList.add('in');
   track('path_select', { path: p });
   if (scroll) $('#start').scrollIntoView({ behavior: REDUCED ? 'auto' : 'smooth', block: 'start' });
 }
@@ -1175,6 +1232,17 @@ function pickSolution(k) {
   setTimeout(() => $('#cfMsg').focus({ preventScroll: true }), 700);
 }
 
+/* Inquiry shortcuts for setup and Indonesian MSME programs. */
+$$('[data-contact-topic]').forEach(a => a.addEventListener('click', () => {
+  const topic = a.dataset.contactTopic;
+  const select = $('#cfType'), field = $('#cfMsg');
+  select.value = topic === 'umkm' ? 'training' : 'setup';
+  field.value = topic === 'umkm'
+    ? t('Kami ingin berdiskusi tentang webinar/pelatihan digitalisasi UMKM atau kerja sama institusi. Organisasi dan sasaran peserta: ', 'We would like to discuss MSME digital training or an institutional collaboration. Organization and audience: ')
+    : t('Kami ingin mendiskusikan bantuan instalasi atau penyesuaian template. Produk dan kebutuhan: ', 'We would like help with template setup or customization. Product and requirements: ');
+  setTimeout(() => field.focus({preventScroll:true}), 400);
+}));
+
 /* ======================= Form kontak ======================= */
 $('#contactForm').addEventListener('submit', e => {
   e.preventDefault();
@@ -1220,7 +1288,7 @@ const videoCard = v => `
   <article class="spot lift glass rounded-2xl overflow-hidden group">
     <button data-vid="${esc(v.id)}" class="block w-full text-left" aria-label="${esc(v.title)}">
       <div class="vthumb relative aspect-video bg-slate-200 overflow-hidden">
-        <img src="https://i.ytimg.com/vi/${esc(v.id)}/hqdefault.jpg" loading="lazy" alt="" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
+        <img src="https://i.ytimg.com/vi/${esc(v.id)}/hqdefault.jpg" loading="lazy" alt="" class="w-full h-full object-contain group-hover:scale-105 transition duration-500" />
         <span class="absolute inset-0 grid place-items-center"><span class="w-12 h-12 rounded-full bg-white/90 text-rose-600 grid place-items-center shadow-lg group-hover:scale-110 transition"><i data-lucide="play" class="w-5 h-5 fill-current"></i></span></span>
       </div>
       <div class="p-3.5">
@@ -1294,15 +1362,26 @@ async function loadHomeProducts() {
     const list = (j.products || []).filter(p => p && p.id && p.title && p.published !== false)
       .sort((a, b) => new Date(b.updatedAt || b.createdAt || 0) - new Date(a.updatedAt || a.createdAt || 0)).slice(0, 6);
     if (!list.length) return;
+    const parseMoney = value => (value === null || value === undefined || value === '' || !/^\d+(?:\.\d+)?$/.test(String(value))) ? null : Number(value);
+    const priceLine = (p, normalKey, promoKey, currency) => {
+      const n = parseMoney(p[normalKey]), saleCandidate = parseMoney(p[promoKey]);
+      const sale = n !== null && saleCandidate !== null && saleCandidate < n;
+      const shown = sale ? saleCandidate : n;
+      if (shown === null) return '';
+      const formatted = currency === 'IDR' ? 'Rp' + shown.toLocaleString('id-ID',{maximumFractionDigits:0}) : 'US$' + shown.toLocaleString('en-US',{maximumFractionDigits:2});
+      return `<div class="min-w-0"><div class="text-[10px] font-bold tracking-wide text-slate-400">${currency}</div><div class="font-display text-sm sm:text-base font-extrabold text-zura-navy">${formatted}</div></div>`;
+    };
+    const imgSrc = cover => { if (!cover) return ''; const u=String(cover).trim(); return /^https:\/\//i.test(u) ? u : (/^http:\/\//i.test(u) ? '' : '/'+u.replace(/^\/+/,'')); };
     $('#prodStrip').innerHTML = list.map((p, i) => `
       <a href="/products/?p=${encodeURIComponent(p.slug || p.id)}" data-track="home_product_click" class="spot lift glass rounded-3xl overflow-hidden group flex flex-col reveal" style="--d:${i * 60}ms">
-        <div class="relative aspect-[16/10] overflow-hidden bg-gradient-to-br from-blue-100 to-sky-50">
-          ${p.cover ? `<img src="/${esc(String(p.cover).replace(/^\/+/, ''))}" alt="${esc(p.title)}" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" onerror="this.style.visibility='hidden'" />` : ''}
+        <div class="relative aspect-square overflow-hidden bg-gradient-to-br from-blue-100 to-sky-50">
+          ${imgSrc(p.cover) ? `<img src="${esc(imgSrc(p.cover))}" alt="${esc(p.title)}" loading="lazy" class="w-full h-full object-contain group-hover:scale-105 transition duration-500" onerror="this.style.visibility='hidden'" />` : ''}
           <span class="absolute top-3 left-3 px-2.5 py-1 rounded-lg bg-zura-navy/85 text-white text-[11px] font-semibold backdrop-blur">${esc(p.category || t('Lainnya', 'Other'))}</span>
         </div>
         <div class="p-5 flex-1 flex flex-col">
           <h3 class="font-display font-extrabold text-zura-navy leading-snug line-clamp-2 group-hover:text-blue-600 transition">${esc(p.title)}</h3>
           <div class="mt-2.5 flex flex-wrap gap-1.5">${(p.tags || []).slice(0, 3).map(x => `<span class="text-[11px] font-bold text-blue-700 bg-blue-50 rounded-md px-2 py-0.5">${esc(x)}</span>`).join('')}</div>
+          <div class="mt-3 flex flex-wrap items-center gap-4">${priceLine(p,'normalPrice','promoPrice','IDR')}${priceLine(p,'usdNormalPrice','usdPromoPrice','USD')}</div>
           <span class="mt-auto pt-4 inline-flex items-center gap-1.5 text-sm font-bold text-blue-600">${t('Lihat detail', 'View details')}<i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition"></i></span>
         </div>
       </a>`).join('');
@@ -1314,6 +1393,7 @@ async function loadHomeProducts() {
 /* ======================= Reveal / anim observer ======================= */
 let io;
 function observeReveals() {
+  if (!('IntersectionObserver' in window) || REDUCED) { $$('.reveal,[data-anim]').forEach(el => el.classList.add('in')); return; }
   if (!io) io = new IntersectionObserver(es => es.forEach(en => { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } }), { threshold: .12, rootMargin: '0px 0px -40px 0px' });
   $$('.reveal:not(.in), [data-anim]:not(.in)').forEach(el => io.observe(el));
 }
@@ -1386,8 +1466,9 @@ window.addEventListener('DOMContentLoaded', () => {
   applyLang();       // juga memanggil renderDynamic()
   loadChannel();
   loadHomeProducts();
-  activatePath('build', false);
-  const hash = location.hash; if (hash === '#learn') activatePath('learn', false);
+  activatePath('shop', false);
+  const hash = location.hash, intent = new URLSearchParams(location.search).get('intent');
+  if (intent === 'build' || hash === '#build') activatePath('build', false); else if (hash === '#learn' || intent === 'learn') activatePath('learn', false);
   lucide.createIcons();
   observeReveals();
   onScroll();
