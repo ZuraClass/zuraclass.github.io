@@ -6,11 +6,10 @@
       "title": "ZURA POS Lite — Aplikasi Kasir Siap Pakai untuk Usaha Kecil",
       "category": "POS Kasir",
       "tags": [
-        "POS",
-        "Kasir",
-        "Retail",
-        "Toko",
-        "UMKM"
+        "Appsheet",
+        "Android",
+        "iOS",
+        "Web"
       ],
       "description": "Kelola Transaksi Penjualan Lebih Praktis dengan ZURA POS Lite! 🚀\n\nMasih mencatat penjualan secara manual? Atau sering kesulitan mencocokkan uang di laci kasir dengan hasil transaksi harian?\n\nZURA POS Lite adalah template aplikasi kasir (Point of Sale) berbasis Google AppSheet yang dirancang untuk membantu usaha kecil, toko retail, dan UMKM mengelola transaksi penjualan dengan lebih mudah dan terorganisir.\n\nMelalui tampilan katalog produk visual, kasir bisa memilih barang, mengatur jumlah pesanan, menghitung total belanja, mencatat pembayaran, hingga menyiapkan struk transaksi.\n\nBukan cuma untuk melayani pelanggan, ZURA POS Lite juga membantu pengelolaan uang kasir, mulai dari pencatatan modal awal, penambahan uang kas, setoran tunai, hingga laporan closing saat shift berakhir.\n\nKenapa memilih ZURA POS Lite?\n✅ Praktis: Fitur transaksi kasir tersedia dalam satu aplikasi.\n✅ Mudah Dikembangkan: Dibangun menggunakan Google AppSheet tanpa perlu menulis kode program.\n✅ Lebih Terorganisir: Bantu pencatatan transaksi, pembayaran, dan aktivitas kasir.\n✅ Database Milik Sendiri: Gunakan Google Sheets pada akun Google milikmu.\n✅ Sekali Beli: Dapatkan template tanpa biaya langganan template bulanan dari Zuralogic.\n\nCocok untuk:\n- Pemilik toko, usaha kecil, dan UMKM.\n- Pelaku usaha yang ingin beralih dari pencatatan penjualan manual.\n- Pengguna AppSheet yang ingin mempelajari atau mengembangkan aplikasi POS.\n- Siapa saja yang ingin memulai dari template aplikasi kasir yang sudah dibuat, tanpa harus membangun semuanya dari nol.\n\nDapatkan template, ikuti panduan setup, lalu sesuaikan data produk dengan kebutuhan usahamu.",
       "features": "🛒 Transaksi Penjualan & Katalog Produk\n\n- Katalog produk visual dengan gambar, nama, kategori, dan harga.\n- Pencarian produk untuk membantu menemukan barang lebih cepat.\n- Tambah atau kurangi jumlah pesanan menggunakan tombol + dan −.\n- Keranjang belanja dengan rincian item dan kuantitas.\n- Perhitungan subtotal belanja secara otomatis.\n\n📦 Pengelolaan Data Produk\n\n- Tambahkan produk baru ke dalam katalog.\n- Ubah informasi dan harga produk.\n- Hapus produk yang tidak digunakan.\n- Kelompokkan produk berdasarkan kategori.\n- Upload dan download data produk.\n\n 💳 Checkout & Pembayaran\n\n- Menampilkan total tagihan transaksi.\n- Pilihan pencatatan pembayaran Cash dan Transfer/Debit.\n- Input nominal uang yang diterima.\n- Perhitungan uang kembalian otomatis untuk pembayaran tunai.\n- Kolom nomor referensi pembayaran.\n- Proses penyelesaian transaksi melalui tombol Check Out dan Selesai.\n\n 🧾 Struk Penjualan\n\n- Nomor struk atau identitas transaksi.\n- Tanggal dan jam transaksi.\n- Nama kasir yang melayani.\n- Rincian barang, harga, kuantitas, dan total.\n- Total belanja, nominal pembayaran, dan kembalian.\n- Informasi metode pembayaran.\n- Fitur struk yang dapat dicetak menggunakan perangkat yang kompatibel.\n\n💰 Pengelolaan Kas Kasir\n\n- Login kasir dan pencatatan shift.\n- Input Initial Cash (modal awal kasir).\n- Additional Cash untuk mencatat penambahan uang kas.\n- Cash Drop untuk mencatat setoran uang tunai.\n- Pencatatan nominal transaksi kasir.\n- Riwayat aktivitas kas selama shift.\n\n 📊 Laporan Closing Kasir\n\n- Identitas laporan dan nomor shift.\n- Nama kasir yang bertugas.\n- Informasi Clock In dan Clock Out.\n- Rekap Initial Cash dan Cash Drop.\n- Total Cash Sales selama shift.\n- Perhitungan selisih kas (Discrepancy).\n- Status validitas laporan.\n- Struk laporan closing untuk membantu pemeriksaan kasir.\n\nDari transaksi penjualan hingga pemeriksaan kas saat tutup shift, semuanya dibuat lebih terstruktur dalam satu aplikasi.",
@@ -35,7 +34,7 @@
       "shareImage": "assets/product-share/pmw9b1or1zyo.jpg",
       "published": true,
       "createdAt": "2026-11-09T13:39:57.320Z",
-      "updatedAt": "2026-11-11T03:58:15.171Z"
+      "updatedAt": "2026-11-11T03:59:26.237Z"
     },
     {
       "id": "pmwatjv35rtz",
@@ -68,5 +67,5 @@
       "updatedAt": "2026-11-10T15:41:25.484Z"
     }
   ],
-  "updatedAt": "2026-11-11T03:58:15.171Z"
+  "updatedAt": "2026-11-11T03:59:26.237Z"
 }
