@@ -1,221 +1,281 @@
-<!doctype html>
-<html lang="id">
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#08132f">
-  <meta name="description" content="Kenali Zuralogic, Business Systems Studio yang membangun template aplikasi, sistem custom, otomasi, dan website sesuai kebutuhan operasional bisnis. Tepat guna, transparan, dan bertahap.">
-  <meta property="og:type" content="website">
-  <meta property="og:site_name" content="Zuralogic">
-  <meta property="og:title" content="Tentang Zuralogic — Sistem yang Tepat untuk Bisnis yang Nyata">
-  <meta property="og:description" content="Bukan sistem paling rumit. Kami membantu bisnis memilih dan membangun solusi digital yang benar-benar dibutuhkan.">
-  <meta property="og:url" content="https://zuralogic.com/about/">
-  <link rel="canonical" href="https://zuralogic.com/about/">
-  <title>Tentang Kami — Zuralogic | Business Systems Studio</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About Zuralogic — Business Systems Studio</title>
+  <meta name="description" content="Meet Zuralogic, an Indonesia-based business systems studio creating practical digital product templates, custom applications, automation and technology training for businesses worldwide." />
+  <meta name="robots" content="index, follow, max-image-preview:large" />
+  <meta name="theme-color" content="#F4F8FF" />
+  <link rel="canonical" href="https://zuralogic.com/about/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Zuralogic" />
+  <meta property="og:title" content="About Zuralogic — Practical Systems for Real Business" />
+  <meta property="og:description" content="An Indonesia-based business systems studio building useful templates, tailored solutions and practical digital learning." />
+  <meta property="og:url" content="https://zuralogic.com/about/" />
+  <meta property="og:image" content="https://zuralogic.com/assets/og-image.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" type="image/png" href="/contents/favicon.png" />
+  <link rel="apple-touch-icon" href="/contents/favicon.png" />
+  <!-- Google Tag Manager: shared with homepage -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-567FLHZT');</script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://unpkg.com/lucide@0.462.0/dist/umd/lucide.min.js"></script>
+  <script>tailwind.config={theme:{extend:{fontFamily:{sans:['Inter','sans-serif'],display:['Sora','Inter','sans-serif']},colors:{zura:{navy:'#0A1931',deep:'#152A4A',blue:'#2563EB',light:'#EFF6FF',ice:'#DBEAFE'}}}}};</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"Zuralogic","url":"https://zuralogic.com/","description":"Indonesia-based business systems studio offering ready-to-use digital templates, custom applications, automation and practical learning.","sameAs":["https://www.youtube.com/@zuraclass"]}</script>
   <style>
-    :root{color-scheme:dark;--bg:#07132d;--bg2:#0b1c40;--card:#0f2449;--line:rgba(173,211,255,.17);--text:#f6faff;--muted:#a9bbd5;--cyan:#51d8ee;--blue:#477af6;--gold:#f6bd70;--max:1150px;--radius:22px}
-    *,*::before,*::after{box-sizing:border-box}
-    html{scroll-behavior:smooth;scroll-padding-top:96px}
-    body{margin:0;background:var(--bg);color:var(--text);font:400 16px/1.68 Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;overflow-x:hidden}
-    a{color:inherit;text-decoration:none}button{font:inherit}button,a{-webkit-tap-highlight-color:transparent}
-    a:focus-visible,button:focus-visible{outline:3px solid var(--cyan);outline-offset:4px}
-    .container{width:min(calc(100% - 48px),var(--max));margin-inline:auto}
-    .skip{position:absolute;top:-80px;left:12px;background:#fff;color:#0b1c40;padding:10px 16px;border-radius:8px;z-index:100}.skip:focus{top:12px}
-    .site-header{position:sticky;top:0;z-index:30;background:rgba(7,19,45,.78);backdrop-filter:blur(18px);border-bottom:1px solid var(--line)}
-    .nav{display:flex;align-items:center;justify-content:space-between;gap:22px;min-height:78px}
-    .brand{display:inline-flex;align-items:center;gap:11px;font-weight:850;letter-spacing:-.035em;font-size:21px;white-space:nowrap}
-    /* Header logo: explicit dimensions prevent oversized images */
-    .site-header .brand{display:inline-flex;align-items:center;flex:0 1 auto;min-width:0;max-width:220px}
-    .site-header .header-logo{display:block;width:auto;height:36px;max-width:200px;object-fit:contain;object-position:left center}
-    .brand-mark{width:37px;height:37px;display:grid;place-items:center;border-radius:11px;background:linear-gradient(145deg,#2e63ed,#41d2ed)}
-    .brand-mark svg{width:23px;height:23px}
-    .brand span span{color:var(--cyan)}
-    .nav-links{display:flex;align-items:center;gap:28px}.nav-links a{font-size:13px;font-weight:650;color:#c8d8ee;transition:color .2s}.nav-links a:hover,.nav-links a[aria-current="page"]{color:#fff}
-    .nav-cta{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:#f4f8ff;color:#112654!important;border-radius:999px;padding:10px 18px;font-size:13px;font-weight:800;box-shadow:0 10px 25px rgba(0,0,0,.1)}
-    .nav-toggle{display:none;background:none;border:1px solid var(--line);border-radius:12px;padding:10px;color:#fff;cursor:pointer}
-    .nav-toggle svg{display:block;width:22px;height:22px}
-    .hero{position:relative;isolation:isolate;overflow:hidden;padding:94px 0 100px;background:radial-gradient(ellipse 65% 70% at 85% 30%,rgba(34,91,196,.25),transparent 75%),linear-gradient(180deg,#081632 0%,#0a1c3e 100%)}
-    .hero::before{content:"";position:absolute;inset:0;z-index:-1;opacity:.25;background-image:linear-gradient(rgba(102,156,236,.12) 1px,transparent 1px),linear-gradient(90deg,rgba(102,156,236,.12) 1px,transparent 1px);background-size:48px 48px;mask-image:linear-gradient(to bottom,#000,transparent 92%)}
-    .hero-layout{display:grid;grid-template-columns:1.13fr .87fr;gap:55px;align-items:center}
-    .eyebrow{display:inline-flex;align-items:center;gap:10px;color:var(--cyan);text-transform:uppercase;letter-spacing:.17em;font-size:11px;font-weight:850}
-    .eyebrow::before{content:"";width:20px;height:2px;background:currentColor;border-radius:99px}
-    h1,h2,h3,p{margin-top:0}h1,h2,h3{line-height:1.13;letter-spacing:-.04em}
-    h1{font-size:clamp(42px,5.1vw,69px);margin:23px 0 24px;max-width:740px}
-    .gradient-text{background:linear-gradient(100deg,#7edcff 0%,#fff 80%);color:transparent;background-clip:text;-webkit-background-clip:text}
-    .hero p{font-size:17px;color:#c2d2e9;max-width:610px;line-height:1.82}
-    .hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:33px}
-    .btn{display:inline-flex;align-items:center;justify-content:center;gap:11px;min-height:48px;border-radius:12px;padding:12px 19px;font-size:14px;font-weight:800;transition:transform .2s,background .2s,border-color .2s;cursor:pointer}
-    .btn:hover{transform:translateY(-2px)}.btn-primary{background:linear-gradient(110deg,#3974f8,#47c7e9);color:#fff;box-shadow:0 12px 30px rgba(31,101,223,.25)}
-    .btn-outline{border:1px solid rgba(181,212,255,.35);background:rgba(255,255,255,.045);color:#eef7ff}
-    .hero-note{margin-top:27px;color:#829abf;font-size:12px;letter-spacing:.02em}
-    .visual{position:relative;padding:25px 22px;border:1px solid rgba(160,211,255,.24);border-radius:28px;background:linear-gradient(145deg,rgba(22,54,102,.84),rgba(7,25,59,.72));box-shadow:0 25px 80px rgba(0,0,0,.32),inset 0 1px 0 rgba(255,255,255,.1);overflow:hidden}
-    .visual::after{content:"";position:absolute;right:-75px;bottom:-75px;width:190px;height:190px;border-radius:50%;background:rgba(43,183,224,.13);filter:blur(35px);pointer-events:none}
-    .visual-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px;color:#a4bfdd;font-size:11px;font-weight:750;letter-spacing:.12em;text-transform:uppercase}
-    .window-dots{display:flex;gap:5px}.window-dots i{width:7px;height:7px;border-radius:50%;background:#6388b6}.window-dots i:first-child{background:#f5b57b}
-    .flow-card{position:relative;z-index:1;border:1px solid var(--line);border-radius:15px;background:rgba(6,20,48,.65);padding:18px;display:flex;gap:13px;align-items:center}
-    .flow-card strong{display:block;font-size:15px;line-height:1.35}.flow-card small{display:block;font-size:12px;color:#9fb4d0;margin-top:3px;line-height:1.5}
-    .flow-card.featured{border-color:rgba(74,207,239,.55);background:linear-gradient(100deg,rgba(28,74,138,.95),rgba(13,49,91,.88));box-shadow:0 10px 30px rgba(10,83,167,.2)}
-    .flow-icon{width:39px;height:39px;flex:none;display:grid;place-items:center;border-radius:11px;background:rgba(91,150,241,.16);color:#a8d9ff}
-    .flow-icon svg{width:20px;height:20px}.featured .flow-icon{background:rgba(69,207,232,.2);color:#77ecff}
-    .connector{display:flex;justify-content:center;height:35px;align-items:center;color:#63b9ee;font-size:23px;line-height:1}
-    .visual-footer{margin-top:20px;color:#91afd1;font-size:11px;text-align:center}
-    .strip{border-block:1px solid var(--line);background:#091936}.strip-inner{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;padding:22px 0}.strip-item{display:flex;align-items:center;gap:11px;font-size:13px;font-weight:750;color:#d2e0f4}.strip-item svg{width:20px;height:20px;color:var(--cyan);flex:none}
-    section.content{padding:110px 0}.section-kicker{color:var(--cyan);font-size:11px;font-weight:850;letter-spacing:.18em;text-transform:uppercase;margin-bottom:16px}
-    .section-head{max-width:790px;margin-bottom:45px}.section-head h2{font-size:clamp(31px,4vw,49px);margin-bottom:18px}.section-head p{font-size:16px;color:var(--muted);max-width:760px}
-    .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start}
-    .about-grid p{color:#bacce5;font-size:16px;line-height:1.95}.about-grid p strong{color:#f1f8ff}
-    .quote-card{padding:30px;border:1px solid rgba(110,190,245,.27);border-radius:24px;background:linear-gradient(140deg,rgba(29,67,123,.48),rgba(12,35,72,.68));position:relative;overflow:hidden}
-    .quote-card::before{content:'“';position:absolute;top:-28px;right:18px;font-size:140px;color:rgba(97,201,241,.12);font-family:Georgia,serif}
-    .quote-card strong{font-size:25px;line-height:1.36;letter-spacing:-.035em;display:block;max-width:400px;position:relative}.quote-card p{font-size:13px;margin:18px 0 0;line-height:1.7}
-    .light-section{background:#f5f8ff;color:#10254d}.light-section .section-kicker{color:#286bd5}.light-section .section-head p{color:#586b87}
-    .services{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
-    .service{background:#fff;border:1px solid #e1e9f5;border-radius:20px;padding:27px;box-shadow:0 8px 25px rgba(31,64,111,.035);transition:transform .2s,box-shadow .2s}
-    .service:hover{transform:translateY(-4px);box-shadow:0 14px 30px rgba(31,64,111,.085)}
-    .service-icon{display:grid;place-items:center;width:47px;height:47px;border-radius:13px;background:#eaf2ff;color:#2362d0;margin-bottom:19px}
-    .service-icon svg{width:23px;height:23px}.service h3{font-size:21px;margin-bottom:9px}.service p{color:#64758d;font-size:14px;line-height:1.8;margin:0}
-    .pill-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}.pill{font-size:11px;font-weight:750;color:#315987;border-radius:999px;padding:5px 10px;background:#eef5ff}
-    .approach{background:linear-gradient(180deg,#081831,#0b2145)}
-    .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.step{padding:24px 22px;border-radius:20px;border:1px solid var(--line);background:rgba(255,255,255,.03)}
-    .step-num{font-size:13px;color:var(--cyan);font-weight:900;letter-spacing:.12em}.step h3{font-size:18px;margin:18px 0 10px}.step p{font-size:13px;color:#a9bedb;line-height:1.8;margin:0}
-    .product-section{background:#0a1b3a}.product-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:18px}
-    .product-card{border:1px solid rgba(137,194,250,.25);border-radius:23px;padding:30px;background:linear-gradient(135deg,#17346a,#0c2249);min-height:270px;display:flex;flex-direction:column;align-items:start}
-    .product-card.secondary{background:linear-gradient(135deg,#14294f,#0d2144)}
-    .tag{display:inline-flex;padding:5px 10px;border:1px solid rgba(111,208,241,.4);border-radius:99px;color:#8fe5fa;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
-    .product-card h3{font-size:26px;margin:23px 0 9px}.product-card p{font-size:14px;color:#b4c8e1;line-height:1.8;max-width:420px}.product-card a{margin-top:auto;font-size:13px;color:#a5ecff;font-weight:850}
-    .small-note{font-size:12px;color:#8da5c4;margin-top:21px;line-height:1.8}
-    .learning{display:grid;grid-template-columns:1fr auto;gap:30px;align-items:center;padding:36px;border-radius:23px;border:1px solid rgba(105,181,243,.22);background:linear-gradient(115deg,rgba(35,77,144,.4),rgba(14,39,81,.55))}
-    .learning h3{font-size:25px;margin:7px 0 11px}.learning p{color:#b6c9e3;margin:0;max-width:730px;font-size:14px}
-    .final-cta{padding:82px 0 88px;background:radial-gradient(ellipse 60% 140% at 50% 110%,rgba(54,119,240,.33),transparent),#07132d;text-align:center;border-top:1px solid var(--line)}
-    .final-cta h2{font-size:clamp(33px,4.2vw,51px);max-width:820px;margin:15px auto 20px}.final-cta p{color:#b0c4df;max-width:620px;margin:0 auto 28px}
-    footer{border-top:1px solid var(--line);background:#061026}.footer-inner{padding:25px 0;display:flex;justify-content:space-between;align-items:center;gap:22px;flex-wrap:wrap}.footer-inner small{color:#8ca5c7;font-size:12px}.footer-links{display:flex;gap:22px}.footer-links a{font-size:12px;color:#b5c9e2}.footer-links a:hover{color:#fff}
-    .reveal{opacity:1;transform:none}
-    @media (prefers-reduced-motion:no-preference){.js .reveal{opacity:0;transform:translateY(20px);transition:opacity .65s ease,transform .65s ease}.js .reveal.visible{opacity:1;transform:none}.visual{animation:float 8s ease-in-out infinite}@keyframes float{50%{transform:translateY(-9px)}}}
-    @media (max-width:920px){.hero-layout{grid-template-columns:1fr;gap:45px}.hero{padding:75px 0}.visual{max-width:620px}.steps{grid-template-columns:repeat(2,1fr)}.nav-links{gap:16px}.nav-links a{font-size:12px}}
-    @media (max-width:850px){.site-header .brand{max-width:calc(100% - 64px)}.site-header .header-logo{height:30px;max-width:min(170px,100%)}}
-    @media (max-width:850px){.container{width:min(calc(100% - 34px),var(--max))}.nav{min-height:68px}.brand{font-size:19px}.nav-toggle{display:block}.nav-links{display:none;position:absolute;left:0;right:0;top:68px;background:#0a1b3b;border-bottom:1px solid var(--line);padding:16px 20px 23px;flex-direction:column;align-items:stretch;gap:3px}.nav-links.open{display:flex}.nav-links a{padding:10px 12px;font-size:14px}.nav-links .nav-cta{margin-top:8px}.hero{padding:58px 0 66px}.hero h1{font-size:clamp(37px,10vw,52px)}.hero p{font-size:15px}.hero-actions{flex-direction:column;align-items:stretch}.hero-actions .btn{width:100%}.visual{padding:18px}.strip-inner{grid-template-columns:1fr;gap:14px;padding:22px 0}section.content{padding:75px 0}.section-head{margin-bottom:29px}.section-head h2{font-size:34px}.about-grid,.services,.product-grid,.learning{grid-template-columns:1fr;gap:15px}.about-grid{gap:28px}.steps{grid-template-columns:1fr}.learning{padding:27px}.learning .btn{width:100%}.footer-inner{align-items:flex-start;flex-direction:column}.final-cta{padding:65px 0}}
-  </style>
-  <script type="application/ld+json">
-    {"@context":"https://schema.org","@type":"Organization","name":"Zuralogic","url":"https://zuralogic.com/","description":"Business Systems Studio yang menyediakan template aplikasi, sistem custom, otomasi, website, dan edukasi teknologi untuk kebutuhan operasional bisnis."}
-  </script>
+    body { background: #F4F8FF; }
+    .font-display { font-family: 'Sora', 'Inter', sans-serif; }
+
+    /* ---------- Background grid + blobs ---------- */
+    .bg-grid {
+      background-image: linear-gradient(rgba(37,99,235,.07) 1px, transparent 1px), linear-gradient(90deg, rgba(37,99,235,.07) 1px, transparent 1px);
+      background-size: 46px 46px;
+      -webkit-mask-image: radial-gradient(ellipse at 50% 15%, #000 25%, transparent 72%);
+      mask-image: radial-gradient(ellipse at 50% 15%, #000 25%, transparent 72%);
+    }
+    @keyframes floaty { 0%,100% { transform: translateY(0) } 50% { transform: translateY(-22px) } }
+    .blob { animation: floaty 14s ease-in-out infinite; }
+
+    /* ---------- Glass ---------- */
+    .glass {
+      background: linear-gradient(135deg, rgba(255,255,255,.80), rgba(239,246,255,.55));
+      backdrop-filter: blur(18px) saturate(150%); -webkit-backdrop-filter: blur(18px) saturate(150%);
+      border: 1px solid rgba(255,255,255,.92);
+      box-shadow: 0 18px 40px -18px rgba(10,25,49,.28), inset 0 1px 0 rgba(255,255,255,.95);
+    }
+    .glass-dark {
+      background: linear-gradient(135deg, rgba(10,25,49,.96), rgba(29,78,216,.90));
+      backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
+      border: 1px solid rgba(147,197,253,.35);
+      box-shadow: 0 30px 60px -24px rgba(10,25,49,.55);
+    }
+    .frosted-nav { background: rgba(255,255,255,.72); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); }
+    .text-grad { background: linear-gradient(90deg, #0A1931, #2563EB 60%, #38BDF8); -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+    /* Spotlight yang mengikuti kursor */
+    .spot { position: relative; overflow: hidden; transition: transform .35s cubic-bezier(.16,1,.3,1), box-shadow .35s; }
+    .spot::before { content: ""; position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity .3s;
+      background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 50%), rgba(37,99,235,.16), transparent 45%); }
+    .spot:hover::before { opacity: 1; }
+    .lift:hover { transform: translateY(-5px); box-shadow: 0 28px 50px -20px rgba(10,25,49,.38); }
+
+    /* ---------- Reveal on scroll ---------- */
+    .reveal { opacity: 0; transform: translateY(26px); transition: opacity .8s ease, transform .8s cubic-bezier(.16,1,.3,1); transition-delay: var(--d, 0ms); }
+    .reveal.in { opacity: 1; transform: none; }
+
+    /* ---------- Animated chart parts ---------- */
+    .bar { height: var(--h); transform: scaleY(0); transform-origin: bottom; transition: transform .9s cubic-bezier(.2,.8,.2,1), filter .2s; transition-delay: calc(var(--i) * 70ms); }
+    .in .bar { transform: scaleY(1); }
+    .bar:hover { filter: brightness(1.18); }
+    .draw { stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 1.8s ease .3s; }
+    .in .draw { stroke-dashoffset: 0; }
+    @keyframes bob { 0%,100% { transform: translateY(0) } 50% { transform: translateY(-10px) } }
+    .bob { animation: bob 5s ease-in-out infinite; }
+    @keyframes scan { 0% { top: 6% } 50% { top: 86% } 100% { top: 6% } }
+    .scanline { position: absolute; left: 8%; right: 8%; height: 2px; border-radius: 2px; background: #38BDF8; box-shadow: 0 0 12px 2px rgba(56,189,248,.8); animation: scan 2.6s ease-in-out infinite; }
+    @keyframes dash { to { stroke-dashoffset: -24; } }
+    .flow { stroke-dasharray: 6 6; animation: dash 1.2s linear infinite; }
+    @keyframes shimmer { 0% { background-position: -200px 0 } 100% { background-position: 200px 0 } }
+    .skel { background: linear-gradient(90deg, #e2e8f0 25%, #f1f5f9 50%, #e2e8f0 75%); background-size: 400px 100%; animation: shimmer 1.8s linear infinite; }
+    @keyframes pagescroll { 0%, 8% { transform: translateY(0) } 50%, 58% { transform: translateY(-46%) } 100% { transform: translateY(0) } }
+    .pagescroll { animation: pagescroll 12s ease-in-out infinite; }
+    .pagescroll:hover, .browser:hover .pagescroll { animation-play-state: paused; }
+    @keyframes spin360 { to { transform: rotate(360deg) } }
+    .spin-slow { animation: spin360 5s linear infinite; }
+    @keyframes ping2 { 0% { transform: scale(.9); opacity: .7 } 100% { transform: scale(1.8); opacity: 0 } }
+    .ping2 { animation: ping2 2s ease-out infinite; }
+
+    /* ---------- Marquee ---------- */
+    @keyframes marquee { to { transform: translateX(-50%); } }
+    .marquee-track { animation: marquee 32s linear infinite; width: max-content; }
+    .marquee:hover .marquee-track { animation-play-state: paused; }
+
+    /* ---------- Skill tabs ---------- */
+    .skill-panel { display: none; }
+    .skill-panel.active { display: grid; animation: fadeUp .5s ease both; }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(14px) } to { opacity: 1; transform: none } }
+    .ch-tab.active { background: #0A1931; color: #fff; border-color: #0A1931; box-shadow: 0 10px 24px -10px rgba(10,25,49,.6); }
+    .tab-btn.active { background: #0A1931; color: #fff; border-color: #0A1931; box-shadow: 0 10px 24px -10px rgba(10,25,49,.6); }
+
+    /* ---------- Path cards ---------- */
+    .path-card.active { border-color: #2563EB; box-shadow: 0 0 0 3px rgba(37,99,235,.18), 0 24px 48px -20px rgba(10,25,49,.4); }
+    .path-card.active .path-check { opacity: 1; transform: scale(1); }
+    .path-check { opacity: 0; transform: scale(.6); transition: all .3s; }
+
+    /* ---------- Wizard ---------- */
+    .opt { transition: all .2s; }
+    .opt.sel { border-color: #2563EB; background: #EFF6FF; box-shadow: 0 0 0 2px rgba(37,99,235,.2); }
+
+    /* ---------- Process ---------- */
+    .proc-step .dot { transition: all .5s; background: #fff; color: #64748b; border-color: #cbd5e1; }
+    .proc-step.on .dot { background: #0A1931; color: #fff; border-color: #2563EB; box-shadow: 0 0 0 6px rgba(37,99,235,.15); }
+    .proc-step .body { opacity: .45; transition: opacity .5s; }
+    .proc-step.on .body { opacity: 1; }
+
+    /* 2026 update: unified product, services & training funnels */
+    .journey-card.active { border-color: #2563EB; box-shadow: 0 0 0 3px rgba(37,99,235,.12), 0 24px 48px -24px rgba(10,25,49,.36); }
+    .journey-card .path-check { opacity:0; transform:scale(.6); }
+    .journey-card.active .path-check { opacity:1; transform:scale(1); }
+    .path-card.active { border-color: #2563EB; }
+    .product-note { background: linear-gradient(135deg,rgba(219,234,254,.58),rgba(255,255,255,.84)); border:1px solid #dbeafe; }
+    .faq-grid details { background:white; border:1px solid #dbeafe; border-radius:16px; }
+    .faq-grid details summary { cursor:pointer; padding:18px 20px; font-weight:750; list-style:none; display:flex; gap:12px; align-items:center; justify-content:space-between; }
+    .faq-grid details summary::-webkit-details-marker { display:none; }
+    .faq-grid details summary::after { content:'+'; color:#2563EB; font-size:24px; font-weight:400; line-height:1; }
+    .faq-grid details[open] summary::after { content:'−'; }
+    .faq-grid details p { padding:0 20px 20px; margin:0; color:#475569; font-size:14px; line-height:1.8; }
+    :focus-visible { outline: 3px solid #38BDF8; outline-offset: 3px; }
+    @media (max-width: 640px) { .shop-actions a { width:100%; } }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+      .reveal { opacity: 1; transform: none; }
+      .bar { transform: none; } .draw { stroke-dashoffset: 0; }
+    }
+  
+
+    /* About page — visually matched to Home */
+    .about-kicker { font-size:11px; font-weight:800; letter-spacing:.17em; text-transform:uppercase; color:#2563EB; }
+    .about-stage { position:relative; }
+    .route-btn[aria-pressed="true"] { border-color:#2563EB; background:linear-gradient(125deg,#eff6ff,#fff);box-shadow:0 0 0 2px rgba(37,99,235,.13); }
+    .route-body { min-height:172px; }
+    .process-step { position:relative; }
+    .process-step:not(:last-child)::after { content:""; position:absolute; top:22px; right:-20px; width:32px; height:1px; background:#bfdbfe; }
+    .intent-card { transition: transform .25s ease, box-shadow .25s ease; }
+    .intent-card:hover { transform:translateY(-4px);box-shadow:0 24px 45px -22px rgba(10,25,49,.3); }
+    .number-stamp { font-family:'Sora',sans-serif;font-size:12px;font-weight:800;color:#2563EB;letter-spacing:.1em; }
+    .about-faq details { background:#fff;border:1px solid #dbeafe;border-radius:16px;overflow:hidden; }
+    .about-faq summary { cursor:pointer;padding:18px 20px;font-weight:750;list-style:none;display:flex;justify-content:space-between;gap:14px; }
+    .about-faq summary::-webkit-details-marker { display:none; }
+    .about-faq summary:after { content:'+';font-size:23px;color:#2563EB;line-height:1; }
+    .about-faq details[open] summary:after { content:'−'; }
+    .about-faq details p { padding:0 20px 20px;color:#475569;font-size:14px;line-height:1.75; }
+    @media(max-width:1023px){.process-step:not(:last-child)::after{display:none;}}
+    :focus-visible { outline:3px solid #38bdf8;outline-offset:3px; }
+</style>
 </head>
-<body>
-  <a class="skip" href="#main">Lewati ke konten utama</a>
-  <header class="site-header">
-    <div class="container nav">
-      <a class="brand" href="/" aria-label="Zuralogic, kembali ke beranda">
-        <img src="/contents/imgheader.png" alt="Zuralogic" class="header-logo" width="200" height="36">
-      </a>
-      <button class="nav-toggle" type="button" aria-label="Buka menu navigasi" aria-expanded="false" aria-controls="main-nav"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
-      <nav class="nav-links" id="main-nav" aria-label="Navigasi utama">
-        <a href="/">Beranda</a>
-        <a href="#tentang" aria-current="page">Tentang</a>
-        <a href="#solusi">Solusi</a>
-        <a href="#pendekatan">Pendekatan</a>
-        <a href="#produk">Produk</a>
-        <a class="nav-cta" href="/products/">Jelajahi Produk <span aria-hidden="true">↗</span></a>
+<body class="text-slate-900 font-sans antialiased selection:bg-blue-600 selection:text-white overflow-x-hidden min-h-screen">
+  <a class="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[100] focus:bg-white focus:p-3 focus:rounded-xl" href="#main">Skip to content</a>
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-567FLHZT" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <div class="fixed top-0 left-0 right-0 h-[3px] z-[70] pointer-events-none"><div id="progress" class="h-full w-0 bg-gradient-to-r from-blue-600 via-sky-400 to-zura-navy"></div></div>
+  <div class="absolute inset-x-0 top-0 h-[950px] bg-grid pointer-events-none -z-10"></div>
+  <div class="absolute inset-x-0 top-0 h-[950px] overflow-hidden pointer-events-none -z-10"><div class="absolute -right-24 top-0 w-[520px] h-[520px] rounded-full bg-blue-400/25 blur-3xl blob"></div><div class="absolute -left-32 top-64 w-[420px] h-[420px] rounded-full bg-sky-300/30 blur-3xl blob"></div></div>
+  <header id="nav" class="sticky top-0 z-50 frosted-nav border-b border-blue-100/70 transition-shadow">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-[68px] flex items-center justify-between gap-4">
+      <a href="/" class="flex items-center gap-3 shrink-0" aria-label="Zuralogic"><img src="/contents/imgheader.png" alt="Zuralogic" class="h-6 w-auto" /><span class="hidden sm:inline text-[11px] font-semibold text-slate-500 mt-1">Your Scale-Up Partner</span></a>
+      <nav class="hidden lg:flex items-center gap-1 text-sm font-semibold text-slate-700" aria-label="Main navigation">
+        <a href="/products/" data-track="about_nav_products" class="px-3 py-2 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition"><span data-en="Products">Produk</span></a>
+        <a href="/#start" class="px-3 py-2 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition"><span data-en="Find your path">Pilih jalur</span></a>
+        <a href="/#solutions" class="px-3 py-2 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition"><span data-en="Solutions">Solusi</span></a>
+        <a href="/#umkm" class="px-3 py-2 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition"><span data-en="MSME training">Pelatihan UMKM</span></a>
+        <a href="/#youtube" class="px-3 py-2 rounded-lg hover:bg-blue-50 hover:text-blue-600 transition"><span data-en="Learn">Belajar</span></a>
+        <a href="/about/" aria-current="page" class="px-3 py-2 rounded-lg bg-blue-50 text-blue-700"><span data-en="About">Tentang</span></a>
       </nav>
+      <div class="flex items-center gap-2">
+        <button id="langBtn" type="button" class="px-3 py-2 rounded-xl border border-slate-200 bg-white/80 text-xs font-extrabold text-slate-700 hover:border-blue-400 transition flex items-center gap-1.5" aria-label="Ganti bahasa / Switch language"><i data-lucide="languages" class="w-4 h-4 text-blue-600"></i><span id="langLabel">ID</span></button>
+        <a href="/#contact" data-track="about_nav_contact" class="hidden sm:inline-flex px-5 py-2.5 rounded-full bg-zura-navy hover:bg-blue-700 text-white text-sm font-bold shadow-md transition items-center gap-2"><i data-lucide="message-circle" class="w-4 h-4"></i><span data-en="Discuss your project">Diskusikan proyek</span></a>
+        <button id="menuBtn" type="button" class="lg:hidden p-2.5 rounded-xl border border-slate-200 bg-white/80 text-slate-700" aria-label="Menu" aria-expanded="false" aria-controls="mobileMenu"><i data-lucide="menu" class="w-5 h-5"></i></button>
+      </div>
     </div>
+    <div id="mobileMenu" hidden class="lg:hidden border-t border-blue-100 bg-white/95 backdrop-blur-xl px-5 py-4"><div class="grid gap-1 text-sm font-semibold text-slate-800">
+      <a href="/products/" class="py-2.5 border-b border-slate-100"><span data-en="Products">Produk</span></a>
+      <a href="/#start" class="py-2.5 border-b border-slate-100"><span data-en="Find your path">Pilih jalur</span></a>
+      <a href="/#solutions" class="py-2.5 border-b border-slate-100"><span data-en="Solutions">Solusi</span></a>
+      <a href="/#umkm" class="py-2.5 border-b border-slate-100"><span data-en="MSME training">Pelatihan UMKM</span></a>
+      <a href="/#youtube" class="py-2.5 border-b border-slate-100"><span data-en="Learn">Belajar</span></a>
+      <a href="/about/" class="py-2.5 border-b border-slate-100 text-blue-700"><span data-en="About">Tentang</span></a>
+      <a href="/#contact" class="mt-3 py-3 rounded-xl bg-zura-navy text-white text-center font-bold"><span data-en="Discuss your project">Diskusikan proyek</span></a>
+    </div></div>
   </header>
   <main id="main">
-    <section class="hero" aria-labelledby="hero-title">
-      <div class="container hero-layout">
-        <div>
-          <span class="eyebrow">Tentang Zuralogic · Business Systems Studio</span>
-          <h1 id="hero-title">Bukan sistem paling rumit.<br><span class="gradient-text">Sistem yang paling tepat.</span></h1>
-          <p>Kami membantu bisnis merapikan proses kerja melalui aplikasi, otomasi, dan solusi digital yang dibangun berdasarkan kebutuhan nyata—bukan sekadar menumpuk fitur yang belum tentu digunakan.</p>
-          <div class="hero-actions">
-            <a class="btn btn-primary" href="#solusi">Kenali Solusi Kami <span aria-hidden="true">↗</span></a>
-            <a class="btn btn-outline" href="/products/">Lihat Produk Digital <span aria-hidden="true">→</span></a>
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 sm:pt-20 pb-14 sm:pb-20">
+      <div class="grid lg:grid-cols-12 gap-10 items-center">
+        <div class="lg:col-span-7">
+          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full glass text-[11px] sm:text-xs font-extrabold tracking-[.16em] uppercase text-blue-700 reveal in"><i data-lucide="sparkles" class="w-4 h-4"></i><span data-en="About Zuralogic · Business Systems Studio">Tentang Zuralogic · Business Systems Studio</span></div>
+          <h1 class="font-display mt-5 text-[36px] sm:text-5xl lg:text-[58px] leading-[1.12] tracking-tight font-extrabold text-zura-navy reveal in"><span data-en="Technology should solve">Teknologi harus menyelesaikan</span> <span class="text-grad" data-en="real problems.">masalah nyata.</span></h1>
+          <p class="mt-6 text-base sm:text-lg leading-relaxed text-slate-600 max-w-2xl reveal in" data-en="Zuralogic is an Indonesia-based business systems studio making practical digital products, custom applications and automation. We start with the workflow—not the feature count.">Zuralogic adalah studio sistem bisnis berbasis di Indonesia yang mengembangkan produk digital, aplikasi custom, dan otomasi yang praktis. Kami mulai dari alur kerja—bukan jumlah fiturnya.</p>
+          <div class="mt-7 flex flex-col sm:flex-row flex-wrap gap-3 reveal in"><a href="/products/" data-track="about_hero_products" class="px-6 py-3.5 rounded-2xl bg-zura-navy hover:bg-blue-700 text-white font-bold shadow-xl shadow-blue-900/20 transition flex items-center justify-center gap-2"><i data-lucide="shopping-bag" class="w-5 h-5"></i><span data-en="Explore products">Jelajahi produk</span><i data-lucide="arrow-right" class="w-4 h-4"></i></a><a href="/?intent=build#start" data-track="about_hero_build" class="px-6 py-3.5 rounded-2xl glass hover:border-blue-400 text-zura-navy font-bold transition flex items-center justify-center gap-2"><i data-lucide="workflow" class="w-5 h-5 text-blue-600"></i><span data-en="Find the right solution">Temukan solusi yang sesuai</span></a></div>
+        </div>
+        <div class="lg:col-span-5 about-stage reveal in">
+          <div class="glass rounded-[30px] p-5 sm:p-7" data-tilt>
+            <div class="flex items-center justify-between"><span class="text-[11px] font-extrabold tracking-[.14em] uppercase text-slate-500" data-en="Our approach">Pendekatan kami</span><div class="flex gap-1.5"><span class="w-2 h-2 rounded-full bg-rose-300"></span><span class="w-2 h-2 rounded-full bg-amber-300"></span><span class="w-2 h-2 rounded-full bg-emerald-300"></span></div></div>
+            <div class="mt-6 space-y-2"><div class="rounded-2xl bg-white border border-blue-100 p-4 flex gap-3 items-center"><span class="w-10 h-10 rounded-xl grid place-items-center bg-blue-50 text-blue-600 shrink-0"><i data-lucide="search" class="w-5 h-5"></i></span><div><b class="text-sm text-zura-navy" data-en="Understand the workflow">Pahami alur kerjanya</b><p class="text-xs text-slate-500 mt-1" data-en="People, tasks, constraints and data">Pengguna, tugas, batasan, dan data</p></div></div>
+            <div class="flex justify-center text-blue-400"><i data-lucide="arrow-down" class="w-5 h-5"></i></div>
+            <div class="rounded-2xl bg-gradient-to-br from-zura-navy to-blue-700 text-white p-4 flex gap-3 items-center shadow-lg"><span class="w-10 h-10 rounded-xl grid place-items-center bg-white/15 text-sky-200 shrink-0"><i data-lucide="layout-template" class="w-5 h-5"></i></span><div><b class="text-sm" data-en="Choose the right-sized solution">Pilih solusi yang tepat guna</b><p class="text-xs text-blue-100 mt-1" data-en="Template · Setup · Custom build">Template · Setup · Sistem custom</p></div></div>
+            <div class="flex justify-center text-blue-400"><i data-lucide="arrow-down" class="w-5 h-5"></i></div>
+            <div class="rounded-2xl bg-white border border-blue-100 p-4 flex gap-3 items-center"><span class="w-10 h-10 rounded-xl grid place-items-center bg-emerald-50 text-emerald-600 shrink-0"><i data-lucide="check-circle" class="w-5 h-5"></i></span><div><b class="text-sm text-zura-navy" data-en="Make it usable and maintainable">Buat agar mudah dipakai & dikembangkan</b><p class="text-xs text-slate-500 mt-1" data-en="Document, test, improve by need">Dokumentasi, uji, kembangkan sesuai kebutuhan</p></div></div></div>
+            <p class="text-xs text-slate-400 mt-5" data-en="Illustration of our principles; not a client performance claim.">Ilustrasi prinsip kerja, bukan klaim hasil proyek klien tertentu.</p>
           </div>
-          <div class="hero-note">Work Smarter. Automate Better. Scale Further.</div>
-        </div>
-        <div class="visual" role="img" aria-label="Ilustrasi pendekatan Zuralogic: dari proses manual menuju solusi digital tepat guna dan operasional yang lebih terstruktur">
-          <div class="visual-top"><span>Our approach</span><span class="window-dots" aria-hidden="true"><i></i><i></i><i></i></span></div>
-          <div class="flow-card"><span class="flow-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M7 3h10l4 4v14H3V3h4m4 0v5h6M7 13h10M7 17h7"/></svg></span><span><strong>Proses operasional nyata</strong><small>Kenali hambatan, alur kerja, dan kebutuhan tim.</small></span></div>
-          <div class="connector" aria-hidden="true">↓</div>
-          <div class="flow-card featured"><span class="flow-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="m8 12 3 3 5-6"/></svg></span><span><strong>Solusi sesuai kebutuhan</strong><small>Template, setup, customization, atau sistem custom.</small></span></div>
-          <div class="connector" aria-hidden="true">↓</div>
-          <div class="flow-card"><span class="flow-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 17V7m5 10v-6m5 6V5m5 12v-9M3 21h18"/></svg></span><span><strong>Operasional lebih terstruktur</strong><small>Data tercatat, proses lebih jelas, sistem dapat dikembangkan.</small></span></div>
-          <div class="visual-footer">Ilustrasi prinsip kerja, bukan klaim hasil proyek tertentu.</div>
         </div>
       </div>
     </section>
-    <div class="strip"><div class="container strip-inner">
-      <div class="strip-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m4 12 5 5L20 6"/></svg>Fitur relevan, bukan fitur berlebihan</div>
-      <div class="strip-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M5 6h10a4 4 0 0 1 0 8H9a4 4 0 0 0 0 8h10"/></svg>Biaya & cakupan yang transparan</div>
-      <div class="strip-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20V4h16M7 16l4-5 3 2 5-7"/></svg>Bertumbuh sesuai kebutuhan bisnis</div>
-    </div></div>
-    <section class="content" id="tentang" aria-labelledby="about-title">
-      <div class="container about-grid">
-        <div class="reveal">
-          <div class="section-kicker">Siapa kami</div>
-          <h2 id="about-title" style="font-size:clamp(32px,3.7vw,46px);margin-bottom:23px">Teknologi seharusnya mengikuti cara bisnis bekerja.</h2>
-          <p><strong>Zuralogic adalah Business Systems Studio</strong> yang mengembangkan aplikasi bisnis, otomasi, website, dan produk digital untuk kebutuhan operasional yang spesifik.</p>
-          <p>Berangkat dari perspektif pekerjaan operasional sehari-hari, kami melihat bahwa tidak setiap usaha memerlukan sistem enterprise yang kompleks. Kadang yang dibutuhkan hanyalah alur penjualan yang rapi, pencatatan stok yang jelas, approval yang terkontrol, atau laporan yang tidak lagi dikerjakan manual.</p>
-          <p>Karena itu, kami memulai dari masalah yang ingin diselesaikan, lalu memilih teknologi dan cakupan fitur yang paling masuk akal.</p>
-        </div>
-        <aside class="quote-card reveal" aria-label="Prinsip Zuralogic">
-          <div class="section-kicker">Yang kami yakini</div>
-          <strong>Solusi yang baik bukan yang memiliki semua fitur. Solusi yang baik adalah yang benar-benar dipakai.</strong>
-          <p>Kami tidak menggantikan peran ERP untuk bisnis yang memang membutuhkannya. Kami menawarkan pendekatan yang lebih fokus bagi kebutuhan yang dapat diselesaikan secara sederhana, modular, dan terukur.</p>
-        </aside>
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-10"><div class="glass rounded-2xl p-4 sm:p-5 grid sm:grid-cols-3 gap-3"><div class="flex gap-2 items-center text-sm font-bold text-slate-700"><i data-lucide="check-circle-2" class="w-5 h-5 text-blue-600 shrink-0"></i><span data-en="Useful features over feature overload">Fitur berguna, bukan fitur berlebihan</span></div><div class="flex gap-2 items-center text-sm font-bold text-slate-700"><i data-lucide="check-circle-2" class="w-5 h-5 text-blue-600 shrink-0"></i><span data-en="Transparent scope & licensing">Scope dan lisensi transparan</span></div><div class="flex gap-2 items-center text-sm font-bold text-slate-700"><i data-lucide="check-circle-2" class="w-5 h-5 text-blue-600 shrink-0"></i><span data-en="Grow when the workflow demands it">Kembangkan saat benar-benar diperlukan</span></div></div></section>
+    <section id="who" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20 scroll-mt-24"><div class="grid lg:grid-cols-2 gap-12"><div class="reveal"><div class="about-kicker" data-en="Who we are">Siapa kami</div><h2 class="font-display mt-3 text-3xl sm:text-4xl font-extrabold tracking-tight text-zura-navy" data-en="Business systems made practical.">Sistem bisnis yang masuk akal.</h2><p class="mt-5 leading-relaxed text-slate-600" data-en="We approach digital tools from the reality of daily operations: sales, stock movements, reporting, team access and the small bottlenecks that cost time. Not every business needs an enterprise platform. Sometimes it needs a well-designed, focused system.">Kami melihat solusi digital dari kebutuhan operasional sehari-hari: transaksi penjualan, pergerakan stok, laporan, hak akses tim, dan hambatan kecil yang menyita waktu. Tidak semua bisnis membutuhkan sistem enterprise. Kadang yang diperlukan justru aplikasi sederhana yang dirancang dengan benar.</p><p class="mt-4 leading-relaxed text-slate-600" data-en="Our work spans ready-made templates, agreed setup services, bespoke applications, and practical technology education through ZuraClass.">Ruang lingkup kami mencakup template siap pakai, bantuan setup sesuai kesepakatan, aplikasi custom, dan edukasi praktis melalui ZuraClass.</p></div><div class="glass rounded-3xl p-7 sm:p-8 reveal"><div class="about-kicker" data-en="What guides us">Prinsip kami</div><div class="font-display mt-4 text-2xl sm:text-3xl font-extrabold text-zura-navy leading-tight" data-en="The best system isn't the one with the most features. It's the one people actually use.">Sistem terbaik bukan yang fiturnya paling banyak, tetapi yang benar-benar digunakan.</div><div class="h-px bg-blue-100 my-6"></div><p class="text-slate-600 leading-relaxed" data-en="We aim to make the next useful step clear: buy an existing template, customize it, build something purpose-made, or learn to do it yourself.">Kami membantu memperjelas langkah berikutnya: memakai template, menyesuaikannya, membangun sistem khusus, atau mempelajarinya sendiri.</p></div></div></section>
+    <section id="offer" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20 scroll-mt-24"><div class="reveal max-w-3xl"><div class="about-kicker" data-en="How we help">Yang kami tawarkan</div><h2 class="font-display mt-3 text-3xl sm:text-4xl font-extrabold text-zura-navy" data-en="Choose the level of help you need.">Pilih tingkat bantuan yang dibutuhkan.</h2><p class="mt-3 text-slate-600" data-en="Not every problem requires a fully custom build. The simplest suitable solution is often the right place to start.">Tidak semua masalah perlu sistem custom dari nol. Mulai dari solusi yang memang cukup untuk kebutuhanmu.</p></div>
+      <div class="mt-8 grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <article class="glass intent-card rounded-2xl p-6 flex flex-col"><span class="w-11 h-11 rounded-xl bg-blue-50 text-blue-600 grid place-items-center"><i data-lucide="package-check" class="w-6 h-6"></i></span><h3 class="font-display mt-5 text-lg font-extrabold text-zura-navy" data-en="Digital templates">Template digital</h3><p class="mt-2 text-sm text-slate-600 leading-relaxed" data-en="Ready-made, editable products with features and requirements explained before checkout.">Produk siap pakai yang dapat disesuaikan, dengan fitur dan persyaratan dijelaskan sebelum checkout.</p><a href="/products/" data-track="about_offer_templates" class="mt-auto pt-5 text-blue-700 font-bold text-sm inline-flex gap-1.5 items-center"><span data-en="Explore products">Jelajahi produk</span><i data-lucide="arrow-right" class="w-4 h-4"></i></a></article>
+        <article class="glass intent-card rounded-2xl p-6 flex flex-col"><span class="w-11 h-11 rounded-xl bg-blue-50 text-blue-600 grid place-items-center"><i data-lucide="settings-2" class="w-6 h-6"></i></span><h3 class="font-display mt-5 text-lg font-extrabold text-zura-navy" data-en="Setup & customization">Setup & customization</h3><p class="mt-2 text-sm text-slate-600 leading-relaxed" data-en="Configuration, onboarding and agreed feature changes when a template is almost the right fit.">Konfigurasi, onboarding, dan perubahan fitur tertentu ketika template hampir sesuai kebutuhan.</p><a href="/#contact" data-track="about_offer_setup" class="mt-auto pt-5 text-blue-700 font-bold text-sm inline-flex gap-1.5 items-center"><span data-en="Discuss scope">Diskusikan scope</span><i data-lucide="arrow-right" class="w-4 h-4"></i></a></article>
+        <article class="glass intent-card rounded-2xl p-6 flex flex-col"><span class="w-11 h-11 rounded-xl bg-blue-50 text-blue-600 grid place-items-center"><i data-lucide="workflow" class="w-6 h-6"></i></span><h3 class="font-display mt-5 text-lg font-extrabold text-zura-navy" data-en="Custom systems">Sistem custom</h3><p class="mt-2 text-sm text-slate-600 leading-relaxed" data-en="Operational apps, automated reports, integrations, and websites mapped to real workflows.">Aplikasi operasional, pelaporan otomatis, integrasi, dan website yang disesuaikan dengan alur kerja.</p><a href="/?intent=build#start" data-track="about_offer_custom" class="mt-auto pt-5 text-blue-700 font-bold text-sm inline-flex gap-1.5 items-center"><span data-en="Create a brief">Buat brief</span><i data-lucide="arrow-right" class="w-4 h-4"></i></a></article>
+        <article class="glass intent-card rounded-2xl p-6 flex flex-col"><span class="w-11 h-11 rounded-xl bg-blue-50 text-blue-600 grid place-items-center"><i data-lucide="graduation-cap" class="w-6 h-6"></i></span><h3 class="font-display mt-5 text-lg font-extrabold text-zura-navy" data-en="Learning & training">Edukasi & pelatihan</h3><p class="mt-2 text-sm text-slate-600 leading-relaxed" data-en="ZuraClass tutorials and discussions about practical training for Indonesian MSMEs and institutions.">Tutorial ZuraClass serta diskusi program pelatihan untuk UMKM dan institusi Indonesia.</p><a href="/#umkm" data-track="about_offer_training" class="mt-auto pt-5 text-blue-700 font-bold text-sm inline-flex gap-1.5 items-center"><span data-en="Training opportunities">Peluang pelatihan</span><i data-lucide="arrow-right" class="w-4 h-4"></i></a></article>
       </div>
     </section>
-    <section class="content light-section" id="solusi" aria-labelledby="services-title">
-      <div class="container">
-        <div class="section-head reveal"><div class="section-kicker">Apa yang kami kerjakan</div><h2 id="services-title">Dari template siap pakai sampai sistem yang dibuat khusus.</h2><p>Pilih solusi sesuai kondisi bisnis. Tidak semua masalah harus diselesaikan dengan membangun aplikasi dari nol.</p></div>
-        <div class="services">
-          <article class="service reveal"><div class="service-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="3" width="8" height="8" rx="2"/><rect x="13" y="3" width="8" height="8" rx="2"/><rect x="3" y="13" width="8" height="8" rx="2"/><rect x="13" y="13" width="8" height="8" rx="2"/></svg></div><h3>Template & produk digital</h3><p>Solusi awal yang bisa dipelajari, dipasang, dan dikembangkan. Cocok untuk kebutuhan umum yang tidak memerlukan sistem custom sepenuhnya.</p><div class="pill-row"><span class="pill">POS Lite</span><span class="pill">Aplikasi bisnis</span><span class="pill">Template editable</span></div></article>
-          <article class="service reveal"><div class="service-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="m14 7 3 3m-9 9-5 2 2-5L16 5a3 3 0 0 1 4 4L8 19Z"/></svg></div><h3>Setup & customization</h3><p>Bantuan instalasi, konfigurasi, migrasi data awal, pelatihan, atau penyesuaian fitur tertentu sebagai layanan tambahan dengan ruang lingkup yang disepakati.</p><div class="pill-row"><span class="pill">Setup opsional</span><span class="pill">Penyesuaian fitur</span><span class="pill">Pelatihan</span></div></article>
-          <article class="service reveal"><div class="service-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="M3 9h18m-13 5 2 2 4-4"/></svg></div><h3>Aplikasi custom & otomasi</h3><p>Aplikasi, dashboard, alur approval, integrasi data, dan laporan otomatis yang mengikuti proses kerja bisnis—bukan sebaliknya.</p><div class="pill-row"><span class="pill">AppSheet</span><span class="pill">Google Apps Script</span><span class="pill">Web App</span></div></article>
-          <article class="service reveal"><div class="service-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="2" y="4" width="20" height="16" rx="3"/><path d="M2 9h20M7 6.5h.01M10 6.5h.01M7 14h6"/></svg></div><h3>Website & edukasi</h3><p>Website bisnis yang menjelaskan penawaran dengan jelas, serta pembelajaran praktis melalui ZuraClass agar lebih banyak orang mampu membangun solusi digital sendiri.</p><div class="pill-row"><span class="pill">Website</span><span class="pill">Landing page</span><span class="pill">ZuraClass</span></div></article>
-        </div>
-      </div>
+    <section id="markets" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20 scroll-mt-24"><div class="reveal max-w-2xl"><div class="about-kicker" data-en="One studio, two ways to serve">Satu studio, dua jalur layanan</div><h2 class="font-display mt-3 text-3xl sm:text-4xl font-extrabold text-zura-navy" data-en="Global products. Local impact.">Produk global. Dampak lokal.</h2></div><div class="mt-7 grid md:grid-cols-2 gap-5">
+      <article class="glass rounded-3xl p-7 sm:p-9"><div class="flex items-center gap-3"><span class="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 grid place-items-center"><i data-lucide="globe-2" class="w-6 h-6"></i></span><div><span class="about-kicker" data-en="Online product sales">Penjualan produk online</span><h3 class="font-display text-xl font-extrabold text-zura-navy">Global digital products</h3></div></div><p class="mt-5 text-slate-600 leading-relaxed" data-en="Our online catalog uses English-first product visuals for a broader audience. Buyers review product details, then select the available payment region at checkout.">Visual katalog produk kami dibuat English-first untuk menjangkau audiens yang lebih luas. Pembeli melihat detail produk, lalu memilih region checkout yang tersedia.</p><a href="/products/" data-track="about_market_global" class="mt-5 inline-flex items-center gap-2 text-blue-700 font-bold text-sm"><span data-en="Open the catalog">Buka katalog</span><i data-lucide="arrow-right" class="w-4 h-4"></i></a></article>
+      <article class="glass rounded-3xl p-7 sm:p-9"><div class="flex items-center gap-3"><span class="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 grid place-items-center"><i data-lucide="store" class="w-6 h-6"></i></span><div><span class="about-kicker" data-en="Indonesia · MSMEs">Indonesia · UMKM</span><h3 class="font-display text-xl font-extrabold text-zura-navy" data-en="Practical local learning & implementation">Pelatihan & implementasi lokal</h3></div></div><p class="mt-5 text-slate-600 leading-relaxed" data-en="We are open to Indonesian-language webinars, workshops and pilot implementation discussions with MSME communities, organizations and local institutions. Every engagement needs a defined scope and agreement.">Kami membuka diskusi webinar, workshop, dan pilot implementasi berbahasa Indonesia bersama komunitas UMKM, organisasi, serta institusi daerah. Setiap kegiatan memerlukan scope dan kesepakatan tersendiri.</p><a href="/#umkm" data-track="about_market_umkm" class="mt-5 inline-flex items-center gap-2 text-blue-700 font-bold text-sm"><span data-en="Explore collaboration">Jelajahi kerja sama</span><i data-lucide="arrow-right" class="w-4 h-4"></i></a></article>
+    </div></section>
+    <section id="guide" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20 scroll-mt-24"><div class="max-w-3xl reveal"><div class="about-kicker" data-en="Find a starting point">Tentukan langkah awal</div><h2 class="font-display mt-3 text-3xl sm:text-4xl font-extrabold text-zura-navy" data-en="What kind of challenge are you working on?">Masalah bisnis apa yang ingin kamu selesaikan?</h2><p class="mt-3 text-slate-600" data-en="Pick an example to see a sensible starting approach. This isn't an automatic quote—it helps frame the discussion.">Pilih salah satu contoh untuk melihat pendekatan awal yang masuk akal. Ini bukan penawaran otomatis—hanya panduan membuka diskusi.</p></div>
+      <div class="glass rounded-3xl p-5 sm:p-8 mt-7"><div class="grid sm:grid-cols-4 gap-2" role="group" aria-label="Select use case">
+        <button type="button" class="route-btn rounded-xl p-3.5 border-2 border-blue-100 text-left bg-white" data-use="sales" aria-pressed="true"><i data-lucide="shopping-cart" class="w-5 h-5 text-blue-600"></i><span class="block mt-2 text-sm font-bold text-zura-navy" data-en="Sales & cashier">Penjualan & kasir</span></button>
+        <button type="button" class="route-btn rounded-xl p-3.5 border-2 border-blue-100 text-left bg-white" data-use="inventory" aria-pressed="false"><i data-lucide="warehouse" class="w-5 h-5 text-blue-600"></i><span class="block mt-2 text-sm font-bold text-zura-navy" data-en="Inventory & warehouse">Stok & gudang</span></button>
+        <button type="button" class="route-btn rounded-xl p-3.5 border-2 border-blue-100 text-left bg-white" data-use="automation" aria-pressed="false"><i data-lucide="workflow" class="w-5 h-5 text-blue-600"></i><span class="block mt-2 text-sm font-bold text-zura-navy" data-en="Admin & automation">Admin & otomasi</span></button>
+        <button type="button" class="route-btn rounded-xl p-3.5 border-2 border-blue-100 text-left bg-white" data-use="training" aria-pressed="false"><i data-lucide="graduation-cap" class="w-5 h-5 text-blue-600"></i><span class="block mt-2 text-sm font-bold text-zura-navy" data-en="Digital training">Pelatihan digital</span></button>
+      </div><div id="useCasePanel" class="route-body bg-blue-50/70 border border-blue-100 rounded-2xl p-5 sm:p-6 mt-5" aria-live="polite"></div></div>
     </section>
-    <section class="content approach" id="pendekatan" aria-labelledby="approach-title">
-      <div class="container"><div class="section-head reveal"><div class="section-kicker">Cara kami bekerja</div><h2 id="approach-title">Mulai dari masalahnya. Bukan dari daftar fiturnya.</h2><p>Setiap solusi memiliki batasan, kebutuhan teknis, dan biaya yang berbeda. Semuanya perlu jelas sebelum pengembangan dimulai.</p></div>
-        <div class="steps">
-          <article class="step reveal"><div class="step-num">01 / PAHAMI</div><h3>Petakan alur kerja</h3><p>Kenali pengguna, proses manual, titik hambatan, dan hasil yang ingin dicapai.</p></article>
-          <article class="step reveal"><div class="step-num">02 / PILIH</div><h3>Tentukan solusi</h3><p>Pilih template, penyesuaian, atau aplikasi custom sesuai kebutuhan dan anggaran.</p></article>
-          <article class="step reveal"><div class="step-num">03 / BANGUN</div><h3>Implementasi terarah</h3><p>Bangun fungsi prioritas, lakukan pengujian, dan siapkan panduan penggunaan.</p></article>
-          <article class="step reveal"><div class="step-num">04 / KEMBANGKAN</div><h3>Tingkatkan bertahap</h3><p>Tambahkan kemampuan baru saat ada kebutuhan nyata, bukan sekadar tren.</p></article>
-        </div>
-      </div>
-    </section>
-    <section class="content product-section" id="produk" aria-labelledby="product-title">
-      <div class="container"><div class="section-head reveal"><div class="section-kicker">Produk & solusi</div><h2 id="product-title">Mulai sederhana. Bertumbuh saat diperlukan.</h2><p>Model produk kami mengutamakan template sebagai titik awal, dengan layanan setup dan customization sebagai opsi—bukan kewajiban.</p></div>
-        <div class="product-grid">
-          <article class="product-card reveal"><span class="tag">Template digital</span><h3>ZURA POS Lite</h3><p>Template kasir berbasis AppSheet untuk pencatatan transaksi dan pengelolaan aktivitas kasir. Pembeli dapat mempelajari dan menyesuaikannya sesuai ketentuan produk dan platform.</p><a href="/products/">Lihat katalog produk <span aria-hidden="true">↗</span></a></article>
-          <article class="product-card secondary reveal"><span class="tag">Arah pengembangan</span><h3>ZURA Store Manager</h3><p>Konsep solusi pengelolaan toko yang lebih terintegrasi, dengan pendekatan template dan opsi setup maupun customization berdasarkan kebutuhan bisnis.</p><a href="/products/">Jelajahi produk Zuralogic <span aria-hidden="true">↗</span></a></article>
-        </div>
-        <p class="small-note">Biaya template atau jasa Zuralogic tidak otomatis mencakup biaya lisensi platform pihak ketiga, perangkat, atau layanan tambahan kecuali dinyatakan secara eksplisit pada penawaran.</p>
-      </div>
-    </section>
-    <section class="content" aria-labelledby="learn-title"><div class="container"><div class="learning reveal"><div><div class="section-kicker">Belajar & membangun</div><h3 id="learn-title">Teknologi yang dipahami akan lebih mudah dikembangkan.</h3><p>Melalui YouTube ZuraClass, kami berbagi tutorial AppSheet, Google Apps Script, dan pengembangan aplikasi bisnis. Karena solusi digital yang baik juga perlu bisa dipahami penggunanya.</p></div><a class="btn btn-outline" href="https://www.youtube.com/@zuraclass" target="_blank" rel="noopener noreferrer">Kunjungi ZuraClass <span aria-hidden="true">↗</span></a></div></div></section>
-    <section class="final-cta" aria-labelledby="cta-title"><div class="container"><div class="section-kicker">Mulai dari kebutuhanmu</div><h2 id="cta-title">Ada proses bisnis yang masih terlalu manual?</h2><p>Ceritakan tantangannya. Kita bisa mulai dengan melihat apakah template yang sudah ada cukup, perlu penyesuaian, atau memang memerlukan aplikasi khusus.</p><div class="hero-actions" style="justify-content:center"><a class="btn btn-primary" href="/">Kunjungi Beranda untuk Konsultasi <span aria-hidden="true">↗</span></a><a class="btn btn-outline" href="/products/">Lihat Produk <span aria-hidden="true">→</span></a></div></div></section>
+    <section id="approach" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20 scroll-mt-24"><div class="max-w-3xl reveal"><div class="about-kicker" data-en="Our working principles">Cara kami bekerja</div><h2 class="font-display mt-3 text-3xl sm:text-4xl font-extrabold text-zura-navy" data-en="Start with the need. Build with a clear scope.">Mulai dari kebutuhan. Bangun dengan scope yang jelas.</h2></div><div class="mt-8 grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        <div class="process-step glass rounded-2xl p-6"><div class="number-stamp">01 / DISCOVER</div><h3 class="font-extrabold text-zura-navy mt-4" data-en="Map the workflow">Petakan prosesnya</h3><p class="text-sm text-slate-600 mt-2" data-en="Clarify users, bottlenecks, data and desired outcomes.">Pahami pengguna, hambatan, data, dan hasil yang ingin dicapai.</p></div>
+        <div class="process-step glass rounded-2xl p-6"><div class="number-stamp">02 / SCOPE</div><h3 class="font-extrabold text-zura-navy mt-4" data-en="Select the right scope">Tentukan scope</h3><p class="text-sm text-slate-600 mt-2" data-en="Choose a suitable template, customization or bespoke build.">Pilih template, penyesuaian, atau pengembangan custom.</p></div>
+        <div class="process-step glass rounded-2xl p-6"><div class="number-stamp">03 / TEST</div><h3 class="font-extrabold text-zura-navy mt-4" data-en="Build and validate">Bangun dan uji</h3><p class="text-sm text-slate-600 mt-2" data-en="Test key tasks and adjust against agreed requirements.">Uji proses utama dan sesuaikan dengan kebutuhan yang disepakati.</p></div>
+        <div class="process-step glass rounded-2xl p-6"><div class="number-stamp">04 / HANDOVER</div><h3 class="font-extrabold text-zura-navy mt-4" data-en="Handover & learn">Serah terima & belajar</h3><p class="text-sm text-slate-600 mt-2" data-en="Provide guidance, training or support according to the scope.">Siapkan panduan, pelatihan, atau dukungan sesuai scope.</p></div>
+      </div></section>
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10"><div class="grid lg:grid-cols-5 gap-5 glass-dark rounded-[32px] p-7 sm:p-10 text-white items-center"><div class="lg:col-span-3"><span class="text-xs font-extrabold text-sky-300 tracking-[.15em] uppercase">ZURACLASS</span><h2 class="font-display mt-3 text-2xl sm:text-3xl font-extrabold" data-en="We build systems. We also teach how they work.">Kami membangun sistem. Kami juga mengajarkan cara kerjanya.</h2><p class="text-sm text-blue-100/85 mt-3 leading-relaxed" data-en="ZuraClass shares practical AppSheet, Apps Script and business app tutorials. Explore the methods before choosing a product or service.">Melalui ZuraClass, kami berbagi tutorial AppSheet, Apps Script, dan aplikasi bisnis praktis. Pelajari pendekatannya sebelum memilih produk atau layanan.</p></div><div class="lg:col-span-2 flex flex-col gap-3"><a href="https://www.youtube.com/@zuraclass" target="_blank" rel="noopener noreferrer" data-track="about_zuraclass" class="px-5 py-3.5 rounded-xl bg-white text-zura-navy hover:bg-blue-50 font-bold text-sm flex justify-center items-center gap-2"><i data-lucide="youtube" class="w-5 h-5 text-red-600"></i><span data-en="Watch ZuraClass">Tonton ZuraClass</span></a><a href="/#youtube" data-track="about_youtube_hub" class="px-5 py-3.5 rounded-xl border border-white/30 bg-white/10 hover:bg-white/15 font-bold text-sm flex justify-center items-center gap-2"><span data-en="Browse learning resources">Lihat materi belajar</span><i data-lucide="arrow-right" class="w-4 h-4"></i></a></div></div></section>
+    <section class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20"><div class="reveal max-w-2xl"><div class="about-kicker">FAQ</div><h2 class="font-display mt-3 text-3xl sm:text-4xl font-extrabold text-zura-navy" data-en="Clear expectations matter.">Ekspektasi yang jelas itu penting.</h2></div><div class="about-faq mt-7 grid md:grid-cols-2 gap-4">
+        <details><summary><span data-en="Are templates the same as managed software?">Apakah template sama dengan software yang dikelola penuh?</span></summary><p data-en="No. A template is a starting point and may require setup, testing and a suitable platform license. Refer to each product page for included features and requirements.">Tidak. Template merupakan titik awal yang mungkin memerlukan konfigurasi, pengujian, dan lisensi platform. Periksa isi paket dan persyaratannya pada halaman produk.</p></details>
+        <details><summary><span data-en="Can buyers outside Indonesia purchase?">Apakah pembeli luar negeri bisa membeli?</span></summary><p data-en="Products may offer IDR (Indonesia) and USD (International) checkout choices. Availability depends on product configuration and payment provider acceptance.">Produk dapat memiliki opsi IDR (Indonesia) dan USD (International). Ketersediaan tergantung konfigurasi produk dan penyedia pembayaran.</p></details>
+        <details><summary><span data-en="Do you offer implementation help?">Apakah ada bantuan implementasi?</span></summary><p data-en="We can discuss setup, onboarding and customization as separately scoped services, subject to project suitability and availability.">Bantuan setup, onboarding, dan penyesuaian dapat didiskusikan sebagai layanan dengan scope tersendiri, sesuai kecocokan proyek dan kapasitas.</p></details>
+        <details><summary><span data-en="Are you partnered with government agencies?">Apakah Zuralogic sudah menjadi mitra pemerintah?</span></summary><p data-en="We welcome discussions with Indonesian institutions and MSME communities. This page does not claim an existing government partnership, contract or funding award.">Kami terbuka untuk diskusi dengan institusi dan komunitas UMKM Indonesia. Halaman ini tidak mengklaim kemitraan pemerintah, kontrak, atau pendanaan yang sudah diperoleh.</p></details>
+    </div></section>
+    <section id="next" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16 sm:pb-24 scroll-mt-24"><div class="glass-dark rounded-[32px] p-8 sm:p-12 text-white text-center"><div class="text-xs font-extrabold uppercase tracking-[.17em] text-sky-300" data-en="Your next step">Langkah berikutnya</div><h2 class="font-display mt-3 text-3xl sm:text-4xl font-extrabold max-w-3xl mx-auto" data-en="Start small. Make it work. Improve as you grow.">Mulai sederhana. Pastikan berfungsi. Kembangkan saat perlu.</h2><p class="mt-4 max-w-2xl mx-auto text-blue-100/85" data-en="Explore the catalog, turn an idea into a project brief, or discuss a training initiative. Choose what moves your business forward.">Jelajahi katalog, susun brief proyek, atau diskusikan inisiatif pelatihan. Pilih yang benar-benar membantu bisnismu.</p><div class="mt-7 flex flex-col sm:flex-row flex-wrap justify-center gap-3"><a href="/products/" data-track="about_final_products" class="px-6 py-3.5 rounded-xl bg-white text-zura-navy hover:bg-blue-50 font-extrabold text-sm inline-flex justify-center items-center gap-2"><i data-lucide="shopping-bag" class="w-4 h-4"></i><span data-en="Explore products">Lihat produk</span></a><a href="/?intent=build#start" data-track="about_final_brief" class="px-6 py-3.5 rounded-xl border border-white/30 bg-white/10 hover:bg-white/20 font-bold text-sm inline-flex justify-center items-center gap-2"><i data-lucide="workflow" class="w-4 h-4"></i><span data-en="Find a solution">Temukan solusi</span></a><a href="/#umkm" data-track="about_final_umkm" class="px-6 py-3.5 rounded-xl border border-white/30 bg-white/10 hover:bg-white/20 font-bold text-sm inline-flex justify-center items-center gap-2"><i data-lucide="handshake" class="w-4 h-4"></i><span data-en="Discuss MSME training">Diskusikan pelatihan UMKM</span></a></div></div></section>
   </main>
-  <footer><div class="container footer-inner"><div><a class="brand" href="/" style="font-size:17px"><span class="brand-mark" style="width:30px;height:30px;border-radius:9px"><svg viewBox="0 0 24 24" fill="none"><path d="M5 5h14l-14 14h14" stroke="white" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>ZURA<span>LOGIC</span></span></a><br><small>Work Smarter. Automate Better. Scale Further.</small></div><div class="footer-links"><a href="/">Beranda</a><a href="/products/">Produk</a><a href="https://www.youtube.com/@zuraclass" target="_blank" rel="noopener noreferrer">ZuraClass</a></div><small>© <span id="year">2026</span> Zuralogic</small></div></footer>
-  <script>
-    document.documentElement.classList.add('js');
-    const menuButton = document.querySelector('.nav-toggle');
-    const nav = document.querySelector('#main-nav');
-    menuButton.addEventListener('click', () => {
-      const expanded = menuButton.getAttribute('aria-expanded') === 'true';
-      menuButton.setAttribute('aria-expanded', String(!expanded));
-      menuButton.setAttribute('aria-label', expanded ? 'Buka menu navigasi' : 'Tutup menu navigasi');
-      nav.classList.toggle('open', !expanded);
-    });
-    nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
-      nav.classList.remove('open'); menuButton.setAttribute('aria-expanded','false'); menuButton.setAttribute('aria-label','Buka menu navigasi');
-    }));
-    document.querySelector('#year').textContent = String(new Date().getFullYear());
-    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if ('IntersectionObserver' in window && !reducedMotion) {
-      const observer = new IntersectionObserver(entries => entries.forEach(entry => {
-        if (entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); }
-      }), {threshold: 0.08, rootMargin: '0px 0px 30px 0px'});
-      document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-    } else { document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible')); }
-  </script>
+  <footer class="bg-white/80 border-t border-slate-200/90"><div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col md:flex-row items-center justify-between gap-5"><div class="flex items-center gap-3"><img src="/contents/imgheader.png" alt="Zuralogic" class="h-4 w-auto" /><span class="text-xs text-slate-400">• Your Scale-Up Partner</span></div><div class="flex flex-wrap items-center justify-center gap-5 text-xs sm:text-sm font-semibold text-slate-600"><a href="/products/" class="hover:text-blue-600 transition"><span data-en="Products">Produk</span></a><a href="/terms.html" class="hover:text-blue-600 transition">Terms of Service</a><a href="/privacy.html" class="hover:text-blue-600 transition">Privacy Policy</a><a href="/gethelp/" class="hover:text-blue-600 transition">Help Center</a><a href="/#contact" class="hover:text-blue-600 transition"><span data-en="Contact">Kontak</span></a></div><p class="text-sm font-medium text-slate-500">© Zuralogic <span id="yr"></span></p></div></footer>
+<script>
+/* Shared language preference with homepage and /products/ */
+const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
+let LANG='id'; try { LANG=localStorage.getItem('zl_lang') || ((navigator.language||'id').toLowerCase().startsWith('id')?'id':'en'); } catch(e){}
+const t=(id,en)=>LANG==='id'?id:en;
+const CASES={
+  sales:{icon:'shopping-bag',id:{title:'Transaksi & kasir',body:'Jika toko memerlukan pencatatan transaksi dan laporan shift kasir, periksa produk POS yang sudah tersedia sebelum memilih pengembangan custom.',cta:'Lihat produk POS',url:'/products/'},en:{title:'Sales & cashier',body:'If a shop needs transaction and shift reporting, review existing POS templates before choosing custom development.',cta:'Explore POS templates',url:'/products/'}},
+  inventory:{icon:'package-check',id:{title:'Stok & operasional gudang',body:'Lokasi barang, stok fisik, dan perpindahan inventory memerlukan alur dan hak akses yang jelas. Mulai dari pemetaan proses sebelum memutuskan teknologinya.',cta:'Susun brief inventori',url:'/?intent=build#start'},en:{title:'Inventory & warehouse',body:'Stock positions and inventory movements need clear roles and workflows. Start by mapping the process before deciding on tools.',cta:'Build an inventory brief',url:'/?intent=build#start'}},
+  automation:{icon:'workflow',id:{title:'Administrasi & laporan berulang',body:'Jika pekerjaan masih bergantung pada salin-tempel data, identifikasi sumber data, aturan bisnis dan output laporan. Otomasi bisa dipertimbangkan setelah prosesnya jelas.',cta:'Diskusikan otomasi',url:'/#contact'},en:{title:'Administration & recurring reports',body:'If recurring tasks still rely on copying data by hand, identify the source, business rules and reporting output before choosing automation.',cta:'Discuss automation',url:'/#contact'}},
+  training:{icon:'graduation-cap',id:{title:'Pelatihan aplikasi untuk UMKM',body:'Untuk komunitas UMKM atau institusi, kita bisa membahas webinar, workshop atau pilot dengan tujuan belajar yang terukur dan kebutuhan peserta yang nyata.',cta:'Diskusikan pelatihan',url:'/#umkm'},en:{title:'Practical digital training',body:'For MSME groups and institutions, explore webinars, workshops or scoped pilots with concrete learning outcomes and participant needs.',cta:'Discuss training',url:'/#umkm'}}
+};
+function renderUse(key){ const c=CASES[key]||CASES.sales, v=c[LANG]; $$('[data-use]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.use===key))); $('#useCasePanel').innerHTML=`<div class="flex items-start gap-4"><span class="w-11 h-11 shrink-0 rounded-xl bg-white text-blue-600 grid place-items-center"><i data-lucide="${c.icon}" class="w-6 h-6"></i></span><div><h3 class="font-display text-lg font-extrabold text-zura-navy">${v.title}</h3><p class="mt-2 text-sm text-slate-600 leading-relaxed">${v.body}</p><a href="${v.url}" data-track="about_usecase_${key}" class="inline-flex mt-4 items-center gap-1.5 text-blue-700 font-bold text-sm">${v.cta}<i data-lucide="arrow-right" class="w-4 h-4"></i></a></div></div>`; if(window.lucide)lucide.createIcons(); }
+let activeUse='sales';
+function applyLang(){document.documentElement.lang=LANG;$('#langLabel').textContent=LANG.toUpperCase();$$('[data-en]').forEach(el=>{if(el.dataset.id===undefined) el.dataset.id=el.textContent;el.textContent=LANG==='en'?el.dataset.en:el.dataset.id;});renderUse(activeUse);}
+$('#langBtn').addEventListener('click',()=>{LANG=LANG==='id'?'en':'id';try{localStorage.setItem('zl_lang',LANG)}catch(e){}applyLang();track('lang_switch',{lang:LANG});});
+$$('[data-use]').forEach(b=>b.addEventListener('click',()=>{activeUse=b.dataset.use;renderUse(activeUse);track('about_usecase_pick',{use_case:activeUse});}));
+const menu=$('#menuBtn'),mobile=$('#mobileMenu');menu.addEventListener('click',()=>{mobile.hidden=!mobile.hidden;menu.setAttribute('aria-expanded',String(!mobile.hidden));});$$('#mobileMenu a').forEach(a=>a.addEventListener('click',()=>{mobile.hidden=true;menu.setAttribute('aria-expanded','false');}));
+window.dataLayer=window.dataLayer||[];function track(name,params={}){try{window.dataLayer.push({event:name,...params});}catch(e){}}
+document.addEventListener('click',e=>{const a=e.target.closest('[data-track]');if(a)track(a.dataset.track);});
+function scrollUpdate(){const h=document.documentElement.scrollHeight-innerHeight;$('#progress').style.width=(h>0?scrollY/h*100:0)+'%';$('#nav').classList.toggle('shadow-md',scrollY>10);}addEventListener('scroll',scrollUpdate,{passive:true});addEventListener('resize',scrollUpdate);
+$('#yr').textContent=new Date().getFullYear();applyLang();if(window.lucide)lucide.createIcons();
+if('IntersectionObserver'in window && !matchMedia('(prefers-reduced-motion: reduce)').matches){const ob=new IntersectionObserver(es=>es.forEach(x=>{if(x.isIntersecting){x.target.classList.add('in');ob.unobserve(x.target);}}),{threshold:.08,rootMargin:'0px 0px -35px 0px'});$$('.reveal').forEach(el=>ob.observe(el));}else{$$('.reveal').forEach(el=>el.classList.add('in'));}
+scrollUpdate();
+</script>
 </body>
 </html>
