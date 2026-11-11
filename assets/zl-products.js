@@ -21,34 +21,67 @@
     return Number.isSafeInteger(n) && n >= 0 ? n : null;
   }
   const fmtPrice = price => 'Rp' + Number(price).toLocaleString('id-ID', { maximumFractionDigits: 0 });
+  const fmtUSD = price => 'US$' + Number(price).toLocaleString('en-US', { maximumFractionDigits: 0 });
+
+  /* Harga USD ditetapkan manual di Catalog, bukan hasil konversi otomatis. */
+  function parseUSDPrice(value) {
+    if (value === null || value === undefined || value === '') return null;
+    if (typeof value === 'number') return Number.isSafeInteger(value) && value >= 0 ? value : null;
+    const cleaned = String(value).trim().replace(/^(?:US\$|USD|\$)\s*/i, '').replace(/,/g, '');
+    if (!/^\d+$/.test(cleaned)) return null;
+    const n = Number(cleaned);
+    return Number.isSafeInteger(n) && n >= 0 ? n : null;
+  }
+
+  /* Rekomendasi = CEILING((harga IDR x 130%) / 18000), dalam USD bulat. */
+  function recommendUSD(idrPrice) {
+    const price = parsePrice(idrPrice);
+    return price === null ? null : Math.ceil(price * 13 / 180000);
+  }
+
   function priceMarkup(p, opts = {}) {
-    const normal = parsePrice(p.normalPrice), promo = parsePrice(p.promoPrice);
-    const large = !!opts.large, sale = normal !== null && promo !== null && promo < normal;
-    if (normal === null) return `<span class="text-sm font-semibold text-slate-500">${t('Harga belum tersedia', 'Price not available')}</span>`;
-    return `<div class="flex flex-wrap gap-x-2.5 gap-y-1 items-baseline">
-      ${sale ? `<del class="text-sm font-medium text-slate-400">${esc(fmtPrice(normal))}</del>` : ''}
-      <strong class="font-display font-extrabold ${large ? 'text-3xl sm:text-4xl' : 'text-xl'} text-zura-navy">${esc(fmtPrice(sale ? promo : normal))}</strong>
-      ${sale ? `<span class="self-center rounded-md px-2 py-0.5 text-[11px] font-extrabold bg-rose-50 text-rose-600">${t('PROMO', 'SALE')}</span>` : ''}
+    const large = !!opts.large;
+    const pair = (normal, promo, fmt, empty, currency) => {
+      const sale = normal !== null && promo !== null && promo < normal;
+      if (normal === null) return `<span class="text-xs font-medium text-slate-400">${esc(empty)}</span>`;
+      return `<div class="flex flex-wrap items-baseline gap-x-2 gap-y-1">
+        ${sale ? `<del class="text-xs font-medium text-slate-400">${esc(fmt(normal))}</del>` : ''}
+        <strong class="font-display font-extrabold ${large ? 'text-2xl sm:text-3xl' : 'text-lg'} text-zura-navy">${esc(fmt(sale ? promo : normal))}</strong>
+        ${sale ? `<span class="self-center rounded-md px-1.5 py-0.5 text-[10px] font-extrabold bg-rose-50 text-rose-600">${t('PROMO','SALE')}</span>` : ''}
+      </div>`;
+    };
+    const idrNormal = parsePrice(p.normalPrice), idrPromo = parsePrice(p.promoPrice);
+    const usdNormal = parseUSDPrice(p.usdNormalPrice), usdPromo = parseUSDPrice(p.usdPromoPrice);
+    return `<div class="grid ${large ? 'grid-cols-2' : 'grid-cols-2'} gap-2.5" data-dual-prices>
+      <div class="min-w-0"><div class="mb-1 text-[10px] font-extrabold tracking-widest text-slate-400">INDONESIA · IDR</div>
+        ${pair(idrNormal, idrPromo, fmtPrice, t('Harga belum tersedia','Price unavailable'),'IDR')}
+      </div>
+      <div class="min-w-0 border-l border-slate-200 pl-2.5"><div class="mb-1 text-[10px] font-extrabold tracking-widest text-blue-500">INTERNATIONAL · USD</div>
+        ${pair(usdNormal, usdPromo, fmtUSD, t('Harga belum tersedia','Price unavailable'),'USD')}
+      </div>
     </div>`;
   }
-  /* Link beli hanya boleh HTTPS; jangan diam-diam mengganti checkout dengan WhatsApp. */
-  function checkoutHref(p) {
+
+  /* Tautan checkout hanya HTTPS, tidak pernah fallback diam-diam ke WA. */
+  function validHTTPS(value) {
     try {
-      const url = new URL(String(p.checkoutUrl || '').trim());
-      return url.protocol === 'https:' && url.hostname ? url.href : '';
+      const url = new URL(String(value || '').trim());
+      return url.protocol === 'https:' && url.hostname && !url.username && !url.password ? url.href : '';
     } catch (e) { return ''; }
   }
+  const checkoutHref = p => validHTTPS(p.checkoutUrl);
+  const lemonCheckoutHref = p => validHTTPS(p.lemonCheckoutUrl);
+  const shareHref = p => '/products/share/' + encodeURIComponent(String(p.slug || p.id)) + '/';
 
   /* Teks beberapa baris -> daftar poin (satu baris = satu poin).
      Format "Judul | keterangan": judul ditebalkan. inline=true -> "Judul: keterangan" dalam satu baris. */
   function listMarkup(text, inline) {
     const rows = String(text || '').split(/\r?\n/).map(s => s.trim().replace(/^[-*•]\s+/, '')).filter(Boolean).slice(0, 40);
-    const dot = '<span class="mt-[7px] w-1.5 h-1.5 rounded-full bg-blue-600 shrink-0"></span>';
     return rows.map(row => {
       const i = row.indexOf('|');
       const head = i > 0 ? row.slice(0, i).trim() : '', body = (i >= 0 ? row.slice(i + 1) : row).trim();
-      if (inline) return `<li class="flex gap-2.5 text-[13px] leading-relaxed text-slate-700">${dot}<span class="min-w-0 break-words">${head ? `<b class="font-bold text-zura-navy">${esc(head)}:</b> ` : ''}${esc(body)}</span></li>`;
-      return `<li class="flex gap-2.5">${dot}<div class="min-w-0"><div class="text-sm break-words ${head ? 'font-bold text-zura-navy' : 'text-slate-700'}">${esc(head || body)}</div>${head && body ? `<div class="text-[13px] leading-relaxed text-slate-600 break-words">${esc(body)}</div>` : ''}</div></li>`;
+      if (inline) return `<li class="block text-[13px] leading-relaxed text-slate-700 break-words">${head ? `<b class="font-bold text-zura-navy">${esc(head)}:</b> ` : ''}${esc(body)}</li>`;
+      return `<li class="block"><div class="min-w-0"><div class="text-sm break-words ${head ? 'font-bold text-zura-navy' : 'text-slate-700'}">${esc(head || body)}</div>${head && body ? `<div class="text-[13px] leading-relaxed text-slate-600 break-words mt-0.5">${esc(body)}</div>` : ''}</div></li>`;
     }).join('');
   }
 
@@ -56,8 +89,10 @@
     const ps = (d && Array.isArray(d.products) ? d.products : []).map(p => ({
       id: String(p.id), slug: String(p.slug || p.id), title: String(p.title || ''), category: String(p.category || ''),
       tags: Array.isArray(p.tags) ? p.tags.map(String) : [], description: String(p.description || ''), checkoutUrl: String(p.checkoutUrl || ''),
+      lemonCheckoutUrl: String(p.lemonCheckoutUrl || ''), shareImage: p.shareImage || null,
       features: String(p.features || ''), includes: String(p.includes || ''), terms: String(p.terms || ''),
        normalPrice: parsePrice(p.normalPrice), promoPrice: parsePrice(p.promoPrice),
+      usdNormalPrice: parseUSDPrice(p.usdNormalPrice), usdPromoPrice: parseUSDPrice(p.usdPromoPrice),
       cover: p.cover || null, images: Array.isArray(p.images) ? p.images.slice(0, 15) : [],
       published: p.published !== false, createdAt: p.createdAt || null, updatedAt: p.updatedAt || p.createdAt || null
     }));
@@ -84,9 +119,9 @@
     const close = o.href ? '</a>' : '</button>';
     const tags = (p.tags || []).slice(0, 3).map(x => `<span class="text-[11px] font-bold text-blue-700 bg-blue-50 rounded-md px-2 py-0.5">${esc(x)}</span>`).join('');
     const more = (p.tags || []).length > 3 ? `<span class="text-[11px] font-bold text-slate-400">+${p.tags.length - 3}</span>` : '';
-    const checkout = checkoutHref(p);
+    const canBuy = !!(checkoutHref(p) || lemonCheckoutHref(p));
     const buttons = o.href ? `<div class="px-4 pb-4 grid grid-cols-2 gap-2.5">
-      ${checkout ? `<a href="${esc(checkout)}" target="_blank" rel="noopener noreferrer" data-buy class="min-w-0 px-2.5 py-3 text-center rounded-xl bg-zura-navy hover:bg-blue-700 text-white text-xs sm:text-sm font-extrabold transition flex items-center justify-center gap-1.5"><i data-lucide="shopping-cart" class="w-4 h-4 shrink-0"></i>${t('Beli Sekarang', 'Buy Now')}</a>` : `<span aria-disabled="true" title="${t('Link checkout belum diisi', 'Checkout link is missing')}" class="min-w-0 px-2 py-3 text-center rounded-xl bg-slate-100 text-slate-400 text-xs sm:text-sm font-bold flex items-center justify-center">${t('Belum Tersedia', 'Unavailable')}</span>`}
+      ${canBuy ? `<button type="button" data-checkout-product="${esc(p.id)}" class="min-w-0 px-2.5 py-3 text-center rounded-xl bg-zura-navy hover:bg-blue-700 text-white text-xs sm:text-sm font-extrabold transition flex items-center justify-center gap-1.5"><i data-lucide="shopping-cart" class="w-4 h-4 shrink-0"></i>${t('Beli Sekarang', 'Buy Now')}</button>` : `<span aria-disabled="true" title="${t('Link checkout belum diisi', 'Checkout link is missing')}" class="min-w-0 px-2 py-3 text-center rounded-xl bg-slate-100 text-slate-400 text-xs sm:text-sm font-bold flex items-center justify-center">${t('Belum Tersedia', 'Unavailable')}</span>`}
       <a href="${esc(o.href)}" data-open="${esc(p.id)}" class="min-w-0 px-2.5 py-3 rounded-xl border border-blue-200 hover:border-blue-600 hover:bg-blue-50 text-blue-700 text-xs sm:text-sm font-extrabold transition flex items-center justify-center gap-1.5"><i data-lucide="eye" class="w-4 h-4 shrink-0"></i>${t('Lihat Detail', 'View Details')}</a>
     </div>` : '';
     return `
@@ -182,5 +217,5 @@
     b.textContent = msg; b.style.display = 'block'; clearTimeout(b._t); b._t = setTimeout(() => { b.style.display = 'none'; }, 4200);
   }
 
-  window.ZLP = { LANG, t, esc, src, slugify, fmtDate, catLabel, waLink, parsePrice, fmtPrice, priceMarkup, checkoutHref, listMarkup, normalize, loadProducts, groupByCategory, card, lightbox, mountGallery, toast };
+  window.ZLP = { LANG, t, esc, src, slugify, fmtDate, catLabel, waLink, parsePrice, fmtPrice, fmtUSD, parseUSDPrice, recommendUSD, priceMarkup, checkoutHref, lemonCheckoutHref, shareHref, validHTTPS, listMarkup, normalize, loadProducts, groupByCategory, card, lightbox, mountGallery, toast };
 })();
