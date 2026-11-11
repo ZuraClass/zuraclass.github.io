@@ -69,6 +69,7 @@
         <div class="flex items-center gap-2">
           <a href="/products/" target="_blank" rel="noopener" class="hidden sm:flex px-3 py-2 rounded-xl border border-slate-200 bg-white/80 text-xs font-bold text-slate-700 hover:border-blue-400 transition items-center gap-1.5"><i data-lucide="external-link" class="w-4 h-4 text-blue-600"></i>Halaman publik</a>
           <button id="btnCats" class="px-3 py-2 rounded-xl border border-slate-200 bg-white/80 text-xs font-bold text-slate-700 hover:border-blue-400 transition flex items-center gap-1.5"><i data-lucide="folders" class="w-4 h-4 text-blue-600"></i><span class="hidden sm:inline">Kategori</span></button>
+          <button id="btnSyncShares" title="Buat/refresh preview link WhatsApp & Telegram untuk semua produk" class="px-3 py-2 rounded-xl border border-blue-200 bg-blue-50 text-blue-800 text-xs font-bold hover:bg-blue-100 transition flex items-center gap-1"><i data-lucide="share-2" class="w-4 h-4"></i><span class="hidden lg:inline">Sync Share Preview</span></button>
           <button id="btnRefresh" class="p-2.5 rounded-xl border border-slate-200 bg-white/80 text-slate-700 hover:border-blue-400 transition" aria-label="Segarkan"><i data-lucide="refresh-cw" class="w-4 h-4"></i></button>
           <button id="btnNew" class="px-4 py-2.5 rounded-xl bg-zura-navy hover:bg-blue-700 text-white text-sm font-bold shadow-md transition flex items-center gap-1.5"><i data-lucide="plus" class="w-4 h-4"></i><span>Produk baru</span></button>
           <button id="btnOut" class="p-2.5 rounded-xl border border-slate-200 bg-white/80 text-slate-500 hover:text-rose-600 hover:border-rose-300 transition" aria-label="Keluar" title="Putuskan GitHub"><i data-lucide="log-out" class="w-4 h-4"></i></button>
@@ -105,7 +106,7 @@
   </div>
 
 <script>
-const { esc, slugify, fmtDate, groupByCategory, card, mountGallery, toast, normalize, parsePrice, priceMarkup, checkoutHref, listMarkup } = ZLP;
+const { esc, slugify, fmtDate, groupByCategory, card, mountGallery, toast, normalize, parsePrice, priceMarkup, checkoutHref, lemonCheckoutHref, shareHref, recommendUSD, parseUSDPrice, listMarkup } = ZLP;
 const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [...r.querySelectorAll(s)];
 const MAX_GALLERY = 15, MAX_DESC = 10000, MAX_TAGS = 12, MAX_TITLE = 100, MAX_CAT = 40, MAX_BLOCK = 4000;
 const CK = 'zl_catalog_conn';
@@ -190,6 +191,96 @@ async function mutate(message, fn) {
   S.data = fresh; return fresh;
 }
 
+/* ===================== STATIC OG SHARE PAGES ===================== */
+const SITE_ROOT = 'https://zuralogic.com';
+const sharePagePath = p => `products/share/${p.slug}/index.html`;
+const shareImagePath = p => `assets/product-share/${p.id}.jpg`;
+const fullUrl = url => !url ? '' : /^https?:\/\//i.test(url) ? url : SITE_ROOT + '/' + String(url).replace(/^\/+/, '');
+function makeSharePage(p) {
+  // Halaman statis: bot melihat OG tags, manusia langsung ke detail produk.
+  const url = SITE_ROOT + shareHref(p), image = fullUrl(p.shareImage || p.cover || '/assets/og-image.png');
+  const target = SITE_ROOT + '/products/?p=' + encodeURIComponent(p.slug);
+  const description = String(p.description || 'Explore this digital product by Zuralogic.').replace(/\s+/g, ' ').trim().slice(0, 155);
+  const jsonTarget = JSON.stringify(target).replace(/</g, '\\u003c');
+  return `<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>${esc(p.title)} — Zuralogic</title>
+<meta name="description" content="${esc(description)}">
+<meta property="og:type" content="product"><meta property="og:site_name" content="Zuralogic">
+<meta property="og:title" content="${esc(p.title)} — Zuralogic">
+<meta property="og:description" content="${esc(description)}">
+<meta property="og:url" content="${esc(url)}">
+<meta property="og:image" content="${esc(image)}">
+${p.shareImage ? '<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">' : ''}
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="${esc(p.title)} — Zuralogic">
+<meta name="twitter:description" content="${esc(description)}"><meta name="twitter:image" content="${esc(image)}">
+<link rel="canonical" href="${esc(target)}">
+<style>body{font:16px system-ui, sans-serif; background:#eff6ff;color:#0a1931; display:grid; place-items:center;min-height:90vh;text-align:center;padding:20px;}a{color:#2563eb}</style>
+<script>window.location.replace(${jsonTarget});<\/script>
+</head><body><main><h1>${esc(p.title)}</h1><p>Opening Zuralogic product details…</p><a href="${esc(target)}">View product</a></main></body></html>`;
+}
+/* Otomatis buat JPEG 1200×630 (<600KB jika memungkinkan) supaya preview WA lebih konsisten. */
+async function makeShareJPEG(p, coverItem) {
+  if (!p.cover && !(coverItem && coverItem.blob)) return null;
+  let blob;
+  if (coverItem && coverItem.blob) blob = coverItem.blob;
+  else {
+    let r = await fetch('/' + String(p.cover).replace(/^\/+/, ''));
+    if (!r.ok) r = await fetch(rawUrl(p.cover));
+    if (!r.ok) throw new Error('Tidak dapat membaca cover untuk preview.');
+    blob = await r.blob();
+  }
+  const bmp = await createImageBitmap(blob);
+  const c = document.createElement('canvas'); c.width = 1200; c.height = 630;
+  const g = c.getContext('2d');
+  g.fillStyle = '#0A1931'; g.fillRect(0, 0, 1200, 630);
+  g.fillStyle = '#2563EB'; g.fillRect(0, 0, 14, 630);
+  g.fillStyle = '#ffffff'; g.fillRect(44, 64, 500, 500);
+  const s = Math.min(480 / bmp.width, 480 / bmp.height);
+  const w = bmp.width * s, h = bmp.height * s;
+  g.drawImage(bmp, 294 - w / 2, 314 - h / 2, w, h);
+  if (bmp.close) bmp.close();
+  g.font = 'bold 23px Arial,sans-serif'; g.fillStyle = '#60A5FA'; g.fillText('ZURALOGIC  /  DIGITAL PRODUCTS', 590, 120);
+  g.font = 'bold 45px Arial,sans-serif'; g.fillStyle = '#ffffff';
+  const text = String(p.title || 'Digital Product').trim();
+  const words = text.split(/\s+/); let line = '', y = 197, lines = 0;
+  for (const word of words) {
+    if (g.measureText(line ? line + ' ' + word : word).width > 555 && line) {
+      g.fillText(line, 590, y); y += 58; lines++; line = word;
+      if (lines >= 3) break;
+    } else line = line ? line + ' ' + word : word;
+  }
+  if (lines < 4 && line) g.fillText(line.slice(0, 30), 590, y);
+  g.fillStyle = '#93C5FD'; g.font = '24px Arial,sans-serif'; g.fillText('Explore the app and its features', 590, 525);
+  const toJpeg = q => new Promise(r => c.toBlob(r, 'image/jpeg', q));
+  let out = await toJpeg(.82);
+  if (out && out.size > 580000) out = await toJpeg(.64);
+  if (!out) throw new Error('Gagal menghasilkan JPEG preview.');
+  return { path: shareImagePath(p), base64: await blobToB64(out) };
+}
+
+async function syncSharePreviews() {
+  if (!(await confirmBox({title:'Sync preview semua produk?', text:'Buat metadata share dan JPEG thumbnail untuk produk yang published. Ini membantu link WhatsApp dan Telegram menampilkan cover.',ok:'Sync sekarang'}))) return;
+  setBusy('Memproses link share…');
+  try {
+    const fresh = await loadRemote(), files = [], deletePaths = []; let warnings = 0;
+    for (let i=0; i < fresh.products.length; i++) {
+      const p = fresh.products[i];
+      if (!p.published) { deletePaths.push(sharePagePath(p)); continue; }
+      setBusy(`Membuat preview ${i+1}/${fresh.products.length}: ${p.title.slice(0,25)}…`);
+      try {
+        const thumb = await makeShareJPEG(p);
+        if (thumb) { files.push(thumb); p.shareImage = thumb.path; }
+      } catch (err) { warnings++; /* Tetap buat OG dengan gambar cover yang ada. */ }
+      files.push({path:sharePagePath(p),text:makeSharePage(p)});
+    }
+    files.unshift({path:'data/products.json',text:JSON.stringify(fresh,null,2)});
+    await commit({message:'Sync static product sharing previews',files,deletePaths});
+    S.data = fresh; render();
+    toast(`Sync selesai: ${fresh.products.filter(p=>p.published).length} produk. ${warnings ? warnings+' thumbnail JPEG gagal; OG memakai cover asli.' : 'Thumbnail JPEG berhasil.'}`);
+  } catch(err) { toast(errMsg(err)); } finally { setBusy(false); }
+}
+
 /* ===================== UI dasar ===================== */
 function setBusy(msg) { const b = $('#busy'); if (!msg) { b.classList.replace('flex', 'hidden'); return; } $('#busyText').textContent = msg; b.classList.replace('hidden', 'flex'); }
 function showConnect() {
@@ -219,6 +310,7 @@ $('#btnOut').addEventListener('click', async () => { if (await confirmBox({ titl
 $('#btnRefresh').addEventListener('click', async () => { setBusy('Menyegarkan data…'); try { S.data = await loadRemote(); render(); toast('Data disegarkan dari GitHub.'); } catch (e) { toast(errMsg(e)); } finally { setBusy(false); } });
 $('#btnNew').addEventListener('click', () => openEditor(null));
 $('#btnCats').addEventListener('click', openCats);
+$('#btnSyncShares').addEventListener('click', syncSharePreviews);
 
 /* Modal konfirmasi */
 function confirmBox({ title, text, ok = 'Ya', danger = false }) {
@@ -287,10 +379,24 @@ document.addEventListener('pointermove', e => { const s = e.target.closest && e.
 document.addEventListener('error', e => { const i = e.target; if (i && i.tagName === 'IMG' && S.owner && i.src.startsWith(RAW()) && !i.dataset.fb) { i.dataset.fb = 1; i.src = '/' + i.src.slice(RAW().length).split('?')[0]; } }, true);
 
 async function togglePublish(id) {
-  const p = S.data.products.find(x => x.id === id); const to = !p.published;
+  const original = S.data.products.find(x => x.id === id); if (!original) return;
+  const to = !original.published;
   setBusy(to ? 'Menampilkan produk…' : 'Menyembunyikan produk…');
-  try { await mutate(`${to ? 'Tampilkan' : 'Sembunyikan'} produk: ${p.title}`, d => { const q = d.products.find(x => x.id === id); if (q) { q.published = to; q.updatedAt = new Date().toISOString(); } }); render(); toast(to ? 'Produk tampil di website.' : 'Produk disembunyikan (draft).'); }
-  catch (e) { toast(errMsg(e)); } finally { setBusy(false); }
+  try {
+    const fresh = await loadRemote(), p = fresh.products.find(x => x.id === id);
+    if (!p) throw new Error('Produk tidak ditemukan pada data terbaru.');
+    p.published = to; p.updatedAt = new Date().toISOString(); fresh.updatedAt = p.updatedAt;
+    const files = [];
+    if (to) {
+      try { const thumb = await makeShareJPEG(p); if (thumb) { p.shareImage = thumb.path; files.push(thumb); } }
+      catch (e) { console.warn('Share JPEG failed', e); }
+      files.push({path:sharePagePath(p),text:makeSharePage(p)});
+    }
+    files.unshift({path:'data/products.json',text:JSON.stringify(fresh,null,2)});
+    await commit({message:`${to ? 'Tampilkan' : 'Sembunyikan'} produk: ${p.title}`,files,
+      deletePaths:to?[]:[sharePagePath(p)]});
+    S.data=fresh; render(); toast(to?'Produk tampil di website.':'Produk disembunyikan (draft).');
+  } catch(e) {toast(errMsg(e));} finally {setBusy(false);}
 }
 async function askDelete(id) {
   const p = S.data.products.find(x => x.id === id); if (!p) return;
@@ -298,7 +404,7 @@ async function askDelete(id) {
   setBusy('Menghapus produk dan gambar…');
   try {
     const fresh = await loadRemote(); fresh.products = fresh.products.filter(x => x.id !== id); fresh.updatedAt = new Date().toISOString();
-    await commit({ message: `Hapus produk: ${p.title}`, files: [{ path: 'data/products.json', text: JSON.stringify(fresh, null, 2) }], deletePrefixes: [`assets/products/${id}/`] });
+    await commit({ message: `Hapus produk: ${p.title}`, files: [{ path: 'data/products.json', text: JSON.stringify(fresh, null, 2) }], deletePrefixes: [`assets/products/${id}/`], deletePaths: [sharePagePath(p), ...(p.shareImage ? [p.shareImage] : [])] });
     S.data = fresh; closeDrawer(true); render(); toast('Produk dihapus.');
   } catch (e) { toast(errMsg(e)); } finally { setBusy(false); }
 }
@@ -339,7 +445,9 @@ function openView(id) {
       <div class="rounded-xl bg-slate-50 p-3"><dt class="font-extrabold uppercase tracking-wide text-slate-400">Gambar</dt><dd class="mt-1 font-bold text-slate-700">${urls.length} (cover + ${p.images.length})</dd></div>
       <div class="rounded-xl bg-slate-50 p-3"><dt class="font-extrabold uppercase tracking-wide text-slate-400">Diperbarui</dt><dd class="mt-1 font-bold text-slate-700">${esc(fmtDate(p.updatedAt) || '-')}</dd></div>
       <div class="rounded-xl bg-slate-50 p-3 col-span-2"><dt class="font-extrabold uppercase tracking-wide text-slate-400">Link publik</dt><dd class="mt-1 font-bold text-blue-700 break-all"><a href="/products/?p=${encodeURIComponent(p.slug)}" target="_blank" rel="noopener">/products/?p=${esc(p.slug)}</a></dd></div>
-      <div class="rounded-xl bg-slate-50 p-3 col-span-2"><dt class="font-extrabold uppercase tracking-wide text-slate-400">Link checkout</dt><dd class="mt-1 font-bold break-all">${/^https?:\/\//i.test(p.checkoutUrl || '') ? `<a class="text-blue-700" href="${esc(p.checkoutUrl)}" target="_blank" rel="noopener noreferrer">${esc(p.checkoutUrl)}</a>` : '<span class="text-slate-400">Belum diisi (tombol Beli mengarah ke WhatsApp)</span>'}</dd></div>
+      <div class="rounded-xl bg-slate-50 p-3 col-span-2"><dt class="font-extrabold uppercase tracking-wide text-slate-400">Mayar Checkout (IDR)</dt><dd class="mt-1 font-bold break-all">${checkoutHref(p) ? `<a class="text-blue-700" href="${esc(checkoutHref(p))}" target="_blank" rel="noopener noreferrer">${esc(checkoutHref(p))}</a>` : '<span class="text-slate-400">Belum diisi</span>'}</dd></div>
+      <div class="rounded-xl bg-slate-50 p-3 col-span-2"><dt class="font-extrabold uppercase tracking-wide text-slate-400">Lemon Squeezy Checkout (USD)</dt><dd class="mt-1 font-bold break-all">${lemonCheckoutHref(p) ? `<a class="text-blue-700" href="${esc(lemonCheckoutHref(p))}" target="_blank" rel="noopener noreferrer">${esc(lemonCheckoutHref(p))}</a>` : '<span class="text-slate-400">Belum diisi</span>'}</dd></div>
+      <div class="rounded-xl bg-slate-50 p-3 col-span-2"><dt class="font-extrabold uppercase tracking-wide text-slate-400">Share preview link</dt><dd class="mt-1 font-bold break-all"><a class="text-blue-700" href="${esc(shareHref(p))}" target="_blank" rel="noopener">${esc(shareHref(p))}</a> <span class="text-slate-400">(jalankan Sync Share Preview untuk produk lama)</span></dd></div>
     </dl>`;
   $('#drawerFoot').innerHTML = `<div class="flex gap-3"><button data-edit class="flex-1 py-3 rounded-xl bg-zura-navy hover:bg-blue-700 text-white text-sm font-bold transition flex items-center justify-center gap-2"><i data-lucide="pencil" class="w-4 h-4"></i>Edit</button><button data-del class="px-5 py-3 rounded-xl border border-slate-200 hover:border-rose-300 hover:bg-rose-50 text-slate-600 hover:text-rose-600 text-sm font-bold transition flex items-center gap-2"><i data-lucide="trash-2" class="w-4 h-4"></i>Hapus</button></div>`;
   mountGallery($('#vGal'), urls);
@@ -363,9 +471,12 @@ function openEditor(id) {
     isNew: !p, id: p ? p.id : 'p' + Date.now().toString(36) + rid().slice(0, 3), slug: p ? p.slug : '',
     title: p ? p.title : '', category: p ? p.category : '', tags: p ? [...p.tags] : [], description: p ? p.description : '',
     published: p ? p.published : true, createdAt: p ? p.createdAt : null, checkoutUrl: p ? (p.checkoutUrl || '') : '',
+    lemonCheckoutUrl: p ? (p.lemonCheckoutUrl || '') : '', shareImage: p ? (p.shareImage || null) : null,
     features: p ? (p.features || '') : '', includes: p ? (p.includes || '') : '', terms: p ? (p.terms || '') : '',
     normalPrice: p && p.normalPrice !== null ? String(p.normalPrice) : '',
     promoPrice: p && p.promoPrice !== null ? String(p.promoPrice) : '',
+    usdNormalPrice: p && p.usdNormalPrice !== null ? String(p.usdNormalPrice) : '',
+    usdPromoPrice: p && p.usdPromoPrice !== null ? String(p.usdPromoPrice) : '',
     cover: p && p.cover ? mk(p.cover) : null, gallery: p ? p.images.map(mk) : [], trash: [],
     orig: new Set(p ? [p.cover, ...p.images].filter(Boolean) : []), dirty: false, working: 0
   };
@@ -398,10 +509,25 @@ function openEditor(id) {
           <input id="ePromoPrice" type="text" inputmode="numeric" maxlength="20" class="field" value="${esc(formatInputPrice(E.promoPrice))}" placeholder="contoh: 129.900" autocomplete="off" />
           <p class="mt-1 text-[11px] text-slate-500">Harus lebih rendah daripada harga normal.</p></div>
       </div>
-      <div class="rounded-xl border border-blue-100 bg-blue-50/60 p-3"><div class="text-[11px] font-bold uppercase tracking-wide text-slate-500 mb-1">Pratinjau harga</div><div id="pricePreview"></div></div>
-      <div><label class="lbl" for="eCheckout">Link checkout <span class="normal-case font-semibold text-slate-400">(tujuan tombol "Beli Sekarang")</span></label>
-        <input id="eCheckout" type="url" inputmode="url" class="field" value="${esc(E.checkoutUrl)}" placeholder="https://..." />
-        <p class="mt-1.5 text-[11px] text-slate-500">Gunakan URL HTTPS lengkap. Jika kosong, tombol beli di halaman publik dinonaktifkan; pengunjung masih bisa melihat detail dan bertanya melalui WhatsApp.</p></div>
+      <div class="rounded-2xl border border-sky-200 bg-sky-50/50 p-4 space-y-3">
+        <div><div class="text-[11px] font-extrabold uppercase tracking-widest text-blue-700">USD Price · International</div>
+          <p class="mt-1 text-xs text-slate-600">Rekomendasi otomatis untuk referensi saja: <b>ROUNDUP((harga IDR × 130%) / 18.000)</b>. Harga USD final tetap kamu isi manual dan harus cocok dengan harga checkout Lemon Squeezy.</p></div>
+        <div class="grid sm:grid-cols-2 gap-3">
+          <div><label class="lbl" for="eUsdNormalPrice">USD Price — Normal (US$)</label>
+            <input id="eUsdNormalPrice" type="text" inputmode="numeric" maxlength="10" class="field" value="${esc(E.usdNormalPrice)}" placeholder="contoh: 11" />
+            <p id="usdNormalHint" class="mt-1 text-xs text-blue-700 font-semibold"></p></div>
+          <div><label class="lbl" for="eUsdPromoPrice">USD Price — Promo (US$) <span class="normal-case font-semibold text-slate-400">(opsional)</span></label>
+            <input id="eUsdPromoPrice" type="text" inputmode="numeric" maxlength="10" class="field" value="${esc(E.usdPromoPrice)}" placeholder="contoh: 10" />
+            <p id="usdPromoHint" class="mt-1 text-xs text-blue-700 font-semibold"></p></div>
+        </div>
+      </div>
+      <div class="rounded-xl border border-blue-100 bg-blue-50/60 p-3"><div class="text-[11px] font-bold uppercase tracking-wide text-slate-500 mb-1">Pratinjau harga IDR + USD</div><div id="pricePreview"></div></div>
+      <div><label class="lbl" for="eCheckout">Checkout Mayar — Indonesia (IDR)</label>
+        <input id="eCheckout" type="url" inputmode="url" class="field" value="${esc(E.checkoutUrl)}" placeholder="https://mayar.id/..." />
+        <p class="mt-1.5 text-[11px] text-slate-500">Link lama tetap dipakai untuk Indonesia; URL HTTPS lengkap.</p></div>
+      <div><label class="lbl" for="eLemonCheckout">Checkout Lemon Squeezy — International (USD) <span class="normal-case font-semibold text-slate-400">(opsional)</span></label>
+        <input id="eLemonCheckout" type="url" inputmode="url" class="field" value="${esc(E.lemonCheckoutUrl)}" placeholder="https://yourstore.lemonsqueezy.com/checkout/buy/..." />
+        <p class="mt-1.5 text-[11px] text-slate-500">Kalau kosong, pilihan International akan menampilkan permintaan maaf berbahasa Inggris dan link Customer Service.</p></div>
 
       <div class="mb-4"><label class="lbl">Format gambar (semua gambar dijadikan 1:1)</label>
         <div class="inline-flex rounded-xl border border-slate-200 bg-white p-1 text-xs font-bold">
@@ -428,6 +554,11 @@ $('#drawerBody').addEventListener('input', e => {
   if (e.target.id === 'eTitle') { E.title = e.target.value; dirty(); }
   else if (e.target.id === 'eCat') { E.category = e.target.value; dirty(); }
   else if (e.target.id === 'eCheckout') { E.checkoutUrl = e.target.value; dirty(); }
+  else if (e.target.id === 'eLemonCheckout') { E.lemonCheckoutUrl = e.target.value; dirty(); }
+  else if (e.target.id === 'eUsdNormalPrice' || e.target.id === 'eUsdPromoPrice') {
+    const key = e.target.id === 'eUsdNormalPrice' ? 'usdNormalPrice' : 'usdPromoPrice';
+    E[key] = e.target.value.replace(/\D/g, '').slice(0, 10); e.target.value = E[key]; paintPricePreview(); dirty();
+  }
   else if (e.target.id === 'eNormalPrice' || e.target.id === 'ePromoPrice') {
     const key = e.target.id === 'eNormalPrice' ? 'normalPrice' : 'promoPrice';
     E[key] = e.target.value.replace(/\D/g, '').slice(0, 15);
@@ -472,7 +603,20 @@ function paintTags() { $('#tagChips').innerHTML = E.tags.map((t, i) => `<span cl
 function paintFit() { $$('.fit-btn').forEach(b => { const on = b.dataset.fit === FIT; b.classList.toggle('bg-zura-navy', on); b.classList.toggle('text-white', on); b.classList.toggle('text-slate-600', !on); }); }
 function paintDesc() { const n = E.description.length, c = $('#descCount'); c.textContent = `${n} / ${MAX_DESC}`; c.className = 'text-[11px] font-bold ' + (n > MAX_DESC - 100 ? 'text-rose-500' : 'text-slate-400'); }
 function formatInputPrice(raw) { const digits = String(raw || '').replace(/\D/g, '').slice(0, 15); return digits ? Number(digits).toLocaleString('id-ID') : ''; }
-function paintPricePreview() { const el = $('#pricePreview'); if (!el || !E) return; const p = { normalPrice: parsePrice(E.normalPrice), promoPrice: parsePrice(E.promoPrice) }; el.innerHTML = priceMarkup(p) + (E.promoPrice && (p.normalPrice === null || p.promoPrice >= p.normalPrice) ? '<p class=\"mt-1 text-xs font-semibold text-rose-600\">Harga promo harus lebih rendah daripada harga normal.</p>' : ''); }
+function paintPricePreview() {
+  const el = $('#pricePreview'); if (!el || !E) return;
+  const p = { normalPrice: parsePrice(E.normalPrice), promoPrice: parsePrice(E.promoPrice),
+    usdNormalPrice: parseUSDPrice(E.usdNormalPrice), usdPromoPrice: parseUSDPrice(E.usdPromoPrice) };
+  el.innerHTML = priceMarkup(p) + ((E.promoPrice && (p.normalPrice === null || p.promoPrice >= p.normalPrice)) ||
+    (E.usdPromoPrice && (p.usdNormalPrice === null || p.usdPromoPrice >= p.usdNormalPrice)) ?
+    '<p class="mt-1 text-xs font-semibold text-rose-600">Harga promo harus lebih rendah daripada harga normal sesuai mata uang.</p>' : '');
+  const rn = recommendUSD(p.normalPrice), rp = recommendUSD(p.promoPrice);
+  const n = $('#eUsdNormalPrice'), v = $('#eUsdPromoPrice'), nh = $('#usdNormalHint'), ph = $('#usdPromoHint');
+  if (n) n.placeholder = rn === null ? 'contoh: 11' : `Rekomendasi: $${rn}`;
+  if (v) v.placeholder = rp === null ? 'contoh: 10' : `Rekomendasi: $${rp}`;
+  if (nh) nh.textContent = rn === null ? 'Isi harga IDR normal untuk rekomendasi.' : `Rekomendasi: US$${rn} (berdasarkan IDR normal)`;
+  if (ph) ph.textContent = rp === null ? 'Isi harga IDR promo untuk rekomendasi.' : `Rekomendasi: US$${rp} (berdasarkan IDR promo)`;
+}
 function paintCover() {
   const z = $('#coverZone');
   z.innerHTML = E.cover
@@ -549,10 +693,18 @@ function validate() {
   if (e.promoPrice !== '' && promo === null) return 'Harga promo harus berupa angka Rupiah yang valid.';
   if (promo !== null && normal === null) return 'Isi harga normal sebelum menetapkan harga promo.';
   if (promo !== null && promo >= normal) return 'Harga promo harus lebih kecil daripada harga normal.';
+  const usdNormal = parseUSDPrice(e.usdNormalPrice), usdPromo = parseUSDPrice(e.usdPromoPrice);
+  if (e.usdNormalPrice !== '' && usdNormal === null) return 'USD Price normal harus bilangan bulat USD yang valid.';
+  if (e.usdPromoPrice !== '' && usdPromo === null) return 'USD Price promo harus bilangan bulat USD yang valid.';
+  if (usdPromo !== null && usdNormal === null) return 'Isi USD Price normal sebelum harga promo USD.';
+  if (usdPromo !== null && usdPromo >= usdNormal) return 'Harga promo USD harus lebih kecil daripada harga normal USD.';
   if (!e.cover) return 'Gambar cover wajib ada.';
   if (e.gallery.length > MAX_GALLERY) return `Galeri maksimal ${MAX_GALLERY} gambar.`;
   const cu = e.checkoutUrl.trim();
-  if (cu && !checkoutHref({ checkoutUrl: cu })) return 'Link checkout harus URL HTTPS valid (https://...).';
+  if (cu && !checkoutHref({ checkoutUrl: cu })) return 'Link checkout Mayar harus URL HTTPS valid.';
+  const lu = e.lemonCheckoutUrl.trim();
+  if (lu && !lemonCheckoutHref({ lemonCheckoutUrl: lu })) return 'Link checkout Lemon Squeezy harus URL HTTPS valid.';
+  if (lu && usdNormal === null) return 'Isi USD Price normal saat checkout Lemon Squeezy diaktifkan.';
   return '';
 }
 async function saveEditor() {
@@ -568,11 +720,28 @@ async function saveEditor() {
     const idx = fresh.products.findIndex(p => p.id === e.id);
     let slug = e.slug;
     if (!slug) { const base = slugify(e.title); slug = base; let n = 2; while (fresh.products.some(p => p.slug === slug && p.id !== e.id)) slug = base + '-' + n++; }
-    const prod = { id: e.id, slug, title: e.title.trim(), category: e.category.trim(), tags: e.tags, description: e.description, features: e.features.trim(), includes: e.includes.trim(), terms: e.terms.trim(), normalPrice: parsePrice(e.normalPrice), promoPrice: parsePrice(e.promoPrice), checkoutUrl: e.checkoutUrl.trim(), cover: e.cover.path, images: e.gallery.map(i => i.path), published: e.published, createdAt: e.createdAt || now, updatedAt: now };
+    const prod = { id: e.id, slug, title: e.title.trim(), category: e.category.trim(), tags: e.tags, description: e.description, features: e.features.trim(), includes: e.includes.trim(), terms: e.terms.trim(),
+      normalPrice: parsePrice(e.normalPrice), promoPrice: parsePrice(e.promoPrice),
+      usdNormalPrice: parseUSDPrice(e.usdNormalPrice), usdPromoPrice: parseUSDPrice(e.usdPromoPrice),
+      checkoutUrl: e.checkoutUrl.trim(), lemonCheckoutUrl: e.lemonCheckoutUrl.trim(),
+      cover: e.cover.path, images: e.gallery.map(i => i.path), shareImage: e.shareImage,
+      published: e.published, createdAt: e.createdAt || now, updatedAt: now };
+    const previousProd = idx >= 0 ? fresh.products[idx] : null;
     if (idx >= 0) fresh.products[idx] = prod; else fresh.products.push(prod);
     fresh.updatedAt = now;
     const keep = new Set(items.map(i => i.path)), removed = [...e.orig].filter(p => !keep.has(p));
-    await commit({ message: `${e.isNew ? 'Tambah' : 'Ubah'} produk: ${prod.title}`, files: [{ path: 'data/products.json', text: JSON.stringify(fresh, null, 2) }, ...files], deletePaths: removed });
+    const deletePaths = [...removed];
+    if (e.published) {
+      try {
+        const thumb = await makeShareJPEG(prod, e.cover);
+        if (thumb) { files.push(thumb); prod.shareImage = thumb.path; }
+      } catch (x) { console.warn('Share JPEG failed; using original cover', x); prod.shareImage = null; }
+      files.push({ path: sharePagePath(prod), text: makeSharePage(prod) });
+    } else { deletePaths.push(sharePagePath(prod)); }
+    if (previousProd && previousProd.slug !== slug) deletePaths.push(sharePagePath(previousProd));
+    fresh.products[idx >= 0 ? idx : fresh.products.length-1] = prod;
+    files.unshift({ path: 'data/products.json', text: JSON.stringify(fresh, null, 2) });
+    await commit({ message: `${e.isNew ? 'Tambah' : 'Ubah'} produk: ${prod.title}`, files, deletePaths });
     S.data = fresh; e.dirty = false; closeDrawer(true); render();
     toast('Tersimpan. Halaman Product diperbarui dalam ±1–2 menit (menunggu GitHub Pages).');
   } catch (x) { err.textContent = errMsg(x); err.classList.remove('hidden'); }
