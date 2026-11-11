@@ -160,7 +160,7 @@ const CONFIG = {
   dataUrl: "/data/products.json"
 };
 
-const { t, LANG, esc, src, slugify, fmtDate, catLabel, waLink, loadProducts, groupByCategory, card, mountGallery, toast, priceMarkup, checkoutHref, lemonCheckoutHref, shareHref, listMarkup } = ZLP;
+const { t, LANG, esc, src, slugify, fmtDate, catLabel, waLink, loadProducts, groupByCategory, card, mountGallery, toast, priceMarkup, checkoutHref, lemonCheckoutHref, shareHref } = ZLP;
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 let ALL = [], loaded = false, SHARE = null;
@@ -357,6 +357,86 @@ function trackBeginCheckout(p, region) {
   });
 }
 
+/* ===== RENDER DETAIL PRODUK BERSTRUKTUR =====
+   Kompatibel dengan field multiline di Catalog:
+   - Baris judul tanpa awalan "-", diikuti satu/lebih baris "- ..." = kelompok fitur.
+   - "- ..." = detail / bullet.
+   - Baris kosong = pemisah yang tidak membuat item kosong.
+   - "Judul | Deskripsi" (format lama) juga masih didukung.
+   Selalu escape teks dari JSON untuk mencegah HTML injection.
+*/
+function structuredDetailMarkup(input) {
+  const lines = String(input || '').replace(/\r\n?/g, '\n').split('\n').slice(0, 240);
+  const blocks = [];
+  let current = null;
+
+  const makeBlock = (heading = '') => {
+    current = { heading, entries: [] };
+    blocks.push(current);
+  };
+  const parsePair = raw => {
+    const pos = raw.indexOf('|');
+    return pos > 0
+      ? { label: raw.slice(0, pos).trim(), detail: raw.slice(pos + 1).trim() }
+      : { label: '', detail: raw.trim() };
+  };
+  const isBullet = line => /^\s*(?:[-*•–—]\s+|\d{1,2}[.)]\s+)/u.test(line);
+  const stripBullet = line => line.replace(/^\s*(?:[-*•–—]\s+|\d{1,2}[.)]\s+)/u, '').trim();
+  const nextContent = index => {
+    for (let j = index + 1; j < lines.length; j++) {
+      if (lines[j].trim()) return lines[j].trim();
+    }
+    return '';
+  };
+
+  lines.forEach((raw, index) => {
+    const line = raw.trim();
+    if (!line) return;
+    if (isBullet(line)) {
+      if (!current) makeBlock();
+      const text = stripBullet(line);
+      if (text) current.entries.push({ type: 'bullet', ...parsePair(text) });
+      return;
+    }
+
+    // Judul eksplisit "## ..." atau judul biasa yang diikuti baris detail berawalan "-".
+    const markdownHeading = /^#{2,4}\s+(.+)$/u.exec(line);
+    const isHeading = !!markdownHeading || isBullet(nextContent(index)) || (/[:：]$/u.test(line) && !line.includes('|'));
+    if (isHeading) {
+      const heading = (markdownHeading ? markdownHeading[1] : line).replace(/[:：]$/u, '').trim();
+      makeBlock(heading);
+      return;
+    }
+
+    // Format Catalog lama: "Judul | keterangan" tetap ditampilkan sebagai pasangan teks.
+    // Kalimat biasa tidak dipaksakan menjadi judul fitur.
+    if (!current || current.entries.some(e => e.type === 'bullet')) makeBlock();
+    current.entries.push({ type: 'paragraph', ...parsePair(line) });
+  });
+
+  const content = entry => {
+    if (entry.label) {
+      return `<span class="font-bold text-zura-navy">${esc(entry.label)}</span>${entry.detail ? `<span class="text-slate-600"> — ${esc(entry.detail)}</span>` : ''}`;
+    }
+    return esc(entry.detail);
+  };
+
+  return blocks.map(block => {
+    const bullets = block.entries.filter(e => e.type === 'bullet');
+    const paragraphs = block.entries.filter(e => e.type === 'paragraph');
+    const heading = block.heading
+      ? `<h4 class="font-display text-[13px] sm:text-sm font-extrabold text-zura-navy leading-snug break-words">${esc(block.heading)}</h4>`
+      : '';
+    const paragraphsHTML = paragraphs.length
+      ? `<div class="${heading ? 'mt-2' : ''} space-y-1.5">${paragraphs.map(e => `<p class="text-[13px] leading-relaxed text-slate-600 break-words">${content(e)}</p>`).join('')}</div>`
+      : '';
+    const bulletsHTML = bullets.length
+      ? `<ul class="${heading || paragraphs.length ? 'mt-2.5' : ''} space-y-1.5" role="list">${bullets.map(e => `<li class="flex items-start gap-2 text-[13px] leading-relaxed text-slate-600 break-words"><span aria-hidden="true" class="shrink-0 text-slate-400 font-semibold leading-relaxed">–</span><span class="min-w-0">${content(e)}</span></li>`).join('')}</ul>`
+      : '';
+    return `<section class="py-3 first:pt-0 last:pb-0 border-b border-slate-100 last:border-b-0">${heading}${paragraphsHTML}${bulletsHTML}</section>`;
+  }).join('');
+}
+
 /* ===== Detail ===== */
 const linkify = s => esc(s).replace(/(https?:\/\/[^\s<]+?)([.,;:!?)]*)(?=\s|<|$)/g, '<a href="$1" target="_blank" rel="noopener noreferrer" class="text-blue-600 underline break-all">$1</a>$2');
 function openDetail(id, push) {
@@ -376,13 +456,13 @@ function openDetail(id, push) {
     { key: 'includes', icon: 'package-check', title: t('Yang Kamu Dapatkan (Isi Paket)', 'What You Get (Package)'), inline: false },
     { key: 'terms', icon: 'file-check-2', title: t('Persyaratan dan Ketentuan', 'Terms & Conditions'), inline: true }
   ].filter(x => (p[x.key] || '').trim());
-  const cols = { 1: 'md:grid-cols-1', 2: 'md:grid-cols-2', 3: 'md:grid-cols-3' }[blocks.length];
+  const cols = { 1: 'lg:grid-cols-1', 2: 'lg:grid-cols-2', 3: 'lg:grid-cols-[minmax(0,1.45fr)_minmax(0,1fr)_minmax(0,1fr)]' }[blocks.length];
   const detailCols = blocks.length ? `
     <section class="mt-5 sm:mt-6 rounded-2xl border border-slate-200 bg-white shadow-sm overflow-hidden">
-      <div class="grid ${cols} divide-y md:divide-y-0 md:divide-x divide-slate-200">
+      <div class="grid ${cols} divide-y lg:divide-y-0 lg:divide-x divide-slate-200">
         ${blocks.map(x => `<div class="p-5 sm:p-6 min-w-0">
           <h3 class="font-display font-extrabold text-zura-navy text-base flex items-center gap-2"><i data-lucide="${x.icon}" class="w-5 h-5 text-blue-600 shrink-0"></i>${esc(x.title)}</h3>
-          <ul class="mt-4 space-y-3">${listMarkup(p[x.key], x.inline)}</ul>
+          <div class="mt-4">${structuredDetailMarkup(p[x.key])}</div>
         </div>`).join('')}
       </div>
     </section>` : '';
