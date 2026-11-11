@@ -116,6 +116,35 @@
     </div>
   </div>
 
+
+  <!-- CHECKOUT REGION SELECTOR · satu modal untuk semua produk -->
+  <div id="checkoutModal" role="dialog" aria-modal="true" aria-labelledby="checkoutHeading" style="display:none" class="fixed inset-0 z-[160]">
+    <div data-checkout-close class="absolute inset-0 bg-zura-navy/70 backdrop-blur-sm"></div>
+    <div class="absolute inset-0 flex items-center justify-center p-4 pointer-events-none">
+      <div class="pointer-events-auto w-full max-w-xl rounded-3xl bg-white shadow-2xl p-5 sm:p-7 relative max-h-[92vh] overflow-y-auto">
+        <button type="button" data-checkout-close aria-label="Close" class="absolute top-4 right-4 rounded-xl p-2 hover:bg-slate-100"><i data-lucide="x" class="w-5 h-5"></i></button>
+        <span class="text-xs font-extrabold uppercase tracking-widest text-blue-600">ZURALOGIC · SECURE CHECKOUT</span>
+        <h2 id="checkoutHeading" class="mt-2 font-display text-xl sm:text-2xl font-extrabold text-zura-navy" data-i="Pilih region pembayaran|Choose your payment region"></h2>
+        <p id="checkoutProductName" class="mt-1 text-sm font-semibold text-slate-600 break-words"></p>
+        <div class="grid sm:grid-cols-2 gap-3 mt-6">
+          <button type="button" data-region="indonesia" class="rounded-2xl border-2 border-slate-200 text-left p-4 transition hover:border-blue-500 hover:bg-blue-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-blue-600">
+            <span class="text-2xl" aria-hidden="true">🇮🇩</span><span class="block mt-2 font-extrabold text-zura-navy">Indonesia</span>
+            <span id="checkoutIdrAmount" class="block mt-1 text-sm font-bold text-blue-600"></span>
+            <span class="block mt-2 text-xs text-slate-500">Mayar · IDR</span>
+          </button>
+          <button type="button" data-region="international" class="rounded-2xl border-2 border-slate-200 text-left p-4 transition hover:border-blue-500 hover:bg-blue-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-blue-600">
+            <span class="text-2xl" aria-hidden="true">🌍</span><span class="block mt-2 font-extrabold text-zura-navy">International</span>
+            <span id="checkoutUsdAmount" class="block mt-1 text-sm font-bold text-blue-600"></span>
+            <span class="block mt-2 text-xs text-slate-500">Lemon Squeezy · USD</span>
+          </button>
+        </div>
+        <div id="checkoutNotice" role="status" aria-live="polite" class="hidden mt-4 rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-950 leading-relaxed"></div>
+        <a id="checkoutSupport" href="/gethelp/" target="_blank" rel="noopener noreferrer" class="hidden mt-3 text-blue-700 text-sm font-bold hover:underline">Contact Customer Service</a>
+        <p class="mt-5 text-xs text-slate-500" data-i="Harga final dan metode pembayaran mengikuti halaman checkout penyedia pembayaran.|Final price and available methods are confirmed on the provider's checkout page."></p>
+      </div>
+    </div>
+  </div>
+
   <footer class="bg-white/80 border-t border-slate-200/90">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-7 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-slate-500">
       <span class="font-bold text-zura-navy"><img src="/contents/imgheader.png" alt="Zuralogic" class="h-4 w-auto" /> <span class="text-xs font-medium text-slate-400">• Your Scale-Up Partner</span></span>
@@ -131,12 +160,16 @@ const CONFIG = {
   dataUrl: "/data/products.json"
 };
 
-const { t, LANG, esc, src, slugify, fmtDate, catLabel, waLink, loadProducts, groupByCategory, card, mountGallery, toast, priceMarkup, checkoutHref, listMarkup } = ZLP;
+const { t, LANG, esc, src, slugify, fmtDate, catLabel, waLink, loadProducts, groupByCategory, card, mountGallery, toast, priceMarkup, checkoutHref, lemonCheckoutHref, shareHref, listMarkup } = ZLP;
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 let ALL = [], loaded = false, SHARE = null;
 const F = { cat: 'all', tag: '', q: '' };
 const baseTitle = document.title, baseDesc = $('#metaDesc').content;
+/* SVG vektor brand asli, bukan ikon generik Lucide. */
+const WA_BRAND_ICON = `<svg viewBox="0 0 24 24" aria-hidden="true" class="w-5 h-5 shrink-0" xmlns="http://www.w3.org/2000/svg"><path fill="#25D366" d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.966-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.198-.347.223-.644.075-.297-.149-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.496.099-.198.05-.372-.025-.52-.075-.149-.67-1.612-.916-2.206-.242-.579-.487-.5-.669-.51-.173-.008-.372-.01-.57-.01-.198 0-.52.074-.793.372s-1.04 1.017-1.04 2.48 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.077 4.487.709.306 1.262.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.29.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.9 9.9 0 01-5.031-1.378l-.361-.214-3.74.982.998-3.646-.235-.374a9.894 9.894 0 01-1.518-5.274c.002-5.458 4.444-9.9 9.905-9.9 2.644 0 5.128 1.03 6.993 2.898a9.849 9.849 0 012.9 7.005c-.003 5.459-4.445 9.901-9.907 9.901m8.423-18.324A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335 .157 11.893c0 2.096.547 4.143 1.588 5.949L.057 24l6.3-1.652a11.87 11.87 0 005.684 1.448h.005c6.557 0 11.893-5.335 11.896-11.893a11.815 11.815 0 00-3.488-8.442"/></svg>`;
+const TG_BRAND_ICON = `<svg viewBox="0 0 24 24" aria-hidden="true" class="w-5 h-5 shrink-0" xmlns="http://www.w3.org/2000/svg"><path fill="#229ED9" d="M11.944 0C5.347 0 0 5.347 0 11.944s5.347 11.944 11.944 11.944 11.944-5.347 11.944-11.944S18.542 0 11.944 0zm5.88 8.211c-.178 1.886-.949 6.461-1.34 8.574-.166.895-.492 1.195-.807 1.223-.685.063-1.204-.452-1.867-.886-1.037-.68-1.624-1.103-2.629-1.767-1.163-.766-.409-1.187.254-1.876.174-.18 3.191-2.926 3.249-3.174.007-.031.015-.147-.055-.209-.07-.063-.172-.042-.246-.025-.105.024-1.764 1.119-4.978 3.284-.47.323-.896.481-1.278.473-.42-.009-1.228-.238-1.829-.434-.737-.24-1.322-.367-1.271-.775.026-.212.319-.429.878-.65 3.441-1.499 5.736-2.489 6.887-2.971 3.279-1.364 3.96-1.601 4.404-1.609.098-.002.317.022.459.137.12.098.153.23.169.323.016.093.036.305.02.471z"/></svg>`;
+
 
 /* i18n untuk teks antarmuka */
 function applyStatic() {
@@ -197,23 +230,73 @@ function renderList() {
 function render() { renderChips(); renderList(); lucide.createIcons(); }
 
   
-/* ===== TRACK BUY NOW CLICK ===== */
-document.addEventListener("click", function (e) {
-  const buyButton = e.target.closest(
-    'a[data-track-checkout]'
-  );
-
-  if (!buyButton) return;
-
-  const productId = buyButton.dataset.trackCheckout;
-
-  const product = ALL.find(
-    p => p.id === productId || p.slug === productId
-  );
-
-  if (!product) return;
-
-  trackBeginCheckout(product);
+/* ===== REGION CHECKOUT · modal reusable + analytics sesuai provider ===== */
+let checkoutProduct = null, checkoutReturnFocus = null;
+function priceSelected(p, region) {
+  const usd = region === 'international';
+  const normal = usd ? ZLP.parseUSDPrice(p.usdNormalPrice) : ZLP.parsePrice(p.normalPrice);
+  const promo = usd ? ZLP.parseUSDPrice(p.usdPromoPrice) : ZLP.parsePrice(p.promoPrice);
+  return normal !== null && promo !== null && promo < normal ? promo : normal;
+}
+function openCheckoutModal(p, trigger) {
+  checkoutProduct = p; checkoutReturnFocus = trigger || document.activeElement;
+  $('#checkoutProductName').textContent = p.title;
+  const idr = priceSelected(p, 'indonesia'), usd = priceSelected(p, 'international');
+  $('#checkoutIdrAmount').textContent = idr === null ? t('Harga belum diatur','Price not set') : ZLP.fmtPrice(idr);
+  $('#checkoutUsdAmount').textContent = usd === null ? 'USD price not set' : ZLP.fmtUSD(usd);
+  $('#checkoutNotice').classList.add('hidden'); $('#checkoutNotice').textContent = '';
+  $('#checkoutSupport').classList.add('hidden');
+  $('#checkoutModal').style.display = 'block';
+  lucide.createIcons();
+  $('#checkoutModal [data-region="indonesia"]').focus();
+}
+function closeCheckoutModal() {
+  $('#checkoutModal').style.display = 'none'; checkoutProduct = null;
+  if (checkoutReturnFocus && checkoutReturnFocus.isConnected) checkoutReturnFocus.focus();
+  checkoutReturnFocus = null;
+}
+function checkoutNotice(message) {
+  $('#checkoutNotice').textContent = message; $('#checkoutNotice').classList.remove('hidden');
+  $('#checkoutSupport').href = CONFIG.whatsappUrl || '/gethelp/';
+  $('#checkoutSupport').classList.remove('hidden');
+}
+function selectRegion(region) {
+  const p = checkoutProduct; if (!p) return;
+  const url = region === 'international' ? lemonCheckoutHref(p) : checkoutHref(p);
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push({ event: 'select_payment_region', item_id: String(p.id), payment_region: region,
+    payment_provider: region === 'international' ? 'lemon_squeezy' : 'mayar' });
+  if (!url) {
+    if (region === 'international') checkoutNotice('We’re sorry, this product is currently available for checkout in Indonesia only. Please contact Customer Service for more information or assistance.');
+    else checkoutNotice(t('Maaf, pembayaran untuk Indonesia belum tersedia. Silakan hubungi Customer Service.',
+      'Sorry, Indonesian checkout is currently unavailable. Please contact Customer Service.'));
+    return;
+  }
+  trackBeginCheckout(p, region);
+  // Buka di tab ini supaya browser tidak memblokir popup pembayaran.
+  window.location.assign(url);
+}
+document.addEventListener('click', e => {
+  const buy = e.target.closest('[data-checkout-product]');
+  if (buy) {
+    e.preventDefault();
+    const p = ALL.find(x => x.id === buy.dataset.checkoutProduct || x.slug === buy.dataset.checkoutProduct);
+    if (p) openCheckoutModal(p, buy);
+  }
+});
+$('#checkoutModal').addEventListener('click', e => {
+  if (e.target.closest('[data-checkout-close]')) { closeCheckoutModal(); return; }
+  const b = e.target.closest('[data-region]'); if (b) selectRegion(b.dataset.region);
+});
+$('#checkoutModal').addEventListener('keydown', e => {
+  if (e.key === 'Escape') { e.stopPropagation(); closeCheckoutModal(); }
+  if (e.key === 'Tab') {
+    const focusable = [...$('#checkoutModal').querySelectorAll('button:not([disabled]),a:not(.hidden)')].filter(x => x.offsetParent !== null);
+    if (!focusable.length) return;
+    const first=focusable[0], last=focusable[focusable.length-1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  }
 });
 
 document.addEventListener('click', e => {
@@ -258,31 +341,18 @@ function trackProductView(p) {
 
   
 /* ===== BEGIN CHECKOUT ANALYTICS ===== */
-function trackBeginCheckout(p) {
-  const normal = ZLP.parsePrice(p.normalPrice);
-  const promo = ZLP.parsePrice(p.promoPrice);
-
-  const price =
-    normal !== null && promo !== null && promo < normal
-      ? promo
-      : normal;
-
+function trackBeginCheckout(p, region) {
+  const price = priceSelected(p, region);
+  const currency = region === 'international' ? 'USD' : 'IDR';
+  const provider = region === 'international' ? 'lemon_squeezy' : 'mayar';
   window.dataLayer = window.dataLayer || [];
-
   window.dataLayer.push({ ecommerce: null });
-
   window.dataLayer.push({
-    event: "begin_checkout",
+    event: 'begin_checkout', payment_region: region, payment_provider: provider,
     ecommerce: {
-      currency: "IDR",
-      ...(price !== null ? { value: price } : {}),
-      items: [{
-        item_id: String(p.id),
-        item_name: p.title,
-        item_category: p.category,
-        ...(price !== null ? { price: price } : {}),
-        quantity: 1
-      }]
+      currency, ...(price !== null ? { value: price } : {}),
+      items: [{ item_id: String(p.id), item_name: p.title, item_category: p.category,
+        ...(price !== null ? { price } : {}), quantity: 1 }]
     }
   });
 }
@@ -295,9 +365,10 @@ function openDetail(id, push) {
   const rel = ALL.filter(x => x.id !== p.id && (x.category || '') === (p.category || '')).slice(0, 3);
   const msg = t(`Halo Zuralogic, saya tertarik dengan "${p.title}". Bisa dibantu?`, `Hi Zuralogic, I'm interested in "${p.title}". Can you help?`);
   const wa = CONFIG.whatsappUrl ? waLink(CONFIG.whatsappUrl, msg) : '/#contact';
-  const buy = checkoutHref(p); // Hanya checkout HTTPS valid yang boleh membuka pembelian
+  const buy = checkoutHref(p) || lemonCheckoutHref(p); // pilihan region diproses oleh modal
   const desc = (p.description || '').trim();
-  SHARE = { title: p.title, url: new URL(href(p), location.origin).href };
+  SHARE = { title: p.title, description: desc.replace(/\s+/g, ' ').slice(0, 125),
+    url: new URL(shareHref(p), location.origin).href, cover: p.cover ? new URL(src(p.cover), location.origin).href : '' };
 
   /* 3 kolom konten: hanya yang terisi yang tampil */
   const blocks = [
@@ -341,15 +412,16 @@ function openDetail(id, push) {
         <div class="mt-5">${priceMarkup(p, { large: true })}</div>
 
         <div class="mt-5 space-y-3">
-          ${buy ? `<a href="${esc(buy)}" target="_blank" rel="noopener noreferrer" data-track-checkout="${ZLP.esc(String(p.id))}" data-buy class="w-full px-5 py-4 rounded-2xl bg-zura-navy hover:bg-blue-700 text-white font-extrabold text-base flex items-center justify-center gap-2 shadow-xl shadow-blue-900/20 transition"><i data-lucide="shopping-cart" class="w-5 h-5"></i>${t('Beli Sekarang', 'Buy Now')}</a>` : `<div aria-disabled="true" class="w-full px-5 py-4 rounded-2xl bg-slate-100 text-slate-500 text-sm font-semibold text-center">${t('Checkout belum tersedia — hubungi kami melalui WhatsApp.', 'Checkout is unavailable — contact us via WhatsApp.')}</div>`}
+          ${buy ? `<button type="button" data-checkout-product="${esc(p.id)}" class="w-full px-5 py-4 rounded-2xl bg-zura-navy hover:bg-blue-700 text-white font-extrabold text-base flex items-center justify-center gap-2 shadow-xl shadow-blue-900/20 transition"><i data-lucide="shopping-cart" class="w-5 h-5"></i>${t('Beli Sekarang', 'Buy Now')}</button>` : `<div aria-disabled="true" class="w-full px-5 py-4 rounded-2xl bg-slate-100 text-slate-500 text-sm font-semibold text-center">${t('Checkout belum tersedia — hubungi kami melalui WhatsApp.', 'Checkout is unavailable — contact us via WhatsApp.')}</div>`}
           <div class="grid grid-cols-2 gap-3">
             <a href="${esc(wa)}" target="_blank" rel="noopener noreferrer" class="px-3 py-3 rounded-2xl border border-slate-200 hover:border-blue-400 bg-white text-slate-700 font-bold text-sm flex items-center justify-center gap-2 transition"><i data-lucide="message-circle" class="w-4 h-4 text-emerald-600 shrink-0"></i>${t('Tanya produk ini', 'Ask about this')}</a>
             <div class="relative" data-sharewrap>
               <button type="button" data-share aria-haspopup="true" class="w-full px-3 py-3 rounded-2xl border border-slate-200 hover:border-blue-400 bg-white text-slate-700 font-bold text-sm flex items-center justify-center gap-2 transition"><i data-lucide="share-2" class="w-4 h-4 text-blue-600 shrink-0"></i>${t('Bagikan', 'Share')}</button>
               <div id="shareMenu" class="hidden absolute right-0 top-full mt-2 w-56 rounded-2xl bg-white border border-slate-200 shadow-2xl p-1.5 z-20">
                 <button type="button" data-share-act="copy" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-blue-50 text-sm font-semibold text-slate-700 text-left"><span class="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 grid place-items-center"><i data-lucide="link" class="w-4 h-4"></i></span>${t('Salin link', 'Copy link')}</button>
-                <button type="button" data-share-act="wa" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-emerald-50 text-sm font-semibold text-slate-700 text-left"><span class="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 grid place-items-center"><i data-lucide="message-circle" class="w-4 h-4"></i></span>WhatsApp</button>
-                <button type="button" data-share-act="tg" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-sky-50 text-sm font-semibold text-slate-700 text-left"><span class="w-8 h-8 rounded-lg bg-sky-50 text-sky-600 grid place-items-center"><i data-lucide="send" class="w-4 h-4"></i></span>Telegram</button>
+                <button type="button" data-share-act="wa" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-emerald-50 text-sm font-semibold text-slate-700 text-left"><span class="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 grid place-items-center">${WA_BRAND_ICON}</span>WhatsApp</button>
+                <button type="button" data-share-act="tg" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-sky-50 text-sm font-semibold text-slate-700 text-left"><span class="w-8 h-8 rounded-lg bg-sky-50 text-sky-600 grid place-items-center">${TG_BRAND_ICON}</span>Telegram</button>
+                <button type="button" data-share-act="cover" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-blue-50 text-sm font-semibold text-slate-700 text-left"><span class="w-8 h-8 rounded-lg bg-blue-50 text-blue-700 grid place-items-center"><i data-lucide="image" class="w-4 h-4"></i></span>${t('Bagikan cover / Status', 'Share cover / Status')}</button>
               </div>
             </div>
           </div>
@@ -403,18 +475,35 @@ $('#detail').addEventListener('click', e => {
   if (sa && SHARE) { shareTo(sa.dataset.shareAct); $('#shareMenu').classList.add('hidden'); return; }
   const o = e.target.closest('a[data-open]'); if (o && !e.metaKey && !e.ctrlKey && e.button === 0) { e.preventDefault(); openDetail(o.dataset.open, true); }
 });
-window.addEventListener('keydown', e => { if (e.key === 'Escape' && $('#detail').style.display === 'block') closeDetail(true); });
+window.addEventListener('keydown', e => { if (e.key === 'Escape' && $('#checkoutModal').style.display !== 'block' && $('#detail').style.display === 'block') closeDetail(true); });
 window.addEventListener('popstate', () => {
   const p = new URLSearchParams(location.search).get('p');
   if (p) openDetail(p, false); else closeDetail(false);
 });
 
 /* ===== Bagikan: salin link / WhatsApp / Telegram ===== */
-function shareTo(kind) {
-  const { title, url } = SHARE, text = title + ' — Zuralogic';
+async function shareTo(kind) {
+  const { title, description, url, cover } = SHARE;
+  const text = `${title} — Zuralogic${description ? '\n' + description : ''}`;
   if (kind === 'wa') window.open('https://wa.me/?text=' + encodeURIComponent(text + '\n' + url), '_blank', 'noopener');
   else if (kind === 'tg') window.open('https://t.me/share/url?url=' + encodeURIComponent(url) + '&text=' + encodeURIComponent(text), '_blank', 'noopener');
-  else {
+  else if (kind === 'cover') {
+    // Membagikan file asli ke aplikasi Status hanya bisa lewat Web Share API jika didukung.
+    if (!cover) return toast(t('Cover produk tidak tersedia.', 'Product cover is unavailable.'));
+    try {
+      const response = await fetch(cover); if (!response.ok) throw new Error('cover download failed');
+      const blob = await response.blob();
+      const file = new File([blob], 'zuralogic-product-cover.' + (blob.type.includes('png') ? 'png' : blob.type.includes('jpeg') ? 'jpg' : 'webp'), { type: blob.type || 'image/webp' });
+      if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
+        await navigator.share({ files: [file], title, text: text + '\n' + url }); return;
+      }
+      // Browser desktop: buka cover; pengguna bisa simpan dan unggah manual ke Status.
+      window.open(cover, '_blank', 'noopener');
+      toast(t('Buka/simpan gambar lalu unggah ke Status WhatsApp secara manual.', 'Save the cover and upload it to WhatsApp Status manually.'));
+    } catch (e) { if (e.name !== 'AbortError') {
+      window.open(cover, '_blank', 'noopener'); toast(t('Buka cover dan bagikan melalui aplikasi WhatsApp.', 'Open the cover and share it through WhatsApp.'));
+    }}
+  } else {
     const ok = () => toast(t('Link disalin', 'Link copied'));
     const fallback = () => { const ta = document.createElement('textarea'); ta.value = url; ta.style.position = 'fixed'; ta.style.opacity = '0'; document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); ok(); } catch (x) { toast(url); } ta.remove(); };
     if (navigator.clipboard && typeof navigator.clipboard.writeText === 'function' && window.isSecureContext) navigator.clipboard.writeText(url).then(ok, fallback); else fallback();
