@@ -42,12 +42,11 @@
       "title": "ZURA SM — Aplikasi Manajemen Toko Berbasis Web",
       "category": "Store Management",
       "tags": [
-        "Toko",
-        "Retail",
-        "Kasir",
-        "Inventory",
-        "POS",
-        "management"
+        "AppsScript",
+        "GSheet",
+        "Android",
+        "iOS",
+        "Web"
       ],
       "description": "# Lebih dari Kasir. Kelola Toko dalam Satu Aplikasi.\n\nMasih menggunakan catatan terpisah untuk penjualan, barang masuk, dan persediaan toko?\n\nZURA SM adalah aplikasi kasir dan manajemen toko berbasis web yang membantu usaha kecil mengelola transaksi penjualan, produk, stok, dan aktivitas operasional dalam satu sistem.\n\nDibangun menggunakan Google Apps Script dan Google Sheets, ZURA SM dapat diinstal pada akun Google milikmu melalui template yang sudah disiapkan.\n\nApa yang membuat ZURA SM menarik?\n\n✅ Transaksi kasir dengan pengurangan stok otomatis.\n✅ Pencatatan pembayaran tunai, transfer, dan debit/kredit.\n✅ Katalog produk yang menandai barang dengan stok habis.\n✅ Pengelolaan barang masuk dan stock opname.\n✅ Pengaturan pengguna dengan peran Admin dan Kasir.\n✅ Dashboard dan riwayat transaksi penjualan.\n✅ Pengaturan identitas toko dan informasi struk.\n\nCukup salin template, ikuti panduan instalasi, lalu sesuaikan data produk dan informasi toko sesuai kebutuhanmu.\n\nZURA SM dirancang untuk satu kasir aktif dalam konfigurasi standar. Penggunaan beberapa kasir secara bersamaan memerlukan konfigurasi tambahan.\n\nSekali beli template, tanpa biaya langganan template bulanan dari Zuralogic.\n\nButuh penyesuaian fitur atau bantuan instalasi? Zuralogic juga menyediakan layanan setup dan custom development secara terpisah.\n\nZURA SM — Store Management App by Zuralogic.",
       "features": "📊 Dashboard Penjualan\n- Ringkasan total penjualan.\n- Jumlah transaksi dan item terjual.\n- Grafik penjualan harian.\n- Filter laporan berdasarkan periode tanggal.\n\n🛒 POS Kasir\n- Katalog produk untuk transaksi penjualan.\n- Pengurangan stok otomatis pada barang stok.\n- Barang dengan stok habis ditampilkan di akhir katalog dengan keterangan \"Stok Habis\".\n- Perhitungan total belanja dan uang kembalian.\n- Pencatatan pembayaran Tunai, Transfer, serta Debit/Kredit.\n- Pembuatan dan pencetakan struk transaksi.\n\n📦 Master Data Barang\n- Pengelolaan data dan informasi produk.\n- Pilihan jenis barang stok dan non-stok.\n- Pengaturan produk untuk kebutuhan toko retail maupun produk olahan yang tidak menggunakan pencatatan stok langsung.\n\n👥 Pengaturan Pengguna\n- Pengelolaan akun pengguna.\n- Pemisahan hak akses Admin dan Kasir.\n- Pengaturan akses berdasarkan peran.\n\n🏪 Pengaturan Toko & Struk\n- Nama toko, alamat, dan kontak.\n- Catatan tambahan informasi toko.\n- Header struk untuk pesan atau campaign.\n- Footer struk yang dapat disesuaikan.\n\n🧾 Riwayat Transaksi\n- Pencatatan dan penelusuran transaksi kasir sebelumnya.\n\n📥 Barang Masuk\n- Pencatatan penerimaan barang stok.\n- Pembaruan data persediaan berdasarkan barang masuk.\n\n📋 Stock Opname\n- Pemeriksaan stok fisik terhadap catatan sistem.\n- Penyesuaian stok sesuai hasil pemeriksaan.\n\n❓ FAQ & Bantuan\n- Panduan penggunaan aplikasi.\n- Informasi penyelesaian masalah umum.\n\nSemua fitur standar tersedia dalam satu template ZURA SM.",
@@ -64,8 +63,8 @@
       "shareImage": "assets/product-share/pmwatjv35rtz.jpg",
       "published": true,
       "createdAt": "2026-11-10T15:41:25.484Z",
-      "updatedAt": "2026-11-11T04:05:13.618Z"
+      "updatedAt": "2026-11-11T04:06:21.228Z"
     }
   ],
-  "updatedAt": "2026-11-11T04:05:13.618Z"
+  "updatedAt": "2026-11-11T04:06:21.228Z"
 }
