@@ -228,8 +228,8 @@
     .zl-donut-wrap { display:flex; align-items:center; justify-content:center; gap:6px; }
     .zl-donut-svg { width:104px; height:104px; flex:none; }
     .zl-donut-seg { stroke-linecap:round; transition:stroke-dasharray .75s ease,stroke-dashoffset .75s ease; }
-    .zl-donut-big { font-size:25px; font-weight:800; fill:#fff; font-family:'Sora','Inter',sans-serif; text-anchor:middle; }
-    .zl-donut-small { font-size:9px; font-weight:650; fill:#8fb1d6; text-anchor:middle; }
+    .zl-donut-big { font-size:20px; font-weight:800; letter-spacing:-.045em; fill:#fff; font-family:'Sora','Inter',sans-serif; text-anchor:middle; dominant-baseline:middle; }
+    .zl-donut-small { font-size:9px; font-weight:650; fill:#8fb1d6; text-anchor:middle; dominant-baseline:middle; }
     .zl-donut-legend { list-style:none; padding:0; margin:0; min-width:0; flex:1; }
     .zl-donut-legend li { display:flex; align-items:center; gap:7px; color:#a9c1dc; font-size:9.5px; line-height:1.45; margin:5px 0; }
     .zl-donut-dot { width:7px; height:7px; flex:none; border-radius:50%; }
@@ -423,7 +423,7 @@
                   <circle class="zl-donut-seg" data-seg="0" cx="60" cy="60" r="39" stroke="#60c5ff" fill="none" stroke-width="11" stroke-dasharray="114.6 130.4" stroke-dashoffset="0" transform="rotate(-90 60 60)"></circle>
                   <circle class="zl-donut-seg" data-seg="1" cx="60" cy="60" r="39" stroke="#4e78ee" fill="none" stroke-width="11" stroke-dasharray="75.4 169.6" stroke-dashoffset="-117.6" transform="rotate(-90 60 60)"></circle>
                   <circle class="zl-donut-seg" data-seg="2" cx="60" cy="60" r="39" stroke="#b494f8" fill="none" stroke-width="11" stroke-dasharray="46 199" stroke-dashoffset="-196" transform="rotate(-90 60 60)"></circle>
-                  <text class="zl-donut-big" x="60" y="58" id="demoDonutValue">100%</text><text class="zl-donut-small" x="60" y="75" id="demoDonutCaption">mix</text>
+                  <text class="zl-donut-big" x="60" y="54" id="demoDonutValue">100%</text><text class="zl-donut-small" x="60" y="76" id="demoDonutCaption">mix</text>
                 </svg>
                 <ul class="zl-donut-legend" id="demoDonutLegend"><li><i class="zl-donut-dot" style="background:#60c5ff"></i>Card<span>48%</span></li><li><i class="zl-donut-dot" style="background:#4e78ee"></i>Transfer<span>32%</span></li><li><i class="zl-donut-dot" style="background:#b494f8"></i>Cash<span>20%</span></li></ul>
               </div>
