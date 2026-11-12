@@ -167,6 +167,64 @@
     .faq-grid details summary::after { content:'+'; color:#2563EB; font-size:24px; font-weight:400; line-height:1; }
     .faq-grid details[open] summary::after { content:'−'; }
     .faq-grid details p { padding:0 20px 20px; margin:0; color:#475569; font-size:14px; line-height:1.8; }
+    /* ---------- Hero CTA + live dashboard ---------- */
+    .hero-cta-grid { display:grid; gap:12px; max-width: 820px; }
+    .hero-cta { min-height: 68px; width:100%; padding: 14px 20px; border-radius: 20px; display:flex; align-items:center; justify-content:center; gap:10px; font-weight: 800; transition: transform .22s ease, box-shadow .22s ease, background-color .22s ease, border-color .22s ease; }
+    .hero-cta:hover { transform: translateY(-2px); }
+    .hero-cta-primary { background:#0A1931; color:#fff; box-shadow: 0 18px 34px -18px rgba(10,25,49,.55); }
+    .hero-cta-primary:hover { background:#1d4ed8; }
+    .hero-cta-secondary { color:#0A1931; border:1px solid rgba(96,165,250,.34); }
+    .hero-cta-secondary:hover { border-color:#60A5FA; }
+    .hero-cta-tertiary { background: rgba(255,255,255,.88); border:1px solid rgba(191,219,254,.95); color:#0A1931; }
+    .hero-cta-tertiary:hover { background: #EFF6FF; }
+    @media (max-width: 639px) { .hero-cta-grid { grid-template-columns:1fr; } }
+    @media (min-width: 640px) and (max-width: 1023px) {
+      .hero-cta-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
+      .hero-cta-grid .hero-cta:nth-child(3) { grid-column: 1 / -1; max-width: 250px; justify-self: start; }
+    }
+    @media (min-width: 1024px) { .hero-cta-grid { grid-template-columns: minmax(0,1.12fr) minmax(0,1.12fr) minmax(220px,.88fr); align-items:stretch; } }
+
+    .hero-board { position: relative; overflow: hidden; }
+    .hero-board::after { content:''; position:absolute; inset:auto -14% -38% auto; width: 240px; height: 240px; border-radius: 999px; background: radial-gradient(circle, rgba(56,189,248,.16), transparent 68%); pointer-events:none; }
+    .hero-kpi { background: linear-gradient(135deg, rgba(255,255,255,.88), rgba(239,246,255,.62)); border:1px solid rgba(191,219,254,.85); border-radius: 18px; padding: 12px 14px; }
+    .hero-kpi-label { font-size: 11px; text-transform: uppercase; letter-spacing: .14em; font-weight: 800; color:#64748b; }
+    .hero-kpi-value { margin-top: 8px; font-family: 'Sora','Inter',sans-serif; font-size: clamp(18px, 2vw, 24px); font-weight: 800; color:#0A1931; line-height:1; }
+    .hero-panel { background: linear-gradient(135deg, rgba(255,255,255,.92), rgba(248,250,252,.76)); border:1px solid rgba(219,234,254,.96); border-radius: 22px; padding: 14px; box-shadow: inset 0 1px 0 rgba(255,255,255,.95); }
+    .hero-panel-title { font-size: 11px; text-transform: uppercase; letter-spacing: .15em; font-weight: 800; color:#64748b; }
+    .hero-panel-head { display:flex; align-items:center; justify-content:space-between; gap:8px; margin-bottom: 10px; }
+    .hero-badge { font-size: 11px; font-weight: 800; color:#2563EB; background: rgba(219,234,254,.88); border:1px solid #bfdbfe; border-radius: 999px; padding: 4px 8px; }
+    .hero-donut-ring { transition: stroke-dashoffset .9s cubic-bezier(.16,1,.3,1); }
+    .hero-donut-center { text-anchor: middle; dominant-baseline: middle; font-family: 'Sora','Inter',sans-serif; font-weight: 800; fill:#0A1931; }
+    .hero-donut-sub { text-anchor: middle; fill:#64748b; font-size: 11px; font-weight: 700; }
+    .hero-legend li { display:flex; align-items:center; justify-content:space-between; gap:10px; font-size: 12px; color:#475569; padding-top: 6px; }
+    .hero-legend span:last-child { font-weight: 800; color:#0A1931; }
+    .hero-line-svg { width:100%; height: 160px; }
+    .hero-line-area { fill: url(#heroLineGradient); opacity: .28; }
+    .hero-line-path { fill: none; stroke:#2563EB; stroke-width:3.2; stroke-linecap:round; stroke-linejoin:round; }
+    .hero-line-dot { fill:#fff; stroke:#2563EB; stroke-width:2.5; }
+    .hero-line-grid { stroke:#dbeafe; stroke-width:1; }
+    .hero-axis { display:flex; justify-content:space-between; font-size: 11px; font-weight: 700; color:#94a3b8; margin-top: 8px; }
+    .hero-bars { display:grid; grid-template-columns: repeat(6, minmax(0,1fr)); gap:10px; align-items:end; height: 136px; }
+    .hero-bar-wrap { display:flex; flex-direction:column; align-items:center; gap:8px; }
+    .hero-bar-track { width:100%; height: 112px; border-radius: 14px 14px 8px 8px; background: linear-gradient(180deg, rgba(239,246,255,.72), rgba(226,232,240,.46)); display:flex; align-items:flex-end; overflow:hidden; }
+    .hero-bar { width:100%; height: 20%; border-radius: 14px 14px 8px 8px; background: linear-gradient(180deg, #93C5FD, #3B82F6 55%, #0A1931 100%); box-shadow: 0 16px 24px -18px rgba(37,99,235,.65); transition: height .85s cubic-bezier(.16,1,.3,1); }
+    .hero-bar-wrap strong { font-size: 10px; letter-spacing: .08em; text-transform: uppercase; color:#94a3b8; }
+    .hero-map { position:relative; height: 136px; border-radius: 18px; overflow:hidden; background: radial-gradient(circle at 80% 20%, rgba(59,130,246,.14), transparent 28%), linear-gradient(180deg, #f8fbff, #eef4ff); }
+    .hero-map svg { position:absolute; inset:0; width:100%; height:100%; }
+    .hero-hotspot { position:absolute; width:10px; height:10px; border-radius:999px; background:#2563EB; box-shadow: 0 0 0 4px rgba(37,99,235,.14); }
+    .hero-hotspot::after { content:''; position:absolute; inset:-7px; border-radius:999px; border:2px solid rgba(37,99,235,.34); animation: ping2 2.4s ease-out infinite; }
+    .hero-hotspot.alt { background:#38BDF8; box-shadow: 0 0 0 4px rgba(56,189,248,.16); }
+    .hero-map-legend { display:grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap:8px; margin-top: 10px; }
+    .hero-map-legend div { border-radius: 14px; background: rgba(255,255,255,.72); border:1px solid #dbeafe; padding: 8px; }
+    .hero-map-legend span { display:block; font-size: 10px; letter-spacing:.1em; text-transform:uppercase; color:#64748b; font-weight:800; }
+    .hero-map-legend strong { display:block; margin-top:4px; font-size: 15px; font-family:'Sora','Inter',sans-serif; font-weight:800; color:#0A1931; }
+    .hero-float { white-space:nowrap; box-shadow: 0 20px 40px -24px rgba(10,25,49,.34); }
+    .hero-mini-card { min-width: 180px; }
+    .hero-mini-stat { font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color:#64748b; font-weight:800; }
+    .hero-mini-value { font-family:'Sora','Inter',sans-serif; font-size: 26px; font-weight:800; color:#0A1931; line-height:1; }
+    @media (max-width: 1023px) {
+      .hero-float { transform:none !important; }
+    }
     :focus-visible { outline: 3px solid #38BDF8; outline-offset: 3px; }
     @media (max-width: 640px) { .shop-actions a { width:100%; } }
     .no-scrollbar::-webkit-scrollbar { display: none; }
@@ -270,10 +328,10 @@
           <span class="text-grad" data-en="real business growth.">bisnis yang berkembang.</span>
         </h1>
         <p class="mt-5 text-base sm:text-lg text-slate-600 leading-relaxed max-w-xl reveal" style="--d:160ms" data-en="Explore ready-to-use apps, build a solution for your workflow, or learn the skills yourself. Made in Indonesia. Built for businesses everywhere.">Temukan aplikasi siap pakai, bangun sistem sesuai alur kerja, atau pelajari cara membuatnya sendiri. Dibangun di Indonesia, untuk bisnis di mana saja.</p>
-        <div class="mt-7 flex flex-col sm:flex-row flex-wrap gap-3 reveal" style="--d:240ms">
-          <a href="/products/" data-track="hero_shop" class="group px-6 py-3.5 rounded-2xl bg-zura-navy hover:bg-blue-700 text-white font-bold shadow-xl shadow-blue-900/20 transition flex items-center justify-center gap-2"><i data-lucide="shopping-bag" class="w-5 h-5"></i><span data-en="Explore products">Jelajahi produk</span><i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition"></i></a>
-          <button data-path="build" data-track="hero_build" class="group px-6 py-3.5 rounded-2xl glass hover:border-blue-400 text-zura-navy font-bold transition flex items-center justify-center gap-2"><i data-lucide="workflow" class="w-5 h-5 text-blue-600"></i><span data-en="Build a custom system">Buat sistem custom</span></button>
-          <a href="#youtube" data-track="hero_learn" class="group px-5 py-3.5 rounded-2xl border border-blue-200 bg-white/80 hover:bg-blue-50 text-zura-navy font-bold transition flex items-center justify-center gap-2"><i data-lucide="graduation-cap" class="w-5 h-5 text-blue-600"></i><span data-en="Learn for free">Belajar gratis</span></a>
+        <div class="mt-7 hero-cta-grid reveal" style="--d:240ms">
+          <a href="/products/" data-track="hero_shop" class="hero-cta hero-cta-primary group"><i data-lucide="shopping-bag" class="w-5 h-5"></i><span data-en="Explore products">Jelajahi produk</span><i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition"></i></a>
+          <button data-path="build" data-track="hero_build" class="hero-cta hero-cta-secondary glass group"><i data-lucide="workflow" class="w-5 h-5 text-blue-600"></i><span data-en="Build a custom system">Buat sistem custom</span></button>
+          <a href="#youtube" data-track="hero_learn" class="hero-cta hero-cta-tertiary group"><i data-lucide="graduation-cap" class="w-5 h-5 text-blue-600"></i><span data-en="Learn for free">Belajar gratis</span></a>
         </div>
         <div class="mt-6 flex flex-wrap gap-x-5 gap-y-2 text-xs sm:text-sm font-semibold text-slate-600 reveal" style="--d:320ms">
           <span class="flex items-center gap-1.5"><i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-500"></i><span data-en="Templates & custom work">Template & solusi custom</span></span>
@@ -284,63 +342,157 @@
 
       <!-- Interactive stage -->
       <div class="lg:col-span-6 relative">
-        <div id="stage" class="relative h-[400px] sm:h-[470px] lg:h-[520px] in" data-anim>
-          <!-- Main dashboard -->
-          <div class="layer absolute inset-x-0 top-3 mx-auto w-[86%] max-w-[440px]" data-depth="10">
-            <div class="glass rounded-3xl p-5" data-tilt>
-              <div class="flex items-center justify-between">
+        <div id="stage" class="relative h-[430px] sm:h-[500px] lg:h-[540px] in" data-anim>
+          <div class="layer absolute inset-x-0 top-2 mx-auto w-[94%] max-w-[540px]" data-depth="10">
+            <div class="glass hero-board rounded-[30px] p-4 sm:p-5" data-tilt>
+              <div class="flex items-center justify-between gap-3">
                 <div class="flex gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-rose-300"></span><span class="w-2.5 h-2.5 rounded-full bg-amber-300"></span><span class="w-2.5 h-2.5 rounded-full bg-emerald-300"></span></div>
-                <div class="h-2.5 w-24 rounded-full bg-slate-200"></div>
+                <div class="text-[11px] font-extrabold uppercase tracking-[.18em] text-slate-400" data-en="Operations dashboard">Dasbor operasi</div>
               </div>
-              <div class="mt-5 grid grid-cols-3 gap-3">
-                <div class="rounded-2xl bg-white/80 p-3"><div class="h-2 w-8 rounded bg-slate-200"></div><div class="mt-3 h-3.5 w-14 rounded bg-zura-navy/80"></div></div>
-                <div class="rounded-2xl bg-white/80 p-3"><div class="h-2 w-10 rounded bg-slate-200"></div><div class="mt-3 h-3.5 w-12 rounded bg-blue-500/80"></div></div>
-                <div class="rounded-2xl bg-white/80 p-3"><div class="h-2 w-7 rounded bg-slate-200"></div><div class="mt-3 h-3.5 w-16 rounded bg-sky-400/80"></div></div>
-              </div>
-              <div class="mt-5 flex items-end gap-2 h-28">
-                <div class="bar flex-1 rounded-t-lg bg-gradient-to-t from-blue-600 to-sky-300" style="--h:38%;--i:0"></div>
-                <div class="bar flex-1 rounded-t-lg bg-gradient-to-t from-blue-600 to-sky-300" style="--h:55%;--i:1"></div>
-                <div class="bar flex-1 rounded-t-lg bg-gradient-to-t from-blue-600 to-sky-300" style="--h:45%;--i:2"></div>
-                <div class="bar flex-1 rounded-t-lg bg-gradient-to-t from-blue-600 to-sky-300" style="--h:72%;--i:3"></div>
-                <div class="bar flex-1 rounded-t-lg bg-gradient-to-t from-blue-600 to-sky-300" style="--h:60%;--i:4"></div>
-                <div class="bar flex-1 rounded-t-lg bg-gradient-to-t from-zura-navy to-blue-500" style="--h:88%;--i:5"></div>
-                <div class="bar flex-1 rounded-t-lg bg-gradient-to-t from-blue-600 to-sky-300" style="--h:66%;--i:6"></div>
-                <div class="bar flex-1 rounded-t-lg bg-gradient-to-t from-zura-navy to-blue-500" style="--h:96%;--i:7"></div>
-              </div>
-              <svg viewBox="0 0 300 50" class="mt-4 w-full h-12" preserveAspectRatio="none" aria-hidden="true">
-                <path class="draw" pathLength="1" d="M0 40 C 30 38, 40 18, 75 22 S 130 44, 160 26 S 220 6, 250 14 S 285 8, 300 4" fill="none" stroke="#2563EB" stroke-width="3" stroke-linecap="round"/>
-              </svg>
-            </div>
-          </div>
 
-          <!-- Phone -->
-          <div class="layer absolute left-0 sm:left-2 bottom-2 w-[38%] max-w-[170px]" data-depth="26">
-            <div class="glass rounded-[26px] p-2.5 bob" style="animation-delay:-1.2s">
-              <div class="rounded-2xl bg-white/85 p-3 space-y-2">
-                <div class="relative h-24 rounded-xl bg-gradient-to-br from-blue-50 to-blue-100 overflow-hidden grid place-items-center">
-                  <i data-lucide="qr-code" class="w-10 h-10 text-zura-navy"></i><span class="scanline"></span>
+              <div class="mt-4 grid grid-cols-3 gap-3">
+                <div class="hero-kpi">
+                  <div class="hero-kpi-label" data-en="Monthly sales">Penjualan bulanan</div>
+                  <div id="heroRevenue" class="hero-kpi-value">US$12,400</div>
                 </div>
-                <div class="h-2 rounded-full bg-slate-200 w-4/5"></div>
-                <div class="h-2 rounded-full bg-slate-200 w-3/5"></div>
-                <div class="flex items-center gap-1 text-[10px] font-bold text-emerald-600"><i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i><span data-en="Recorded">Tercatat</span></div>
+                <div class="hero-kpi">
+                  <div class="hero-kpi-label" data-en="Transactions">Transaksi</div>
+                  <div id="heroOrders" class="hero-kpi-value">186</div>
+                </div>
+                <div class="hero-kpi">
+                  <div class="hero-kpi-label" data-en="Time saved">Waktu hemat</div>
+                  <div id="heroSaved" class="hero-kpi-value">42h</div>
+                </div>
+              </div>
+
+              <div class="mt-4 grid grid-cols-12 gap-3">
+                <div class="col-span-12 sm:col-span-4 hero-panel">
+                  <div class="hero-panel-head">
+                    <div class="hero-panel-title" data-en="Automation mix">Komposisi otomasi</div>
+                    <span id="heroDonutChip" class="hero-badge">+18%</span>
+                  </div>
+                  <div class="grid place-items-center">
+                    <svg viewBox="0 0 160 160" class="w-[140px] h-[140px]" aria-hidden="true">
+                      <circle cx="80" cy="80" r="54" fill="none" stroke="#dbeafe" stroke-width="14"></circle>
+                      <circle id="heroDonutRing" class="hero-donut-ring" cx="80" cy="80" r="54" fill="none" stroke="url(#heroDonutGradient)" stroke-width="14" stroke-linecap="round" transform="rotate(-90 80 80)" stroke-dasharray="339.292" stroke-dashoffset="88"></circle>
+                      <defs>
+                        <linearGradient id="heroDonutGradient" x1="0" x2="1" y1="1" y2="0">
+                          <stop offset="0%" stop-color="#2563EB"></stop>
+                          <stop offset="100%" stop-color="#38BDF8"></stop>
+                        </linearGradient>
+                      </defs>
+                      <text id="heroDonutValue" x="80" y="74" class="hero-donut-center" font-size="28">74%</text>
+                      <text id="heroDonutLabel" x="80" y="98" class="hero-donut-sub" data-en="workflow automated">alur otomatis</text>
+                    </svg>
+                  </div>
+                  <ul class="hero-legend mt-1">
+                    <li><span data-en="Catalog & sales">Katalog & penjualan</span><span id="heroLegendA">42%</span></li>
+                    <li><span data-en="Reporting">Pelaporan</span><span id="heroLegendB">33%</span></li>
+                    <li><span data-en="Approvals">Approval</span><span id="heroLegendC">25%</span></li>
+                  </ul>
+                </div>
+
+                <div class="col-span-12 sm:col-span-8 hero-panel">
+                  <div class="hero-panel-head">
+                    <div>
+                      <div class="hero-panel-title" data-en="Revenue trend">Tren pendapatan</div>
+                      <div class="text-sm font-semibold text-slate-500" data-en="Last 6 periods · realistic growth">6 periode terakhir · pertumbuhan realistis</div>
+                    </div>
+                    <span id="heroLineChip" class="hero-badge">+12.4%</span>
+                  </div>
+                  <svg viewBox="0 0 320 160" class="hero-line-svg" preserveAspectRatio="none" aria-hidden="true">
+                    <defs>
+                      <linearGradient id="heroLineGradient" x1="0" x2="0" y1="0" y2="1">
+                        <stop offset="0%" stop-color="#60A5FA" stop-opacity="0.55"></stop>
+                        <stop offset="100%" stop-color="#60A5FA" stop-opacity="0"></stop>
+                      </linearGradient>
+                    </defs>
+                    <g>
+                      <line class="hero-line-grid" x1="10" y1="26" x2="310" y2="26"></line>
+                      <line class="hero-line-grid" x1="10" y1="62" x2="310" y2="62"></line>
+                      <line class="hero-line-grid" x1="10" y1="98" x2="310" y2="98"></line>
+                      <line class="hero-line-grid" x1="10" y1="134" x2="310" y2="134"></line>
+                    </g>
+                    <path id="heroLineArea" class="hero-line-area" d=""></path>
+                    <path id="heroLinePath" class="hero-line-path" d=""></path>
+                    <g id="heroLineDots"></g>
+                  </svg>
+                  <div class="hero-axis"><span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span><span>May</span><span>Jun</span></div>
+                </div>
+
+                <div class="col-span-12 sm:col-span-7 hero-panel">
+                  <div class="hero-panel-head">
+                    <div>
+                      <div class="hero-panel-title" data-en="Channel performance">Performa kanal</div>
+                      <div class="text-sm font-semibold text-slate-500" data-en="Traffic converted into actions">Traffic berubah jadi aksi</div>
+                    </div>
+                    <span id="heroBarChip" class="hero-badge">Live</span>
+                  </div>
+                  <div class="hero-bars">
+                    <div class="hero-bar-wrap"><div class="hero-bar-track"><div class="hero-bar" data-bar="0"></div></div><strong>WEB</strong></div>
+                    <div class="hero-bar-wrap"><div class="hero-bar-track"><div class="hero-bar" data-bar="1"></div></div><strong>YT</strong></div>
+                    <div class="hero-bar-wrap"><div class="hero-bar-track"><div class="hero-bar" data-bar="2"></div></div><strong>FB</strong></div>
+                    <div class="hero-bar-wrap"><div class="hero-bar-track"><div class="hero-bar" data-bar="3"></div></div><strong>WA</strong></div>
+                    <div class="hero-bar-wrap"><div class="hero-bar-track"><div class="hero-bar" data-bar="4"></div></div><strong>ADS</strong></div>
+                    <div class="hero-bar-wrap"><div class="hero-bar-track"><div class="hero-bar" data-bar="5"></div></div><strong>CRM</strong></div>
+                  </div>
+                </div>
+
+                <div class="col-span-12 sm:col-span-5 hero-panel">
+                  <div class="hero-panel-head">
+                    <div>
+                      <div class="hero-panel-title" data-en="Market reach">Jangkauan pasar</div>
+                      <div class="text-sm font-semibold text-slate-500" data-en="From Indonesia to cross-border buyers">Dari Indonesia ke pembeli lintas negara</div>
+                    </div>
+                    <span class="hero-badge" data-en="Map view">Peta</span>
+                  </div>
+                  <div class="hero-map">
+                    <svg viewBox="0 0 280 160" aria-hidden="true">
+                      <g fill="#c7d2fe" opacity=".6">
+                        <path d="M28 55c12-18 34-30 60-27 16 2 22 10 31 14 10 5 18 2 28 1 16-2 33 0 45 8 6 4 14 11 28 11 10 0 23-4 32 2 12 7 14 25 4 35-10 11-32 12-46 9-17-4-25-14-43-17-20-4-35 3-48 10-15 8-31 17-53 15-18-1-37-13-43-30-5-14-2-21 5-31z"></path>
+                        <path d="M168 100c6 4 10 10 10 16 0 10-10 17-22 17-13 0-23-7-23-17 0-7 4-11 10-16z" opacity=".7"></path>
+                      </g>
+                      <path d="M25 84c24 16 54 18 83 10 28-8 47-27 78-25 18 1 30 10 52 8" fill="none" stroke="#2563EB" stroke-width="3" stroke-linecap="round" class="flow"></path>
+                    </svg>
+                    <span class="hero-hotspot" style="left:24%; top:43%;"></span>
+                    <span class="hero-hotspot alt" style="left:50%; top:54%; animation-delay:-.8s;"></span>
+                    <span class="hero-hotspot" style="left:75%; top:38%; animation-delay:-1.2s;"></span>
+                  </div>
+                  <div class="hero-map-legend">
+                    <div><span>ID</span><strong id="heroMarketId">68%</strong></div>
+                    <div><span>SEA</span><strong id="heroMarketSea">20%</strong></div>
+                    <div><span>GLOBAL</span><strong id="heroMarketGlobal">12%</strong></div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
 
-          <!-- Chips -->
-          <div class="layer absolute right-0 top-0 sm:right-1" data-depth="40">
-            <div class="glass rounded-2xl px-3.5 py-2.5 flex items-center gap-2 text-[11px] sm:text-xs font-bold text-zura-navy bob" style="animation-delay:-2.4s">
-              <span class="w-7 h-7 rounded-lg bg-blue-600 text-white grid place-items-center"><i data-lucide="mail-check" class="w-4 h-4"></i></span><span data-en="Report sent automatically">Laporan terkirim otomatis</span>
+          <div class="layer absolute left-0 sm:left-3 bottom-2 w-[40%] max-w-[200px]" data-depth="22">
+            <div class="glass hero-mini-card rounded-[28px] p-3 bob" style="animation-delay:-1.15s">
+              <div class="rounded-[22px] bg-white/88 p-3.5 space-y-3">
+                <div class="flex items-center justify-between"><span class="hero-mini-stat" data-en="Capture">Input</span><span class="text-[10px] font-bold text-emerald-600 bg-emerald-50 rounded-full px-2 py-1">SYNC</span></div>
+                <div class="relative h-24 rounded-2xl bg-gradient-to-br from-blue-50 to-blue-100 overflow-hidden grid place-items-center">
+                  <i data-lucide="qr-code" class="w-11 h-11 text-zura-navy"></i><span class="scanline"></span>
+                </div>
+                <div class="hero-mini-value" id="heroMiniValue">184</div>
+                <div class="text-xs font-semibold text-slate-500" data-en="Records updated this week">data masuk minggu ini</div>
+              </div>
             </div>
           </div>
-          <div class="layer absolute right-2 bottom-8 sm:bottom-12" data-depth="34">
-            <div class="glass rounded-2xl px-3.5 py-2.5 flex items-center gap-2 text-[11px] sm:text-xs font-bold text-zura-navy bob" style="animation-delay:-.6s">
-              <span class="w-7 h-7 rounded-lg bg-zura-navy text-white grid place-items-center"><i data-lucide="refresh-cw" class="w-4 h-4 spin-slow"></i></span><span data-en="Data in sync">Data tersinkron</span>
+
+          <div class="layer absolute right-0 top-0 sm:right-1" data-depth="38">
+            <div class="glass hero-float rounded-2xl px-3.5 py-2.5 flex items-center gap-2 text-[11px] sm:text-xs font-bold text-zura-navy bob" style="animation-delay:-2.2s">
+              <span class="w-7 h-7 rounded-lg bg-blue-600 text-white grid place-items-center"><i data-lucide="mail-check" class="w-4 h-4"></i></span><span data-en="Reports generated automatically">Laporan dibuat otomatis</span>
+            </div>
+          </div>
+          <div class="layer absolute right-0 bottom-6 sm:bottom-9" data-depth="32">
+            <div class="glass hero-float rounded-2xl px-3.5 py-2.5 flex items-center gap-2 text-[11px] sm:text-xs font-bold text-zura-navy bob" style="animation-delay:-.55s">
+              <span class="w-7 h-7 rounded-lg bg-zura-navy text-white grid place-items-center"><i data-lucide="refresh-cw" class="w-4 h-4 spin-slow"></i></span><span data-en="Data stays in sync">Data selalu sinkron</span>
             </div>
           </div>
         </div>
-      </div>
-    </div>
+      </div>    </div>
   </section>
 
   <!-- Tech marquee -->
@@ -957,6 +1109,7 @@ function applyLang() {
     el.placeholder = LANG === 'en' ? el.dataset.enPh : el.dataset.phId;
   });
   renderDynamic();
+  if (typeof applyHeroDataset === 'function') applyHeroDataset(HERO_DASH_INDEX || 0);
 }
 $('#langBtn').addEventListener('click', () => {
   LANG = LANG === 'id' ? 'en' : 'id';
@@ -1459,12 +1612,67 @@ addEventListener('resize', onScroll);
 $('#menuBtn').addEventListener('click', () => { const m = $('#mobileMenu'); m.style.display = m.style.display === 'none' ? 'block' : 'none'; });
 $$('.m-link').forEach(a => a.addEventListener('click', () => { $('#mobileMenu').style.display = 'none'; }));
 
+/* ======================= Hero dashboard ======================= */
+let HERO_DASH_INDEX = 0;
+const HERO_DASH = [
+  { revenue: 12400, orders: 186, saved: 42, donut: 74, donutLabel: {id:'alur otomatis', en:'workflow automated'}, donutParts:[42,33,25], chip:'+18%', lineChip:'+12.4%', bars:[62,74,58,86,72,91], line:[32,38,36,44,49,52], market:[68,20,12] },
+  { revenue: 13750, orders: 204, saved: 47, donut: 78, donutLabel: {id:'tugas otomatis', en:'tasks automated'}, donutParts:[45,31,24], chip:'+21%', lineChip:'+15.1%', bars:[66,79,64,90,75,94], line:[35,41,39,48,52,58], market:[64,23,13] },
+  { revenue: 14980, orders: 228, saved: 53, donut: 81, donutLabel: {id:'proses otomatis', en:'processes automated'}, donutParts:[47,29,24], chip:'+24%', lineChip:'+18.7%', bars:[70,83,68,94,79,97], line:[38,45,43,51,57,63], market:[60,25,15] }
+];
+function linePath(values, w=320, h=160, padX=10, padY=18) {
+  const usableW = w - padX * 2, usableH = h - padY * 2;
+  const max = Math.max(...values), min = Math.min(...values);
+  const range = Math.max(8, max - min);
+  const pts = values.map((v, i) => {
+    const x = padX + usableW * (i / (values.length - 1));
+    const y = h - padY - ((v - min) / range) * usableH;
+    return [x, y];
+  });
+  const d = pts.map((p, i) => `${i ? 'L' : 'M'}${p[0].toFixed(1)} ${p[1].toFixed(1)}`).join(' ');
+  const area = d + ` L ${pts[pts.length - 1][0].toFixed(1)} ${(h - padY).toFixed(1)} L ${pts[0][0].toFixed(1)} ${(h - padY).toFixed(1)} Z`;
+  return { d, area, pts };
+}
+function formatUSD(v) { return 'US$' + Number(v).toLocaleString('en-US'); }
+function applyHeroDataset(idx=0) {
+  HERO_DASH_INDEX = idx % HERO_DASH.length;
+  const data = HERO_DASH[HERO_DASH_INDEX];
+  const ring = $('#heroDonutRing');
+  if (!ring) return;
+  const circ = 339.292;
+  $('#heroRevenue').textContent = formatUSD(data.revenue);
+  $('#heroOrders').textContent = data.orders.toLocaleString('en-US');
+  $('#heroSaved').textContent = data.saved + 'h';
+  $('#heroMiniValue').textContent = data.orders.toLocaleString('en-US');
+  $('#heroDonutValue').textContent = data.donut + '%';
+  $('#heroDonutLabel').textContent = LANG === 'id' ? data.donutLabel.id : data.donutLabel.en;
+  $('#heroDonutChip').textContent = data.chip;
+  $('#heroLineChip').textContent = data.lineChip;
+  ring.style.strokeDashoffset = (circ * (1 - data.donut / 100)).toFixed(2);
+  ['A','B','C'].forEach((k,i) => { const el = $('#heroLegend'+k); if (el) el.textContent = data.donutParts[i] + '%'; });
+  const geom = linePath(data.line);
+  $('#heroLinePath').setAttribute('d', geom.d);
+  $('#heroLineArea').setAttribute('d', geom.area);
+  $('#heroLineDots').innerHTML = geom.pts.map(([x,y]) => `<circle class="hero-line-dot" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="4.5"></circle>`).join('');
+  $$('[data-bar]').forEach((bar,i) => { bar.style.height = (data.bars[i] || 20) + '%'; });
+  $('#heroBarChip').textContent = 'Live';
+  $('#heroMarketId').textContent = data.market[0] + '%';
+  $('#heroMarketSea').textContent = data.market[1] + '%';
+  $('#heroMarketGlobal').textContent = data.market[2] + '%';
+}
+function initHeroDashboard() {
+  applyHeroDataset(0);
+  if (REDUCED) return;
+  let idx = 0;
+  setInterval(() => { idx = (idx + 1) % HERO_DASH.length; applyHeroDataset(idx); }, 3400);
+}
+
 /* ======================= Init ======================= */
 window.addEventListener('DOMContentLoaded', () => {
   $('#yr').textContent = new Date().getFullYear();
   wireLinks();
   renderYT();
   applyLang();       // juga memanggil renderDynamic()
+  initHeroDashboard();
   loadChannel();
   loadHomeProducts();
   activatePath('shop', false);
