@@ -54,10 +54,10 @@
       "terms": "Persyaratan Penggunaan\n\n- Platform: Google Apps Script dan Google Sheets.\n\n- Akun: Memerlukan akun Google dengan izin untuk menggunakan Apps Script dan melakukan deployment Web App.\n\n- Penggunaan kasir: Konfigurasi standar ditujukan untuk satu kasir aktif. Penggunaan multi-kasir memerlukan konfigurasi tambahan.\n\n- Koneksi internet: Diperlukan untuk mengakses aplikasi dan layanan Google terkait.\n\n- Kuota platform: Penggunaan tunduk pada batas layanan, kuota, dan kebijakan Google yang berlaku.\n\n- Perangkat cetak: Fitur pencetakan struk memerlukan printer dan konfigurasi perangkat yang kompatibel.\n\n Ketentuan Produk\n\nProduk digital\n\n- Pembelian memberikan akses ke template aplikasi dan materi pendukung yang disertakan. Tidak termasuk perangkat keras kasir.\n\nLisensi penggunaan\n\n- Template ditujukan untuk penggunaan oleh pembeli sesuai ketentuan lisensi Zuralogic. Pembelian tidak otomatis memberikan hak untuk menjual ulang atau mendistribusikan template kepada pihak lain.\n\nPengembangan tambahan\n\n- Kustomisasi fitur, integrasi khusus, dan perubahan workflow di luar paket standar merupakan layanan terpisah.\n\nLayanan setup\n\n- Pembeli dapat melakukan instalasi secara mandiri. Bantuan instalasi oleh tim Zuralogic tersedia sebagai layanan opsional berbayar.\n\nBiaya platform\n\n- Tidak ada biaya langganan template bulanan dari Zuralogic. Biaya layanan Google atau pihak ketiga, jika berlaku, mengikuti kebijakan penyedia layanan masing-masing.\n\nPengembalian dana\n\n- Permintaan pengembalian dana ditangani berdasarkan ketentuan pembelian dan peraturan perlindungan konsumen yang berlaku.\n\nDukungan\n\n- Untuk pertanyaan produk, kendala akses, atau kebutuhan pengembangan tambahan, hubungi:\n\nWhatsApp Zuralogic: https://wa.me/6282177755114\n\nZuralogic — Work Smarter. Automate Better. Scale Further.",
       "normalPrice": 374900,
       "promoPrice": 299900,
-      "usdNormalPrice": null,
-      "usdPromoPrice": null,
+      "usdNormalPrice": 28,
+      "usdPromoPrice": 22,
       "checkoutUrl": "https://zurastore.myr.id/pl/zura-sm-aplikasi-manajemen-toko-berbasis-web/",
-      "lemonCheckoutUrl": "",
+      "lemonCheckoutUrl": "https://zurashop.lemonsqueezy.com/checkout/buy/57a199cb-e12e-4e75-9ee0-9cb01165e0b3",
       "cover": "assets/products/pmwatjv35rtz/n2u4pof5.webp",
       "images": [
         "assets/products/pmwatjv35rtz/ys1vsbw3.webp"
@@ -65,8 +65,8 @@
       "shareImage": "assets/product-share/pmwatjv35rtz.jpg",
       "published": true,
       "createdAt": "2026-11-10T15:41:25.484Z",
-      "updatedAt": "2026-11-11T16:43:11.295Z"
+      "updatedAt": "2026-11-12T02:01:03.390Z"
     }
   ],
-  "updatedAt": "2026-11-11T16:43:11.295Z"
+  "updatedAt": "2026-11-12T02:01:03.390Z"
 }
