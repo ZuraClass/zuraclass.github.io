@@ -167,63 +167,106 @@
     .faq-grid details summary::after { content:'+'; color:#2563EB; font-size:24px; font-weight:400; line-height:1; }
     .faq-grid details[open] summary::after { content:'−'; }
     .faq-grid details p { padding:0 20px 20px; margin:0; color:#475569; font-size:14px; line-height:1.8; }
-    /* ---------- Hero CTA + live dashboard ---------- */
-    .hero-cta-grid { display:grid; gap:12px; max-width: 820px; }
-    .hero-cta { min-height: 68px; width:100%; padding: 14px 20px; border-radius: 20px; display:flex; align-items:center; justify-content:center; gap:10px; font-weight: 800; transition: transform .22s ease, box-shadow .22s ease, background-color .22s ease, border-color .22s ease; }
-    .hero-cta:hover { transform: translateY(-2px); }
-    .hero-cta-primary { background:#0A1931; color:#fff; box-shadow: 0 18px 34px -18px rgba(10,25,49,.55); }
-    .hero-cta-primary:hover { background:#1d4ed8; }
-    .hero-cta-secondary { color:#0A1931; border:1px solid rgba(96,165,250,.34); }
-    .hero-cta-secondary:hover { border-color:#60A5FA; }
-    .hero-cta-tertiary { background: rgba(255,255,255,.88); border:1px solid rgba(191,219,254,.95); color:#0A1931; }
-    .hero-cta-tertiary:hover { background: #EFF6FF; }
-    @media (max-width: 639px) { .hero-cta-grid { grid-template-columns:1fr; } }
-    @media (min-width: 640px) and (max-width: 1023px) {
-      .hero-cta-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
-      .hero-cta-grid .hero-cta:nth-child(3) { grid-column: 1 / -1; max-width: 250px; justify-self: start; }
+    /* ================================================
+       ZURALOGIC HERO V3 — conversion-first, SVG-only
+       ================================================ */
+    .zl-hero { position:relative; isolation:isolate; }
+    .zl-hero-grid { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.06fr); align-items:center; gap:clamp(34px,3.1vw,58px); }
+    .zl-hero-copy { min-width:0; }
+    .zl-hero-kicker { display:inline-flex; align-items:center; gap:10px; border:1px solid #c6d9ff; background:rgba(255,255,255,.8); color:#255bcb; border-radius:999px; padding:8px 14px; font-size:11px; font-weight:850; letter-spacing:.12em; text-transform:uppercase; }
+    .zl-hero-kicker i { display:block; width:8px; height:8px; border-radius:50%; background:#387cf5; box-shadow:0 0 0 4px #dbeafe; }
+    .zl-hero-title { margin:22px 0 0; max-width:630px; font-family:'Sora','Inter',sans-serif; font-weight:800; font-size:clamp(38px,3.8vw,57px); line-height:1.09; letter-spacing:-.055em; color:#0a1931; text-wrap:balance; }
+    .zl-hero-title em { font-style:normal; color:#3067e7; background:linear-gradient(110deg,#1d4ed8,#3b82f6 62%,#06b6d4); background-clip:text; -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    .zl-hero-lead { max-width:580px; font-size:clamp(15px,1.16vw,17px); line-height:1.82; color:#53647e; margin:21px 0 0; }
+    .zl-hero-actions { margin-top:29px; display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
+    .zl-action { position:relative; min-width:0; min-height:84px; display:flex; align-items:center; text-align:left; gap:12px; padding:15px 15px; border-radius:19px; border:1px solid #cfdcf0; background:rgba(255,255,255,.84); color:#0a1931; font-family:inherit; cursor:pointer; transition:transform .22s ease, box-shadow .22s ease, border-color .22s ease, background .22s ease; }
+    .zl-action:hover { transform:translateY(-3px); border-color:#93b4ef; box-shadow:0 15px 28px -20px rgba(10,25,49,.4); }
+    .zl-action:active { transform:translateY(-1px); }
+    .zl-action-primary { background:#0a1931; color:#fff; border-color:#0a1931; box-shadow:0 18px 32px -18px rgba(10,25,49,.65); }
+    .zl-action-primary:hover { border-color:#2563eb; background:#172e61; box-shadow:0 18px 32px -16px rgba(37,99,235,.5); }
+    .zl-action-icon { display:grid; place-items:center; width:38px; height:38px; flex:none; border-radius:11px; background:rgba(255,255,255,.12); color:#fff; }
+    .zl-action-secondary .zl-action-icon { background:#e8f0ff; color:#2563eb; }
+    .zl-action-text { min-width:0; flex:1; display:grid; gap:4px; }
+    .zl-action-title { font-weight:850; font-size:13px; line-height:1.35; }
+    .zl-action-description { font-size:11px; line-height:1.4; font-weight:550; color:#adbedb; }
+    .zl-action-secondary .zl-action-description { color:#718096; }
+    .zl-action-arrow { flex:none; opacity:.8; }
+    .zl-hero-learn { display:inline-flex; align-items:center; gap:9px; margin-top:18px; font-size:13px; color:#245ed5; font-weight:780; text-decoration:none; transition:gap .2s,color .2s; }
+    .zl-hero-learn:hover { gap:14px; color:#0a1931; }
+    .zl-hero-proof { display:flex; align-items:center; flex-wrap:wrap; column-gap:18px; row-gap:10px; margin-top:24px; padding-top:18px; border-top:1px solid #d7e4f6; }
+    .zl-hero-proof span { display:inline-flex; align-items:center; gap:7px; font-size:11px; color:#64748b; font-weight:700; }
+    .zl-hero-proof svg { width:16px; height:16px; color:#1eaf81; flex:none; }
+    .zl-hero-preview { min-width:0; position:relative; }
+    .zl-hero-preview::before { content:''; position:absolute; inset:10% -2% 2% 4%; border-radius:34px; background:linear-gradient(135deg,#cfe4ff,#edf8ff); filter:blur(34px); opacity:.7; pointer-events:none; z-index:-1; }
+    .zl-dashboard { position:relative; isolation:isolate; width:100%; color:#eef6ff; border-radius:28px; padding:18px; overflow:hidden; background:linear-gradient(148deg,#142746 0%,#0a1931 58%,#0c2350 100%); border:1px solid rgba(118,178,255,.28); box-shadow:0 30px 70px -32px rgba(10,25,49,.66), inset 0 1px 0 rgba(215,237,255,.12); }
+    .zl-dashboard::before { content:''; position:absolute; width:300px; height:300px; top:-155px; right:-125px; pointer-events:none; border-radius:50%; background:radial-gradient(circle,rgba(59,130,246,.22),transparent 68%); }
+    .zl-board-head { position:relative; display:flex; justify-content:space-between; align-items:center; gap:12px; }
+    .zl-board-app { display:flex; gap:10px; align-items:center; min-width:0; }
+    .zl-board-logo { display:grid; place-items:center; flex:none; width:38px; height:38px; border:1px solid rgba(125,207,255,.34); background:linear-gradient(145deg,#2858a4,#153257); border-radius:12px; color:#b1e2ff; }
+    .zl-board-overline { color:#85a5ce; font-size:9px; font-weight:800; letter-spacing:.17em; text-transform:uppercase; }
+    .zl-board-heading { color:#fff; margin-top:3px; font-size:14px; font-weight:800; }
+    .zl-board-pill { font-size:9px; letter-spacing:.1em; font-weight:850; color:#b9e2ff; background:#15355c; padding:7px 10px; border:1px solid #2b527f; border-radius:999px; white-space:nowrap; }
+    .zl-board-tabs { display:flex; gap:5px; border-radius:13px; padding:4px; margin-top:16px; border:1px solid rgba(144,183,237,.17); background:rgba(255,255,255,.04); }
+    .zl-board-tabs button { border:1px solid transparent; border-radius:10px; flex:1; min-width:0; cursor:pointer; padding:8px 6px; color:#9cb9dc; font-size:11px; font-weight:800; background:transparent; transition:background .2s,color .2s,box-shadow .2s; }
+    .zl-board-tabs button[aria-pressed="true"] { color:#fff; background:#244b86; border-color:rgba(148,192,249,.24); box-shadow:0 2px 10px rgba(4,12,35,.26); }
+    .zl-board-tabs button:focus-visible { outline:2px solid #7dd3fc; outline-offset:2px; }
+    .zl-demo-kpis { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:9px; margin-top:14px; }
+    .zl-demo-kpi { min-width:0; min-height:74px; padding:12px 11px; border:1px solid rgba(125,165,223,.18); border-radius:15px; background:rgba(248,252,255,.06); }
+    .zl-demo-kpi small { display:block; color:#9cb7d6; font-size:10px; font-weight:650; line-height:1.4; }
+    .zl-demo-kpi strong { display:block; margin-top:6px; font-family:'Sora','Inter',sans-serif; color:#fff; font-size:clamp(14px,1.5vw,20px); font-weight:800; letter-spacing:-.04em; line-height:1.2; white-space:nowrap; }
+    .zl-demo-grid { display:grid; grid-template-columns:minmax(0,1.17fr) minmax(0,.83fr); gap:10px; margin-top:10px; }
+    .zl-demo-panel { min-width:0; border-radius:16px; background:rgba(255,255,255,.055); border:1px solid rgba(133,180,241,.16); padding:13px; }
+    .zl-demo-panel-head { display:flex; justify-content:space-between; align-items:center; gap:8px; margin-bottom:9px; }
+    .zl-demo-panel h3 { color:#e2edff; font-size:11px; font-weight:780; margin:0; }
+    .zl-demo-trend { color:#6ee7c2; font-size:10px; white-space:nowrap; font-weight:800; }
+    .zl-line-svg { display:block; width:100%; height:112px; overflow:visible; }
+    .zl-line-grid { stroke:#345071; stroke-width:1; stroke-dasharray:3 5; opacity:.8; }
+    .zl-line-path { fill:none; stroke:#60b8ff; stroke-width:3.5; stroke-linecap:round; stroke-linejoin:round; filter:drop-shadow(0 0 3px rgba(96,184,255,.3)); }
+    .zl-line-area { fill:url(#zlHeroArea); opacity:.92; }
+    .zl-line-point { fill:#0c2241; stroke:#a5e4ff; stroke-width:2.5; }
+    .zl-chart-axis { display:flex; justify-content:space-between; font-size:9px; font-weight:650; color:#8eabc9; margin-top:0; }
+    .zl-donut-wrap { display:flex; align-items:center; justify-content:center; gap:6px; }
+    .zl-donut-svg { width:104px; height:104px; flex:none; }
+    .zl-donut-seg { stroke-linecap:round; transition:stroke-dasharray .75s ease,stroke-dashoffset .75s ease; }
+    .zl-donut-big { font-size:25px; font-weight:800; fill:#fff; font-family:'Sora','Inter',sans-serif; text-anchor:middle; }
+    .zl-donut-small { font-size:9px; font-weight:650; fill:#8fb1d6; text-anchor:middle; }
+    .zl-donut-legend { list-style:none; padding:0; margin:0; min-width:0; flex:1; }
+    .zl-donut-legend li { display:flex; align-items:center; gap:7px; color:#a9c1dc; font-size:9.5px; line-height:1.45; margin:5px 0; }
+    .zl-donut-dot { width:7px; height:7px; flex:none; border-radius:50%; }
+    .zl-donut-legend span:last-child { margin-left:auto; padding-left:3px; font-weight:850; color:#fff; }
+    .zl-bars { display:grid; grid-template-columns:repeat(7,minmax(0,1fr)); gap:8px; height:77px; align-items:end; }
+    .zl-bar-col { min-width:0; display:flex; flex-direction:column; justify-content:end; align-items:center; gap:5px; height:100%; }
+    .zl-bar-shell { height:61px; width:min(100%,31px); border-radius:7px 7px 4px 4px; overflow:hidden; background:rgba(147,197,253,.08); display:flex; align-items:flex-end; }
+    .zl-bar-fill { height:35%; width:100%; background:linear-gradient(180deg,#72ceff,#3669e9); border-radius:7px 7px 4px 4px; transition:height .7s cubic-bezier(.16,1,.3,1); }
+    .zl-bar-col:nth-child(5) .zl-bar-fill { background:linear-gradient(180deg,#9de4ff,#4b87ef); }
+    .zl-bar-col small { font-size:9px; font-weight:650; color:#88a5c7; }
+    .zl-bars-sub { color:#84a2c8; font-size:9px; margin-top:6px; }
+    .zl-demo-foot { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-top:12px; padding-top:11px; border-top:1px solid rgba(154,199,250,.13); color:#8ba9c9; font-size:9px; }
+    .zl-demo-foot strong { display:inline-flex; align-items:center; gap:6px; font-weight:750; color:#b9d6f4; }
+    .zl-demo-foot strong::before { content:''; display:block; width:6px; height:6px; border-radius:50%; background:#52d6b3; }
+    .zl-hero-smallprint { display:flex; justify-content:space-between; margin:12px 0 0; align-items:center; gap:12px; padding:0 5px; color:#6b85a7; font-size:10px; font-weight:650; }
+    .zl-hero-smallprint em { font-style:normal; color:#3b71d7; }
+    @media (max-width:1199px) {
+      .zl-hero-grid { grid-template-columns:minmax(0,1fr); gap:35px; }
+      .zl-hero-copy { max-width:700px; }
+      .zl-hero-preview { width:min(100%,690px); margin-inline:auto; }
     }
-    @media (min-width: 1024px) { .hero-cta-grid { grid-template-columns: minmax(0,1.12fr) minmax(0,1.12fr) minmax(220px,.88fr); align-items:stretch; } }
-
-    .hero-board { position: relative; overflow: hidden; }
-    .hero-board::after { content:''; position:absolute; inset:auto -14% -38% auto; width: 240px; height: 240px; border-radius: 999px; background: radial-gradient(circle, rgba(56,189,248,.16), transparent 68%); pointer-events:none; }
-    .hero-kpi { background: linear-gradient(135deg, rgba(255,255,255,.88), rgba(239,246,255,.62)); border:1px solid rgba(191,219,254,.85); border-radius: 18px; padding: 12px 14px; }
-    .hero-kpi-label { font-size: 11px; text-transform: uppercase; letter-spacing: .14em; font-weight: 800; color:#64748b; }
-    .hero-kpi-value { margin-top: 8px; font-family: 'Sora','Inter',sans-serif; font-size: clamp(18px, 2vw, 24px); font-weight: 800; color:#0A1931; line-height:1; }
-    .hero-panel { background: linear-gradient(135deg, rgba(255,255,255,.92), rgba(248,250,252,.76)); border:1px solid rgba(219,234,254,.96); border-radius: 22px; padding: 14px; box-shadow: inset 0 1px 0 rgba(255,255,255,.95); }
-    .hero-panel-title { font-size: 11px; text-transform: uppercase; letter-spacing: .15em; font-weight: 800; color:#64748b; }
-    .hero-panel-head { display:flex; align-items:center; justify-content:space-between; gap:8px; margin-bottom: 10px; }
-    .hero-badge { font-size: 11px; font-weight: 800; color:#2563EB; background: rgba(219,234,254,.88); border:1px solid #bfdbfe; border-radius: 999px; padding: 4px 8px; }
-    .hero-donut-ring { transition: stroke-dashoffset .9s cubic-bezier(.16,1,.3,1); }
-    .hero-donut-center { text-anchor: middle; dominant-baseline: middle; font-family: 'Sora','Inter',sans-serif; font-weight: 800; fill:#0A1931; }
-    .hero-donut-sub { text-anchor: middle; fill:#64748b; font-size: 11px; font-weight: 700; }
-    .hero-legend li { display:flex; align-items:center; justify-content:space-between; gap:10px; font-size: 12px; color:#475569; padding-top: 6px; }
-    .hero-legend span:last-child { font-weight: 800; color:#0A1931; }
-    .hero-line-svg { width:100%; height: 160px; }
-    .hero-line-area { fill: url(#heroLineGradient); opacity: .28; }
-    .hero-line-path { fill: none; stroke:#2563EB; stroke-width:3.2; stroke-linecap:round; stroke-linejoin:round; }
-    .hero-line-dot { fill:#fff; stroke:#2563EB; stroke-width:2.5; }
-    .hero-line-grid { stroke:#dbeafe; stroke-width:1; }
-    .hero-axis { display:flex; justify-content:space-between; font-size: 11px; font-weight: 700; color:#94a3b8; margin-top: 8px; }
-    .hero-bars { display:grid; grid-template-columns: repeat(6, minmax(0,1fr)); gap:10px; align-items:end; height: 136px; }
-    .hero-bar-wrap { display:flex; flex-direction:column; align-items:center; gap:8px; }
-    .hero-bar-track { width:100%; height: 112px; border-radius: 14px 14px 8px 8px; background: linear-gradient(180deg, rgba(239,246,255,.72), rgba(226,232,240,.46)); display:flex; align-items:flex-end; overflow:hidden; }
-    .hero-bar { width:100%; height: 20%; border-radius: 14px 14px 8px 8px; background: linear-gradient(180deg, #93C5FD, #3B82F6 55%, #0A1931 100%); box-shadow: 0 16px 24px -18px rgba(37,99,235,.65); transition: height .85s cubic-bezier(.16,1,.3,1); }
-    .hero-bar-wrap strong { font-size: 10px; letter-spacing: .08em; text-transform: uppercase; color:#94a3b8; }
-    .hero-map { position:relative; height: 136px; border-radius: 18px; overflow:hidden; background: radial-gradient(circle at 80% 20%, rgba(59,130,246,.14), transparent 28%), linear-gradient(180deg, #f8fbff, #eef4ff); }
-    .hero-map svg { position:absolute; inset:0; width:100%; height:100%; }
-    .hero-hotspot { position:absolute; width:10px; height:10px; border-radius:999px; background:#2563EB; box-shadow: 0 0 0 4px rgba(37,99,235,.14); }
-    .hero-hotspot::after { content:''; position:absolute; inset:-7px; border-radius:999px; border:2px solid rgba(37,99,235,.34); animation: ping2 2.4s ease-out infinite; }
-    .hero-hotspot.alt { background:#38BDF8; box-shadow: 0 0 0 4px rgba(56,189,248,.16); }
-    .hero-map-legend { display:grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap:8px; margin-top: 10px; }
-    .hero-map-legend div { border-radius: 14px; background: rgba(255,255,255,.72); border:1px solid #dbeafe; padding: 8px; }
-    .hero-map-legend span { display:block; font-size: 10px; letter-spacing:.1em; text-transform:uppercase; color:#64748b; font-weight:800; }
-    .hero-map-legend strong { display:block; margin-top:4px; font-size: 15px; font-family:'Sora','Inter',sans-serif; font-weight:800; color:#0A1931; }
-    .hero-float { white-space:nowrap; box-shadow: 0 20px 40px -24px rgba(10,25,49,.34); }
-    .hero-mini-card { min-width: 180px; }
-    .hero-mini-stat { font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color:#64748b; font-weight:800; }
-    .hero-mini-value { font-family:'Sora','Inter',sans-serif; font-size: 26px; font-weight:800; color:#0A1931; line-height:1; }
-    @media (max-width: 1023px) {
-      .hero-float { transform:none !important; }
+    @media (max-width:639px) {
+      .zl-hero-title { font-size:clamp(34px,9.2vw,44px); }
+      .zl-hero-actions { grid-template-columns:minmax(0,1fr); }
+      .zl-action { min-height:66px; }
+      .zl-dashboard { padding:13px; border-radius:22px; }
+      .zl-demo-kpis { gap:6px; }
+      .zl-demo-kpi { padding:10px 8px; min-height:71px; }
+      .zl-demo-kpi strong { font-size:clamp(14px,3.8vw,20px); }
+      .zl-demo-grid { grid-template-columns:minmax(0,1fr); }
+      .zl-demo-panel { padding:12px; }
+      .zl-line-svg { height:115px; }
+      .zl-donut-wrap { justify-content:flex-start; gap:14px; }
+      .zl-hero-smallprint { flex-direction:column; align-items:flex-start; }
+    }
+    @media (prefers-reduced-motion:reduce) {
+      .zl-action,.zl-donut-seg,.zl-bar-fill { transition:none !important; }
     }
     :focus-visible { outline: 3px solid #38BDF8; outline-offset: 3px; }
     @media (max-width: 640px) { .shop-actions a { width:100%; } }
@@ -313,186 +356,96 @@
 
   <main id="main">
   <!-- =====================================================================
-       HERO
+       HERO V3 · premium layout + practical conversion paths
        ===================================================================== -->
-  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 sm:pt-14 lg:pt-16 pb-10">
-    <div class="grid lg:grid-cols-12 gap-10 lg:gap-6 items-center">
-
-      <div class="lg:col-span-6 relative z-10">
-        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full glass text-[11px] sm:text-xs font-extrabold tracking-[.12em] uppercase text-blue-700 reveal">
-          <span class="relative flex w-2 h-2"><span class="absolute inset-0 rounded-full bg-blue-500 ping2"></span><span class="relative w-2 h-2 rounded-full bg-blue-600"></span></span>
-          <span data-en="Digital products · Systems · Learning">Produk digital · Sistem · Edukasi</span>
-        </div>
-        <h1 class="font-display mt-5 text-[34px] sm:text-5xl lg:text-[54px] font-extrabold text-zura-navy leading-[1.1] tracking-tight reveal" style="--d:80ms">
-          <span data-en="Practical systems for">Sistem praktis untuk</span><br />
-          <span class="text-grad" data-en="real business growth.">bisnis yang berkembang.</span>
+  <section id="hero" class="zl-hero max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 sm:pt-14 xl:pt-16 pb-12">
+    <div class="zl-hero-grid">
+      <div class="zl-hero-copy relative z-10">
+        <div class="zl-hero-kicker reveal"><i aria-hidden="true"></i><span data-en="Digital products · Custom systems · Learning">Produk digital · Sistem custom · Edukasi</span></div>
+        <h1 class="zl-hero-title reveal" style="--d:80ms">
+          <span data-en="Business systems">Sistem bisnis yang</span><br>
+          <em data-en="that simplify real work.">mempermudah kerja nyata.</em>
         </h1>
-        <p class="mt-5 text-base sm:text-lg text-slate-600 leading-relaxed max-w-xl reveal" style="--d:160ms" data-en="Explore ready-to-use apps, build a solution for your workflow, or learn the skills yourself. Made in Indonesia. Built for businesses everywhere.">Temukan aplikasi siap pakai, bangun sistem sesuai alur kerja, atau pelajari cara membuatnya sendiri. Dibangun di Indonesia, untuk bisnis di mana saja.</p>
-        <div class="mt-7 hero-cta-grid reveal" style="--d:240ms">
-          <a href="/products/" data-track="hero_shop" class="hero-cta hero-cta-primary group"><i data-lucide="shopping-bag" class="w-5 h-5"></i><span data-en="Explore products">Jelajahi produk</span><i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition"></i></a>
-          <button data-path="build" data-track="hero_build" class="hero-cta hero-cta-secondary glass group"><i data-lucide="workflow" class="w-5 h-5 text-blue-600"></i><span data-en="Build a custom system">Buat sistem custom</span></button>
-          <a href="#youtube" data-track="hero_learn" class="hero-cta hero-cta-tertiary group"><i data-lucide="graduation-cap" class="w-5 h-5 text-blue-600"></i><span data-en="Learn for free">Belajar gratis</span></a>
+        <p class="zl-hero-lead reveal" style="--d:150ms" data-en="Find ready-to-use apps, simplify your daily workflow with a custom solution, or build the skills yourself. Practical technology, made in Indonesia for businesses worldwide.">Temukan aplikasi siap pakai, sederhanakan operasional lewat solusi custom, atau pelajari cara membangunnya sendiri. Teknologi praktis dari Indonesia untuk bisnis di mana saja.</p>
+        <div class="zl-hero-actions reveal" style="--d:220ms">
+          <a href="/products/" data-track="hero_shop" class="zl-action zl-action-primary group">
+            <span class="zl-action-icon"><i data-lucide="shopping-bag" class="w-5 h-5"></i></span>
+            <span class="zl-action-text"><span class="zl-action-title" data-en="Explore products">Jelajahi produk</span><span class="zl-action-description" data-en="Features, demos &amp; pricing">Fitur, demo &amp; harga</span></span>
+            <i data-lucide="arrow-up-right" class="zl-action-arrow w-4 h-4"></i>
+          </a>
+          <button type="button" data-path="build" data-track="hero_build" class="zl-action zl-action-secondary group">
+            <span class="zl-action-icon"><i data-lucide="workflow" class="w-5 h-5"></i></span>
+            <span class="zl-action-text"><span class="zl-action-title" data-en="Discuss a custom system">Diskusikan sistem custom</span><span class="zl-action-description" data-en="Tell us about your workflow">Ceritakan alur kerja Anda</span></span>
+            <i data-lucide="arrow-up-right" class="zl-action-arrow w-4 h-4"></i>
+          </button>
         </div>
-        <div class="mt-6 flex flex-wrap gap-x-5 gap-y-2 text-xs sm:text-sm font-semibold text-slate-600 reveal" style="--d:320ms">
-          <span class="flex items-center gap-1.5"><i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-500"></i><span data-en="Templates & custom work">Template & solusi custom</span></span>
-          <span class="flex items-center gap-1.5"><i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-500"></i><span data-en="Clear scope and licensing">Scope dan lisensi jelas</span></span>
-          <span class="flex items-center gap-1.5"><i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-500"></i><span data-en="Learning through ZuraClass">Edukasi bersama ZuraClass</span></span>
+        <a href="#youtube" data-track="hero_learn" class="zl-hero-learn reveal" style="--d:270ms"><i data-lucide="graduation-cap" class="w-4 h-4"></i><span data-en="Learn to build apps for free on ZuraClass">Belajar membuat aplikasi gratis di ZuraClass</span><i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+        <div class="zl-hero-proof reveal" style="--d:310ms" aria-label="Zuralogic highlights">
+          <span><i data-lucide="check-circle-2"></i><span data-en="Clear product details">Detail produk transparan</span></span>
+          <span><i data-lucide="check-circle-2"></i><span data-en="IDR &amp; USD checkout">Checkout IDR &amp; USD</span></span>
+          <span><i data-lucide="check-circle-2"></i><span data-en="Learn with ZuraClass">Belajar bersama ZuraClass</span></span>
         </div>
       </div>
 
-      <!-- Interactive stage -->
-      <div class="lg:col-span-6 relative">
-        <div id="stage" class="relative h-[430px] sm:h-[500px] lg:h-[540px] in" data-anim>
-          <div class="layer absolute inset-x-0 top-2 mx-auto w-[94%] max-w-[540px]" data-depth="10">
-            <div class="glass hero-board rounded-[30px] p-4 sm:p-5" data-tilt>
-              <div class="flex items-center justify-between gap-3">
-                <div class="flex gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-rose-300"></span><span class="w-2.5 h-2.5 rounded-full bg-amber-300"></span><span class="w-2.5 h-2.5 rounded-full bg-emerald-300"></span></div>
-                <div class="text-[11px] font-extrabold uppercase tracking-[.18em] text-slate-400" data-en="Operations dashboard">Dasbor operasi</div>
-              </div>
-
-              <div class="mt-4 grid grid-cols-3 gap-3">
-                <div class="hero-kpi">
-                  <div class="hero-kpi-label" data-en="Monthly sales">Penjualan bulanan</div>
-                  <div id="heroRevenue" class="hero-kpi-value">US$12,400</div>
-                </div>
-                <div class="hero-kpi">
-                  <div class="hero-kpi-label" data-en="Transactions">Transaksi</div>
-                  <div id="heroOrders" class="hero-kpi-value">186</div>
-                </div>
-                <div class="hero-kpi">
-                  <div class="hero-kpi-label" data-en="Time saved">Waktu hemat</div>
-                  <div id="heroSaved" class="hero-kpi-value">42h</div>
-                </div>
-              </div>
-
-              <div class="mt-4 grid grid-cols-12 gap-3">
-                <div class="col-span-12 sm:col-span-4 hero-panel">
-                  <div class="hero-panel-head">
-                    <div class="hero-panel-title" data-en="Automation mix">Komposisi otomasi</div>
-                    <span id="heroDonutChip" class="hero-badge">+18%</span>
-                  </div>
-                  <div class="grid place-items-center">
-                    <svg viewBox="0 0 160 160" class="w-[140px] h-[140px]" aria-hidden="true">
-                      <circle cx="80" cy="80" r="54" fill="none" stroke="#dbeafe" stroke-width="14"></circle>
-                      <circle id="heroDonutRing" class="hero-donut-ring" cx="80" cy="80" r="54" fill="none" stroke="url(#heroDonutGradient)" stroke-width="14" stroke-linecap="round" transform="rotate(-90 80 80)" stroke-dasharray="339.292" stroke-dashoffset="88"></circle>
-                      <defs>
-                        <linearGradient id="heroDonutGradient" x1="0" x2="1" y1="1" y2="0">
-                          <stop offset="0%" stop-color="#2563EB"></stop>
-                          <stop offset="100%" stop-color="#38BDF8"></stop>
-                        </linearGradient>
-                      </defs>
-                      <text id="heroDonutValue" x="80" y="74" class="hero-donut-center" font-size="28">74%</text>
-                      <text id="heroDonutLabel" x="80" y="98" class="hero-donut-sub" data-en="workflow automated">alur otomatis</text>
-                    </svg>
-                  </div>
-                  <ul class="hero-legend mt-1">
-                    <li><span data-en="Catalog & sales">Katalog & penjualan</span><span id="heroLegendA">42%</span></li>
-                    <li><span data-en="Reporting">Pelaporan</span><span id="heroLegendB">33%</span></li>
-                    <li><span data-en="Approvals">Approval</span><span id="heroLegendC">25%</span></li>
-                  </ul>
-                </div>
-
-                <div class="col-span-12 sm:col-span-8 hero-panel">
-                  <div class="hero-panel-head">
-                    <div>
-                      <div class="hero-panel-title" data-en="Revenue trend">Tren pendapatan</div>
-                      <div class="text-sm font-semibold text-slate-500" data-en="Last 6 periods · realistic growth">6 periode terakhir · pertumbuhan realistis</div>
-                    </div>
-                    <span id="heroLineChip" class="hero-badge">+12.4%</span>
-                  </div>
-                  <svg viewBox="0 0 320 160" class="hero-line-svg" preserveAspectRatio="none" aria-hidden="true">
-                    <defs>
-                      <linearGradient id="heroLineGradient" x1="0" x2="0" y1="0" y2="1">
-                        <stop offset="0%" stop-color="#60A5FA" stop-opacity="0.55"></stop>
-                        <stop offset="100%" stop-color="#60A5FA" stop-opacity="0"></stop>
-                      </linearGradient>
-                    </defs>
-                    <g>
-                      <line class="hero-line-grid" x1="10" y1="26" x2="310" y2="26"></line>
-                      <line class="hero-line-grid" x1="10" y1="62" x2="310" y2="62"></line>
-                      <line class="hero-line-grid" x1="10" y1="98" x2="310" y2="98"></line>
-                      <line class="hero-line-grid" x1="10" y1="134" x2="310" y2="134"></line>
-                    </g>
-                    <path id="heroLineArea" class="hero-line-area" d=""></path>
-                    <path id="heroLinePath" class="hero-line-path" d=""></path>
-                    <g id="heroLineDots"></g>
-                  </svg>
-                  <div class="hero-axis"><span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span><span>May</span><span>Jun</span></div>
-                </div>
-
-                <div class="col-span-12 sm:col-span-7 hero-panel">
-                  <div class="hero-panel-head">
-                    <div>
-                      <div class="hero-panel-title" data-en="Channel performance">Performa kanal</div>
-                      <div class="text-sm font-semibold text-slate-500" data-en="Traffic converted into actions">Traffic berubah jadi aksi</div>
-                    </div>
-                    <span id="heroBarChip" class="hero-badge">Live</span>
-                  </div>
-                  <div class="hero-bars">
-                    <div class="hero-bar-wrap"><div class="hero-bar-track"><div class="hero-bar" data-bar="0"></div></div><strong>WEB</strong></div>
-                    <div class="hero-bar-wrap"><div class="hero-bar-track"><div class="hero-bar" data-bar="1"></div></div><strong>YT</strong></div>
-                    <div class="hero-bar-wrap"><div class="hero-bar-track"><div class="hero-bar" data-bar="2"></div></div><strong>FB</strong></div>
-                    <div class="hero-bar-wrap"><div class="hero-bar-track"><div class="hero-bar" data-bar="3"></div></div><strong>WA</strong></div>
-                    <div class="hero-bar-wrap"><div class="hero-bar-track"><div class="hero-bar" data-bar="4"></div></div><strong>ADS</strong></div>
-                    <div class="hero-bar-wrap"><div class="hero-bar-track"><div class="hero-bar" data-bar="5"></div></div><strong>CRM</strong></div>
-                  </div>
-                </div>
-
-                <div class="col-span-12 sm:col-span-5 hero-panel">
-                  <div class="hero-panel-head">
-                    <div>
-                      <div class="hero-panel-title" data-en="Market reach">Jangkauan pasar</div>
-                      <div class="text-sm font-semibold text-slate-500" data-en="From Indonesia to cross-border buyers">Dari Indonesia ke pembeli lintas negara</div>
-                    </div>
-                    <span class="hero-badge" data-en="Map view">Peta</span>
-                  </div>
-                  <div class="hero-map">
-                    <svg viewBox="0 0 280 160" aria-hidden="true">
-                      <g fill="#c7d2fe" opacity=".6">
-                        <path d="M28 55c12-18 34-30 60-27 16 2 22 10 31 14 10 5 18 2 28 1 16-2 33 0 45 8 6 4 14 11 28 11 10 0 23-4 32 2 12 7 14 25 4 35-10 11-32 12-46 9-17-4-25-14-43-17-20-4-35 3-48 10-15 8-31 17-53 15-18-1-37-13-43-30-5-14-2-21 5-31z"></path>
-                        <path d="M168 100c6 4 10 10 10 16 0 10-10 17-22 17-13 0-23-7-23-17 0-7 4-11 10-16z" opacity=".7"></path>
-                      </g>
-                      <path d="M25 84c24 16 54 18 83 10 28-8 47-27 78-25 18 1 30 10 52 8" fill="none" stroke="#2563EB" stroke-width="3" stroke-linecap="round" class="flow"></path>
-                    </svg>
-                    <span class="hero-hotspot" style="left:24%; top:43%;"></span>
-                    <span class="hero-hotspot alt" style="left:50%; top:54%; animation-delay:-.8s;"></span>
-                    <span class="hero-hotspot" style="left:75%; top:38%; animation-delay:-1.2s;"></span>
-                  </div>
-                  <div class="hero-map-legend">
-                    <div><span>ID</span><strong id="heroMarketId">68%</strong></div>
-                    <div><span>SEA</span><strong id="heroMarketSea">20%</strong></div>
-                    <div><span>GLOBAL</span><strong id="heroMarketGlobal">12%</strong></div>
-                  </div>
-                </div>
-              </div>
-            </div>
+      <div class="zl-hero-preview">
+        <div id="heroDemo" class="zl-dashboard" aria-label="Interactive example business dashboard with illustrative figures">
+          <div class="zl-board-head">
+            <div class="zl-board-app"><span class="zl-board-logo"><i data-lucide="layout-dashboard" class="w-5 h-5"></i></span><div><div class="zl-board-overline">ZURALOGIC · PREVIEW</div><div class="zl-board-heading" data-en="Business control center">Pusat kendali bisnis</div></div></div>
+            <span class="zl-board-pill" data-en="SAMPLE DATA">DATA CONTOH</span>
           </div>
-
-          <div class="layer absolute left-0 sm:left-3 bottom-2 w-[40%] max-w-[200px]" data-depth="22">
-            <div class="glass hero-mini-card rounded-[28px] p-3 bob" style="animation-delay:-1.15s">
-              <div class="rounded-[22px] bg-white/88 p-3.5 space-y-3">
-                <div class="flex items-center justify-between"><span class="hero-mini-stat" data-en="Capture">Input</span><span class="text-[10px] font-bold text-emerald-600 bg-emerald-50 rounded-full px-2 py-1">SYNC</span></div>
-                <div class="relative h-24 rounded-2xl bg-gradient-to-br from-blue-50 to-blue-100 overflow-hidden grid place-items-center">
-                  <i data-lucide="qr-code" class="w-11 h-11 text-zura-navy"></i><span class="scanline"></span>
-                </div>
-                <div class="hero-mini-value" id="heroMiniValue">184</div>
-                <div class="text-xs font-semibold text-slate-500" data-en="Records updated this week">data masuk minggu ini</div>
+          <div class="zl-board-tabs" aria-label="Choose dashboard preview">
+            <button type="button" data-demo="sales" aria-pressed="true"><span data-en="Sales">Penjualan</span></button>
+            <button type="button" data-demo="stock" aria-pressed="false"><span data-en="Inventory">Stok</span></button>
+            <button type="button" data-demo="automation" aria-pressed="false"><span data-en="Automation">Otomasi</span></button>
+          </div>
+          <div class="zl-demo-kpis">
+            <div class="zl-demo-kpi"><small id="demoKpiLabel0" data-en="Monthly sales">Penjualan bulanan</small><strong id="demoKpiValue0">US$12.4k</strong></div>
+            <div class="zl-demo-kpi"><small id="demoKpiLabel1" data-en="Transactions">Transaksi</small><strong id="demoKpiValue1">186</strong></div>
+            <div class="zl-demo-kpi"><small id="demoKpiLabel2" data-en="Items sold">Item terjual</small><strong id="demoKpiValue2">542</strong></div>
+          </div>
+          <div class="zl-demo-grid">
+            <section class="zl-demo-panel" aria-label="Trend line chart">
+              <div class="zl-demo-panel-head"><h3 id="demoLineTitle" data-en="Revenue trend">Tren pendapatan</h3><span id="demoTrend" class="zl-demo-trend">+12.4%</span></div>
+              <svg id="demoLineSvg" class="zl-line-svg" viewBox="0 0 300 130" preserveAspectRatio="none" aria-hidden="true">
+                <defs><linearGradient id="zlHeroArea" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#4db7ff" stop-opacity=".40"></stop><stop offset="100%" stop-color="#4db7ff" stop-opacity="0"></stop></linearGradient></defs>
+                <line class="zl-line-grid" x1="4" x2="296" y1="28" y2="28"></line><line class="zl-line-grid" x1="4" x2="296" y1="64" y2="64"></line><line class="zl-line-grid" x1="4" x2="296" y1="100" y2="100"></line>
+                <path id="demoLineArea" class="zl-line-area" d="M 4 100 L 296 30 L 296 114 L 4 114 Z"></path>
+                <path id="demoLinePath" class="zl-line-path" d="M 4 100 L 296 30"></path>
+                <circle id="demoLineDot" class="zl-line-point" cx="296" cy="30" r="5"></circle>
+              </svg>
+              <div id="demoLineAxis" class="zl-chart-axis"><span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span><span>May</span><span>Jun</span></div>
+            </section>
+            <section class="zl-demo-panel" aria-label="Donut chart">
+              <div class="zl-demo-panel-head"><h3 id="demoDonutTitle" data-en="Payment methods">Metode pembayaran</h3></div>
+              <div class="zl-donut-wrap">
+                <svg class="zl-donut-svg" viewBox="0 0 120 120" aria-hidden="true">
+                  <circle cx="60" cy="60" r="39" stroke="#1d3a5b" fill="none" stroke-width="11"></circle>
+                  <circle class="zl-donut-seg" data-seg="0" cx="60" cy="60" r="39" stroke="#60c5ff" fill="none" stroke-width="11" stroke-dasharray="114.6 130.4" stroke-dashoffset="0" transform="rotate(-90 60 60)"></circle>
+                  <circle class="zl-donut-seg" data-seg="1" cx="60" cy="60" r="39" stroke="#4e78ee" fill="none" stroke-width="11" stroke-dasharray="75.4 169.6" stroke-dashoffset="-117.6" transform="rotate(-90 60 60)"></circle>
+                  <circle class="zl-donut-seg" data-seg="2" cx="60" cy="60" r="39" stroke="#b494f8" fill="none" stroke-width="11" stroke-dasharray="46 199" stroke-dashoffset="-196" transform="rotate(-90 60 60)"></circle>
+                  <text class="zl-donut-big" x="60" y="58" id="demoDonutValue">100%</text><text class="zl-donut-small" x="60" y="75" id="demoDonutCaption">mix</text>
+                </svg>
+                <ul class="zl-donut-legend" id="demoDonutLegend"><li><i class="zl-donut-dot" style="background:#60c5ff"></i>Card<span>48%</span></li><li><i class="zl-donut-dot" style="background:#4e78ee"></i>Transfer<span>32%</span></li><li><i class="zl-donut-dot" style="background:#b494f8"></i>Cash<span>20%</span></li></ul>
               </div>
-            </div>
+            </section>
+            <section class="zl-demo-panel" style="grid-column:1/-1" aria-label="Bar chart">
+              <div class="zl-demo-panel-head"><h3 id="demoBarsTitle" data-en="Daily activity">Aktivitas harian</h3><span class="zl-demo-trend" id="demoBarsNote" data-en="7-day view">7 hari</span></div>
+              <div class="zl-bars" id="demoBars">
+                <div class="zl-bar-col"><div class="zl-bar-shell"><div class="zl-bar-fill" data-demo-bar="0" style="height:34%"></div></div><small>Mon</small></div>
+                <div class="zl-bar-col"><div class="zl-bar-shell"><div class="zl-bar-fill" data-demo-bar="1" style="height:53%"></div></div><small>Tue</small></div>
+                <div class="zl-bar-col"><div class="zl-bar-shell"><div class="zl-bar-fill" data-demo-bar="2" style="height:69%"></div></div><small>Wed</small></div>
+                <div class="zl-bar-col"><div class="zl-bar-shell"><div class="zl-bar-fill" data-demo-bar="3" style="height:48%"></div></div><small>Thu</small></div>
+                <div class="zl-bar-col"><div class="zl-bar-shell"><div class="zl-bar-fill" data-demo-bar="4" style="height:85%"></div></div><small>Fri</small></div>
+                <div class="zl-bar-col"><div class="zl-bar-shell"><div class="zl-bar-fill" data-demo-bar="5" style="height:73%"></div></div><small>Sat</small></div>
+                <div class="zl-bar-col"><div class="zl-bar-shell"><div class="zl-bar-fill" data-demo-bar="6" style="height:92%"></div></div><small>Sun</small></div>
+              </div>
+            </section>
           </div>
-
-          <div class="layer absolute right-0 top-0 sm:right-1" data-depth="38">
-            <div class="glass hero-float rounded-2xl px-3.5 py-2.5 flex items-center gap-2 text-[11px] sm:text-xs font-bold text-zura-navy bob" style="animation-delay:-2.2s">
-              <span class="w-7 h-7 rounded-lg bg-blue-600 text-white grid place-items-center"><i data-lucide="mail-check" class="w-4 h-4"></i></span><span data-en="Reports generated automatically">Laporan dibuat otomatis</span>
-            </div>
-          </div>
-          <div class="layer absolute right-0 bottom-6 sm:bottom-9" data-depth="32">
-            <div class="glass hero-float rounded-2xl px-3.5 py-2.5 flex items-center gap-2 text-[11px] sm:text-xs font-bold text-zura-navy bob" style="animation-delay:-.55s">
-              <span class="w-7 h-7 rounded-lg bg-zura-navy text-white grid place-items-center"><i data-lucide="refresh-cw" class="w-4 h-4 spin-slow"></i></span><span data-en="Data stays in sync">Data selalu sinkron</span>
-            </div>
-          </div>
+          <div class="zl-demo-foot"><strong data-en="Interactive UI concept">Konsep UI interaktif</strong><span data-en="Illustrative figures · Not customer results">Angka ilustratif · Bukan hasil klien</span></div>
         </div>
-      </div>    </div>
+        <div class="zl-hero-smallprint"><span data-en="Three views, one practical idea: make operations easier to understand.">Tiga tampilan, satu tujuan: operasional lebih mudah dipahami.</span><em data-en="No external chart library">Tanpa library chart tambahan</em></div>
+      </div>
+    </div>
   </section>
 
   <!-- Tech marquee -->
@@ -1109,7 +1062,7 @@ function applyLang() {
     el.placeholder = LANG === 'en' ? el.dataset.enPh : el.dataset.phId;
   });
   renderDynamic();
-  if (typeof applyHeroDataset === 'function') applyHeroDataset(HERO_DASH_INDEX || 0);
+  if (typeof renderHeroDemo === 'function') renderHeroDemo(false);
 }
 $('#langBtn').addEventListener('click', () => {
   LANG = LANG === 'id' ? 'en' : 'id';
@@ -1569,23 +1522,7 @@ if (HOVER && !REDUCED) {
   document.addEventListener('pointerleave', () => $$('[data-tilt].tilting').forEach(o => { o.style.transform = ''; o.classList.remove('tilting'); }), true);
 }
 
-/* ======================= Hero parallax ======================= */
-(function heroParallax() {
-  const stage = $('#stage'), layers = $$('.layer', stage);
-  let mx = 0, my = 0, tx = 0, ty = 0, visible = true;
-  stage.addEventListener('pointermove', e => { const r = stage.getBoundingClientRect(); tx = (e.clientX - r.left) / r.width - .5; ty = (e.clientY - r.top) / r.height - .5; });
-  stage.addEventListener('pointerleave', () => { tx = ty = 0; });
-  new IntersectionObserver(es => { visible = es[0].isIntersecting; }, { threshold: 0 }).observe(stage);
-  if (REDUCED) return;
-  (function loop() {
-    if (visible) {
-      mx += (tx - mx) * .08; my += (ty - my) * .08;
-      const s = Math.min(window.scrollY, 700);
-      layers.forEach(l => { const d = +l.dataset.depth; l.style.translate = `${(-mx * d * 1.3).toFixed(1)}px ${(-my * d * 1.3 - s * d / 300).toFixed(1)}px`; });
-    }
-    requestAnimationFrame(loop);
-  })();
-})();
+/* Hero uses low-frequency SVG/CSS transitions; no scroll/pointer RAF loop. */
 
 /* ======================= Scroll effects ======================= */
 let ticking = false;
@@ -1612,58 +1549,97 @@ addEventListener('resize', onScroll);
 $('#menuBtn').addEventListener('click', () => { const m = $('#mobileMenu'); m.style.display = m.style.display === 'none' ? 'block' : 'none'; });
 $$('.m-link').forEach(a => a.addEventListener('click', () => { $('#mobileMenu').style.display = 'none'; }));
 
-/* ======================= Hero dashboard ======================= */
-let HERO_DASH_INDEX = 0;
-const HERO_DASH = [
-  { revenue: 12400, orders: 186, saved: 42, donut: 74, donutLabel: {id:'alur otomatis', en:'workflow automated'}, donutParts:[42,33,25], chip:'+18%', lineChip:'+12.4%', bars:[62,74,58,86,72,91], line:[32,38,36,44,49,52], market:[68,20,12] },
-  { revenue: 13750, orders: 204, saved: 47, donut: 78, donutLabel: {id:'tugas otomatis', en:'tasks automated'}, donutParts:[45,31,24], chip:'+21%', lineChip:'+15.1%', bars:[66,79,64,90,75,94], line:[35,41,39,48,52,58], market:[64,23,13] },
-  { revenue: 14980, orders: 228, saved: 53, donut: 81, donutLabel: {id:'proses otomatis', en:'processes automated'}, donutParts:[47,29,24], chip:'+24%', lineChip:'+18.7%', bars:[70,83,68,94,79,97], line:[38,45,43,51,57,63], market:[60,25,15] }
-];
-function linePath(values, w=320, h=160, padX=10, padY=18) {
-  const usableW = w - padX * 2, usableH = h - padY * 2;
-  const max = Math.max(...values), min = Math.min(...values);
-  const range = Math.max(8, max - min);
-  const pts = values.map((v, i) => {
-    const x = padX + usableW * (i / (values.length - 1));
-    const y = h - padY - ((v - min) / range) * usableH;
-    return [x, y];
+/* ======================= Zuralogic hero demo V3 =======================
+   Curated illustrative numbers; never presented as real client performance.
+   Animates only when visible, with reduced-motion and manual-control support.
+*/
+const ZL_DEMOS = {
+  sales: {
+    kpiID:['Penjualan bulanan','Transaksi','Item terjual'], kpiEN:['Monthly sales','Transactions','Items sold'], values:['US$12.4k','186','542'],
+    trend:'+12.4%', lineID:'Tren pendapatan', lineEN:'Revenue trend', line:[32,40,37,50,61,65],
+    donutID:'Metode pembayaran', donutEN:'Payment methods', labelsID:['Kartu','Transfer','Tunai'], labelsEN:['Card','Transfer','Cash'], donut:[48,32,20],
+    barsID:'Transaksi per hari', barsEN:'Transactions per day', bars:[34,53,69,48,85,73,92]
+  },
+  stock: {
+    kpiID:['SKU tercatat','Akurasi stok','Stok menipis'], kpiEN:['SKUs tracked','Stock accuracy','Low-stock alerts'], values:['1,240','98.4%','8'],
+    trend:'+4.1%', lineID:'Tren akurasi stok', lineEN:'Stock accuracy trend', line:[48,55,54,60,65,69],
+    donutID:'Status persediaan', donutEN:'Inventory status', labelsID:['Tersedia','Dipesan','Stok tipis'], labelsEN:['Available','Reserved','Low stock'], donut:[76,16,8],
+    barsID:'Pergerakan stok', barsEN:'Stock movements', bars:[62,44,78,56,90,72,82]
+  },
+  automation: {
+    kpiID:['Tugas diproses','Jam terhemat','Pengecualian'], kpiEN:['Tasks processed','Hours saved','Exceptions'], values:['2,846','42h','12'],
+    trend:'+16.8%', lineID:'Aktivitas otomasi', lineEN:'Automation activity', line:[25,39,42,50,61,77],
+    donutID:'Jenis alur kerja', donutEN:'Workflow routing', labelsID:['Terjadwal','Berbasis event','Manual'], labelsEN:['Scheduled','Event-based','Manual'], donut:[54,31,15],
+    barsID:'Tugas per hari', barsEN:'Tasks per day', bars:[30,47,64,72,56,85,95]
+  }
+};
+const ZL_DEMO_COLORS=['#60c5ff','#4e78ee','#b494f8'];
+let zlDemoMode='sales', zlDemoManual=false, zlDemoVisible=true;
+function zlDemoPath(points) {
+  const min=Math.min(...points), max=Math.max(...points), range=Math.max(10,max-min);
+  const xy=points.map((v,i)=>[4+(292*i)/(points.length-1),112-(v-min)/range*89]);
+  let d=`M ${xy[0][0].toFixed(1)} ${xy[0][1].toFixed(1)}`;
+  for(let i=1;i<xy.length;i++) {
+    const a=xy[i-1], b=xy[i], dx=b[0]-a[0];
+    d+=` C ${(a[0]+dx*.48).toFixed(1)} ${a[1].toFixed(1)}, ${(b[0]-dx*.48).toFixed(1)} ${b[1].toFixed(1)}, ${b[0].toFixed(1)} ${b[1].toFixed(1)}`;
+  }
+  return {line:d,area:d+` L ${xy.at(-1)[0].toFixed(1)} 115 L 4 115 Z`,end:xy.at(-1)};
+}
+function renderHeroDemo(animate=true) {
+  const board=document.getElementById('heroDemo'); if(!board) return;
+  const d=ZL_DEMOS[zlDemoMode]; if(!d) return;
+  const chosen=LANG==='id'?'ID':'EN';
+  for(let i=0;i<3;i++) {
+    document.getElementById('demoKpiLabel'+i).textContent=d['kpi'+chosen][i];
+    document.getElementById('demoKpiValue'+i).textContent=d.values[i];
+  }
+  document.getElementById('demoTrend').textContent=d.trend;
+  document.getElementById('demoLineTitle').textContent=d['line'+chosen];
+  document.getElementById('demoDonutTitle').textContent=d['donut'+chosen];
+  document.getElementById('demoBarsTitle').textContent=d['bars'+chosen];
+  const curve=zlDemoPath(d.line);
+  const line=document.getElementById('demoLinePath');
+  const area=document.getElementById('demoLineArea');
+  const tip=document.getElementById('demoLineDot');
+  line.setAttribute('d',curve.line); area.setAttribute('d',curve.area);
+  tip.setAttribute('cx',curve.end[0]); tip.setAttribute('cy',curve.end[1]);
+  if(animate && !REDUCED) {
+    // Replay the SVG line draw when the sample scenario changes.
+    const length=line.getTotalLength();
+    line.style.transition='none'; line.style.strokeDasharray=length; line.style.strokeDashoffset=length;
+    requestAnimationFrame(()=>{requestAnimationFrame(()=>{line.style.transition='stroke-dashoffset .85s ease';line.style.strokeDashoffset='0';});});
+  } else { line.style.transition='none'; line.style.strokeDasharray='none'; line.style.strokeDashoffset='0'; }
+  let start=0; const C=2*Math.PI*39;
+  board.querySelectorAll('[data-seg]').forEach((el,i)=>{
+    const percent=d.donut[i], arc=percent/100*C;
+    el.style.strokeDasharray=`${Math.max(arc-3,0)} ${C-Math.max(arc-3,0)}`;
+    el.style.strokeDashoffset=String(-start/100*C);
+    start+=percent;
   });
-  const d = pts.map((p, i) => `${i ? 'L' : 'M'}${p[0].toFixed(1)} ${p[1].toFixed(1)}`).join(' ');
-  const area = d + ` L ${pts[pts.length - 1][0].toFixed(1)} ${(h - padY).toFixed(1)} L ${pts[0][0].toFixed(1)} ${(h - padY).toFixed(1)} Z`;
-  return { d, area, pts };
+  document.getElementById('demoDonutValue').textContent='100%';
+  document.getElementById('demoDonutCaption').textContent=LANG==='id'?'komposisi':'mix';
+  document.getElementById('demoDonutLegend').innerHTML=d['labels'+chosen].map((name,i)=>`<li><i class="zl-donut-dot" style="background:${ZL_DEMO_COLORS[i]}"></i>${name}<span>${d.donut[i]}%</span></li>`).join('');
+  board.querySelectorAll('[data-demo-bar]').forEach((bar,i)=>{
+    const v=d.bars[i]; bar.style.height=v+'%'; bar.parentElement.title=(LANG==='id'?'Indeks aktivitas: ':'Activity index: ')+v;
+  });
+  board.querySelectorAll('[data-demo]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.demo===zlDemoMode)));
 }
-function formatUSD(v) { return 'US$' + Number(v).toLocaleString('en-US'); }
-function applyHeroDataset(idx=0) {
-  HERO_DASH_INDEX = idx % HERO_DASH.length;
-  const data = HERO_DASH[HERO_DASH_INDEX];
-  const ring = $('#heroDonutRing');
-  if (!ring) return;
-  const circ = 339.292;
-  $('#heroRevenue').textContent = formatUSD(data.revenue);
-  $('#heroOrders').textContent = data.orders.toLocaleString('en-US');
-  $('#heroSaved').textContent = data.saved + 'h';
-  $('#heroMiniValue').textContent = data.orders.toLocaleString('en-US');
-  $('#heroDonutValue').textContent = data.donut + '%';
-  $('#heroDonutLabel').textContent = LANG === 'id' ? data.donutLabel.id : data.donutLabel.en;
-  $('#heroDonutChip').textContent = data.chip;
-  $('#heroLineChip').textContent = data.lineChip;
-  ring.style.strokeDashoffset = (circ * (1 - data.donut / 100)).toFixed(2);
-  ['A','B','C'].forEach((k,i) => { const el = $('#heroLegend'+k); if (el) el.textContent = data.donutParts[i] + '%'; });
-  const geom = linePath(data.line);
-  $('#heroLinePath').setAttribute('d', geom.d);
-  $('#heroLineArea').setAttribute('d', geom.area);
-  $('#heroLineDots').innerHTML = geom.pts.map(([x,y]) => `<circle class="hero-line-dot" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="4.5"></circle>`).join('');
-  $$('[data-bar]').forEach((bar,i) => { bar.style.height = (data.bars[i] || 20) + '%'; });
-  $('#heroBarChip').textContent = 'Live';
-  $('#heroMarketId').textContent = data.market[0] + '%';
-  $('#heroMarketSea').textContent = data.market[1] + '%';
-  $('#heroMarketGlobal').textContent = data.market[2] + '%';
-}
-function initHeroDashboard() {
-  applyHeroDataset(0);
-  if (REDUCED) return;
-  let idx = 0;
-  setInterval(() => { idx = (idx + 1) % HERO_DASH.length; applyHeroDataset(idx); }, 3400);
+function initHeroDemo() {
+  const board=document.getElementById('heroDemo'); if(!board) return;
+  renderHeroDemo(false);
+  board.querySelectorAll('[data-demo]').forEach(btn=>btn.addEventListener('click',()=>{
+    zlDemoManual=true; zlDemoMode=btn.dataset.demo; renderHeroDemo();
+    if(typeof track==='function') track('hero_preview_select',{demo:zlDemoMode});
+  }));
+  if(REDUCED) return;
+  if('IntersectionObserver' in window) new IntersectionObserver(es=>{
+    zlDemoVisible=!!(es[0] && es[0].isIntersecting);
+  },{threshold:.08}).observe(board);
+  const cycle=['sales','stock','automation'];
+  setInterval(()=>{
+    if(zlDemoManual || !zlDemoVisible || document.hidden) return;
+    zlDemoMode=cycle[(cycle.indexOf(zlDemoMode)+1)%cycle.length]; renderHeroDemo();
+  },6800);
 }
 
 /* ======================= Init ======================= */
@@ -1672,7 +1648,7 @@ window.addEventListener('DOMContentLoaded', () => {
   wireLinks();
   renderYT();
   applyLang();       // juga memanggil renderDynamic()
-  initHeroDashboard();
+  initHeroDemo();
   loadChannel();
   loadHomeProducts();
   activatePath('shop', false);
