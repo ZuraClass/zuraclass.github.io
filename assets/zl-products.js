@@ -39,25 +39,72 @@
     return price === null ? null : Math.ceil(price * 13 / 180000);
   }
 
+  /*
+   * PRICE DESIGN v3 — tepat tiga baris per region:
+   * 1) region & mata uang; 2) harga normal dicoret + SALE/PROMO;
+   * 3) harga final/promo yang menjadi fokus.
+   *
+   * Responsive berdasarkan LEBAR KOMPONEN, bukan lebar layar. Kartu sempit
+   * menjadi susunan vertikal; panel detail yang lebar tetap dua kolom.
+   * Tidak memodifikasi nilai harga/checkout yang berasal dari Catalog.
+   */
+  function mountPriceStyles() {
+    if (typeof document === 'undefined' || document.getElementById('zl-price-styles-v3')) return;
+    const css = `
+      .zl-price-shell {container-type:inline-size; container-name:zlprice; width:100%;}
+      .zl-price-grid {display:grid;grid-template-columns:minmax(0,1fr);gap:0;}
+      .zl-price-col {display:grid;grid-template-rows:minmax(1.1rem,auto) minmax(1.45rem,auto) minmax(2.15rem,auto);
+        align-content:start;row-gap:.32rem;min-width:0;padding:0;}
+      .zl-price-col+.zl-price-col {border-top:1px solid #e2e8f0;margin-top:.85rem;padding-top:.8rem;}
+      .zl-price-region {min-width:0;font-size:clamp(.625rem,2.3cqw,.7rem);line-height:1.4;
+        font-weight:850;letter-spacing:.09em;text-transform:uppercase;color:#94a3b8;white-space:normal;}
+      .zl-price-col--usd .zl-price-region {color:#3b82f6;}
+      .zl-price-previous {display:flex;flex-wrap:nowrap;align-items:center;gap:.5rem;min-height:1.45rem;min-width:0;}
+      .zl-price-old {font-size:clamp(.75rem,2.8cqw,.9rem);font-weight:650;color:#94a3b8;
+        white-space:nowrap;line-height:1.3;}
+      .zl-price-badge {font-size:.6rem;font-weight:850;white-space:nowrap;line-height:1.3;
+        border-radius:.4rem;padding:.18rem .42rem;background:#fff1f2;color:#e11d48;letter-spacing:.025em;}
+      .zl-price-value {display:block;min-width:0;color:#0A1931;font-family:Sora,Inter,sans-serif;font-weight:850;
+        font-size:clamp(1.35rem,5.2cqw,2.1rem);line-height:1.2;letter-spacing:-.055em;
+        font-variant-numeric:tabular-nums;white-space:nowrap;}
+      .zl-price-shell[data-size="card"] .zl-price-value {font-size:clamp(1.25rem,5.1cqw,1.78rem);}
+      .zl-price-unavailable {display:block;font-size:.8rem;line-height:1.3;color:#94a3b8;font-weight:650;}
+      @container zlprice (min-width:400px) {
+        .zl-price-grid {grid-template-columns:repeat(2,minmax(0,1fr));}
+        .zl-price-col+.zl-price-col {border-top:0;border-left:1px solid #e2e8f0;margin-top:0;
+          padding-top:0;padding-left:clamp(.7rem,2.3cqw,1.15rem);margin-left:clamp(.4rem,1.2cqw,.65rem);}
+      }
+    `;
+    const el = document.createElement('style');
+    el.id = 'zl-price-styles-v3'; el.textContent = css;
+    (document.head || document.documentElement).appendChild(el);
+  }
+
   function priceMarkup(p, opts = {}) {
+    mountPriceStyles();
     const large = !!opts.large;
-    const pair = (normal, promo, fmt, empty, currency) => {
+    const region = (label, normal, promo, formatter, empty, regionClass) => {
       const sale = normal !== null && promo !== null && promo < normal;
-      if (normal === null) return `<span class="text-xs font-medium text-slate-400">${esc(empty)}</span>`;
-      return `<div class="flex flex-wrap items-baseline gap-x-2 gap-y-1">
-        ${sale ? `<del class="text-xs font-medium text-slate-400">${esc(fmt(normal))}</del>` : ''}
-        <strong class="font-display font-extrabold ${large ? 'text-2xl sm:text-3xl' : 'text-lg'} text-zura-navy">${esc(fmt(sale ? promo : normal))}</strong>
-        ${sale ? `<span class="self-center rounded-md px-1.5 py-0.5 text-[10px] font-extrabold bg-rose-50 text-rose-600">${t('PROMO','SALE')}</span>` : ''}
+      const finalValue = sale ? promo : normal;
+      const previous = sale
+        ? `<del class="zl-price-old">${esc(formatter(normal))}</del><span class="zl-price-badge">${t('PROMO','SALE')}</span>`
+        : '<span aria-hidden="true">&nbsp;</span>';
+      return `<div class="zl-price-col ${regionClass}">
+        <div class="zl-price-region">${esc(label)}</div>
+        <div class="zl-price-previous">${previous}</div>
+        ${finalValue === null
+          ? `<span class="zl-price-unavailable">${esc(empty)}</span>`
+          : `<strong class="zl-price-value">${esc(formatter(finalValue))}</strong>`}
       </div>`;
     };
     const idrNormal = parsePrice(p.normalPrice), idrPromo = parsePrice(p.promoPrice);
     const usdNormal = parseUSDPrice(p.usdNormalPrice), usdPromo = parseUSDPrice(p.usdPromoPrice);
-    return `<div class="grid ${large ? 'grid-cols-2' : 'grid-cols-2'} gap-2.5" data-dual-prices>
-      <div class="min-w-0"><div class="mb-1 text-[10px] font-extrabold tracking-widest text-slate-400">INDONESIA · IDR</div>
-        ${pair(idrNormal, idrPromo, fmtPrice, t('Harga belum tersedia','Price unavailable'),'IDR')}
-      </div>
-      <div class="min-w-0 border-l border-slate-200 pl-2.5"><div class="mb-1 text-[10px] font-extrabold tracking-widest text-blue-500">INTERNATIONAL · USD</div>
-        ${pair(usdNormal, usdPromo, fmtUSD, t('Harga belum tersedia','Price unavailable'),'USD')}
+    return `<div class="zl-price-shell" data-size="${large ? 'large' : 'card'}" data-dual-prices>
+      <div class="zl-price-grid">
+        ${region('INDONESIA · IDR', idrNormal, idrPromo, fmtPrice,
+          t('Harga belum tersedia','Price unavailable'), 'zl-price-col--idr')}
+        ${region('INTERNATIONAL · USD', usdNormal, usdPromo, fmtUSD,
+          t('Harga belum tersedia','Price unavailable'), 'zl-price-col--usd')}
       </div>
     </div>`;
   }
