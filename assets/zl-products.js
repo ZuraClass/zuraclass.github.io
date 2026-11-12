@@ -44,12 +44,12 @@
    * 1) region & mata uang; 2) harga normal dicoret + SALE/PROMO;
    * 3) harga final/promo yang menjadi fokus.
    *
-   * Responsive berdasarkan LEBAR KOMPONEN, bukan lebar layar. Kartu sempit
-   * menjadi susunan vertikal; panel detail yang lebar tetap dua kolom.
+   * v4: kartu katalog SELALU dua kolom 50%/50%, meski sempit.
+   * Panel detail tetap menggunakan aturan responsif v3 yang sudah bekerja.
    * Tidak memodifikasi nilai harga/checkout yang berasal dari Catalog.
    */
   function mountPriceStyles() {
-    if (typeof document === 'undefined' || document.getElementById('zl-price-styles-v3')) return;
+    if (typeof document === 'undefined' || document.getElementById('zl-price-styles-v4')) return;
     const css = `
       .zl-price-shell {container-type:inline-size; container-name:zlprice; width:100%;}
       .zl-price-grid {display:grid;grid-template-columns:minmax(0,1fr);gap:0;}
@@ -74,9 +74,46 @@
         .zl-price-col+.zl-price-col {border-top:0;border-left:1px solid #e2e8f0;margin-top:0;
           padding-top:0;padding-left:clamp(.7rem,2.3cqw,1.15rem);margin-left:clamp(.4rem,1.2cqw,.65rem);}
       }
+      /* CATALOG CARD ONLY: fixed equal widths. Keep DETAIL (data-size=large) unchanged. */
+      .zl-price-shell[data-size="card"] .zl-price-grid {
+        grid-template-columns:repeat(2,minmax(0,1fr));
+      }
+      .zl-price-shell[data-size="card"] .zl-price-col:first-child {
+        padding-right:clamp(.35rem,1.5cqw,.75rem);
+      }
+      .zl-price-shell[data-size="card"] .zl-price-col + .zl-price-col {
+        border-top:0;
+        border-left:1px solid #e2e8f0;
+        margin-top:0;
+        margin-left:0;
+        padding-top:0;
+        padding-left:clamp(.35rem,1.5cqw,.75rem);
+      }
+      .zl-price-shell[data-size="card"] .zl-price-region {
+        font-size:clamp(.57rem,2.25cqw,.7rem);
+        letter-spacing:.055em;
+        overflow-wrap:break-word;
+      }
+      .zl-price-shell[data-size="card"] .zl-price-previous {gap:clamp(.2rem,.85cqw,.5rem);}
+      .zl-price-shell[data-size="card"] .zl-price-old {
+        font-size:clamp(.62rem,2.75cqw,.84rem);
+        letter-spacing:-.025em;
+      }
+      .zl-price-shell[data-size="card"] .zl-price-badge {
+        font-size:clamp(.48rem,1.9cqw,.6rem);
+        padding:.14rem .3rem;
+      }
+      .zl-price-shell[data-size="card"] .zl-price-value {
+        font-size:clamp(.91rem,4.65cqw,1.5rem);
+        letter-spacing:-.06em;
+      }
+      .zl-price-shell[data-size="card"] .zl-price-unavailable {
+        font-size:clamp(.6rem,2.35cqw,.8rem);
+        overflow-wrap:anywhere;
+      }
     `;
     const el = document.createElement('style');
-    el.id = 'zl-price-styles-v3'; el.textContent = css;
+    el.id = 'zl-price-styles-v4'; el.textContent = css;
     (document.head || document.documentElement).appendChild(el);
   }
 
