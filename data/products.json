@@ -18,9 +18,9 @@
       "normalPrice": 299900,
       "promoPrice": 149900,
       "usdNormalPrice": 22,
-      "usdPromoPrice": 11,
+      "usdPromoPrice": 12,
       "checkoutUrl": "https://zurastore.myr.id/pl/appsheet-pos-lite/",
-      "lemonCheckoutUrl": "https://zurashop.lemonsqueezy.com/checkout/buy/c65e0f9b-102e-4ea0-b6c1-b55fa4c7ccfc",
+      "lemonCheckoutUrl": "https://zuralogic.gumroad.com/l/zura-pos-lite-appsheet?wanted=true",
       "cover": "assets/products/pmw9b1or1zyo/luwd0i23.webp",
       "images": [
         "assets/products/pmw9b1or1zyo/4in6t0x0.webp",
@@ -34,7 +34,7 @@
       "shareImage": "assets/product-share/pmw9b1or1zyo.jpg",
       "published": true,
       "createdAt": "2026-11-09T13:39:57.320Z",
-      "updatedAt": "2026-11-12T02:13:39.714Z"
+      "updatedAt": "2026-11-18T07:15:22.551Z"
     },
     {
       "id": "pmwatjv35rtz",
@@ -68,5 +68,5 @@
       "updatedAt": "2026-11-12T02:01:03.390Z"
     }
   ],
-  "updatedAt": "2026-11-12T02:13:39.714Z"
+  "updatedAt": "2026-11-18T07:15:22.551Z"
 }
